@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="RwuhsveunXtvJvMHt2v_kQKeC2xaRPjTYuRsp_99o0s">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ScriboAI Bot | Étude de cas — DIGICRAFT Labs</title>
+  <meta name="description" content="Étude de cas ScriboAI Bot : un assistant de rédaction et synthèse assistée par IA, accessible directement depuis Telegram.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/projets/scriboai-bot/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="DIGICRAFT Labs">
+  <meta property="og:title" content="ScriboAI Bot | Étude de cas">
+  <meta property="og:description" content="Étude de cas ScriboAI Bot : un assistant de rédaction et synthèse assistée par IA, accessible directement depuis Telegram.">
+  <meta property="og:url" content="https://digicraft-labs-drf.pages.dev/projets/scriboai-bot/">
+  <meta property="og:image" content="https://digicraft-labs-drf.pages.dev/assets/images/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../../css/style.css?v=20260828u">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="../../index.html" aria-label="Bot : ScriboAI Bot">
+        <img class="brand-logo" src="../../assets/logo/digicraft-labs.png" alt="" width="38" height="38">
+        <span class="brand-name">DIGICRAFT Labs<small>Koffa Jean Agoudavi</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Bot : ScriboAI Bot">
+        <a href="../../index.html">Accueil</a>
+        <a href="../index.html">Projets</a>
+        <a href="../../articles/">Articles</a>
+        <a href="../../boutique/">Boutique</a>
+        <a href="../../a-propos/">À propos</a>
+      </nav>
+      <a class="btn btn-gold btn-sm header-cta" href="../../contact/">Me contacter</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="menu-mobile" aria-label="Bot : ScriboAI Bot">
+        <span class="bars"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="menu-mobile" aria-hidden="true">
+    <nav aria-label="Bot : ScriboAI Bot">
+      <a href="../../index.html">Accueil</a>
+      <a href="../index.html">Projets</a>
+      <a href="../../articles/">Articles</a>
+      <a href="../../boutique/">Boutique</a>
+      <a href="../../a-propos/">À propos</a>
+    </nav>
+    <div class="menu-foot">
+      <a class="btn btn-gold" href="../../contact/">Me contacter</a>
+      <div class="menu-social">
+        <a data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">LinkedIn</a>
+        <a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a>
+      </div>
+      <p class="menu-note">DIGICRAFT Labs — Koffa Jean AGOUDAVI</p>
+    </div>
+  </div>
+
+  <main id="contenu" data-cs-page="scriboai-bot">
+
+    <!-- ===== HERO ===== -->
+    <section class="page-hero">
+      <div class="container">
+        <a class="back-link reveal is-visible" href="../index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Tous mes projets</a>
+        <p class="eyebrow reveal">Étude de cas</p>
+        <h1 class="reveal" data-cs-titre>ScriboAI Bot</h1>
+        <p class="lead reveal" data-cs-desc>Bot Telegram de rédaction assistée par IA.</p>
+        <div class="page-extra reveal">
+          <span class="chip chip-gold"><span class="cs-dot"></span><span data-cs-statut>Test privé</span></span>
+          <div class="cs-tags" data-cs-tags>
+            <span class="tag">Groq</span>
+            <span class="tag">Gemini</span>
+            <span class="tag">Telegram</span>
+          </div>
+        </div>
+        <div class="cs-actions">
+          <a class="btn btn-gold" data-cs-action href="https://t.me/scribo_ia_bot" target="_blank" rel="noopener" aria-label="Bot : ScriboAI Bot">Bot</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:1.5rem">
+      <div class="container">
+
+        <!-- Visuel projet (image_url du Sheet) -->
+        <div class="cs-media reveal" data-cs-media>
+          <img src="https://res.cloudinary.com/mdebk4xz/image/upload/v1787947761/scriboai.png" alt="ScriboAI Bot" width="1280" height="800" loading="lazy" decoding="async">
+        </div>
+
+        <!-- Sections de l'étude de cas -->
+        <div class="cs-sections">
+
+          <section class="cs-section reveal" data-cs-section="probleme">
+            <span class="cs-num">01 — Contexte</span>
+            <h2>Le problème</h2>
+            <p data-cs-txt>Rédiger rapidement des contenus de qualité peut être chronophage, surtout lorsqu'il faut reformuler, résumer ou structurer des informations directement depuis son téléphone.</p>
+          </section>
+
+          <section class="cs-section reveal" data-cs-section="solution">
+            <span class="cs-num">02 — La réponse</span>
+            <h2>La solution</h2>
+            <p data-cs-txt>ScriboAI est un assistant rédactionnel accessible depuis Telegram. Il utilise l'IA pour générer, reformuler et synthétiser des textes rapidement, avec une interface conversationnelle simple et accessible sans application dédiée.</p>
+          </section>
+
+          <section class="cs-section reveal" data-cs-section="technologies_detail">
+            <span class="cs-num">03 — Outillage</span>
+            <h2>Technologies</h2>
+            <p data-cs-txt>Telegram Bot API assure l'interface avec l'utilisateur. Cloudflare Workers exécute la logique du bot et gère les requêtes. Groq fournit les modèles de langage pour la génération et la transformation de texte. Gemini est utilisé pour les fonctionnalités liées à la génération et au traitement d'images.</p>
+          </section>
+
+          <section class="cs-section reveal" data-cs-section="resultat">
+            <span class="cs-num">04 — État actuel</span>
+            <h2>Résultat aujourd'hui</h2>
+            <p data-cs-txt>Un assistant accessible directement dans Telegram, conçu pour réduire le temps nécessaire à la rédaction et à la synthèse. Le projet démontre l'intégration de plusieurs services IA dans une architecture légère et accessible.</p>
+          </section>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-box reveal" style="margin-top:4.5rem">
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4L2 9.6h7.6z"/></svg>
+          <h2>Un flux à automatiser, vous aussi ?</h2>
+          <p>Parlons de votre processus et voyons comment l'IA peut le rendre plus simple, plus rapide ou plus efficace.</p>
+          <div class="cta-actions">
+            <a class="btn btn-gold" href="../../contact/">Me contacter <span class="arr">→</span></a>
+            <a class="btn btn-ghost" href="../index.html">Tous mes projets</a>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:2.5rem">
+          <a class="link-arrow" href="../index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:.35rem"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Tous mes projets</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="../../index.html">
+            <img class="brand-logo" src="../../assets/logo/digicraft-labs.png" alt="" width="38" height="38">
+            <span class="brand-name">DIGICRAFT Labs</span>
+          </a>
+          <p><strong>Koffa Jean Agoudavi</strong><br>Fondateur de DIGICRAFT Labs. Je construis des systèmes digitaux intelligents : automatisations, agents IA, bots et produits digitaux.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="../../index.html">Accueil</a></li>
+            <li><a href="../index.html">Projets</a></li>
+            <li><a href="../../articles/">Articles</a></li>
+            <li><a href="../../boutique/">Boutique</a></li>
+            <li><a href="../../a-propos/">À propos</a></li>
+            <li><a href="../../contact/">Contact</a></li>
+            <li><a href="../../build-in-public/">Build in public</a></li>
+            <li><button type="button" class="dl-manage-btn" data-consent-manage>Gérer mes cookies</button></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Me retrouver</h4>
+          <ul>
+            <li><a data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a></li>
+            <li><a data-p-youtube href="https://www.youtube.com/@KoffaJeanAgoudavi" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a data-p-whatsapp href="https://wa.me/22872556556?text=Bonjour%2C%20je%20viens%20de%20votre%20site%20DIGICRAFT%20Labs%20et%20j%27aimerais%20%C3%A9changer%20avec%20vous." target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a data-p-google href="https://share.google/ont9TyuWshpud74fL" target="_blank" rel="noopener">Google Business</a></li>
+            <li><a data-p-email href="mailto:contact.agoudavi@gmail.com" data-p-email-txt>contact.agoudavi@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> DIGICRAFT Labs — Koffa Jean Agoudavi</span>
+        <span class="fb-links">
+          <a href="../index.html">Projets</a>
+          <a href="../../articles/">Articles</a>
+          <a href="../../contact/">Contact</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script>window.SITE_ROOT = "../../";</script>
+  <script src="../../js/config.js?v=20260828u"></script>
+  <script src="../../js/consent.js?v=20260828u"></script>
+  <script src="../../js/analytics.js?v=20260828u"></script>
+  <script src="../../js/sheets.js?v=20260828u"></script>
+  <script src="../../js/projects.js?v=20260828u"></script>
+  <script src="../../js/articles.js?v=20260828u"></script>
+  <script src="../../js/resources.js?v=20260828u"></script>
+  <script src="../../js/main.js?v=20260828u"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      window.Prjs.caseStudy();
+      window.Prjs.initReveal();
+    });
+  </script>
+</body>
+</html>

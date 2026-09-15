@@ -1,0 +1,36 @@
+# ============================================================
+# DIGICRAFT Labs — _headers (Cloudflare Pages)
+# À placer à la RACINE du projet (à côté de index.html).
+# Cloudflare Pages l'applique automatiquement au déploiement.
+# Doc : https://developers.cloudflare.com/pages/configuration/headers/
+# ============================================================
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# ------------------------------------------------------------
+# OPTIONNEL — Content-Security-Policy (protection maximale).
+# ⚠️ À ACTIVER SEULEMENT après test complet du site : une CSP
+# mal réglée casse scripts et styles. Pour l'activer, décommentez
+# le bloc ci-dessous (supprimez le « # » du début de chaque ligne
+# et du sélecteur /*) puis redéployez. Vérifiez ensuite la console
+# navigateur (violations « Refused to … ») et GA4/Clarity.
+#
+# Domaine vérifiés le 2026-09-03 (test automatisé, zéro violation) :
+#   script-src  — www.googletagmanager.com (gtag.js)
+#                 www.clarity.ms (snippet) + scripts.clarity.ms (moteur)
+#   connect-src — docs.google.com + *.googleusercontent.com : le Sheet
+#                 CMS redirige l'export CSV vers doc-…-sheets.googleuser
+#                 content.com → sans *.googleusercontent.com, tout le
+#                 contenu du CMS resterait vide (fallback local seul)
+#                 hook.eu1.make.com (webhook contact)
+#                 *.google-analytics.com (collecteurs GA4, régionaux
+#                 compris — www seul ne suffit pas)
+#                 *.clarity.ms (collecte Clarity : g./l./www…)
+# ------------------------------------------------------------
+# /*
+#   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://*.googleusercontent.com https://hook.eu1.make.com https://*.google-analytics.com https://*.clarity.ms; frame-ancestors 'none'
+# */
