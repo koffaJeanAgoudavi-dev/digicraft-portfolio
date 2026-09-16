@@ -270,16 +270,110 @@
     });
   }
 
+  /* ---- Helpers fiche projet générique (V1.3, mode dynamique) ----
+     Utilisés UNIQUEMENT par projets/fiche.html (data-cs-dynamic).
+     Les fiches statiques existantes (data-cs-page="<slug>" en dur)
+     suivent exactement le même chemin de code qu'avant. */
+
+  function normaliserSlug(v) {
+    return String(v == null ? "" : v).trim().toLowerCase();
+  }
+
+  /* Extrait le slug du CHEMIN de l'URL : /projets/<slug>/ (avec ou
+     sans slash final). Jamais depuis un query parameter (?slug=…). */
+  function slugDepuisChemin() {
+    var m = window.location.pathname.match(/\/projets\/([^\/?#]+)\/?$/i);
+    if (!m) return "";
+    try { return normaliserSlug(decodeURIComponent(m[1])); }
+    catch (e) { return normaliserSlug(m[1]); }
+  }
+
+  function origineSite() {
+    var s = window.CONFIG && window.CONFIG.siteUrl
+      ? String(window.CONFIG.siteUrl).replace(/\/+$/, "")
+      : "";
+    return s || window.location.origin;
+  }
+
+  function setMetaAttr(selecteur, attr, valeur) {
+    var el = document.querySelector(selecteur);
+    if (el && valeur) el.setAttribute(attr, valeur);
+  }
+
+  /* SEO client de la fiche générique : title, meta description,
+     canonical (toujours /projets/<slug>/ — URL propre, jamais ?slug=),
+     Open Graph. Complète l'injection côté serveur faite par la Pages
+     Function (functions/projets/[slug].js) : garantit des métadonnées
+     correctes même si le HTML a été servi sans injection (dev local,
+     Sheet injoignable côté edge). */
+  function injecterMetaFiche(p, slug) {
+    try {
+      var urlPropre = origineSite() + "/projets/" + slug + "/";
+      var titre = String(p.titre || "").trim() || "Projet";
+      var desc = String(p.description_courte || p.description_longue || "")
+        .replace(/\s+/g, " ").trim();
+      if (desc.length > 160) desc = desc.slice(0, 157).replace(/\s+\S*$/, "") + "…";
+      if (!desc) desc = "Étude de cas " + titre + " — DIGICRAFT Labs.";
+      document.title = titre + " | Étude de cas — DIGICRAFT Labs";
+      setMetaAttr('meta[name="description"]', "content", desc);
+      setMetaAttr('link[rel="canonical"]', "href", urlPropre);
+      setMetaAttr('meta[property="og:title"]', "content", titre + " | Étude de cas");
+      setMetaAttr('meta[property="og:description"]', "content", desc);
+      setMetaAttr('meta[property="og:url"]', "content", urlPropre);
+      var img = String(p.image_url || "").trim();
+      if (img) {
+        var imgAbs = /^(https?:)?\/\//i.test(img)
+          ? (img.charAt(0) === "/" ? "https:" + img : img)
+          : origineSite() + "/" + img.replace(/^(\.\/|\/)+/, "");
+        setMetaAttr('meta[property="og:image"]', "content", imgAbs);
+      }
+      /* Lève un éventuel noindex posé avant résolution des données. */
+      var robots = document.querySelector('meta[name="robots"]');
+      if (robots && /noindex/i.test(robots.getAttribute("content") || "")) {
+        robots.parentNode.removeChild(robots);
+      }
+    } catch (e) { console.error("[Projets] Meta fiche générique :", e); }
+  }
+
+  /* Slug inconnu en mode dynamique → état « introuvable » propre +
+     noindex (au lieu d'une page vide). Jamais déclenché pour les
+     fiches statiques existantes (return silencieux conservé). */
+  function projetIntrouvable(page, slug) {
+    try {
+      document.title = "Projet introuvable | DIGICRAFT Labs";
+      if (!document.querySelector('meta[name="robots"]')) {
+        var m = document.createElement("meta");
+        m.setAttribute("name", "robots");
+        m.setAttribute("content", "noindex, nofollow");
+        document.head.appendChild(m);
+      }
+      var canon = document.querySelector('link[rel="canonical"]');
+      if (canon && canon.parentNode) canon.parentNode.removeChild(canon);
+      var lien = (window.SITE_ROOT || "") + "projets/";
+      page.innerHTML = '<section class="page-hero"><div class="container">' +
+        etat("vide", "Projet introuvable",
+          "Aucun projet ne correspond à cette adresse" + (slug ? " (« " + slug + " »)" : "") +
+          ". Il a peut-être été renommé, retiré, ou la page n'existe pas encore.",
+          lien, "Voir tous les projets") +
+        '</div></section>';
+    } catch (e) { console.error("[Projets] État introuvable :", e); }
+  }
+
   /* ---- Étude de cas (V1.1+) : page générique projets/<slug>/ ----
      Template unique pour n'importe quel projet du Sheet ayant un slug.
      Le Sheet alimente : titre, description, visuel (image_url), statut,
      tags et les 4 sections (probleme, solution, technologies_detail,
      resultat). Champ vide du Sheet + texte statique absent -> section
-     masquée. */
+     masquée.
+     V1.3 : si la page porte data-cs-dynamic et un data-cs-page vide
+     (projets/fiche.html servi sur /projets/<slug>/ par la Function),
+     le slug est extrait du chemin de l'URL. */
   function caseStudy() {
     var page = document.querySelector("[data-cs-page]");
     if (!page) return;
-    var slugCible = page.getAttribute("data-cs-page");
+    var dynamique = page.hasAttribute("data-cs-dynamic");
+    var slugCible = (page.getAttribute("data-cs-page") || "").trim();
+    if (dynamique && !slugCible) slugCible = slugDepuisChemin();
     var elStatut = page.querySelector("[data-cs-statut]");
     var elTags = page.querySelector("[data-cs-tags]");
     var elTitre = page.querySelector("[data-cs-titre]");
@@ -308,14 +402,26 @@
     recuperer().then(function (projets) {
       var p = null;
       for (var i = 0; i < projets.length; i++) {
-        if (projets[i].slug === slugCible) { p = projets[i]; break; }
+        if (normaliserSlug(projets[i].slug) === normaliserSlug(slugCible)) { p = projets[i]; break; }
       }
-      if (!p) return;
+      if (!p) {
+        /* V1.3 : fiche générique → état « introuvable » propre + noindex.
+           Fiches statiques existantes → comportement inchangé (return). */
+        if (dynamique) projetIntrouvable(page, slugCible);
+        return;
+      }
 
       if (elTitre && p.titre) elTitre.textContent = p.titre;
       if (elDesc && p.description_courte) elDesc.textContent = p.description_courte;
       if (p.titre) document.title = p.titre + " | Étude de cas — DIGICRAFT Labs";
-      if (elStatut && p.statut) elStatut.textContent = p.statut;
+      if (elStatut && p.statut) {
+        elStatut.textContent = p.statut;
+        /* V1.3 : la fiche générique pré-masque la puce de statut. */
+        if (dynamique) {
+          var chipStatut = elStatut.closest ? elStatut.closest(".chip") : null;
+          if (chipStatut) chipStatut.style.display = "";
+        }
+      }
       if (elTags) {
         var tags = (p.stack_tags || "").split(/[·|,]/).map(function (t) { return t.trim(); }).filter(Boolean);
         if (tags.length) {
@@ -325,6 +431,7 @@
       if (elMedia) {
         if (p.image_url) {
           elMedia.innerHTML = '<img src="' + imgUrl(p.image_url) + '" alt="' + esc(p.titre || "") + '" loading="lazy" decoding="async" onerror="this.remove()">';
+          elMedia.style.display = ""; /* V1.3 : fiche générique pré-masquée */
         } else {
           var im = elMedia.querySelector("img");
           if (!im || !im.getAttribute("src")) elMedia.style.display = "none";
@@ -354,12 +461,28 @@
         var val = nettoyerContenu(p[key] || "");
         if (val) {
           if (txtEl) txtEl.textContent = val;
+          section.style.display = ""; /* V1.3 : fiche générique pré-masquée */
         } else if (txtEl && !txtEl.textContent.trim()) {
           section.style.display = "none";
         }
       });
+
+      /* V1.3 : métadonnées SEO de la fiche générique (title, description,
+         canonical propre /projets/<slug>/, Open Graph). */
+      if (dynamique) injecterMetaFiche(p, slugCible);
     }).catch(function (e) {
       console.error("[Projets] Étude de cas :", e);
+      /* V1.3 : fiche générique → état d'erreur explicite (jamais de
+         squelette infini). Fiches statiques → comportement inchangé. */
+      if (dynamique) {
+        try {
+          page.innerHTML = '<section class="page-hero"><div class="container">' +
+            etat("erreur", "Impossible de charger le projet",
+              "Vérifiez la publication du Google Sheet puis rechargez la page.",
+              "", "") +
+            '</div></section>';
+        } catch (e2) { console.error("[Projets] État erreur :", e2); }
+      }
     });
   }
 
