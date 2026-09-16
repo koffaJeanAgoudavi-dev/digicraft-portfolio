@@ -18,7 +18,15 @@ portfolio/
 ├── robots.txt
 ├── sitemap.xml
 ├── _headers              ← En-têtes de sécurité (Cloudflare Pages) + CSP optionnelle
+├── _routes.json          ← Limite les invocations de la Function aux nouveaux slugs
+├── functions/
+│   └── projets/[slug].js ← Fallback /projets/<slug>/ : asset statique → fiche
+│                            générique (Sheet) → vrai 404 (+ injection SEO serveur)
 ├── projets/index.html    ← Grille + filtres (tous les projets)
+├── projets/fiche.html    ← Fiche projet GÉNÉRIQUE (V1.3) : servie sur
+│                            /projets/<slug>/ quand aucune page statique n'existe
+├── projets/<slug>/index.html ← Études de cas statiques existantes (prioritaires,
+│                                inchangées) : smartreply-agent, scriboai-bot, mysterybot
 ├── articles/index.html   ← Tous les articles + filtres plateforme
 ├── boutique/index.html   ← Tous les produits digitaux
 ├── a-propos/index.html   ← Page personnelle
@@ -30,7 +38,7 @@ portfolio/
 ├── js/
 │   ├── config.js         ← ⚙️ ID du Google Sheet + défauts
 │   ├── sheets.js         ← Couche CMS (fetch CSV publié + parser + secours)
-│   ├── projects.js       ← Rendu projets (carousel accueil / grille)
+│   ├── projects.js       ← Rendu projets (carousel accueil / grille / études de cas)
 │   ├── articles.js       ← Rendu articles
 │   ├── resources.js      ← Rendu produits
 │   └── main.js           ← Header, menu, paramètres, formulaire
@@ -360,19 +368,78 @@ nécessaire : le consentement fonctionne indépendamment du CMS.
 3. Refuser / désactiver → aucun chargement, Consent Mode mis à jour,
    Clarity notifié — idempotent, aucun doublon d'initialisation.
 
-## 13. Études de cas (V1.1+)
+## 13. Études de cas (V1.1+ · V1.3 : fiche générique automatique)
 
-Trois pages en place — template générique identique, chacune alimentée
-par le Sheet :
-- `/projets/smartreply-agent/`
-- `/projets/scriboai-bot/`
-- `/projets/mysterybot/`
+Pages en place — template identique, chacune alimentée par le Sheet :
+- `/projets/smartreply-agent/` (page statique)
+- `/projets/scriboai-bot/` (page statique)
+- `/projets/mysterybot/` (page statique)
+- `/projets/marketpulse-ai/` (**fiche générique V1.3** — aucun fichier dans le dépôt)
+
+### V1.3 — Fiche projet générique (aucun fichier à créer par projet)
+
+Depuis la V1.3, **tout projet ajouté au Sheet avec un `slug` obtient
+automatiquement sa page** sur `/projets/<slug>/` : aucune création de
+fichier, aucun redéploiement.
+
+**Ordre de résolution d'une URL `/projets/<slug>/` :**
+
+1. `projets/<slug>/index.html` existe dans le dépôt → **la page statique
+   est servie telle quelle** (les 3 études de cas existantes sont
+   inchangées et prioritaires ; elles sont aussi exclues de la Function
+   via `_routes.json` → zéro invocation, zéro changement).
+2. Sinon → la Pages Function `functions/projets/[slug].js` cherche le
+   slug dans l'onglet **Projets** du Sheet (CSV publié, cache edge 5 min) :
+   - **trouvé** → `projets/fiche.html` est servi (200) sur l'URL propre
+     `/projets/<slug>/` — sans redirection ni query parameter — avec
+     `title`, `meta description`, `canonical` et Open Graph **injectés
+     côté serveur** depuis la ligne du Sheet ;
+   - **introuvable** → **vrai HTTP 404** (contenu de `404.html`) ;
+   - **Sheet injoignable** → « fail open » : la fiche est servie et le
+     JS client réessaie (comme sur tout le site).
+3. URL sans slash final (`/projets/<slug>`) → 308 vers `/projets/<slug>/`
+   (comportement natif Pages imité).
+
+**Côté client**, `js/projects.js → caseStudy()` détecte la fiche
+générique (`data-cs-dynamic` + `data-cs-page` vide), extrait le slug du
+**chemin** de l'URL (jamais de `?slug=`), remplit hero / visuel / statut /
+tags / 4 sections depuis le Sheet, masque les sections vides, et
+re-confirme les métadonnées SEO (canonical = `siteUrl + projets/<slug>/`).
+Slug inconnu côté client → état « Projet introuvable » + `noindex`.
+
+**Fichiers du système V1.3 :**
+
+| Fichier | Rôle |
+|---|---|
+| `functions/projets/[slug].js` | Fallback + injection SEO serveur + vrai 404 |
+| `projets/fiche.html` | Template générique (design existant, `SITE_ROOT="../../"`) |
+| `_routes.json` | Function invoquée uniquement pour les nouveaux slugs `/projets/*` |
+| `js/projects.js` | `caseStudy()` étendu (mode dynamique) — fiches statiques inchangées |
+| `js/main.js` | La meta description des fiches génériques n'est plus écrasée par `description_hero` |
+
+> ⚙️ **Si l'URL de publication CSV du Sheet change** (`js/config.js` →
+> `sheetUrls.projets`), mettre à jour la constante `SHEET_PROJETS_CSV`
+> en tête de `functions/projets/[slug].js`.
+
+> 💡 **Quota** : la Function n'est invoquée que pour les slugs sans page
+> statique (les anciens slugs et tout le reste du site sont exclus via
+> `_routes.json`). Plan gratuit : 100 000 invocations/jour — très
+> largement suffisant. En cas d'épuisement, le réglage « fail open »
+> (dashboard Pages) ressert les assets statiques normalement.
+
+> 🗺️ **Sitemap** : `sitemap.xml` reste manuel — ajouter une entrée
+> `<url>` pour chaque nouveau slug publié (les pages sont de toute façon
+> découvertes par Google via les liens internes de `/projets/`).
 
 ### Fonctionnement générique
 
-- **Créer une étude de cas** : dupliquez `projets/<slug>/index.html` →
-  changez `data-cs-page="<slug>"` + le contenu statique de secours, puis
-  renseignez les 4 colonnes dans le Sheet.
+- **Ajouter un projet (V1.3 — recommandé)** : une simple ligne dans le
+  Sheet (avec `slug` + les 4 colonnes d'étude de cas) → la page
+  `/projets/<slug>/` fonctionne immédiatement via la fiche générique.
+- **Créer une étude de cas sur mesure (méthode V2 — toujours valable,
+  prioritaire)** : dupliquez `projets/<slug>/index.html` → changez
+  `data-cs-page="<slug>"` + le contenu statique de secours. La page
+  statique reprend la main sur la fiche générique pour ce slug.
 - **Lien des cartes** : automatique — si une des colonnes `probleme` /
   `solution` / `technologies_detail` / `resultat` est remplie, la carte
   pointe vers `/projets/<slug>/` avec le bouton **« En savoir plus »**
@@ -420,11 +487,21 @@ vers la page interne `projets/<slug>/` avec le bouton **« En savoir plus »**
 Jouer…) restent des libellés de bouton ouvrant `url_destination` en
 nouvel onglet.
 
-### Créer une nouvelle étude de cas (V2)
+### Créer une nouvelle étude de cas
 
+**Cas général (V1.3) — rien à créer dans le dépôt :**
+1. Ajoutez la ligne du projet dans l'onglet Projets du Sheet, avec son `slug`
+2. Renseignez les 4 colonnes (`probleme`, `solution`, `technologies_detail`, `resultat`)
+3. `/projets/<slug>/` fonctionne automatiquement (fiche générique) ;
+   ajoutez éventuellement l'URL au `sitemap.xml`
+
+**Page sur mesure (méthode V2 — prioritaire sur la fiche générique) :**
 1. Dupliquez `projets/smartreply-agent/index.html` → `projets/<slug>/index.html`
 2. Changez `data-cs-page="<slug>"` et le contenu statique
 3. Renseignez les 4 colonnes dans le Sheet (le Sheet écrase le statique)
+4. Ajoutez le slug aux `exclude` de `_routes.json` (optionnel : évite les
+   invocations de la Function ; même sans cela, la page statique est servie
+   telle quelle par la Function)
 
 ### Accueil — phrase de transition
 

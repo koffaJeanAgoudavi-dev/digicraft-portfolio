@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "include": ["/projets/*"],
+  "exclude": [
+    "/projets/",
+    "/projets/index.html",
+    "/projets/fiche",
+    "/projets/fiche.html",
+    "/projets/smartreply-agent",
+    "/projets/smartreply-agent/*",
+    "/projets/scriboai-bot",
+    "/projets/scriboai-bot/*",
+    "/projets/mysterybot",
+    "/projets/mysterybot/*"
+  ]
+}

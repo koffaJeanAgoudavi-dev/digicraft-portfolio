@@ -66,6 +66,15 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Fiche projet générique (V1.3) : servie dynamiquement depuis le
+       Google Sheet — aucune page statique dans le dépôt. Penser à
+       ajouter ici chaque nouveau slug publié dans le Sheet. -->
+  <url>
+    <loc>https://digicraft-labs-drf.pages.dev/projets/marketpulse-ai/</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
   <!-- Build in public
        (optionnel : retire ce bloc si tu préfères ne pas indexer

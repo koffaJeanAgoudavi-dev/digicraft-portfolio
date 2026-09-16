@@ -104,10 +104,13 @@
         if (P.email_contact) el.textContent = P.email_contact;
       });
 
-      /* Meta description dynamique (page courante) */
+      /* Meta description dynamique (page courante).
+         V1.3 : la fiche projet générique (data-cs-dynamic) conserve sa
+         description spécifique au projet (injectée par la Function puis
+         par projects.js) — jamais écrasée par description_hero. */
       var meta = qs('meta[name="description"]');
       var desc = P.description_hero || "";
-      if (meta && desc) meta.setAttribute("content", desc.replace(/\s+/g, " ").trim());
+      if (meta && desc && !qs("[data-cs-dynamic]")) meta.setAttribute("content", desc.replace(/\s+/g, " ").trim());
 
       window.PARAMS = P;
     }).catch(function () {
