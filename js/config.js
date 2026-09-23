@@ -54,9 +54,16 @@ window.CONFIG = {
   // Données par défaut (utilisées si le Sheet n'est pas joignable)
   defaults: {
     nom_complet: "Koffa Jean AGOUDAVI",
-    titre_professionnel: "Architecte IA & Automatisations",
+    /* Badge supérieur du Hero + pied de page : composé « titre @ marque / sous-marque ».
+       `marque_lab` et `marque_secondaire` sont optionnels (absents → non affichés). */
+    titre_professionnel: "Fondateur & Lead Product",
+    marque_lab: "DIGICRAFT Labs",
+    marque_secondaire: "SignalDesk",
     slogan_hero: "Je transforme les idées complexes en systèmes intelligents.",
-    description_hero: "Je conçois pour les entrepreneurs et les entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules.",
+    /* Promesse officielle du Hero (clé `promesse_hero` de l'onglet Parametres).
+       `description_hero` reste un alias de compatibilité (ancienne clé). */
+    promesse_hero: "Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules.",
+    description_hero: "Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules.",
     email_contact: "contact.agoudavi@gmail.com",
     url_linkedin: "https://www.linkedin.com/in/koffa-jean-agoudavi-514895423",
     url_telegram: "https://t.me/johnnyokabe",

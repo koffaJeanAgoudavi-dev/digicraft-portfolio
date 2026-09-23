@@ -119,7 +119,7 @@
      - Échec réseau → dernière copie connue (même expirée) avant le local
      - localStorage indisponible / quota → comportement d'origine
      - Transparence : _source = "cache" est affiché dans l'indicateur */
-  var CACHE_PREFIX = "dgc.cms.v1.";
+  var CACHE_PREFIX = "dgc.cms.v2.";  // v2 (2026-09-23) : identité QG + clés marque_lab/promesse_hero → purge des copies v1 chez les visiteurs
   var CACHE_TTL = 15 * 60 * 1000;        // onglets de contenu : 15 min
   var CACHE_TTL_PARAMS = 3 * 60 * 1000;  // Parametres : 3 min (réglages)
 

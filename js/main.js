@@ -63,12 +63,15 @@
     window.Sheets.loadSheet("parametres").then(function (rows) {
       var P = window.Sheets.paramsToObject(rows);
 
-      /* Texte */
+      /* Texte — QG : `promesse_hero` est la clé officielle du sous-titre
+         du Hero ; `description_hero` reste un alias (anciens classeurs). */
+      var promesse = P.promesse_hero || P.description_hero || "";
       var textMap = {
         "[data-p-nom]": P.nom_complet,
         "[data-p-titre]": P.titre_professionnel,
         "[data-p-slogan]": P.slogan_hero,
-        "[data-p-desc-hero]": P.description_hero,
+        "[data-p-desc-hero]": promesse,
+        "[data-p-promesse]": promesse,
         "[data-p-statut]": P.statut_disponibilite
       };
       Object.keys(textMap).forEach(function (sel) {
@@ -76,6 +79,18 @@
           if (textMap[sel]) el.textContent = textMap[sel];
         });
       });
+
+      /* QG — Badge supérieur du Hero & mention du pied de page, composés :
+         « titre_professionnel @ marque_lab / marque_secondaire ».
+         Chaque partie absente est simplement omise (jamais de « @  »). */
+      var badge = [String(P.titre_professionnel || "").trim(),
+                   String(P.marque_lab || "").trim()].filter(Boolean).join(" @ ");
+      var secondaire = String(P.marque_secondaire || "").trim();
+      if (badge && secondaire) badge += " / " + secondaire;
+      if (badge) {
+        qsa("[data-p-titre-badge]").forEach(function (el) { el.textContent = badge; });
+        qsa("[data-p-badge-footer]").forEach(function (el) { el.textContent = badge + "."; });
+      }
 
       /* Liens (normalisation : ajoute https:// si le protocole manque) */
       var normUrl = function (u) {
@@ -109,7 +124,7 @@
          description spécifique au projet (injectée par la Function puis
          par projects.js) — jamais écrasée par description_hero. */
       var meta = qs('meta[name="description"]');
-      var desc = P.description_hero || "";
+      var desc = P.description_hero || P.promesse_hero || "";
       if (meta && desc && !qs("[data-cs-dynamic]")) meta.setAttribute("content", desc.replace(/\s+/g, " ").trim());
 
       window.PARAMS = P;
