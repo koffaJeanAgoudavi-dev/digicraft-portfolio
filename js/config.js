@@ -57,16 +57,16 @@ window.CONFIG = {
   // Données par défaut (utilisées si le Sheet n'est pas joignable)
   defaults: {
     nom_complet: "Koffa Jean AGOUDAVI",
-    titre_professionnel: "Fondateur de DIGICRAFT Labs",
-    slogan_hero: "Je transforme les idées complexes en systèmes digitaux intelligents.",
-    description_hero: "Je conçois des automatisations, des agents IA, des bots et des produits digitaux pour simplifier les workflows et créer des solutions concrètes.",
+    titre_professionnel: "Architecte IA & Automatisations",
+    slogan_hero: "Je transforme les idées complexes en systèmes intelligents.",
+    description_hero: "Je conçois pour les entrepreneurs et les entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules.",
     email_contact: "contact.agoudavi@gmail.com",
     url_linkedin: "https://www.linkedin.com/in/koffa-jean-agoudavi-514895423",
     url_telegram: "https://t.me/johnnyokabe",
     url_google_business: "https://share.google/ont9TyuWshpud74fL",
     url_boutique: "https://digicraft.mychariow.shop",
     url_webhook_contact: "https://hook.eu1.make.com/wjgpk28nmywizvm7kl95hv45gt7n6quq",
-    statut_disponibilite: "AVAILABLE FOR PROJECTS",
+    statut_disponibilite: "Disponible pour projets d'automatisation & IA",
     // QG — Chiffres cles du Hero hybride (onglet Parametres, bindes via data-p-stat-*)
     stat_projets_count: "4+",
     stat_workflows_count: "6+",

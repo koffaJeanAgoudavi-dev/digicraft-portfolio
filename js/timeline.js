@@ -4,19 +4,47 @@
    Colonnes attendues dans le Sheet "Timeline" :
    date, titre, description, type, lien_optionnel, featured, ordre
    Fusionne et remplace l'ancien onglet BuildInPublic.
+   Rendu : pastille de date colorée par type + kicker
+   (« Projet & Résultat : … »), fidèle à la maquette QG.
    ============================================================ */
 (function () {
   "use strict";
 
-  /* Couleur du pastille selon le type d'entrée */
+  var MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+
+  /* Couleur de la pastille selon le type d'entrée */
   function typeClasse(type) {
     var t = String(type || "").toLowerCase();
     if (/saas|produit|app/.test(t)) return "is-saas";
     if (/agent|ia|intelligence/.test(t)) return "is-ia";
     if (/bot|telegram|jeu/.test(t)) return "is-bot";
     if (/jalon|fondation|lancement|prix|award/.test(t)) return "is-jalon";
-    if (/apprentissage|formation|cours|certif/.test(t)) return "is-learn";
+    if (/apprentissage|formation|cours|certif|exploration|veille/.test(t)) return "is-learn";
     return "";
+  }
+
+  /* Libellé de contexte affiché avant le titre (maquette QG) */
+  function labelType(type) {
+    var t = String(type || "").toLowerCase();
+    if (/apprentissage|formation|cours|certif|exploration|veille/.test(t)) return "Apprentissage & Expérimentation";
+    if (/jalon|fondation|lancement|prix|award/.test(t)) return "Jalon & Lancement";
+    return "Projet & Résultat";
+  }
+
+  /* Date longue française : 2026-09 → "Septembre 2026", 2025 → "2025" */
+  function dateLongue(v) {
+    if (!v) return "";
+    var s = String(v).trim();
+    if (/^\d{4}$/.test(s)) return s;
+    var m = s.match(/^(\d{4})-(\d{1,2})/);
+    if (m) {
+      var i = parseInt(m[2], 10) - 1;
+      if (i >= 0 && i < 12) return MOIS[i] + " " + m[1];
+    }
+    var d = new Date(s + "T00:00:00");
+    if (!isNaN(d.getTime())) return MOIS[d.getMonth()] + " " + d.getFullYear();
+    return s;
   }
 
   function imgUrl(u) {
@@ -48,24 +76,28 @@
   }
 
   function item(p) {
-    var dateFmt = p.date ? window.Sheets.formatDate(p.date) : "";
+    var cls = typeClasse(p.type);
+    var dateFmt = dateLongue(p.date);
     var lien = "";
     if (p.lien_optionnel) {
       var href = extUrl(p.lien_optionnel);
       var ext = /^(https?:)?\/\//i.test(String(p.lien_optionnel).trim());
       lien = '<a class="tl-link" href="' + esc(href) + '"' +
         (ext ? ' target="_blank" rel="noopener"' : "") +
-        ' aria-label="Voir : ' + esc(p.titre) + '">Voir <span class="arr">→</span></a>';
+        ' aria-label="Voir : ' + esc(p.titre) + '">Voir le détail <span class="arr">→</span></a>';
     }
+    var media = p.image_url
+      ? '<div class="tl-media"><img src="' + esc(imgUrl(p.image_url)) + '" alt="" loading="lazy" decoding="async"></div>'
+      : "";
     return '<article class="tl-item reveal">' +
-      '<span class="tl-dot' + (typeClasse(p.type) ? " " + typeClasse(p.type) : "") + '" aria-hidden="true"></span>' +
-      '<div class="tl-card">' +
-        '<div class="tl-top">' +
-          (dateFmt ? '<span class="tl-date">' + esc(dateFmt) + '</span>' : "") +
-          (p.type ? '<span class="tl-type' + (typeClasse(p.type) ? " " + typeClasse(p.type) : "") + '">' + esc(p.type) + '</span>' : "") +
-        '</div>' +
-        '<h3>' + esc(p.titre) + '</h3>' +
-        (p.description ? '<p>' + esc(p.description) + '</p>' : "") +
+      (dateFmt ? '<span class="tl-badge' + (cls ? " " + cls : "") + '">' + esc(dateFmt) + '</span>' : "") +
+      '<div class="tl-body">' +
+        '<p class="tl-kicker">' +
+          '<span class="tl-label">' + esc(labelType(p.type)) + ' :</span>' +
+          ' <span class="tl-name' + (cls ? " " + cls : "") + '">' + esc(p.titre) + '</span>' +
+        '</p>' +
+        (p.description ? '<p class="tl-text">' + esc(p.description) + '</p>' : "") +
+        media +
         (lien ? '<div class="tl-foot">' + lien + '</div>' : "") +
       '</div>' +
     '</article>';
@@ -167,5 +199,5 @@
     });
   }
 
-  window.Tml = { accueil: accueil, page: page, item: item, recuperer: recuperer };
+  window.Tml = { accueil: accueil, page: page, item: item, recuperer: recuperer, dateLongue: dateLongue };
 })();
