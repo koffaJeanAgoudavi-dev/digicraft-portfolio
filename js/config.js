@@ -23,7 +23,9 @@ window.CONFIG = {
     projets: 690207518,      // onglet Projets
     articles: 982421678,     // onglet Articles
     ressources: 1306651993,  // onglet Ressources
-    buildinpublic: 1733530302 // onglet BuildInPublic
+    certifications: 0,       // TODO — onglet Certifications (a creer, cf. sheets-exports/)
+    timeline: 0,             // TODO — onglet Timeline (a creer, cf. sheets-exports/)
+    buildinpublic: 1733530302 // DEPRECIE — fusionne dans Timeline (suppression Etape 3)
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
@@ -47,6 +49,8 @@ window.CONFIG = {
     projets: ["titre", "slug", "categorie", "description_courte", "image_url", "stack_tags", "statut", "date", "type_lien", "url_destination", "featured", "ordre", "probleme", "solution", "technologies_detail", "resultat"],
     articles: ["titre", "plateforme", "description", "temps_lecture", "url", "date", "featured", "ordre"],
     ressources: ["nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre"],
+    certifications: ["titre", "organisme", "date_obtention", "date_expiration", "url_verification", "image_badge", "badge", "featured", "ordre"],
+    timeline: ["date", "titre", "description", "type", "lien_optionnel", "featured", "ordre"],
     buildinpublic: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"]
   },
 
@@ -62,11 +66,29 @@ window.CONFIG = {
     url_google_business: "https://share.google/ont9TyuWshpud74fL",
     url_boutique: "https://digicraft.mychariow.shop",
     url_webhook_contact: "https://hook.eu1.make.com/wjgpk28nmywizvm7kl95hv45gt7n6quq",
-    statut_disponibilite: "AVAILABLE FOR PROJECTS"
+    statut_disponibilite: "AVAILABLE FOR PROJECTS",
+    // QG — Chiffres cles du Hero hybride (onglet Parametres, bindes via data-p-stat-*)
+    stat_projets_count: "4+",
+    stat_workflows_count: "6+",
+    stat_certifs_count: "4+"
   },
 
-  // Domaine du site — À REMPLACER par votre domaine final
-  siteUrl: "https://digicraft-labs-drf.pages.dev",
+  // Domaine canonique du site — QG : bascule vers koffajeanagoudavi.com.
+  // `siteUrl` = cible canonique (SEO). `siteUrlFallback` = origine
+  // temporaire (previews Cloudflare / local). `siteOrigin()` retourne
+  // l'origine correcte selon l'hote courant : ne JAMAIS coder d'URL
+  // absolue en dur ailleurs — tout passe par cette variable centrale.
+  siteUrl: "https://koffajeanagoudavi.com",
+  siteUrlFallback: "https://digicraft-labs-drf.pages.dev",
+  siteOrigin: function () {
+    try {
+      var h = window.location.hostname || "";
+      var prod = String(this.siteUrl).replace(/^https?:\/\//i, "").replace(/\/+$/, "");
+      if (h && h.toLowerCase() === prod.toLowerCase()) return "https://" + prod;
+      if (window.location.origin && h) return window.location.origin;
+    } catch (e) { /* repli ci-dessous */ }
+    return this.siteUrlFallback || this.siteUrl;
+  },
 
   // Nombre maximum de produits "featured" sur l'accueil
   featuredRessourcesLimit: 3,
