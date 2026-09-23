@@ -98,11 +98,26 @@
     });
   }
 
+  /* Un onglet est "configuré" s'il a une URL publiée OU un gid non nul.
+     QG (Étape 1) : les nouveaux onglets (Certifications, Timeline) ont
+     gid = 0 et URL vide tant que le Sheet n'est pas prêt → on bascule
+     DIRECTEMENT sur le fallback local au lieu de fetcher le mauvais
+     onglet (gid 0 = premier onglet du classeur). */
+  function ongletConfigure(name) {
+    var urls = window.CONFIG.sheetUrls || {};
+    var gids = window.CONFIG.sheetGids || {};
+    if (urls[name]) return true;
+    return !!gids[name];
+  }
+
   /* Charge un onglet : Sheet d'abord, secours local ensuite.
      Le tableau retourné porte une propriété _source :
      "google-sheets" ou "local" (utilisée par l'indicateur visuel). */
   function loadSheet(name) {
-    var useSheet = window.CONFIG.sheetId && !window.CONFIG.forceLocal;
+    var useSheet = window.CONFIG.sheetId && !window.CONFIG.forceLocal && ongletConfigure(name);
+    if (window.CONFIG.sheetId && !window.CONFIG.forceLocal && !ongletConfigure(name)) {
+      console.warn("[Sheets] Onglet '" + name + "' non configuré (gid/URL manquants) — fallback local.");
+    }
     if (useSheet) {
       return fetchText(sheetUrl(name)).then(function (text) {
         var rows = rowsToObjects(parseCSV(text));

@@ -1,0 +1,56 @@
+[
+  {
+    "date": "2026-09",
+    "titre": "MarketPulse AI : mon premier SaaS public",
+    "description": "SaaS de génération de contenu marketing par IA : interface en ligne, architecture Firebase + Gemini, système de crédits sécurisé côté serveur.",
+    "type": "SaaS",
+    "lien_optionnel": "projets/marketpulse-ai/",
+    "featured": "TRUE",
+    "ordre": "1"
+  },
+  {
+    "date": "2026-08",
+    "titre": "MysteryBot : jeu d'enquête IA sur Telegram",
+    "description": "Moteur narratif génératif (Llama 3.3 via Groq) + état de partie persisté sur Cloudflare KV. Le scénario s'adapte aux choix du joueur.",
+    "type": "Bot",
+    "lien_optionnel": "https://t.me/MysteryBot_jdr_bot",
+    "featured": "TRUE",
+    "ordre": "2"
+  },
+  {
+    "date": "2026-08",
+    "titre": "ScriboAI : assistant de rédaction IA",
+    "description": "Bot Telegram de rédaction assistée : génération, reformulation et synthèse via Groq + Gemini, sans application dédiée.",
+    "type": "Bot",
+    "lien_optionnel": "https://t.me/scribo_ia_bot",
+    "featured": "TRUE",
+    "ordre": "3"
+  },
+  {
+    "date": "2026-08",
+    "titre": "SmartReply Agent passe en production",
+    "description": "Pipeline email intelligent V1.5 : Gmail → Groq → Google Sheets → brouillon, piloté depuis Telegram (Envoyer / Ignorer).",
+    "type": "Agent IA",
+    "lien_optionnel": "projets/smartreply-agent/",
+    "featured": "TRUE",
+    "ordre": "4"
+  },
+  {
+    "date": "2026",
+    "titre": "Fondation de DIGICRAFT Labs",
+    "description": "Création du laboratoire numérique personnel : premiers systèmes en production, premiers produits digitaux, premiers partages publics.",
+    "type": "Jalon",
+    "lien_optionnel": "",
+    "featured": "FALSE",
+    "ordre": "5"
+  },
+  {
+    "date": "2025",
+    "titre": "Exploration intensive IA & automatisation",
+    "description": "Apprentissage intensif : workflows Make, modèles de langage, intégrations API et premières expérimentations.",
+    "type": "Apprentissage",
+    "lien_optionnel": "",
+    "featured": "FALSE",
+    "ordre": "6"
+  }
+]

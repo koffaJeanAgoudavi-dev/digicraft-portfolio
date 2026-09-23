@@ -1,0 +1,7 @@
+date,titre,description,type,lien_optionnel,featured,ordre
+2026-09,MarketPulse AI : mon premier SaaS public,"SaaS de génération de contenu marketing par IA : interface en ligne, architecture Firebase + Gemini, système de crédits sécurisé côté serveur.",SaaS,projets/marketpulse-ai/,TRUE,1
+2026-08,MysteryBot : jeu d'enquête IA sur Telegram,"Moteur narratif génératif (Llama 3.3 via Groq) + état de partie persisté sur Cloudflare KV. Le scénario s'adapte aux choix du joueur.",Bot,https://t.me/MysteryBot_jdr_bot,TRUE,2
+2026-08,ScriboAI : assistant de rédaction IA,"Bot Telegram de rédaction assistée : génération, reformulation et synthèse via Groq + Gemini, sans application dédiée.",Bot,https://t.me/scribo_ia_bot,TRUE,3
+2026-08,SmartReply Agent passe en production,"Pipeline email intelligent V1.5 : Gmail → Groq → Google Sheets → brouillon, piloté depuis Telegram (Envoyer / Ignorer).",Agent IA,projets/smartreply-agent/,TRUE,4
+2026,Fondation de DIGICRAFT Labs,"Création du laboratoire numérique personnel : premiers systèmes en production, premiers produits digitaux, premiers partages publics.",Jalon,,FALSE,5
+2025,Exploration intensive IA & automatisation,"Apprentissage intensif : workflows Make, modèles de langage, intégrations API et premières expérimentations.",Apprentissage,,FALSE,6
