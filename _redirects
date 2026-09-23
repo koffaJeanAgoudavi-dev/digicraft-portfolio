@@ -1,0 +1,12 @@
+# ============================================================
+# DIGICRAFT Labs / QG Numérique — _redirects (Cloudflare Pages)
+# ------------------------------------------------------------
+# Migration Étape 3 : l'onglet BuildInPublic a été fusionné dans
+# Timeline (décision de refonte). L'ancienne page /build-in-public/
+# redirige définitivement vers /timeline/ — les liens indexés et
+# les partages existants continuent de fonctionner.
+# ============================================================
+
+/build-in-public/          /timeline/  301
+/build-in-public           /timeline/  301
+/build-in-public/index.html /timeline/ 301

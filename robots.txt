@@ -1,5 +1,5 @@
-# DIGICRAFT Labs — robots.txt
+# Koffa Jean AGOUDAVI — robots.txt (QG Numérique)
 User-agent: *
 Allow: /
 
-Sitemap: https://digicraft-labs-drf.pages.dev/sitemap.xml
+Sitemap: https://koffajeanagoudavi.com/sitemap.xml

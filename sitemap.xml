@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ============================================================
-     DIGICRAFT Labs — sitemap.xml
-     À placer à la racine du projet (à côté de index.html).
-     ⚠️ Au passage au domaine final (ex. digicraftlabs.com),
-     remplacer toutes les URLs ci-dessous.
+     Koffa Jean AGOUDAVI — sitemap.xml (QG Numérique)
+     Domaine canonique centralisé : https://koffajeanagoudavi.com
+     (repli de déploiement : digicraft-labs-drf.pages.dev)
+     Toute nouvelle page publiée doit être ajoutée ici.
      ============================================================ -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- Page d'accueil -->
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Pages principales -->
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/projets/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/projets/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/articles/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/articles/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/boutique/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/boutique/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/a-propos/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/a-propos/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/contact/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/contact/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Études de cas -->
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/projets/smartreply-agent/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/projets/smartreply-agent/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/projets/scriboai-bot/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/projets/scriboai-bot/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/projets/mysterybot/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/projets/mysterybot/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -70,20 +70,18 @@
        Google Sheet — aucune page statique dans le dépôt. Penser à
        ajouter ici chaque nouveau slug publié dans le Sheet. -->
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/projets/marketpulse-ai/</loc>
+    <loc>https://koffajeanagoudavi.com/projets/marketpulse-ai/</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Build in public
-       (optionnel : retire ce bloc si tu préfères ne pas indexer
-       la page tant que l'onglet BuildInPublic du Sheet est vide) -->
+  <!-- Journal / build in public (fusion de l'ancien onglet BuildInPublic) -->
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/build-in-public/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://koffajeanagoudavi.com/timeline/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
 
 </urlset>

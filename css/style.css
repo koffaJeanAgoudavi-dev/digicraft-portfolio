@@ -1194,3 +1194,88 @@ body.qg .section-head.is-center .eyebrow{display:inline-flex;align-items:center;
 body.qg .section-head h2{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.03em}
 body.qg .section-head p{font-size:.92rem;line-height:1.72}
 body.qg .filters-row .section-head{margin-bottom:0}
+
+/* ============================================================
+   QG — ÉTAPE 3 : CHARTE DES PAGES INTERNES + BADGES DE STATUT
+   ------------------------------------------------------------
+   Toutes les pages portent désormais `class="qg"` sur <body>.
+   La palette legacy (ivoire/or, entièrement tokenisée) est
+   remappée sur les tokens QG : l'ensemble des composants
+   internes (études de cas, workflow, à-propos, contact,
+   formulaires) adoptent la charte sans réécriture.
+   ============================================================ */
+
+/* ---------- Remappage de la palette legacy → QG ---------- */
+body.qg{
+  --bg:var(--qg-bg);
+  --card:var(--qg-glass-solid);
+  --bg-2:#EEF2F7;
+  --gold:var(--qg-blue-2);
+  --gold-2:var(--qg-blue);
+  --gold-soft:rgba(59,130,246,.1);
+  --gold-line:rgba(59,130,246,.32);
+  --ink:var(--qg-ink);
+  --ink-2:var(--qg-ink-2);
+  --line:rgba(226,232,240,.9);
+  --line-strong:var(--qg-line-strong);
+  --font-body:var(--qg-font);
+  --font-display:var(--qg-font);
+  --shadow-sm:0 10px 30px -5px rgba(15,23,42,.03),0 4px 12px -2px rgba(15,23,42,.02);
+  --shadow-md:0 20px 35px -10px rgba(59,130,246,.1),0 8px 16px -4px rgba(15,23,42,.04);
+}
+
+/* ---------- En-têtes de pages internes ---------- */
+body.qg .page-hero{padding-top:clamp(2rem,4.6vw,3.2rem);padding-bottom:clamp(1rem,2.6vw,1.8rem)}
+body.qg .page-hero h1{font-size:clamp(1.85rem,4.2vw,2.85rem);font-weight:800;letter-spacing:-.03em;margin:.55rem 0 .9rem}
+body.qg .page-hero .lead{font-size:clamp(.94rem,1.3vw,1.06rem);line-height:1.75}
+body.qg .page-extra{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.3rem}
+body.qg .lead{color:var(--qg-ink-2)}
+body.qg h1,body.qg h2,body.qg h3,body.qg h4,body.qg .lead,body.qg .wf-label{font-family:var(--qg-font)}
+
+/* ---------- Badges de statut projet (Public/Beta/Privé/Nouveau) ---------- */
+.st-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.64rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.28rem .62rem;border-radius:999px;border:1px solid transparent;line-height:1.5;white-space:nowrap}
+.st-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.st-badge.is-public{background:rgba(16,185,129,.14);border-color:rgba(16,185,129,.38);color:#047857}
+.st-badge.is-beta{background:rgba(245,158,11,.16);border-color:rgba(245,158,11,.42);color:#B45309}
+.st-badge.is-prive{background:rgba(100,116,139,.16);border-color:rgba(100,116,139,.38);color:#475569}
+.st-badge.is-nouveau{background:rgba(37,99,235,.14);border-color:rgba(37,99,235,.38);color:#1D4ED8}
+body.qg .p-media .st-badge{position:absolute;top:.9rem;right:.9rem;z-index:2;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+body.qg .page-hero .chip.st-badge,body.qg .chip.st-badge{letter-spacing:.06em}
+
+/* ---------- Études de cas ---------- */
+body.qg .cs-section{background:var(--qg-glass);border:1px solid var(--qg-line);border-radius:20px;padding:clamp(1.2rem,2.4vw,1.8rem);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:var(--qg-shadow-sm)}
+body.qg .cs-num{font-family:var(--qg-mono);font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--qg-blue-2);background:var(--qg-blue-soft);border-radius:8px;padding:.2rem .5rem}
+body.qg .cs-tags{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin-top:.9rem}
+body.qg .cs-tags .tag{background:none;border:0;padding:0;font-family:var(--qg-mono);font-size:.78rem;color:var(--qg-ink-3)}
+body.qg .cs-tags .tag + .tag::before{content:"·";margin-right:.55rem;color:var(--qg-line-strong);font-weight:700}
+body.qg .cs-dot{background:var(--qg-blue)}
+
+/* ---------- Workflow / étapes (à-propos, fiches) ---------- */
+body.qg .wf-node{background:var(--qg-glass);border:1px solid var(--qg-line);border-radius:14px}
+body.qg .wf-node .wf-ico{background:var(--qg-blue-soft);border-color:rgba(59,130,246,.3);color:var(--qg-blue-2)}
+body.qg .ap-row .ap-num{font-style:normal;font-weight:800;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--qg-blue-2)}
+body.qg .method-steps .card,body.qg .grid-2 .card{border-radius:20px}
+
+/* ---------- Formulaires (contact, pages internes) ---------- */
+body.qg .form-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+@media (min-width:640px){body.qg .form-grid{grid-template-columns:1fr 1fr}body.qg .field.full{grid-column:1/-1}}
+body.qg .field label{font-weight:700;color:var(--qg-ink)}
+body.qg .field input,body.qg .field textarea,body.qg .field select{width:100%;background:rgba(255,255,255,.9);border:1px solid var(--qg-line-strong);border-radius:14px;color:var(--qg-ink);font-family:inherit;font-size:.9rem;padding:.85rem 1rem;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+body.qg .field input:focus,body.qg .field textarea:focus,body.qg .field select:focus{outline:none;border-color:var(--qg-blue);box-shadow:0 0 0 3px rgba(59,130,246,.18)}
+body.qg .form-note{font-size:.8rem;color:var(--qg-ink-3);line-height:1.7}
+body.qg .form-ok{border-radius:14px}
+body.qg .form-ok.is-visible{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.35);color:#047857}
+body.qg .form-ok.is-visible.form-err,body.qg .form-err.is-visible{background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.35);color:#B42318}
+body.qg .coord-card{border-radius:18px}
+body.qg .coord-ico{border-radius:12px}
+
+/* ---------- Indicateur de source : cache local ---------- */
+body.qg .dyn-source.is-cache .dot{background:var(--qg-gold)}
+body.qg .dyn-source.is-cache{color:var(--qg-ink-2)}
+
+/* ---------- Page 404 ---------- */
+body.qg .n404{text-align:center;max-width:560px;background:var(--qg-glass);border:1px solid var(--qg-line);border-radius:32px;padding:clamp(1.8rem,5vw,3rem);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:var(--qg-shadow)}
+body.qg .n404 .code{font-family:var(--qg-font);font-weight:800;font-size:clamp(3.4rem,12vw,5rem);line-height:1;background:linear-gradient(120deg,var(--qg-blue-2),var(--qg-violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+body.qg .n404 h1{margin:.9rem 0 .7rem;font-size:clamp(1.3rem,3vw,1.7rem)}
+body.qg .n404 p{margin-bottom:1.6rem;color:var(--qg-ink-2)}
+body.qg .n404 .n404-links{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center}

@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="google-site-verification" content="RwuhsveunXtvJvMHt2v_kQKeC2xaRPjTYuRsp_99o0s">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mes projets | Koffa Jean AGOUDAVI — DIGICRAFT Labs</title>
-  <meta name="description" content="Systèmes, automatisations et expériences construits par Koffa Jean AGOUDAVI autour de l'IA et du digital : SmartReply Agent, ScriboAI, MysteryBot et plus.">
-  <link rel="icon" type="image/svg+xml" href="../favicon.png">
-  <link rel="canonical" href="https://koffajeanagoudavi.com/projets/">
+  <title>Journal d'ingénieur &amp; build in public | Koffa Jean AGOUDAVI</title>
+  <meta name="description" content="Le journal de bord de Koffa Jean AGOUDAVI : ce que je construis, teste, casse et apprends en public — SaaS, agents IA, bots Telegram et automatisations, en preuves horodatées.">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="canonical" href="https://koffajeanagoudavi.com/timeline/">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="Koffa Jean AGOUDAVI">
-  <meta property="og:title" content="Mes projets | Koffa Jean AGOUDAVI">
-  <meta property="og:description" content="Systèmes, automatisations et expériences construits autour de l'IA et du digital.">
-  <meta property="og:url" content="https://koffajeanagoudavi.com/projets/">
+  <meta property="og:title" content="Journal d'ingénieur &amp; build in public | Koffa Jean AGOUDAVI">
+  <meta property="og:description" content="SaaS, agents IA, bots et automatisations : les coulisses techniques, en public et horodatées.">
+  <meta property="og:url" content="https://koffajeanagoudavi.com/timeline/">
   <meta property="og:image" content="https://koffajeanagoudavi.com/assets/images/og-cover.jpg">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -26,6 +26,7 @@
 <body class="qg">
   <a class="skip-link" href="#contenu">Aller au contenu</a>
 
+  <!-- ============ HEADER ============ -->
   <header class="site-header">
     <div class="container">
       <a class="brand" href="../index.html" aria-label="Koffa Jean AGOUDAVI — Accueil">
@@ -34,30 +35,31 @@
       </a>
       <nav class="main-nav" aria-label="Navigation principale">
         <a href="../index.html">Accueil</a>
-        <a href="index.html">Projets</a>
-        <a href="../timeline/">Journal</a>
+        <a href="../projets/">Projets</a>
+        <a href="../timeline/" aria-current="page">Journal</a>
         <a href="../articles/">Articles</a>
         <a href="../boutique/">Boutique</a>
         <a href="../a-propos/">À propos</a>
       </nav>
-      <a class="btn btn-gold btn-sm header-cta" href="../contact/">Me contacter</a>
+      <a class="btn btn-sm header-cta" href="../contact/">Me contacter</a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
         <span class="bars"><i></i><i></i><i></i></span>
       </button>
     </div>
   </header>
 
+  <!-- Menu mobile plein écran -->
   <div class="mobile-menu" id="menu-mobile" aria-hidden="true">
     <nav aria-label="Navigation mobile">
       <a href="../index.html">Accueil</a>
-      <a href="index.html">Projets</a>
+      <a href="../projets/">Projets</a>
       <a href="../timeline/">Journal</a>
       <a href="../articles/">Articles</a>
       <a href="../boutique/">Boutique</a>
       <a href="../a-propos/">À propos</a>
     </nav>
     <div class="menu-foot">
-      <a class="btn btn-gold" href="../contact/">Me contacter</a>
+      <a class="btn btn-primary" href="../contact/">Me contacter</a>
       <div class="menu-social">
         <a data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">LinkedIn</a>
         <a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a>
@@ -67,53 +69,64 @@
   </div>
 
   <main id="contenu">
+    <!-- ============ EN-TÊTE DE PAGE ============ -->
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow reveal">Portfolio</p>
-        <h1 class="reveal">Mes projets</h1>
-        <p class="lead reveal">Des systèmes, des automatisations et des expériences construits autour de l'IA et du digital. Chaque projet part d'un problème concret et aboutit à un système fonctionnel.</p>
+        <p class="eyebrow reveal">Build in public</p>
+        <h1 class="reveal">Journal d'ingénieur</h1>
+        <p class="lead reveal">Ce que je construis, teste, casse et apprends — en public, au fil de l'eau. Chaque entrée est une preuve horodatée, du premier webhook jusqu'à l'agent en production.</p>
         <div class="page-extra reveal">
-          <span class="chip chip-gold">IA</span>
-          <span class="chip">Automatisation</span>
-          <span class="chip">Bots</span>
-          <span class="chip">SaaS</span>
-          <span class="chip">Produits digitaux</span>
+          <span class="chip chip-gold">Projet &amp; résultat</span>
+          <span class="chip">Apprentissage &amp; expérimentation</span>
+          <span class="chip">Jalon &amp; lancement</span>
         </div>
       </div>
     </section>
 
+    <!-- ============ JOURNAL COMPLET ============ -->
     <section class="section" style="padding-top:1.5rem">
       <div class="container">
-        <div class="filters reveal" id="filtres-projets" role="group" aria-label="Filtrer les projets">
-          <button class="f-btn is-active" data-filtre="Tous">Tous</button>
-          <button class="f-btn" data-filtre="IA">IA</button>
-          <button class="f-btn" data-filtre="Automatisation">Automatisation</button>
-          <button class="f-btn" data-filtre="Bots">Bots</button>
-          <button class="f-btn" data-filtre="SaaS">SaaS</button>
-          <button class="f-btn" data-filtre="Produits digitaux">Produits digitaux</button>
+        <div class="tl-list" id="timeline-list" aria-label="Journal chronologique complet">
+          <!-- injecté par js/timeline.js (Tml.page) — toutes les entrées, ordre du Sheet -->
         </div>
-        <div class="grid-3" id="grille-projets">
-          <!-- injecté par js/projects.js -->
+        <div class="dyn-source-explain" style="margin-top:2rem">
+          <p class="form-note">Le journal est alimenté par l'onglet <strong>Timeline</strong> du classeur CMS : chaque ligne publiée apparaît ici automatiquement, dans l'ordre défini par la colonne <strong>ordre</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="cta-box reveal">
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4L2 9.6h7.6z"/></svg>
+          <h2>Un projet, une automatisation, une question technique ?</h2>
+          <p>Décrivez votre besoin : je réponds personnellement sous 24-48 h, avec un premier avis concret.</p>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="../contact/">Me contacter <span class="arr">→</span></a>
+            <a class="btn btn-ghost" href="../projets/">Voir les projets <span class="arr">→</span></a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
           <a class="brand" href="../index.html">
-            <img class="brand-logo" src="../assets/logo/digicraft-labs.webp" onerror="this.onerror=null;this.src=\'../assets/logo/digicraft-labs.png\'" alt="" width="38" height="38">
-            <span class="brand-name">DIGICRAFT Labs</span>
+            <img class="brand-logo" src="../assets/logo/digicraft-labs.webp" onerror="this.onerror=null;this.src='../assets/logo/digicraft-labs.png'" alt="" width="38" height="38">
+            <span class="brand-name">Koffa Jean Agoudavi</span>
           </a>
-          <p><strong>Koffa Jean Agoudavi</strong><br>Fondateur de DIGICRAFT Labs. Je construis des systèmes digitaux intelligents : automatisations, agents IA, bots et produits digitaux.</p>
+          <p><strong>Fondateur &amp; Lead Product @ DIGICRAFT Labs / SignalDesk.</strong><br>Je conçois des SaaS, agents IA, automatisations et produits digitaux — en public, avec preuves.</p>
         </div>
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul>
             <li><a href="../index.html">Accueil</a></li>
-            <li><a href="index.html">Projets</a></li>
+            <li><a href="../projets/">Projets</a></li>
             <li><a href="../timeline/">Journal</a></li>
             <li><a href="../articles/">Articles</a></li>
             <li><a href="../boutique/">Boutique</a></li>
@@ -128,16 +141,16 @@
             <li><a data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a></li>
             <li><a data-p-youtube href="https://www.youtube.com/@KoffaJeanAgoudavi" target="_blank" rel="noopener">YouTube</a></li>
-            <li><a data-p-whatsapp href="https://wa.me/22872556556?text=Bonjour%2C%20je%20viens%20de%20votre%20site%20DIGICRAFT%20Labs%20et%20j%27aimerais%20%C3%A9changer%20avec%20vous." target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a data-p-whatsapp href="https://wa.me/22872556556" target="_blank" rel="noopener">WhatsApp</a></li>
             <li><a data-p-google href="https://share.google/ont9TyuWshpud74fL" target="_blank" rel="noopener">Google Business</a></li>
             <li><a data-p-email href="mailto:contact.agoudavi@gmail.com" data-p-email-txt>contact.agoudavi@gmail.com</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© <span data-year>2026</span> DIGICRAFT Labs — Koffa Jean Agoudavi</span>
+        <span>© <span data-year>2026</span> Koffa Jean AGOUDAVI — QG Numérique</span>
         <span class="fb-links">
-          <a href="index.html">Projets</a>
+          <a href="../projets/">Projets</a>
           <a href="../articles/">Articles</a>
           <a href="../contact/">Contact</a>
         </span>
@@ -152,12 +165,11 @@
   <script src="../js/analytics.js?v=20260923qg3"></script>
   <script src="../js/sheets.js?v=20260923qg3"></script>
   <script src="../js/projects.js?v=20260923qg3"></script>
-  <script src="../js/articles.js?v=20260923qg3"></script>
-  <script src="../js/resources.js?v=20260923qg3"></script>
+  <script src="../js/timeline.js?v=20260923qg3"></script>
   <script src="../js/main.js?v=20260923qg3"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      window.Prjs.grilleProjets("grille-projets", "filtres-projets");
+      window.Tml.page("timeline-list");
       window.Prjs.initReveal();
     });
   </script>
