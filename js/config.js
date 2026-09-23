@@ -24,8 +24,7 @@ window.CONFIG = {
     articles: 982421678,     // onglet Articles
     ressources: 1306651993,  // onglet Ressources
     certifications: 0,       // TODO — onglet Certifications (a creer, cf. sheets-exports/)
-    timeline: 0,             // TODO — onglet Timeline (a creer, cf. sheets-exports/)
-    buildinpublic: 1733530302 // DEPRECIE — fusionne dans Timeline (suppression Etape 3)
+    timeline: 0              // TODO — onglet Timeline (a creer, cf. sheets-exports/)
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
@@ -36,8 +35,7 @@ window.CONFIG = {
     articles: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=982421678&single=true&output=csv",
     ressources: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1306651993&single=true&output=csv",
     certifications: "", // TODO — URL CSV publiée de l'onglet Certifications
-    timeline: "",        // TODO — URL CSV publiée de l'onglet Timeline
-    buildinpublic: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1733530302&single=true&output=csv" // DÉPRÉCIÉ
+    timeline: ""         // TODO — URL CSV publiée de l'onglet Timeline
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement
@@ -50,8 +48,7 @@ window.CONFIG = {
     articles: ["titre", "plateforme", "description", "temps_lecture", "url", "date", "featured", "ordre"],
     ressources: ["nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre"],
     certifications: ["titre", "organisme", "date_obtention", "date_expiration", "url_verification", "image_badge", "badge", "featured", "ordre"],
-    timeline: ["date", "titre", "description", "type", "lien_optionnel", "featured", "ordre"],
-    buildinpublic: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"]
+    timeline: ["date", "titre", "description", "type", "lien_optionnel", "featured", "ordre"]
   },
 
   // Données par défaut (utilisées si le Sheet n'est pas joignable)
@@ -65,8 +62,10 @@ window.CONFIG = {
     url_telegram: "https://t.me/johnnyokabe",
     url_google_business: "https://share.google/ont9TyuWshpud74fL",
     url_boutique: "https://digicraft.mychariow.shop",
+    url_whatsapp: "https://wa.me/22872556556?text=Bonjour%2C%20je%20viens%20de%20votre%20site%20DIGICRAFT%20Labs%20et%20j%27aimerais%20%C3%A9changer%20avec%20vous.",
+    url_youtube: "https://www.youtube.com/@KoffaJeanAgoudavi",
     url_webhook_contact: "https://hook.eu1.make.com/wjgpk28nmywizvm7kl95hv45gt7n6quq",
-    statut_disponibilite: "Disponible pour projets d'automatisation & IA",
+    statut_disponibilite: "Disponible pour de nouveau projets",
     // QG — Chiffres cles du Hero hybride (onglet Parametres, bindes via data-p-stat-*)
     stat_projets_count: "4+",
     stat_workflows_count: "6+",

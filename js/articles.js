@@ -70,9 +70,11 @@
     if (!el || !el.parentElement) return;
     if (el.parentElement.querySelector(".dyn-source")) return;
     var div = document.createElement("p");
-    div.className = "dyn-source" + (source === "local" ? " is-local" : "");
+    div.className = "dyn-source" + (source === "local" ? " is-local" : (source === "cache" ? " is-cache" : ""));
     if (source === "google-sheets") {
       div.innerHTML = '<span class="dot"></span>Données : Google Sheets · ' + n + ' article(s)';
+    } else if (source === "cache") {
+      div.innerHTML = '<span class="dot"></span>Données : cache local · ' + n + ' article(s)';
     } else if (source === "local") {
       div.innerHTML = '<span class="dot"></span>Données de secours (Google Sheets injoignable)';
     } else {

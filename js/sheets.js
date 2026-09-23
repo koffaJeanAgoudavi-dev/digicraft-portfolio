@@ -110,33 +110,85 @@
     return !!gids[name];
   }
 
-  /* Charge un onglet : Sheet d'abord, secours local ensuite.
+  /* ---------- Cache client (localStorage) ----------
+     Objectif performance : le Sheet n'est sollicité qu'une fois par
+     onglet et par fenêtre de fraîcheur, au lieu d'un appel réseau à
+     chaque page vue.
+     - Lecture : entrée fraîche → réponse immédiate (zéro requête)
+     - Rechargement manuel (F5 / Ctrl+R) → cache ignoré (données fraîches)
+     - Échec réseau → dernière copie connue (même expirée) avant le local
+     - localStorage indisponible / quota → comportement d'origine
+     - Transparence : _source = "cache" est affiché dans l'indicateur */
+  var CACHE_PREFIX = "dgc.cms.v1.";
+  var CACHE_TTL = 15 * 60 * 1000;        // onglets de contenu : 15 min
+  var CACHE_TTL_PARAMS = 3 * 60 * 1000;  // Parametres : 3 min (réglages)
+
+  function ttlPour(name) {
+    return name === "parametres" ? CACHE_TTL_PARAMS : CACHE_TTL;
+  }
+  function rechargementManuel() {
+    try {
+      if (!window.performance || !performance.getEntriesByType) return false;
+      var nav = performance.getEntriesByType("navigation")[0];
+      return !!nav && nav.type === "reload";
+    } catch (e) { return false; }
+  }
+  function cacheLire(name, ignorerTtl) {
+    try {
+      var raw = window.localStorage.getItem(CACHE_PREFIX + name);
+      if (!raw) return null;
+      var o = JSON.parse(raw);
+      if (!o || !o.t || !o.rows || !o.rows.length) return null;
+      if (!ignorerTtl && Date.now() - o.t > ttlPour(name)) return null;
+      return o.rows;
+    } catch (e) { return null; }
+  }
+  function cacheEcrire(name, rows) {
+    try {
+      window.localStorage.setItem(CACHE_PREFIX + name,
+        JSON.stringify({ t: Date.now(), rows: rows }));
+    } catch (e) { /* quota / navigation privée : ignoré sans bruit */ }
+  }
+
+  /* Charge un onglet : cache → Sheet → cache expiré → local.
      Le tableau retourné porte une propriété _source :
-     "google-sheets" ou "local" (utilisée par l'indicateur visuel). */
+     "google-sheets", "cache" ou "local" (indicateur visuel). */
   function loadSheet(name) {
     var useSheet = window.CONFIG.sheetId && !window.CONFIG.forceLocal && ongletConfigure(name);
     if (window.CONFIG.sheetId && !window.CONFIG.forceLocal && !ongletConfigure(name)) {
       console.warn("[Sheets] Onglet '" + name + "' non configuré (gid/URL manquants) — fallback local.");
     }
     if (useSheet) {
+      if (!rechargementManuel()) {
+        var enCache = cacheLire(name, false);
+        if (enCache) { enCache._source = "cache"; return Promise.resolve(enCache); }
+      }
       return fetchText(sheetUrl(name)).then(function (text) {
         var rows = rowsToObjects(parseCSV(text));
         if (!rows.length) {
-          /* Onglet BuildInPublic joignable mais vide : ne PAS basculer
-             sur les données locales — la section Build in public ne doit
-             s'afficher que si le Sheet contient de vraies données. */
-          if (name === "buildinpublic") {
-            var vides = [];
-            vides._source = "google-sheets";
-            return vides;
-          }
-          throw new Error("Onglet vide");
+          /* Onglet joignable mais vide : ne PAS basculer sur les données
+             locales — une section ne doit s'afficher que si le Sheet
+             contient de vraies lignes (ex. Timeline, Certifications).
+             Exception : `parametres` (clé/valeur) et les onglets de
+             contenu dont le repli local est légitime. */
+          if (name === "parametres") throw new Error("Onglet vide");
+          var vides = [];
+          vides._source = "google-sheets";
+          return vides;
         }
         verifierEnTete(rows, name, window.CONFIG.colonnesAttendues[name] || []);
+        cacheEcrire(name, rows);
         rows._source = "google-sheets";
         return rows;
       }).catch(function (err) {
         console.error("[Sheets] Échec de chargement de l'onglet '" + name + "' :", err);
+        /* Résilience : dernière copie connue (même expirée) avant le local */
+        var perime = cacheLire(name, true);
+        if (perime) {
+          console.warn("[Sheets] Dernière copie locale (cache) utilisée pour '" + name + "'.");
+          perime._source = "cache";
+          return perime;
+        }
         console.error("[Sheets] Bascule sur les données locales (js/data/" + name + ".json).");
         return loadLocal(name).then(function (rows) {
           rows._source = "local";

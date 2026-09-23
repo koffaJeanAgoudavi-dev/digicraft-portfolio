@@ -113,6 +113,9 @@
       if (meta && desc && !qs("[data-cs-dynamic]")) meta.setAttribute("content", desc.replace(/\s+/g, " ").trim());
 
       window.PARAMS = P;
+      /* QG : prévient les modules dépendants (analytics.js) que les
+         Parametres du Sheet sont disponibles — sans polling bloquant. */
+      try { document.dispatchEvent(new CustomEvent("digicraft:params")); } catch (e) {}
     }).catch(function () {
       console.warn("Parametres indisponibles — valeurs par défaut utilisées.");
     });
@@ -208,29 +211,6 @@
     });
   }
 
-  /* ---------- Build in public : visibilité conditionnelle ---------- */
-  /* La section (accueil + page dédiée) et le lien footer ne s'affichent
-     que si l'onglet BuildInPublic du Sheet contient au moins une vraie
-     ligne de données. Onglet vide → masqués automatiquement ; dès
-     qu'une ligne est ajoutée, tout réapparaît au rechargement. */
-  function initBuildPublic() {
-    window.Sheets.loadSheet("buildinpublic").then(function (items) {
-      if (items.length) return;
-      qsa(".site-footer a").forEach(function (a) {
-        if (a.textContent.indexOf("Build in public") === -1) return;
-        var li = a.closest("li");
-        if (li) li.style.display = "none"; else a.style.display = "none";
-      });
-      var accueil = document.getElementById("build-in-public");
-      if (accueil) accueil.style.display = "none";
-      var grille = document.getElementById("grille-build");
-      if (grille) {
-        var sec = grille.closest("section");
-        if (sec) sec.style.display = "none";
-      }
-    }).catch(function () {});
-  }
-
   /* ---------- Divers ---------- */
   function initMisc() {
     /* Année du copyright */
@@ -251,7 +231,6 @@
     initCarousel();
     initParametres();
     initContact();
-    initBuildPublic();
     initMisc();
   });
 })();

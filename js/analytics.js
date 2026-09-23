@@ -92,12 +92,16 @@
        changement de consentement. */
     var t0 = Date.now();
     var iv = setInterval(function () {
-      if (window.PARAMS || Date.now() - t0 > 5000) {
+      if (window.PARAMS || Date.now() - t0 > 10000) {
         clearInterval(iv);
         appliquer();
       }
     }, 150);
     document.addEventListener("digicraft:consent", appliquer);
+    /* Signal explicite émis par main.js dès que les Parametres du Sheet
+       sont prêts : garantit la prise en compte des clés `ga4_id` /
+       `clarity_id` même si le Sheet répond après la fenêtre de polling. */
+    document.addEventListener("digicraft:params", appliquer);
   }
 
   if (document.readyState === "loading") {

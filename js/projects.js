@@ -46,6 +46,23 @@
     return t;
   }
 
+  /* Badge de statut public (QG, Étape 3) — normalise la colonne
+     `statut` du Sheet en 4 états lisibles :
+       Privé   : test privé, interne, confidentiel
+       Nouveau : déclaré explicitement (jamais déduit d'une date)
+       Beta    : en développement, prototype, test, WIP
+       Public  : en prod, opérationnel, live, en ligne
+     Aucune correspondance → pas de badge (jamais d'invention). */
+  function badgeStatut(p) {
+    var s = String((p && p.statut) || "").toLowerCase();
+    if (!s) return null;
+    if (/priv|interne|confidentiel/.test(s)) return { cls: "is-prive", label: "Privé" };
+    if (/nouveau|nouveaut|\bnew\b/.test(s)) return { cls: "is-nouveau", label: "Nouveau" };
+    if (/beta|développement|developpement|wip|test|prototype|expérimental|experimental|bientôt|bientot/.test(s)) return { cls: "is-beta", label: "Beta" };
+    if (/prod|opérationnel|operationnel|live|public|en ligne|actif|disponible/.test(s)) return { cls: "is-public", label: "Public" };
+    return null;
+  }
+
   /* Correspondance projet ↔ filtre (colonne `filtre` si présente,
      sinon déduction depuis `categorie`) */
   function matcheFiltre(p, f) {
@@ -86,7 +103,8 @@
       ? (window.SITE_ROOT || "") + "projets/" + projet.slug + "/"
       : extUrl(projet.url_destination);
     var target = isInterne ? "" : ' target="_blank" rel="noopener"';
-    var tags = (projet.stack_tags || "").split(/[·|,]/).map(function (t) { return t.trim(); }).filter(Boolean).slice(0, 3);
+    /* QG (Étape 3) : stack complète, sans limite — rendu monospace séparé par « · » */
+    var tags = (projet.stack_tags || "").split(/[·|,]/).map(function (t) { return t.trim(); }).filter(Boolean);
     var img = projet.image_url
       ? '<img src="' + imgUrl(projet.image_url) + '" alt="' + esc(projet.titre) + '" loading="lazy" decoding="async" onerror="this.remove()">'
       : "";
@@ -98,14 +116,17 @@
     var urlAction = extUrl(projet.url_destination);
     var actionBtn = '<a class="btn btn-gold btn-xs" href="' + urlAction + '" target="_blank" rel="noopener" aria-label="' + esc(labelAction) + ' : ' + esc(projet.titre) + '">' + esc(labelAction) + '</a>';
     var ico = '<span class="p-media-ico" aria-hidden="true">' + iconePour(projet) + '</span>';
+    var badge = badgeStatut(projet);
+    var badgeHtml = badge ? '<span class="st-badge ' + badge.cls + '">' + badge.label + '</span>' : "";
 
     return '<article class="card card-hover p-card reveal">' +
       '<a class="p-media" href="' + href + '"' + target + ' aria-label="Voir le projet : ' + esc(projet.titre) + '">' +
         ico + img +
         '<span class="chip">' + esc(projet.categorie || "") + '</span>' +
+        badgeHtml +
       '</a>' +
       '<div class="p-body">' +
-        '<div class="p-meta"><span class="st">' + esc(projet.categorie || "Projet") + '</span><span class="sep"></span><span>' + esc(projet.statut || "") + '</span><span class="sep"></span><span>' + esc(projet.date || "") + '</span></div>' +
+        '<div class="p-meta"><span class="st">' + esc(projet.categorie || "Projet") + '</span>' + (projet.date ? '<span class="sep"></span><span>' + esc(projet.date) + '</span>' : "") + '</div>' +
         '<h3 class="p-title"><a href="' + href + '"' + target + '>' + esc(projet.titre) + '</a></h3>' +
         '<p class="p-desc">' + esc(projet.description_courte || "") + '</p>' +
         (tags.length ? '<div class="p-tags">' + tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' : "") +
@@ -149,9 +170,11 @@
     if (!el || !el.parentElement) return;
     if (el.parentElement.querySelector(".dyn-source")) return; // déjà affiché
     var div = document.createElement("p");
-    div.className = "dyn-source" + (source === "local" ? " is-local" : "");
+    div.className = "dyn-source" + (source === "local" ? " is-local" : (source === "cache" ? " is-cache" : ""));
     if (source === "google-sheets") {
       div.innerHTML = '<span class="dot"></span>Données : Google Sheets · ' + n + ' projet(s)';
+    } else if (source === "cache") {
+      div.innerHTML = '<span class="dot"></span>Données : cache local · ' + n + ' projet(s)';
     } else if (source === "local") {
       div.innerHTML = '<span class="dot"></span>Données de secours (Google Sheets injoignable)';
     } else {
@@ -416,11 +439,15 @@
       if (p.titre) document.title = p.titre + " | Étude de cas — DIGICRAFT Labs";
       if (elStatut && p.statut) {
         elStatut.textContent = p.statut;
-        /* V1.3 : la fiche générique pré-masque la puce de statut. */
-        if (dynamique) {
-          var chipStatut = elStatut.closest ? elStatut.closest(".chip") : null;
-          if (chipStatut) chipStatut.style.display = "";
+        var chipStatut = elStatut.closest ? elStatut.closest(".chip") : null;
+        /* QG (Étape 3) : puce colorée Public / Beta / Privé / Nouveau */
+        var b = badgeStatut(p);
+        if (chipStatut && b) {
+          chipStatut.classList.add("st-badge", b.cls);
+          elStatut.textContent = b.label;
         }
+        /* V1.3 : la fiche générique pré-masque la puce de statut. */
+        if (dynamique && chipStatut) chipStatut.style.display = "";
       }
       if (elTags) {
         var tags = (p.stack_tags || "").split(/[·|,]/).map(function (t) { return t.trim(); }).filter(Boolean);
