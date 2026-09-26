@@ -23,7 +23,8 @@ window.CONFIG = {
     projets: 690207518,      // onglet Projets
     articles: 982421678,     // onglet Articles
     ressources: 1306651993,  // onglet Ressources
-    buildinpublic: 1733530302 // onglet BuildInPublic
+    buildinpublic: 1733530302, // onglet Timeline (ex-BuildInPublic)
+    expertise: 1879096907     // onglet Expertise
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
@@ -33,7 +34,8 @@ window.CONFIG = {
     projets: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=690207518&single=true&output=csv",
     articles: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=982421678&single=true&output=csv",
     ressources: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1306651993&single=true&output=csv",
-    buildinpublic: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1733530302&single=true&output=csv"
+    buildinpublic: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1733530302&single=true&output=csv",
+    expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1879096907&single=true&output=csv"
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement
@@ -45,7 +47,8 @@ window.CONFIG = {
     projets: ["titre", "slug", "categorie", "badge_statut", "description_courte", "image_url", "stack_tags", "statut", "date", "type_lien", "url_destination", "featured", "ordre", "probleme", "solution", "technologies_detail", "resultat"],
     articles: ["titre", "plateforme", "description", "temps_lecture", "url", "date", "featured", "ordre"],
     ressources: ["nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre"],
-    buildinpublic: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"]
+    buildinpublic: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"],
+    expertise: ["titre", "description_courte", "description_longue", "icone", "categorie", "exemples_projets", "ordre"]
   },
 
   // Données par défaut (utilisées seulement si le Sheet ET le JSON local

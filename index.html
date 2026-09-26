@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20260925b">
+  <link rel="stylesheet" href="css/style.css?v=20260925c">
 </head>
 <body class="has-dock">
   <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -159,35 +159,12 @@
           <h2>Ce que je construis</h2>
           <p>De l'idée au prototype, je combine IA, automatisation et outils no-code pour créer des solutions simples, utiles et évolutives.</p>
         </div>
-        <div class="grid-4">
-          <article class="card card-hover exp-card reveal" style="--d:.05s">
-            <span class="exp-num">01</span>
-            <span class="exp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="6" cy="10" r="2.5"/></svg></span>
-            <h3>Automatisation</h3>
-            <p>Concevoir des workflows capables d'exécuter automatiquement les tâches répétitives.</p>
-            <div class="exp-tags"><span class="tag">Make</span><span class="tag">Webhooks</span><span class="tag">APIs</span></div>
-          </article>
-          <article class="card card-hover exp-card reveal" style="--d:.1s">
-            <span class="exp-num">02</span>
-            <span class="exp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a2 2 0 0 1 0 4h-3.27A6 6 0 0 1 12 20a6 6 0 0 1-5.73-2H3a2 2 0 0 1 0-4h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><path d="M12 12v4"/><path d="M9 13h6"/></svg></span>
-            <h3>Intelligence artificielle</h3>
-            <p>Intégrer les modèles IA dans des workflows et applications utiles.</p>
-            <div class="exp-tags"><span class="tag">Groq</span><span class="tag">Gemini</span><span class="tag">LLM</span></div>
-          </article>
-          <article class="card card-hover exp-card reveal" style="--d:.15s">
-            <span class="exp-num">03</span>
-            <span class="exp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/><path d="M9.5 13.5h.01M14.5 13.5h.01"/><path d="M8 17c1.1 1 2.6 1.5 4 1.5s2.9-.5 4-1.5"/></svg></span>
-            <h3>Bots &amp; assistants</h3>
-            <p>Concevoir des assistants conversationnels et outils accessibles directement depuis Telegram.</p>
-            <div class="exp-tags"><span class="tag">Telegram</span><span class="tag">Groq</span><span class="tag">OCR</span></div>
-          </article>
-          <article class="card card-hover exp-card reveal" style="--d:.2s">
-            <span class="exp-num">04</span>
-            <span class="exp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/><path d="M8 14h3"/></svg></span>
-            <h3>Produits digitaux</h3>
-            <p>Transformer une expertise ou une idée en ressource numérique exploitable.</p>
-            <div class="exp-tags"><span class="tag">Ebooks</span><span class="tag">Guides</span><span class="tag">Templates</span></div>
-          </article>
+        <div class="grid-3" id="apercu-expertise" data-xp-mode="apercu" data-xp-limit="6"
+             aria-live="polite" aria-busy="true">
+          <!-- injecté par js/expertise.js depuis l'onglet « Expertise » -->
+        </div>
+        <div style="text-align:center;margin-top:1.75rem">
+          <a class="btn btn-ghost" href="expertise/">Voir toute l'expertise <span class="arr">→</span></a>
         </div>
       </div>
     </section>
@@ -382,23 +359,25 @@
   </footer>
 
   <script>window.SITE_ROOT = "";</script>
-  <script src="js/config.js?v=20260925b"></script>
-  <script src="js/consent.js?v=20260925b"></script>
-  <script src="js/analytics.js?v=20260925b"></script>
-  <script src="js/sheets.js?v=20260925b"></script>
-  <script src="js/projects.js?v=20260925b"></script>
-  <script src="js/articles.js?v=20260925b"></script>
-  <script src="js/resources.js?v=20260925b"></script>
-  <script src="js/build.js?v=20260925b"></script>
-  <script src="js/i18n.js?v=20260925b"></script>
-  <script src="js/main.js?v=20260925b"></script>
-  <script src="js/dock.js?v=20260925b"></script>
+  <script src="js/config.js?v=20260925c"></script>
+  <script src="js/consent.js?v=20260925c"></script>
+  <script src="js/analytics.js?v=20260925c"></script>
+  <script src="js/sheets.js?v=20260925c"></script>
+  <script src="js/projects.js?v=20260925c"></script>
+  <script src="js/articles.js?v=20260925c"></script>
+  <script src="js/resources.js?v=20260925c"></script>
+  <script src="js/expertise.js?v=20260925c"></script>
+  <script src="js/build.js?v=20260925c"></script>
+  <script src="js/i18n.js?v=20260925c"></script>
+  <script src="js/main.js?v=20260925c"></script>
+  <script src="js/dock.js?v=20260925c"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       window.Prjs.carouselAccueil("carousel-projets");
       window.Bld.accueil("carousel-build");
       window.Ress.accueil("carousel-ressources");
       window.Arts.accueil("carousel-articles");
+      window.Xpr.apercu("apercu-expertise", 6);
       window.Prjs.initReveal();
     });
   </script>

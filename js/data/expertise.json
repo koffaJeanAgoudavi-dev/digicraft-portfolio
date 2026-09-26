@@ -1,0 +1,62 @@
+[
+  {
+    "titre": "Automatisation des processus",
+    "titre_en": "",
+    "description_courte": "Transformez vos tâches répétitives en workflows automatisés.",
+    "description_courte_en": "",
+    "description_longue": "Je conçois des workflows qui connectent vos outils, automatisent les tâches répétitives et réduisent les interventions manuelles dans vos opérations.",
+    "description_longue_en": "",
+    "icone": "⚙️",
+    "categorie": "Automatisation",
+    "exemples_projets": "SmartReply Agent, automatisations DIGICRAFT",
+    "ordre": "1"
+  },
+  {
+    "titre": "Agents IA",
+    "titre_en": "",
+    "description_courte": "Des assistants intelligents conçus pour exécuter des tâches spécifiques.",
+    "description_courte_en": "",
+    "description_longue": "Je conçois des agents IA capables de comprendre des demandes, traiter des informations, prendre en charge certaines tâches et interagir avec vos outils et utilisateurs.",
+    "description_longue_en": "",
+    "icone": "🤖",
+    "categorie": "Intelligence artificielle",
+    "exemples_projets": "SmartReply Agent, Studio Créatif IA, MysteryBot",
+    "ordre": "2"
+  },
+  {
+    "titre": "Chatbots & assistants conversationnels",
+    "titre_en": "",
+    "description_courte": "Créez des interfaces intelligentes accessibles directement par messagerie.",
+    "description_courte_en": "",
+    "description_longue": "Je développe des chatbots et assistants conversationnels adaptés à différents usages : support, assistance, collecte d'informations, génération de contenu ou automatisation de tâches.",
+    "description_longue_en": "",
+    "icone": "💬",
+    "categorie": "Agents & Chatbots",
+    "exemples_projets": "Studio Créatif IA, MysteryBot",
+    "ordre": "3"
+  },
+  {
+    "titre": "Intégration de l’IA",
+    "titre_en": "",
+    "description_courte": "Intégrez l’IA directement dans vos outils et processus existants.",
+    "description_courte_en": "",
+    "description_longue": "Je connecte les modèles et services d’IA à vos workflows, applications et outils afin d'ajouter des capacités d'analyse, de génération et de traitement automatisé.",
+    "description_longue_en": "",
+    "icone": "🧠",
+    "categorie": "Intelligence artificielle",
+    "exemples_projets": "SmartReply Agent, Studio Créatif IA, MysteryBot",
+    "ordre": ""
+  },
+  {
+    "titre": "Produits digitaux & SaaS",
+    "titre_en": "",
+    "description_courte": "Transformez une idée en produit digital fonctionnel.",
+    "description_courte_en": "",
+    "description_longue": "Je conçois et développe des MVP, outils internes et produits SaaS en combinant interfaces, automatisations, APIs et services cloud.",
+    "description_longue_en": "",
+    "icone": "saas",
+    "categorie": "Produit digital",
+    "exemples_projets": "SignalDesk",
+    "ordre": ""
+  }
+]

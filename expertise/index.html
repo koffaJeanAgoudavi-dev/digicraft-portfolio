@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Expertise | Koffa Jean AGOUDAVI</title>
   <meta name="description" content="Compétences, technologies et domaines d'intervention — agents IA, automatisation, backends et produits digitaux.">
-  <!-- TEMPORAIRE : section pas encore alimentée par le CMS.
-       Retirer cette ligne à l'étape qui remplit la page (3, 6 ou 7). -->
-  <meta name="robots" content="noindex, follow">
   <link rel="icon" type="image/svg+xml" href="../favicon.png">
   <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/expertise/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/style.css?v=20260925b">
+  <link rel="stylesheet" href="../css/style.css?v=20260925c">
 </head>
 <body class="has-dock">
   <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -93,20 +90,19 @@
       <div class="container">
         <p class="eyebrow">Expertise</p>
         <h1>Expertise</h1>
-        <p class="lead">Compétences, technologies et domaines d'intervention.</p>
+        <p class="lead">Ce que je conçois et apporte : des systèmes pensés pour vos opérations, alimentés depuis le Google Sheets.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:0">
       <div class="container">
-        <div class="empty-state">
-          <span class="es-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.4L20 10l-5.8 1.6L12 17l-2.2-5.4L4 10l5.8-1.6z"/></svg></span>
-          <b>Contenu en cours d'intégration</b>
-          <p>Cette page se remplit automatiquement depuis l'onglet « Expertise » du Google Sheets : compétences, technologies et exemples de projets liés.</p>
-          <span class="empty-hint">Aucune compétence n'est affichée tant qu'elle n'est pas saisie dans le CMS — rien n'est inventé.</span>
+        <div class="grid-3" id="grille-expertise" data-xp-mode="page"
+             aria-live="polite" aria-busy="true">
+          <!-- injecté par js/expertise.js depuis l'onglet « Expertise » -->
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer">
@@ -155,12 +151,20 @@
     </div>
   </footer>
   <script>window.SITE_ROOT = "../";</script>
-  <script src="../js/config.js?v=20260925b"></script>
-  <script src="../js/consent.js?v=20260925b"></script>
-  <script src="../js/analytics.js?v=20260925b"></script>
-  <script src="../js/sheets.js?v=20260925b"></script>
-  <script src="../js/i18n.js?v=20260925b"></script>
-  <script src="../js/main.js?v=20260925b"></script>
-  <script src="../js/dock.js?v=20260925b"></script>
+  <script src="../js/config.js?v=20260925c"></script>
+  <script src="../js/consent.js?v=20260925c"></script>
+  <script src="../js/analytics.js?v=20260925c"></script>
+  <script src="../js/sheets.js?v=20260925c"></script>
+  <script src="../js/i18n.js?v=20260925c"></script>
+  <script src="../js/main.js?v=20260925c"></script>
+  <script src="../js/expertise.js?v=20260925c"></script>
+  <script src="../js/dock.js?v=20260925c"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      window.Xpr.page("grille-expertise");
+      var g = document.getElementById("grille-expertise");
+      if (g) new MutationObserver(function () { g.setAttribute("aria-busy", "false"); }).observe(g, { childList: true });
+    });
+  </script>
 </body>
 </html>

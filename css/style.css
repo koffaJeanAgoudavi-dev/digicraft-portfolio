@@ -976,3 +976,53 @@ body.dock-sheet-open{overflow:hidden}
   border-color:rgba(242,241,240,.28);
 }
 .dock-lang-sheet .lang-btn{flex:1;padding:.6rem 1rem;font-size:.72rem}
+
+/* ============================================================
+   v2 — EXPERTISE (étape 3, blueprint v0.2 §8)
+   « Ce que je conçois et apporte » : cartes iconographiées,
+   catégorie, description, exemples de réalisations liés.
+   ============================================================ */
+.xp-card{display:flex;flex-direction:column;gap:.8rem;padding:1.7rem 1.6rem 1.6rem;position:relative;overflow:hidden}
+.xp-card::before{
+  content:"";position:absolute;inset:0 auto auto 0;width:100%;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent 72%);
+  opacity:0;transition:opacity .3s var(--ease);
+}
+.xp-card:hover::before{opacity:1}
+.xp-ico{
+  width:46px;height:46px;flex:none;display:grid;place-items:center;
+  border-radius:13px;background:var(--gold-soft);border:1px solid var(--gold-line);
+  color:var(--gold-2);
+}
+.xp-ico svg{width:23px;height:23px}
+.xp-ico img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+.xp-emoji{font-size:1.45rem;line-height:1}
+.xp-cat{align-self:flex-start}
+.xp-title{font-size:1.24rem;margin:0}
+.xp-desc{margin:0;font-size:.94rem;color:var(--ink-2)}
+.xp-projects{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin-top:auto;padding-top:.7rem;border-top:1px dashed var(--line)}
+.xp-projects-label{
+  flex-basis:100%;font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2);margin-bottom:.15rem;
+}
+.xp-tag{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.26rem .6rem;border-radius:999px;
+  font-family:var(--font-mono);font-size:.72rem;
+  background:rgba(166,143,129,.12);border:1px solid var(--line);color:#4E463E;
+}
+.xp-tag[href]{background:var(--card);border-color:var(--gold-line);color:var(--gold-2);font-weight:600}
+.xp-tag[href]:hover{background:var(--gold-soft);border-color:var(--gold)}
+.xp-tag[href]::after{content:"→";font-family:var(--font-body);font-size:.8em;opacity:.85}
+
+/* Aperçu accueil : cartes compactes et cliquables vers /expertise/ */
+.xp-card-sm{cursor:pointer;gap:.6rem;padding:1.4rem 1.35rem}
+.xp-card-sm .xp-title{font-size:1.1rem}
+.xp-card-sm .xp-desc{font-size:.9rem}
+.xp-card-sm:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.xp-card-sm::after{
+  content:"En savoir plus →";font-size:.8rem;font-weight:600;color:var(--gold-2);
+  margin-top:auto;padding-top:.4rem;
+}
+.xp-card-sm:hover::after{color:var(--gold)}
+@media (prefers-reduced-motion:reduce){.xp-card::before{opacity:1}}
