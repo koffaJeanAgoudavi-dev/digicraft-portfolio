@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/style.css?v=20260925c">
+  <link rel="stylesheet" href="../css/style.css?v=20260926a">
 </head>
 <body class="has-dock">
   <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -98,14 +98,10 @@
     <section class="page-hero">
       <div class="container">
         <p class="eyebrow reveal">Portfolio</p>
-        <h1 class="reveal">Mes projets</h1>
+        <h1 class="reveal">Mes réalisations</h1>
         <p class="lead reveal">Des systèmes, des automatisations et des expériences construits autour de l'IA et du digital. Chaque projet part d'un problème concret et aboutit à un système fonctionnel.</p>
-        <div class="page-extra reveal">
-          <span class="chip chip-gold">IA</span>
-          <span class="chip">Automatisation</span>
-          <span class="chip">Bots</span>
-          <span class="chip">SaaS</span>
-          <span class="chip">Produits digitaux</span>
+        <div class="page-extra reveal" id="puces-projets" aria-live="polite">
+          <!-- compte + catégories réelles, injectés par js/projects.js -->
         </div>
       </div>
     </section>
@@ -113,12 +109,9 @@
     <section class="section" style="padding-top:1.5rem">
       <div class="container">
         <div class="filters reveal" id="filtres-projets" role="group" aria-label="Filtrer les projets">
-          <button class="f-btn is-active" data-filtre="Tous">Tous</button>
-          <button class="f-btn" data-filtre="IA">IA</button>
-          <button class="f-btn" data-filtre="Automatisation">Automatisation</button>
-          <button class="f-btn" data-filtre="Bots">Bots</button>
-          <button class="f-btn" data-filtre="SaaS">SaaS</button>
-          <button class="f-btn" data-filtre="Produits digitaux">Produits digitaux</button>
+          <!-- Filtres générés depuis l'onglet Projets (js/projects.js) :
+               « Tous » sert de repli si JavaScript est désactivé. -->
+          <button class="f-btn is-active" data-filtre="Tous" aria-pressed="true">Tous</button>
         </div>
         <div class="grid-3" id="grille-projets">
           <!-- injecté par js/projects.js -->
@@ -174,19 +167,19 @@
   </footer>
 
   <script>window.SITE_ROOT = "../";</script>
-  <script src="../js/config.js?v=20260925c"></script>
-  <script src="../js/consent.js?v=20260925c"></script>
-  <script src="../js/analytics.js?v=20260925c"></script>
-  <script src="../js/sheets.js?v=20260925c"></script>
-  <script src="../js/projects.js?v=20260925c"></script>
-  <script src="../js/articles.js?v=20260925c"></script>
-  <script src="../js/resources.js?v=20260925c"></script>
-  <script src="../js/i18n.js?v=20260925c"></script>
-  <script src="../js/main.js?v=20260925c"></script>
-  <script src="../js/dock.js?v=20260925c"></script>
+  <script src="../js/config.js?v=20260926a"></script>
+  <script src="../js/consent.js?v=20260926a"></script>
+  <script src="../js/analytics.js?v=20260926a"></script>
+  <script src="../js/sheets.js?v=20260926a"></script>
+  <script src="../js/projects.js?v=20260926a"></script>
+  <script src="../js/articles.js?v=20260926a"></script>
+  <script src="../js/resources.js?v=20260926a"></script>
+  <script src="../js/i18n.js?v=20260926a"></script>
+  <script src="../js/main.js?v=20260926a"></script>
+  <script src="../js/dock.js?v=20260926a"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      window.Prjs.grilleProjets("grille-projets", "filtres-projets");
+      window.Prjs.grilleProjets("grille-projets", "filtres-projets", "puces-projets");
       window.Prjs.initReveal();
     });
   </script>

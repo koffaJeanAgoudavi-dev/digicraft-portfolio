@@ -1,9 +1,19 @@
 /* ============================================================
-   PROJECTS.JS — Rendu des projets (carousel accueil / grille /projets)
-   Colonnes attendues dans le Sheet "Projets" (blueprint §18) :
-   id, titre, slug, categorie, description_courte, description_longue,
-   image_url, stack_tags, statut, date, type_lien, url_destination,
-   featured, ordre
+   PROJECTS.JS — Rendu des réalisations (carousel accueil / grille /projets)
+   Colonnes attendues dans le Sheet "Projets" (blueprint §18 + v0.2) :
+   id, titre, slug, categorie, badge_statut, description_courte,
+   description_longue, image_url, stack_tags, statut, date, type_lien,
+   url_destination, featured, ordre [, probleme, solution,
+   technologies_detail, resultat]
+
+   Étape 4 (blueprint v0.2 §5) :
+   - pilule de statut = colonne `badge_statut` (libellé du Sheet conservé,
+     seule la classe CSS est normalisée) ;
+   - ligne technologique en monospace (classe .stack-mono) ;
+   - filtres de la page /projets/ construits depuis les données réelles
+     (aucune catégorie inventée) ;
+   - aucun lien fabriqué : une carte sans URL ni étude de cas n'est pas
+     cliquable.
    ============================================================ */
 (function () {
   "use strict";
@@ -46,27 +56,125 @@
     return t;
   }
 
-  /* Correspondance projet ↔ filtre (colonne `filtre` si présente,
-     sinon déduction depuis `categorie`) */
-  function matcheFiltre(p, f) {
-    if (f === "Tous") return true;
-    if (p.filtre) return p.filtre === f;
-    var c = String(p.categorie || "").toLowerCase().trim();
-    switch (f) {
-      case "IA": return /ia|intelligence/.test(c);
-      case "Automatisation": return /automatis|automation|workflow/.test(c);
-      case "Bots": return /bot/.test(c);
-      case "SaaS": return /saas/.test(c);
-      case "Produits digitaux": return /produit|digital/.test(c);
-      default: return false;
+  /* ---- Filtres : familles déduites des données du Sheet ---- */
+
+  /* Familles d'un projet : colonne `filtre` si renseignée (vocabulaire
+     explicite du CMS), sinon découpage de `categorie` sur & , / + .
+     Aucune catégorie n'est inventée : les puces affichées proviennent
+     toujours d'une valeur réellement présente dans le Sheet. */
+  function familles(p) {
+    var src = String((p && (p.filtre || p.categorie)) || "");
+    var out = [], vus = {};
+    src.split(/[&,/+]/).forEach(function (f) {
+      var v = f.replace(/\s+/g, " ").trim();
+      if (!v) return;
+      var k = v.toLowerCase();
+      if (vus[k]) return;
+      vus[k] = 1;
+      out.push(v);
+    });
+    return out;
+  }
+
+  /* Union des familles, dans l'ordre d'apparition (ordre des projets) */
+  function listeFamilles(projets) {
+    var out = [], vus = {};
+    (projets || []).forEach(function (p) {
+      familles(p).forEach(function (f) {
+        var k = f.toLowerCase();
+        if (vus[k]) return;
+        vus[k] = 1;
+        out.push(f);
+      });
+    });
+    return out;
+  }
+
+  function correspond(p, filtre) {
+    if (!filtre || filtre === "Tous") return true;
+    var cible = String(filtre).toLowerCase();
+    return familles(p).some(function (f) { return f.toLowerCase() === cible; });
+  }
+
+  /* Rétro-compatibilité : même sémantique que l'ancien matcheFiltre */
+  function matcheFiltre(p, f) { return correspond(p, f); }
+
+  /* ---- Pilule de statut (colonne badge_statut) ----
+     Le libellé affiché est EXACTEMENT celui du Sheet ; seule la classe
+     CSS est normalisée pour piloter la couleur (public / beta / privé /
+     nouveau / archivé / neutre). */
+  function normaliser(v) {
+    return String(v == null ? "" : v).toLowerCase()
+      .replace(/[éèêë]/g, "e").replace(/[àâä]/g, "a").replace(/[îï]/g, "i")
+      .replace(/[ôö]/g, "o").replace(/[ûü]/g, "u").replace(/\s+/g, " ").trim();
+  }
+
+  function badgeStatut(p) {
+    var libelle = String((p && p.badge_statut) || "").trim();
+    var cle = normaliser(libelle);
+    var classe = "is-neutre";
+    if (/^(public|publique|en ligne|live|dispo)/.test(cle)) classe = "is-public";
+    else if (/^(beta|bêta|test|prototype|alpha)/.test(cle)) classe = "is-beta";
+    else if (/^(priv|private|interne)/.test(cle)) classe = "is-prive";
+    else if (/^(nouveau|new|nouveaute|nouveauté)/.test(cle)) classe = "is-nouveau";
+    else if (/^(archiv|abandon|deprecat|deprecated)/.test(cle)) classe = "is-archive";
+    return { libelle: libelle, classe: classe };
+  }
+
+  /* Ligne technologique : texte brut monospace (v0.2 §2) */
+  function stack(p) {
+    return String((p && p.stack_tags) || "")
+      .split(/[,·|;]/)
+      .map(function (t) { return t.replace(/\s+/g, " ").trim(); })
+      .filter(Boolean)
+      .join(" · ");
+  }
+
+  /* Statut affiché sous la carte : `statut` puis `date` — uniquement
+     les valeurs présentes (jamais de séparateur orphelin). */
+  function ligneStatut(p) {
+    return [String((p && p.statut) || "").trim(), String((p && p.date) || "").trim()]
+      .filter(Boolean).join(" · ");
+  }
+
+  /* Initiales du visuel de remplacement (aucune donnée inventée : juste
+     les initiales du titre réel). */
+  function initiales(titre) {
+    var t = String(titre || "").split(/—|–|\||:/)[0];
+    var mots = t.replace(/([a-zà-ÿ])([A-ZÀ-Ý])/g, "$1 $2").split(/[\s_\-]+/);
+    var out = "";
+    mots.forEach(function (m) {
+      if (out.length >= 2 || !m) return;
+      if (/^[A-Za-zÀ-ÿ0-9]/.test(m)) out += m.charAt(0).toUpperCase();
+    });
+    return out || "?";
+  }
+
+  /* ---- Cible principale d'une carte ----
+     1. étude de cas interne (/projets/<slug>/) quand au moins une
+        colonne d'étude de cas est remplie (ou type_lien=interne) ;
+     2. sinon lien externe `url_destination` ;
+     3. sinon AUCUN lien (la carte n'est pas cliquable — jamais de « # »). */
+  function lienPrincipal(p) {
+    if (aUneEtudeDeCas(p) && p.slug) {
+      return {
+        href: (window.SITE_ROOT || "") + "projets/" + p.slug + "/",
+        externe: false,
+        libelle: "Étude de cas"
+      };
     }
+    var brut = String((p && p.url_destination) || "").trim();
+    if (brut) {
+      return { href: extUrl(brut), externe: true, libelle: libelleAction(p) };
+    }
+    return null;
   }
 
   /* Icône par défaut selon la catégorie */
   function iconePour(p) {
     var keys = ["IA", "Automatisation", "Bots", "SaaS"];
     for (var i = 0; i < keys.length; i++) {
-      if (matcheFiltre(p, keys[i])) return ICONS[keys[i]];
+      if (correspond(p, keys[i])) return ICONS[keys[i]];
     }
     return FALLBACK_ICON;
   }
@@ -77,44 +185,59 @@
     return !!(p && (p.probleme || p.solution || p.technologies_detail || p.resultat));
   }
 
+  var SVG_ARROW = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
   function carte(projet) {
-    /* V1.1+ : les projets ayant une étude de cas (colonnes probleme /
-       solution / technologies_detail / resultat remplies) pointent vers
-       leur page interne /projets/<slug>/ ; les autres vers url_destination. */
-    var isInterne = projet.type_lien === "interne" || aUneEtudeDeCas(projet);
-    var href = isInterne && projet.slug
-      ? (window.SITE_ROOT || "") + "projets/" + projet.slug + "/"
-      : extUrl(projet.url_destination);
-    var target = isInterne ? "" : ' target="_blank" rel="noopener"';
-    var tags = (projet.stack_tags || "").split(/[·|,]/).map(function (t) { return t.trim(); }).filter(Boolean).slice(0, 3);
+    var l = lienPrincipal(projet);
+    var href = l ? l.href : "";
+    var cible = l && l.externe ? ' target="_blank" rel="noopener"' : "";
+    var b = badgeStatut(projet);
+    var ms = stack(projet);
+    var statut = ligneStatut(projet);
+    var cat = String(projet.categorie || "").trim();
+
+    /* Visuel : image du Sheet si fournie, sinon visuel de remplacement
+       (initiales réelles) — aucune image inventée. */
     var img = projet.image_url
       ? '<img src="' + imgUrl(projet.image_url) + '" alt="' + esc(projet.titre) + '" loading="lazy" decoding="async" onerror="this.remove()">'
+      : '<span class="p-ph" aria-hidden="true"><b>' + esc(initiales(projet.titre)) + '</b><span>visuel à venir</span></span>';
+
+    var media = l
+      ? '<a class="p-media" href="' + href + '"' + cible + ' aria-label="' + esc(l.libelle) + ' : ' + esc(projet.titre) + '">' + img + '</a>'
+      : '<div class="p-media">' + img + '</div>';
+
+    var titre = l
+      ? '<a href="' + href + '"' + cible + '>' + esc(projet.titre) + '</a>'
+      : esc(projet.titre);
+
+    /* Pied de carte : lien vers l'étude de cas interne (si elle existe)
+       puis bouton d'action externe (type_lien → url_destination). */
+    var lienInterne = l && !l.externe
+      ? '<a class="link-arrow" href="' + href + '" aria-label="Étude de cas : ' + esc(projet.titre) + '">Étude de cas' + SVG_ARROW + '</a>'
       : "";
-    /* Libellés des boutons : "En savoir plus" pour les études de cas
-       internes, sinon le libellé personnalisé du Sheet (Demo, Bot, Jouer…) */
-    var label = isInterne ? "En savoir plus" : libelleAction(projet);
-    /* Bouton d'action directe (type_lien → url_destination, nouvel onglet) */
-    var labelAction = libelleAction(projet);
-    var urlAction = extUrl(projet.url_destination);
-    var actionBtn = '<a class="btn btn-gold btn-xs" href="' + urlAction + '" target="_blank" rel="noopener" aria-label="' + esc(labelAction) + ' : ' + esc(projet.titre) + '">' + esc(labelAction) + '</a>';
-    var ico = '<span class="p-media-ico" aria-hidden="true">' + iconePour(projet) + '</span>';
+    var urlAction = String(projet.url_destination || "").trim();
+    var action = (l && l.externe)
+      ? '<a class="btn btn-gold btn-xs" href="' + href + '" target="_blank" rel="noopener" aria-label="' + esc(l.libelle) + ' : ' + esc(projet.titre) + '">' + esc(l.libelle) + '</a>'
+      : (urlAction
+        ? '<a class="btn btn-gold btn-xs" href="' + extUrl(urlAction) + '" target="_blank" rel="noopener" aria-label="' + esc(libelleAction(projet)) + ' : ' + esc(projet.titre) + '">' + esc(libelleAction(projet)) + '</a>'
+        : "");
+    var pied = (lienInterne || action)
+      ? '<div class="p-foot"><span class="p-status">' + esc(statut) + '</span><span class="p-actions">' + lienInterne + action + '</span></div>'
+      : (statut ? '<div class="p-foot"><span class="p-status">' + esc(statut) + '</span></div>' : "");
 
     return '<article class="card card-hover p-card reveal">' +
-      '<a class="p-media" href="' + href + '"' + target + ' aria-label="Voir le projet : ' + esc(projet.titre) + '">' +
-        ico + img +
-        '<span class="chip">' + esc(projet.categorie || "") + '</span>' +
-      '</a>' +
+      media +
       '<div class="p-body">' +
-        '<div class="p-meta"><span class="st">' + esc(projet.categorie || "Projet") + '</span><span class="sep"></span><span>' + esc(projet.statut || "") + '</span><span class="sep"></span><span>' + esc(projet.date || "") + '</span></div>' +
-        '<h3 class="p-title"><a href="' + href + '"' + target + '>' + esc(projet.titre) + '</a></h3>' +
-        '<p class="p-desc">' + esc(projet.description_courte || "") + '</p>' +
-        (tags.length ? '<div class="p-tags">' + tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' : "") +
-        (isInterne
-          ? '<div class="p-foot">' +
-              '<a class="link-arrow" href="' + href + '" aria-label="En savoir plus : ' + esc(projet.titre) + '">En savoir plus<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>' +
-              actionBtn +
+        ((b.libelle || cat)
+          ? '<div class="p-top">' +
+              (b.libelle ? '<span class="badge-statut ' + b.classe + '">' + esc(b.libelle) + '</span>' : "") +
+              (cat ? '<span class="p-cat">' + esc(cat) + '</span>' : "") +
             '</div>'
-          : '<div class="p-foot">' + actionBtn + '</div>') +
+          : "") +
+        '<h3 class="p-title">' + titre + '</h3>' +
+        (projet.description_courte ? '<p class="p-desc">' + esc(projet.description_courte) + '</p>' : "") +
+        (ms ? '<p class="stack-mono">' + esc(ms) + '</p>' : "") +
+        pied +
       '</div>' +
     '</article>';
   }
@@ -140,6 +263,17 @@
       '<h3>' + esc(titre) + '</h3>' +
       '<p>' + esc(texte) + '</p>' +
       (lien ? '<a class="btn btn-gold btn-sm" href="' + lien + '">' + esc(lienTexte) + '</a>' : "") +
+    '</div>';
+  }
+
+  /* État vide v2 (blueprint §5) : aucune donnée inventée, on explique
+     simplement comment en ajouter depuis le Sheet. */
+  function etatVide(titre, texte, hint) {
+    return '<div class="empty-state reveal is-visible">' +
+      '<div class="es-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>' +
+      '<b>' + esc(titre) + '</b>' +
+      '<p>' + esc(texte) + '</p>' +
+      (hint ? '<span class="empty-hint">' + esc(hint) + '</span>' : "") +
     '</div>';
   }
 
@@ -176,6 +310,7 @@
             titre: titre,
             slug: window.Sheets.champ(r, ["slug"], ""),
             categorie: window.Sheets.champ(r, ["categorie", "category"], ""),
+            badge_statut: window.Sheets.champ(r, ["badge_statut", "badge"], ""),
             filtre: window.Sheets.champ(r, ["filtre", "filter"], ""),
             description_courte: window.Sheets.champ(r, ["description_courte", "description"], ""),
             description_longue: window.Sheets.champ(r, ["description_longue"], ""),
@@ -212,12 +347,15 @@
       var featured = projets.filter(function (p) { return p.featured; });
       if (!featured.length) {
         statutSource(containerId, src, 0);
-        el.innerHTML = etat("vide", "Aucun projet à la une", "Les projets sélectionnés apparaîtront ici dès qu'ils seront publiés dans le Sheet.");
+        el.innerHTML = etatVide("Aucun projet à la une",
+          "Les projets marqués featured=TRUE dans le Sheet apparaîtront ici.",
+          "Aucune modification de code nécessaire : ajoutez la ligne dans l'onglet Projets.");
         return;
       }
       el.innerHTML = featured.slice(0, 6).map(function (p) {
         try { return carte(p); } catch (e) { console.error("[Projets] Carte non rendue :", p.titre, e); return ""; }
-      }).join("") || etat("vide", "Aucun projet à la une", "Les projets sélectionnés apparaîtront ici dès qu'ils seront publiés dans le Sheet.");
+      }).join("") || etatVide("Aucun projet à la une",
+        "Les projets marqués featured=TRUE dans le Sheet apparaîtront ici.");
       statutSource(containerId, src, featured.length);
       window.Prjs.observeNew(el);
     }).catch(function (e) {
@@ -227,23 +365,52 @@
     });
   }
 
-  /* ---- Grille page /projets avec filtres ---- */
-  function grilleProjets(containerId, filterId) {
+  /* ---- Grille page /projets : filtres construits depuis le Sheet ----
+     Les puces proviennent des familles réellement présentes dans les
+     données (colonne `categorie`, ou `filtre` si un vocabulaire dédié
+     est renseigné). Ajouter une catégorie = ajouter une ligne dans le
+     Sheet : aucune intervention dans le code. */
+  function grilleProjets(containerId, filterId, resumeId) {
     var el = document.getElementById(containerId);
     if (!el) return;
     var actif = "Tous";
     var tous = [];
+    var bar = document.getElementById(filterId);
+    var resume = document.getElementById(resumeId || "");
+
+    function peindreFiltres() {
+      var famillesListe = listeFamilles(tous);
+      if (bar) {
+        bar.innerHTML = ["Tous"].concat(famillesListe).map(function (f) {
+          var on = f === actif;
+          return '<button class="f-btn' + (on ? " is-active" : "") + '" data-filtre="' + esc(f) + '"' +
+            ' aria-pressed="' + (on ? "true" : "false") + '">' + esc(f) + '</button>';
+        }).join("");
+      }
+      /* Rappel de contexte sous le titre de la page : compte réel +
+         familles réellement présentes (remplace les puces figées). */
+      if (resume) {
+        var n = tous.length;
+        resume.innerHTML = '<span class="chip chip-gold">' +
+          n + (n > 1 ? " réalisations" : " réalisation") + '</span>' +
+          famillesListe.map(function (f) { return '<span class="chip">' + esc(f) + '</span>'; }).join("");
+      }
+    }
 
     function render() {
-      var list = tous.filter(function (p) { return matcheFiltre(p, actif); });
+      var list = tous.filter(function (p) { return correspond(p, actif); });
       if (!list.length) {
         statutSource(containerId, srcActuel, 0);
-        el.innerHTML = etat("vide", "Aucun projet dans cette catégorie", "Essayez un autre filtre, ou consultez l'ensemble des projets.", "", "");
+        el.innerHTML = etatVide(
+          tous.length ? "Aucun projet dans cette catégorie" : "Aucune réalisation publiée",
+          tous.length
+            ? "Aucun projet ne porte la catégorie « " + actif + " » pour le moment. Choisissez « Tous » pour voir l'ensemble."
+            : "Les projets publiés dans l'onglet Projets du Sheet apparaîtront ici automatiquement.");
         return;
       }
       el.innerHTML = list.map(function (p) {
         try { return carte(p); } catch (e) { console.error("[Projets] Carte non rendue :", p.titre, e); return ""; }
-      }).join("") || etat("vide", "Aucun projet dans cette catégorie", "Essayez un autre filtre, ou consultez l'ensemble des projets.");
+      }).join("");
       statutSource(containerId, srcActuel, list.length);
       window.Prjs.observeNew(el);
     }
@@ -253,6 +420,10 @@
     recuperer().then(function (projets) {
       srcActuel = projets._source || "google-sheets";
       tous = projets;
+      if (actif !== "Tous" && !listeFamilles(tous).some(function (f) { return f.toLowerCase() === actif.toLowerCase(); })) {
+        actif = "Tous";
+      }
+      peindreFiltres();
       render();
     }).catch(function (e) {
       console.error("[Projets] Erreur de chargement :", e);
@@ -260,12 +431,15 @@
       el.innerHTML = etat("erreur", "Impossible de charger les projets", "Vérifiez la publication du Google Sheet puis rechargez la page.", "", "");
     });
 
-    var bar = document.getElementById(filterId);
     if (bar) bar.addEventListener("click", function (e) {
       var btn = e.target.closest(".f-btn");
       if (!btn) return;
-      actif = btn.getAttribute("data-filtre");
-      bar.querySelectorAll(".f-btn").forEach(function (b) { b.classList.toggle("is-active", b === btn); });
+      actif = btn.getAttribute("data-filtre") || "Tous";
+      Array.prototype.forEach.call(bar.querySelectorAll(".f-btn"), function (b) {
+        var on = b === btn;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
       render();
     });
   }
@@ -518,5 +692,19 @@
       items.forEach(function (el) { el.classList.add("is-visible"); });
     }
   }
-  window.Prjs = { carouselAccueil: carouselAccueil, grilleProjets: grilleProjets, caseStudy: caseStudy, initReveal: initReveal, observeNew: observeNew, esc: esc };
+  window.Prjs = {
+    carouselAccueil: carouselAccueil,
+    grilleProjets: grilleProjets,
+    caseStudy: caseStudy,
+    initReveal: initReveal,
+    observeNew: observeNew,
+    esc: esc,
+    /* helpers exposés (tests + réutilisation par d'autres modules) */
+    carte: carte,
+    familles: familles,
+    listeFamilles: listeFamilles,
+    badgeStatut: badgeStatut,
+    stack: stack,
+    lienPrincipal: lienPrincipal
+  };
 })();

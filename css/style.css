@@ -1026,3 +1026,32 @@ body.dock-sheet-open{overflow:hidden}
 }
 .xp-card-sm:hover::after{color:var(--gold)}
 @media (prefers-reduced-motion:reduce){.xp-card::before{opacity:1}}
+
+/* ---------- Réalisations v2 — cartes, pilules, filtres (Étape 4) ---------- */
+/* Rangée supérieure : pilule `badge_statut` + catégorie du Sheet */
+.p-top{display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap}
+.p-cat{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+
+/* Variantes de pilule complémentaires (public/beta/privé/nouveau : plus haut) */
+.badge-statut.is-archive{background:var(--bg-2);color:var(--ink-2);border-color:var(--line-strong)}
+.badge-statut.is-neutre{background:var(--card);color:var(--ink-2);border-color:var(--line-strong)}
+
+/* Visuel de remplacement : initiales du titre réel (aucune image inventée) */
+.p-ph{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(135deg,var(--bg-2),#E4DFD9)}
+.p-ph b{font-family:var(--font-display);font-size:2.6rem;font-weight:600;line-height:1;color:var(--gold-2);letter-spacing:.02em}
+.p-ph span{position:absolute;bottom:.75rem;right:.9rem;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe)}
+
+/* Ligne technologique monospace dans les cartes */
+.p-card .stack-mono{margin-top:.05rem}
+
+/* Pied de carte : statut (mono) + actions */
+.p-foot .p-status{font-family:var(--font-mono);font-size:.74rem;color:var(--ink-2)}
+.p-actions{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.p-foot .link-arrow{font-size:.87rem}
+.p-card .p-desc{color:var(--ink-2)}
+
+@media (max-width:560px){
+  .p-foot{flex-direction:column;align-items:flex-start;gap:.7rem}
+  .p-actions{width:100%}
+  .p-actions .btn-xs{flex:1;text-align:center}
+}
