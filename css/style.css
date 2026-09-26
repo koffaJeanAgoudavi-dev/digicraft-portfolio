@@ -1055,3 +1055,17 @@ body.dock-sheet-open{overflow:hidden}
   .p-actions{width:100%}
   .p-actions .btn-xs{flex:1;text-align:center}
 }
+
+/* ---------- Pages projets v2 — entête d'étude de cas (Étape 5) ---------- */
+/* La fiche reprend exactement les surfaces de /projets/ : pilule de
+   statut, ligne technologique monospace, boutons v2. */
+.page-hero .badge-statut{font-size:.72rem;padding:.3rem .8rem}
+.cs-stack{margin-top:.15rem;max-width:min(100%,70ch)}
+.page-extra .cs-stack{margin-top:0}
+.cs-actions{margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:.75rem}
+.cs-actions .btn{min-height:44px}
+.back-link{display:inline-flex;align-items:center;gap:.45rem;font-size:.85rem;font-weight:600;color:var(--ink-2);margin-bottom:1.1rem}
+.back-link:hover{color:var(--gold-2)}
+@media (max-width:560px){
+  .cs-actions .btn{flex:1 1 auto;text-align:center}
+}

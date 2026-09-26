@@ -109,16 +109,29 @@
       .replace(/[ôö]/g, "o").replace(/[ûü]/g, "u").replace(/\s+/g, " ").trim();
   }
 
+  /* Vocabulaire de la colonne `statut` (texte libre) → classe de pilule.
+     L'ordre compte : « Test privé » doit rester privé, « En production »
+     doit ressortir en public. */
+  var REGLES_PILULE = [
+    [/priv/,                         "is-prive"],     /* Privée, Test privé, Interne */
+    [/archiv|abandon|deprecat/,      "is-archive"],
+    [/^nouveau|^new|nouveaute/,      "is-nouveau"],
+    [/public|en ligne|^live|en prod|production|publi|^dispo/, "is-public"],
+    [/beta|b.ta|^test|prototype|alpha|^dev|developpement/, "is-beta"]
+  ];
+
+  function classePilule(valeur) {
+    var cle = normaliser(valeur);
+    if (!cle) return "is-neutre";
+    for (var i = 0; i < REGLES_PILULE.length; i++) {
+      if (REGLES_PILULE[i][0].test(cle)) return REGLES_PILULE[i][1];
+    }
+    return "is-neutre";
+  }
+
   function badgeStatut(p) {
     var libelle = String((p && p.badge_statut) || "").trim();
-    var cle = normaliser(libelle);
-    var classe = "is-neutre";
-    if (/^(public|publique|en ligne|live|dispo)/.test(cle)) classe = "is-public";
-    else if (/^(beta|bêta|test|prototype|alpha)/.test(cle)) classe = "is-beta";
-    else if (/^(priv|private|interne)/.test(cle)) classe = "is-prive";
-    else if (/^(nouveau|new|nouveaute|nouveauté)/.test(cle)) classe = "is-nouveau";
-    else if (/^(archiv|abandon|deprecat|deprecated)/.test(cle)) classe = "is-archive";
-    return { libelle: libelle, classe: classe };
+    return { libelle: libelle, classe: classePilule(libelle) };
   }
 
   /* Ligne technologique : texte brut monospace (v0.2 §2) */
@@ -590,16 +603,30 @@
       if (p.titre) document.title = p.titre + " | Étude de cas — DIGICRAFT Labs";
       if (elStatut && p.statut) {
         elStatut.textContent = p.statut;
+        /* Pilule v2 (blueprint §5) : même barème que les cartes de /projets/,
+           appliqué au libellé libre de la colonne `statut`. */
+        var pilule = elStatut.closest ? elStatut.closest(".badge-statut") : null;
+        if (pilule) {
+          pilule.className = "badge-statut " + classePilule(p.statut);
+          pilule.style.display = "";
+        }
         /* V1.3 : la fiche générique pré-masque la puce de statut. */
         if (dynamique) {
           var chipStatut = elStatut.closest ? elStatut.closest(".chip") : null;
-          if (chipStatut) chipStatut.style.display = "";
+          if (chipStatut && chipStatut !== pilule) chipStatut.style.display = "";
         }
       }
       if (elTags) {
-        var tags = (p.stack_tags || "").split(/[·|,]/).map(function (t) { return t.trim(); }).filter(Boolean);
-        if (tags.length) {
-          elTags.innerHTML = tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("");
+        var texteStack = stack(p);
+        /* v2 : ligne technologique monospace (pages projets restylées) ;
+           repli en puces `.tag` pour tout autre gabarit. */
+        if (elTags.classList && elTags.classList.contains("stack-mono")) {
+          elTags.textContent = texteStack;
+          elTags.style.display = texteStack ? "" : "none";
+        } else if (texteStack) {
+          elTags.innerHTML = texteStack.split(" · ").map(function (t) {
+            return '<span class="tag">' + esc(t) + '</span>';
+          }).join("");
         }
       }
       if (elMedia) {
@@ -640,6 +667,16 @@
           section.style.display = "none";
         }
       });
+
+      /* Sections/visuel remplis APRÈS l'init de l'observateur : leur
+         apparition est garantie (une section rendue visible au chargement
+         ne doit jamais rester en opacité 0 — même correctif que sur la
+         page Expertise). Les blocs restés vides restent masqués. */
+      Array.prototype.forEach.call(
+        page.querySelectorAll("[data-cs-section], [data-cs-media]"),
+        function (el) {
+          if (getComputedStyle(el).display !== "none") el.classList.add("is-visible");
+        });
 
       /* V1.3 : métadonnées SEO de la fiche générique (title, description,
          canonical propre /projets/<slug>/, Open Graph). */
