@@ -254,12 +254,50 @@
         });
       }
       statutSource(el, src, items.length);
-      if (window.Prjs && window.Prjs.observeNew) window.Prjs.observeNew(el);
+      reveler(el);
     }).catch(function (e) {
       console.error("[Expertise] Erreur de chargement :", e);
       statutSource(el, "erreur", 0);
       el.innerHTML = etat("erreur", "Impossible de charger l'expertise", "Vérifiez la publication du Google Sheet puis rechargez la page.");
     });
+  }
+
+  /* ---- Apparition des cartes injectées ----
+     Les cartes portent la classe `.reveal` (opacité 0 → 1 à l'entrée
+     dans le viewport). L'observateur global vit dans js/projects.js,
+     qui n'est PAS chargé sur /expertise/ : sans observateur local, les
+     cartes restaient invisibles (opacité 0) sur cette page.
+     Ce repli rend le module autonome : observateur global s'il existe,
+     sinon observateur local, sinon affichage immédiat. */
+  var observateurLocal = null;
+
+  function reveler(el) {
+    if (!el || !el.querySelectorAll) return;
+    var cibles = el.querySelectorAll(".reveal:not(.is-visible)");
+    if (!cibles.length) return;
+
+    if (window.Prjs && window.Prjs.observeNew) {
+      window.Prjs.observeNew(el);
+      /* Sécurité : si l'observateur global n'a rien marqué (élément hors
+         viewport, observateur indisponible), on n'y touche pas — le
+         défilement déclenchera l'apparition normalement. */
+      return;
+    }
+    if (typeof window.IntersectionObserver !== "function") {
+      Array.prototype.forEach.call(cibles, function (c) { c.classList.add("is-visible"); });
+      return;
+    }
+    if (!observateurLocal) {
+      observateurLocal = new window.IntersectionObserver(function (entrees) {
+        entrees.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            observateurLocal.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: "0px 0px -6% 0px", threshold: 0.05 });
+    }
+    Array.prototype.forEach.call(cibles, function (c) { observateurLocal.observe(c); });
   }
 
   function apercu(containerId, limite) { rendre(containerId, "apercu", limite); }
