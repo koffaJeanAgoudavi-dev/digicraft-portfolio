@@ -47,8 +47,8 @@ window.CONFIG = {
   colonnesAttendues: {
     parametres: ["cle", "valeur"],
     projets: ["titre", "slug", "categorie", "badge_statut", "description_courte", "image_url", "stack_tags", "statut", "date", "type_lien", "url_destination", "featured", "ordre", "probleme", "solution", "technologies_detail", "resultat"],
-    articles: ["titre", "plateforme", "description", "temps_lecture", "url", "date", "featured", "ordre"],
-    ressources: ["nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre"],
+    articles: ["titre", "plateforme", "description", "temps_lecture", "url", "date", "featured", "ordre", "titre_en", "description_en"],
+    ressources: ["type", "nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre", "nom_produit_en", "description_en"],
     buildinpublic: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"],
     expertise: ["titre", "description_courte", "description_longue", "icone", "categorie", "exemples_projets", "ordre"],
     parcours: ["type", "titre", "organisation", "date_obtention", "date_fin", "description", "verification_url", "ordre"]

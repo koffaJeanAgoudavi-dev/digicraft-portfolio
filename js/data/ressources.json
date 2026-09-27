@@ -1,21 +1,8 @@
 [
   {
-    "id": "R01",
-    "nom_produit": "IA sans hallucination",
-    "slug": "",
-    "description": "Guide complet pour maîtriser les modèles de langage sans dérive.",
-    "prix": "8,19",
-    "devise": "USD",
-    "image_cover": "https://res.cloudinary.com/mdebk4xz/image/upload/v1787951188/ima.avif",
-    "url_boutique": "https://digicraft.mychariow.shop/prd_uymct3i9",
-    "badge": "New",
-    "featured": "TRUE",
-    "ordre": "2"
-  },
-  {
     "id": "R02",
-    "nom_produit": "LE BUSINESS DIGITAL : La Méthode Complète (De Zéro à la Rentabilité)",
-    "slug": "",
+    "type": "ebook",
+    "nom_produit": "De Zéro à Rentable : Créer et Vendre son Business Digital avec l'IA (sans compétence technique, sans budget)",
     "description": "Apprends à créer, lancer et rentabiliser ton business digital avec l’IA, sans capital ni expérience.",
     "prix": "6,28",
     "devise": "USD",
@@ -23,12 +10,29 @@
     "url_boutique": "https://digicraft.mychariow.shop/business-digital",
     "badge": "Bestseller",
     "featured": "TRUE",
-    "ordre": "1"
+    "ordre": "1",
+    "nom_produit_en": "",
+    "description_en": ""
+  },
+  {
+    "id": "R01",
+    "type": "ebook",
+    "nom_produit": "IA sans hallucination ",
+    "description": "Guide complet pour maîtriser les modèles de langage sans dérive.",
+    "prix": "8,19",
+    "devise": "USD",
+    "image_cover": "https://res.cloudinary.com/mdebk4xz/image/upload/v1787951188/ima.avif",
+    "url_boutique": "https://digicraft.mychariow.shop/prd_uymct3i9",
+    "badge": "New",
+    "featured": "TRUE",
+    "ordre": "2",
+    "nom_produit_en": "",
+    "description_en": ""
   },
   {
     "id": "R03",
+    "type": "ebook",
     "nom_produit": "5 Prompts IA pour gagner 2h par jour",
-    "slug": "",
     "description": "5 prompts pratiques pour automatiser les tâches répétitives et gagner du temps au quotidien.",
     "prix": "0",
     "devise": "USD",
@@ -36,6 +40,8 @@
     "url_boutique": "https://digicraft.mychariow.shop/prd_abt9ny",
     "badge": "Gratuit",
     "featured": "TRUE",
-    "ordre": "3"
+    "ordre": "3",
+    "nom_produit_en": "",
+    "description_en": ""
   }
 ]

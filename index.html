@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20260926d">
+  <link rel="stylesheet" href="css/style.css?v=20260927a">
 </head>
 <body class="has-dock">
   <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -226,7 +226,7 @@
               <button class="c-arrow" data-carousel-next aria-label="Articles suivants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
           </div>
-          <div class="carousel" id="carousel-articles" aria-label="Articles à la une, défilement horizontal">
+          <div class="carousel" id="carousel-articles" data-art-mode="apercu" data-art-limit="3" aria-label="Articles à la une, défilement horizontal">
             <!-- injecté par js/articles.js — featured uniquement -->
           </div>
         </div>
@@ -251,7 +251,7 @@
               <button class="c-arrow" data-carousel-next aria-label="Ressources suivantes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
           </div>
-          <div class="carousel" id="carousel-ressources" aria-label="Ressources à la une, défilement horizontal">
+          <div class="carousel" id="carousel-ressources" data-ress-mode="apercu" data-ress-limit="3" aria-label="Ressources à la une, défilement horizontal">
             <!-- injecté par js/resources.js — max 3 produits featured -->
           </div>
         </div>
@@ -368,20 +368,20 @@
   </footer>
 
   <script>window.SITE_ROOT = "";</script>
-  <script src="js/config.js?v=20260926d"></script>
-  <script src="js/consent.js?v=20260926d"></script>
-  <script src="js/analytics.js?v=20260926d"></script>
-  <script src="js/sheets.js?v=20260926d"></script>
-  <script src="js/projects.js?v=20260926d"></script>
-  <script src="js/articles.js?v=20260926d"></script>
-  <script src="js/resources.js?v=20260926d"></script>
-  <script src="js/expertise.js?v=20260926d"></script>
-  <script src="js/build.js?v=20260926d"></script>
-  <script src="js/activite.js?v=20260926d"></script>
-  <script src="js/parcours.js?v=20260926d"></script>
-  <script src="js/i18n.js?v=20260926d"></script>
-  <script src="js/main.js?v=20260926d"></script>
-  <script src="js/dock.js?v=20260926d"></script>
+  <script src="js/config.js?v=20260927a"></script>
+  <script src="js/consent.js?v=20260927a"></script>
+  <script src="js/analytics.js?v=20260927a"></script>
+  <script src="js/sheets.js?v=20260927a"></script>
+  <script src="js/projects.js?v=20260927a"></script>
+  <script src="js/articles.js?v=20260927a"></script>
+  <script src="js/resources.js?v=20260927a"></script>
+  <script src="js/expertise.js?v=20260927a"></script>
+  <script src="js/build.js?v=20260927a"></script>
+  <script src="js/activite.js?v=20260927a"></script>
+  <script src="js/parcours.js?v=20260927a"></script>
+  <script src="js/i18n.js?v=20260927a"></script>
+  <script src="js/main.js?v=20260927a"></script>
+  <script src="js/dock.js?v=20260927a"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       window.Prjs.carouselAccueil("carousel-projets");

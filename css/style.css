@@ -1116,3 +1116,28 @@ body.dock-sheet-open{overflow:hidden}
 
 /* Le bloc d'aperçu sur l'accueil reprend la même grille, en 3 colonnes max */
 #apercu-parcours .parc-grid{margin-top:.2rem}
+
+/* ---------- Articles & Ressources — ajustements v2 (étape 8) ---------- */
+/* Articles : étiquette de plateforme (mono) + média optionnel */
+.a-plat{font-family:var(--font-mono);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2)}
+.a-ext{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-2);white-space:nowrap}
+.a-media{display:block;margin:-1.6rem -1.6rem 0;aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.a-media img{width:100%;height:100%;object-fit:cover}
+.a-card h3 + p{margin-top:.1rem}
+
+/* Filtres : compteur réel par catégorie */
+.f-n{display:inline-block;margin-left:.35rem;font-family:var(--font-mono);font-size:.68rem;opacity:.6}
+
+/* Ressources : étiquette `type` + regroupement par type */
+.r-type{margin:0}
+.r-type span{font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2)}
+.r-badge{position:absolute;top:.9rem;left:.9rem;z-index:3}
+.r-foot .r-link{font-size:.86rem}
+.ress-groupe{margin-top:2.4rem}
+.ress-groupe:first-child{margin-top:0}
+.ress-groupe-titre{display:flex;align-items:baseline;gap:.6rem;font-size:1.25rem;margin-bottom:1.1rem}
+.ress-count{font-family:var(--font-mono);font-style:normal;font-size:.72rem;font-weight:700;color:var(--gold-2);background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:999px;padding:.05rem .5rem}
+.ress-grid{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media (min-width:720px){.ress-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.ress-grid{grid-template-columns:repeat(3,1fr)}}
+#grille-articles .a-card{height:100%}
