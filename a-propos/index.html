@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/style.css?v=20260926a">
+  <link rel="stylesheet" href="../css/style.css?v=20260927b">
 </head>
 <body class="has-dock">
   <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -106,7 +106,7 @@
             <p class="lead reveal">Je construis des systèmes digitaux intelligents — et je partage ce que j'apprends en les construisant.</p>
           </div>
           <div class="about-photo reveal" style="max-width:340px;margin-inline:auto">
-            <img src="../assets/images/koffa-agoudavi.jpg" alt="Koffa Jean AGOUDAVI, fondateur de DIGICRAFT Labs" width="720" height="900" loading="lazy" decoding="async" onerror="this.remove()">
+            <img data-p-photo data-photo-fallback="../assets/images/koffa-agoudavi.jpg" src="../assets/images/koffa-agoudavi.jpg" alt="Koffa Jean AGOUDAVI, fondateur de DIGICRAFT Labs" width="720" height="900" loading="lazy" decoding="async" onerror="this.src='../assets/images/koffa-agoudavi.jpg'">
             <span class="about-photo-cap">Koffa Jean Agoudavi · Fondateur</span>
           </div>
         </div>
@@ -157,31 +157,31 @@
           <div class="ap-row reveal">
             <span class="ap-num">05 — Technologies &amp; outils</span>
             <h2>Ma boîte à outils</h2>
-            <div class="tool-chips">
-              <span class="chip chip-gold">Make</span>
-              <span class="chip chip-gold">Groq</span>
-              <span class="chip">Gemini</span>
-              <span class="chip">LLM / IA</span>
-              <span class="chip">Telegram Bots</span>
-              <span class="chip">Google Sheets</span>
-              <span class="chip">Webhooks</span>
-              <span class="chip">APIs</span>
-              <span class="chip">OCR</span>
-              <span class="chip">No-Code</span>
-              <span class="chip">HTML / CSS / JS</span>
-              <span class="chip">Cloudflare Pages</span>
-            </div>
+            <ul class="tech-tags">
+              <li>Make</li>
+              <li>Groq</li>
+              <li>Gemini</li>
+              <li>LLM / IA</li>
+              <li>Telegram Bots</li>
+              <li>Google Sheets</li>
+              <li>Webhooks</li>
+              <li>APIs</li>
+              <li>OCR</li>
+              <li>No-Code</li>
+              <li>HTML / CSS / JS</li>
+              <li>Cloudflare Pages</li>
+            </ul>
           </div>
 
           <!-- Parcours / expériences -->
           <div class="ap-row reveal">
             <span class="ap-num">06 — Parcours &amp; expériences</span>
             <h2>De l'expérimentation à la production</h2>
-            <div class="timeline">
-              <div class="tl-item"><span>2026</span><b>DIGICRAFT Labs</b><p>Fondation du laboratoire : premiers systèmes en production, premiers produits digitaux, premiers partages publics.</p></div>
-              <div class="tl-item"><span>2026</span><b>SmartReply Agent &amp; ScriboAI</b><p>Conception et mise en production d'agents IA et de bots Telegram utilisés au quotidien.</p></div>
-              <div class="tl-item"><span>2025</span><b>Exploration IA &amp; automatisation</b><p>Apprentissage intensif : workflows, modèles de langage, intégrations et expérimentations.</p></div>
-            </div>
+            <ul class="ap-tl">
+              <li><span class="ap-tl-year">2026</span><b>DIGICRAFT Labs</b><p>Fondation du laboratoire : premiers systèmes en production, premiers produits digitaux, premiers partages publics.</p></li>
+              <li><span class="ap-tl-year">2026</span><b>SmartReply Agent &amp; ScriboAI</b><p>Conception et mise en production d'agents IA et de bots Telegram utilisés au quotidien.</p></li>
+              <li><span class="ap-tl-year">2025</span><b>Exploration IA &amp; automatisation</b><p>Apprentissage intensif : workflows, modèles de langage, intégrations et expérimentations.</p></li>
+            </ul>
           </div>
 
           <!-- LinkedIn -->
@@ -190,8 +190,8 @@
             <h2>Où je partage mon travail</h2>
             <p>Je publie régulièrement mes expériences, méthodes et découvertes sur LinkedIn. C'est là que vous verrez le laboratoire en action.</p>
             <div class="about-cta">
-              <a class="btn btn-gold" data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">Voir mon profil LinkedIn <span class="arr">→</span></a>
-              <a class="btn btn-ghost" data-p-youtube href="https://www.youtube.com/@KoffaJeanAgoudavi" target="_blank" rel="noopener">Voir ma chaîne YouTube <span class="arr">→</span></a>
+              <a class="btn btn-gold" data-canal="linkedin" data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">Voir mon profil LinkedIn <span class="arr">→</span></a>
+              <a class="btn btn-ghost" data-canal="youtube" data-p-youtube href="https://www.youtube.com/@KoffaJeanAgoudavi" target="_blank" rel="noopener">Voir ma chaîne YouTube <span class="arr">→</span></a>
             </div>
           </div>
         </div>
@@ -261,16 +261,16 @@
   </footer>
 
   <script>window.SITE_ROOT = "../";</script>
-  <script src="../js/config.js?v=20260926a"></script>
-  <script src="../js/consent.js?v=20260926a"></script>
-  <script src="../js/analytics.js?v=20260926a"></script>
-  <script src="../js/sheets.js?v=20260926a"></script>
-  <script src="../js/projects.js?v=20260926a"></script>
-  <script src="../js/articles.js?v=20260926a"></script>
-  <script src="../js/resources.js?v=20260926a"></script>
-  <script src="../js/i18n.js?v=20260926a"></script>
-  <script src="../js/main.js?v=20260926a"></script>
-  <script src="../js/dock.js?v=20260926a"></script>
+  <script src="../js/config.js?v=20260927b"></script>
+  <script src="../js/consent.js?v=20260927b"></script>
+  <script src="../js/analytics.js?v=20260927b"></script>
+  <script src="../js/sheets.js?v=20260927b"></script>
+  <script src="../js/projects.js?v=20260927b"></script>
+  <script src="../js/articles.js?v=20260927b"></script>
+  <script src="../js/resources.js?v=20260927b"></script>
+  <script src="../js/i18n.js?v=20260927b"></script>
+  <script src="../js/main.js?v=20260927b"></script>
+  <script src="../js/dock.js?v=20260927b"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       window.Prjs.initReveal();

@@ -89,6 +89,16 @@
   function initParametres() {
     window.Sheets.loadSheet("parametres").then(function (rows) {
       var P = window.Sheets.paramsToObject(rows);
+      /* Valeurs BRUTES du Sheet : permet de distinguer « clé absente »
+         (on garde le lien écrit dans le HTML) de « clé présente mais
+         vide » (le propriétaire du CMS a voulu retirer l'élément → on le
+         masque proprement plutôt que d'afficher un lien mort). */
+      var BRUT = {};
+      rows.forEach(function (r) {
+        var k = String(r.cle || "").trim();
+        if (k) BRUT[k] = String(r.valeur == null ? "" : r.valeur).trim();
+      });
+      window.PARAMS_BRUT = BRUT;
 
       /* Textes — clés v2 (CMS v0.2) avec repli sur l'ancien nommage */
       var textMap = {
@@ -150,6 +160,26 @@
         qsa(sel).forEach(function (el) {
           if (linkMap[sel]) el.setAttribute("href", linkMap[sel]);
         });
+      });
+
+      /* Canaux de contact (Etape 9) : chaque carte porte data-canal.
+         - clé absente du Sheet  → on conserve le lien du HTML (repli) ;
+         - clé présente et vide  → la carte est masquée (choix explicite
+           de retrait côté CMS, aucun lien mort, aucun texte vide). */
+      var CANAUX = {
+        email: "email_contact",
+        linkedin: "url_linkedin",
+        telegram: "url_telegram",
+        whatsapp: "url_whatsapp",
+        youtube: "url_youtube",
+        google: "url_google_business"
+      };
+      qsa("[data-canal]").forEach(function (el) {
+        var cle = CANAUX[el.getAttribute("data-canal")];
+        if (!cle) return;
+        var vientDuSheet = Object.prototype.hasOwnProperty.call(BRUT, cle);
+        if (vientDuSheet && !BRUT[cle]) el.hidden = true;
+        else el.hidden = false;
       });
 
       /* Email : liens mailto + valeur */
