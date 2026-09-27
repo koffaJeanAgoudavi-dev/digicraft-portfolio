@@ -7,14 +7,13 @@
   <meta name="description" content="Expériences, formations, certifications et licences de Koffa Jean AGOUDAVI.">
   <!-- TEMPORAIRE : section pas encore alimentée par le CMS.
        Retirer cette ligne à l'étape qui remplit la page (3, 6 ou 7). -->
-  <meta name="robots" content="noindex, follow">
   <link rel="icon" type="image/svg+xml" href="../favicon.png">
   <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/parcours/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/style.css?v=20260926a">
+  <link rel="stylesheet" href="../css/style.css?v=20260926d">
 </head>
 <body class="has-dock">
   <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -91,19 +90,16 @@
   <main id="contenu">
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow">Parcours</p>
-        <h1>Parcours</h1>
-        <p class="lead">Expériences, formations, certifications et licences.</p>
+        <p class="eyebrow reveal">Parcours</p>
+        <h1 class="reveal">Expériences, formations &amp; certifications</h1>
+        <p class="lead reveal">Ce que j'ai appris, construit et validé — formations, expériences et certifications, avec leur lien de vérification quand il existe.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:0">
       <div class="container">
-        <div class="empty-state">
-          <span class="es-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.4L20 10l-5.8 1.6L12 17l-2.2-5.4L4 10l5.8-1.6z"/></svg></span>
-          <b>Contenu en cours d'intégration</b>
-          <p>Cette page se remplit depuis l'onglet « Parcours » (ex-« Certifications ») du Google Sheets : expériences, formations et certifications, avec lien de vérification quand il existe.</p>
-          <span class="empty-hint">Aucune entrée n'est affichée tant qu'elle n'est pas saisie dans le CMS — rien n'est inventé.</span>
+        <div id="parcours-liste" data-parc-mode="page" aria-live="polite" aria-busy="true">
+          <!-- injecté par js/parcours.js depuis l'onglet « Parcours » (ex-Certifications) -->
         </div>
       </div>
     </section>
@@ -155,12 +151,18 @@
     </div>
   </footer>
   <script>window.SITE_ROOT = "../";</script>
-  <script src="../js/config.js?v=20260926a"></script>
-  <script src="../js/consent.js?v=20260926a"></script>
-  <script src="../js/analytics.js?v=20260926a"></script>
-  <script src="../js/sheets.js?v=20260926a"></script>
-  <script src="../js/i18n.js?v=20260926a"></script>
-  <script src="../js/main.js?v=20260926a"></script>
-  <script src="../js/dock.js?v=20260926a"></script>
+  <script src="../js/config.js?v=20260926d"></script>
+  <script src="../js/consent.js?v=20260926d"></script>
+  <script src="../js/analytics.js?v=20260926d"></script>
+  <script src="../js/sheets.js?v=20260926d"></script>
+  <script src="../js/i18n.js?v=20260926d"></script>
+  <script src="../js/main.js?v=20260926d"></script>
+  <script src="../js/parcours.js?v=20260926d"></script>
+  <script src="../js/dock.js?v=20260926d"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      window.Parcs.page("parcours-liste");
+    });
+  </script>
 </body>
 </html>
