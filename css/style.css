@@ -1069,3 +1069,28 @@ body.dock-sheet-open{overflow:hidden}
 @media (max-width:560px){
   .cs-actions .btn{flex:1 1 auto;text-align:center}
 }
+
+/* ---------- Activité — journal chronologique (v0.2 §6) ---------- */
+.tl{list-style:none;position:relative;margin:1.8rem 0 0;padding-left:1.9rem;display:flex;flex-direction:column;gap:0}
+.tl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1.5px;background:var(--line-strong)}
+.tl-item{position:relative;padding:0 0 1.7rem}
+.tl-item::before{content:"";position:absolute;left:-1.9rem;top:.42rem;width:11px;height:11px;border-radius:50%;background:var(--card);border:2.5px solid var(--gold)}
+.tl-item.is-first::before{background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
+.tl-meta{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:.3rem}
+.tl-date{font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2)}
+.tl-type{font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-2);background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:999px;padding:.1rem .5rem}
+.tl-titre{font-size:1.08rem;margin-bottom:.3rem}
+.tl-desc{font-size:.9rem;color:var(--ink-2);max-width:78ch}
+.tl-foot{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;margin-top:.55rem}
+.tl-statut{font-family:var(--font-mono);font-size:.74rem;color:var(--ink-2);background:rgba(166,143,129,.10);border:1px dashed var(--line);border-radius:8px;padding:.28rem .55rem;max-width:100%}
+.tl-link{font-size:.85rem}
+.tl-img{display:block;margin-top:.7rem;max-width:min(100%,360px);border-radius:12px;border:1px solid var(--line)}
+.tl-state{list-style:none}
+.tl-state::before{display:none}
+.tl-state .es-ico{margin-inline:auto}
+@media (max-width:560px){
+  .tl{padding-left:1.5rem}
+  .tl-item{padding-bottom:1.4rem}
+  .tl-item::before{left:-1.5rem;width:9px;height:9px}
+  .tl-statut{font-size:.7rem}
+}

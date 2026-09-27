@@ -265,6 +265,31 @@
     });
   }
 
+  /* ---------- Révélation des blocs `.reveal` (toutes les pages) ----------
+     L'observateur global vit dans js/projects.js, absent de plusieurs
+     pages (activite/, expertise/…). Sans repli, les blocs `.reveal`
+     statiques de ces pages restaient en opacité 0. Ici : on délègue si
+     l'observateur global existe (les pages concernées l'initialisent dans
+     leur script inline), sinon on en crée un localement. */
+  function initRevealGlobal() {
+    if (window.Prjs && window.Prjs.initReveal) return;   /* déjà géré par la page */
+    var els = qsa(".reveal:not(.is-visible)");
+    if (!els.length) return;
+    /* typeof (et non "in window") : certains environnements définissent la
+       propriété à undefined — la garde doit rester fiable. */
+    if (typeof window.IntersectionObserver !== "function") {
+      els.forEach(function (el) { el.classList.add("is-visible"); });
+      return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("is-visible"); obs.unobserve(en.target); }
+      });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.05 });
+    els.forEach(function (el) { obs.observe(el); });
+    window.revealObserver = obs;
+  }
+
   /* ---------- Build in public : visibilité conditionnelle ---------- */
   /* La section (accueil + page dédiée) et le lien footer ne s'affichent
      que si l'onglet BuildInPublic du Sheet contient au moins une vraie
@@ -278,8 +303,11 @@
         var li = a.closest("li");
         if (li) li.style.display = "none"; else a.style.display = "none";
       });
-      var accueil = document.getElementById("build-in-public");
-      if (accueil) accueil.style.display = "none";
+      /* La section d'accueil a été renommée « Activité » (v0.2 §6) ;
+         l'état vide est géré par js/activite.js, on ne masque donc plus
+         la section, mais on garde la règle pour l'ancien gabarit. */
+      var ancien = document.getElementById("build-in-public");
+      if (ancien) ancien.style.display = "none";
       var grille = document.getElementById("grille-build");
       if (grille) {
         var sec = grille.closest("section");
@@ -309,6 +337,7 @@
     initParametres();
     initContact();
     initBuildPublic();
+    initRevealGlobal();
     initMisc();
 
     /* Changement de langue (js/i18n.js) : ré-injection des textes CMS

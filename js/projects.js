@@ -701,7 +701,7 @@
   window.revealObserver = null;
   function initReveal() {
     var els = document.querySelectorAll(".reveal");
-    if (!("IntersectionObserver" in window)) {
+    if (typeof window.IntersectionObserver !== "function") {
       els.forEach(function (el) { el.classList.add("is-visible"); });
       return;
     }

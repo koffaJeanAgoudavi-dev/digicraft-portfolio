@@ -7,14 +7,13 @@
   <meta name="description" content="Articles, publications et journal chronologique de construction — le build in public de mes projets.">
   <!-- TEMPORAIRE : section pas encore alimentée par le CMS.
        Retirer cette ligne à l'étape qui remplit la page (3, 6 ou 7). -->
-  <meta name="robots" content="noindex, follow">
   <link rel="icon" type="image/svg+xml" href="../favicon.png">
   <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/activite/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/style.css?v=20260926a">
+  <link rel="stylesheet" href="../css/style.css?v=20260926c">
 </head>
 <body class="has-dock">
   <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -91,20 +90,17 @@
   <main id="contenu">
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow">Activité</p>
-        <h1>Activité</h1>
-        <p class="lead">Articles, publications et journal chronologique de construction (build in public).</p>
+        <p class="eyebrow reveal">Activité</p>
+        <h1 class="reveal">Journal chronologique</h1>
+        <p class="lead reveal">Ce que je construis, teste et apprends — au jour le jour. Chaque entrée provient du journal du projet : elle n'est ni réécrite ni complétée après coup.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:0">
       <div class="container">
-        <div class="empty-state">
-          <span class="es-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.4L20 10l-5.8 1.6L12 17l-2.2-5.4L4 10l5.8-1.6z"/></svg></span>
-          <b>Contenu en cours d'intégration</b>
-          <p>Cette page regroupera les publications (onglet « Articles ») et le journal chronologique des projets (onglet « Timeline »). Les entrées saisies dans le CMS apparaîtront ici sans modification du code.</p>
-          <span class="empty-hint">En attendant, aucune entrée n'est affichée — rien n'est inventé.</span>
-        </div>
+        <ol class="tl" id="timeline-activite" data-actv-mode="page" aria-live="polite" aria-busy="true">
+          <!-- injecté par js/activite.js depuis l'onglet « Timeline » -->
+        </ol>
       </div>
     </section>
   </main>
@@ -155,12 +151,18 @@
     </div>
   </footer>
   <script>window.SITE_ROOT = "../";</script>
-  <script src="../js/config.js?v=20260926a"></script>
-  <script src="../js/consent.js?v=20260926a"></script>
-  <script src="../js/analytics.js?v=20260926a"></script>
-  <script src="../js/sheets.js?v=20260926a"></script>
-  <script src="../js/i18n.js?v=20260926a"></script>
-  <script src="../js/main.js?v=20260926a"></script>
-  <script src="../js/dock.js?v=20260926a"></script>
+  <script src="../js/config.js?v=20260926c"></script>
+  <script src="../js/consent.js?v=20260926c"></script>
+  <script src="../js/analytics.js?v=20260926c"></script>
+  <script src="../js/sheets.js?v=20260926c"></script>
+  <script src="../js/i18n.js?v=20260926c"></script>
+  <script src="../js/main.js?v=20260926c"></script>
+  <script src="../js/activite.js?v=20260926c"></script>
+  <script src="../js/dock.js?v=20260926c"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      window.Actv.page("timeline-activite");   /* les blocs .reveal statiques sont gérés par js/main.js */
+    });
+  </script>
 </body>
 </html>
