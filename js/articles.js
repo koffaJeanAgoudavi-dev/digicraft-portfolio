@@ -23,6 +23,13 @@
 (function () {
   "use strict";
 
+  /* Libellés d'interface traduits (js/i18n.js). Repli : texte passé en
+     second argument — le module reste lisible même si i18n.js manque. */
+  function T(cle, vars, secours) {
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars);
+    return secours !== undefined ? secours : cle;
+  }
+
   var MOIS_FR = ["janvier", "février", "mars", "avril", "mai", "juin",
                  "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   var MOIS_EN = ["January", "February", "March", "April", "May", "June",
@@ -176,7 +183,7 @@
       .sort(function (a, b) { return b.n - a.n || a.nom.localeCompare(b.nom); });
   }
   function filtrerParPlateforme(liste, plateforme) {
-    if (!plateforme || plateforme === "Tous") return (liste || []).slice();
+    if (!plateforme || plateforme === T("art.filtre.tous", null, "Tous") || plateforme === "Tous") return (liste || []).slice();
     return (liste || []).filter(function (a) { return plateformeDe(a) === plateforme; });
   }
 
@@ -212,7 +219,7 @@
       (desc ? '<p>' + esc(desc) + '</p>' : "") +
       (lien
         ? '<div class="a-foot"><a class="link-arrow" href="' + esc(lien) + '" target="_blank" rel="noopener"' +
-          ' aria-label="Lire « ' + esc(titre) + ' » sur ' + esc(plat) + '">Lire l\'article' +
+          ' aria-label="' + esc(T("art.aria.lire", { t: titre, p: plat })) + '">' + T("art.lire") +
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
           '<span class="a-ext">↗ ' + esc(plat) + '</span></div>'
         : "") +
@@ -239,9 +246,9 @@
     if (ancien) ancien.remove();
     var div = document.createElement("p");
     div.className = "dyn-source" + (source === "local" ? " is-local" : "") + (source === "erreur" ? " is-erreur" : "");
-    if (source === "google-sheets") div.innerHTML = '<span class="dot"></span>Données : Google Sheets · ' + n + " " + mot + (n > 1 ? "s" : "") ;
-    else if (source === "local") div.innerHTML = '<span class="dot"></span>Données de secours (Google Sheets injoignable)';
-    else div.innerHTML = '<span class="dot"></span>Erreur de chargement — ouvrez la console (F12) pour le détail';
+    if (source === "google-sheets") div.innerHTML = '<span class="dot"></span>' + T("etat.donnees") + n + " " + (n > 1 ? T("art.compteur.plur") : T("art.compteur.sing"));
+    else if (source === "local") div.innerHTML = '<span class="dot"></span>' + T("etat.secours");
+    else div.innerHTML = '<span class="dot"></span>' + T("etat.erreur");
     el.parentElement.insertBefore(div, el.nextSibling);
   }
 
@@ -266,7 +273,7 @@
   /* Filtres de la page /articles/ : construits depuis les données */
   function construireFiltres(bar, liste, actif, surClic) {
     if (!bar) return;
-    var items = [{ nom: "Tous", n: liste.length }].concat(plateformes(liste));
+    var items = [{ nom: T("art.filtre.tous", null, "Tous"), n: liste.length }].concat(plateformes(liste));
     bar.innerHTML = items.map(function (p) {
       return '<button type="button" class="f-btn' + (p.nom === actif ? " is-active" : "") + '" data-filtre="' + esc(p.nom) + '">' +
         esc(p.nom) + ' <span class="f-n">' + p.n + "</span></button>";
@@ -295,9 +302,7 @@
 
       if (!tous.length) {
         if (bar) bar.innerHTML = "";
-        el.innerHTML = etatVide("Articles en cours d'alimentation",
-          "Les articles publiés sur LinkedIn, Medium ou ailleurs apparaîtront ici dès qu'ils seront saisis dans l'onglet « Articles » du Sheet.",
-          "Aucun contenu n'est affiché tant que le Sheet est vide — rien n'est inventé.");
+        el.innerHTML = etatVide(T("art.vide.titre"), T("art.vide.desc"), T("etat.rien.invente"));
         statutSource(el, src, 0, "article");
         return;
       }
@@ -305,9 +310,7 @@
       if (mode === "apercu") {
         var featured = tous.filter(function (a) { return a.featured; }).slice(0, limite || 3);
         if (!featured.length) {
-          el.innerHTML = etatVide("Aucun article à la une",
-            "Le Sheet est rempli, mais aucune ligne n'a `featured = TRUE` : l'accueil n'affiche que les articles marqués à la une.",
-            "Cochez `featured` sur les articles à mettre en avant — aucune modification de code n'est nécessaire.");
+          el.innerHTML = etatVide(T("art.accueil.vide.titre"), T("art.accueil.vide.desc"), T("art.accueil.vide.hint"));
           statutSource(el, src, 0, "article");
           return;
         }
@@ -323,9 +326,9 @@
       function afficher(filtre) {
         var list = filtrerParPlateforme(tous, filtre);
         if (!list.length) {
-          el.innerHTML = etatVide("Aucun article dans cette catégorie",
-            "Aucun article du Sheet ne correspond au filtre « " + filtre + " ».",
-            "Choisissez « Tous » pour revenir à la liste complète.");
+          el.innerHTML = etatVide(T("art.vide.filtre.titre"),
+            T("art.vide.filtre.desc", { f: filtre }),
+            "");
           statutSource(el, src, 0, "article");
           return;
         }
@@ -335,12 +338,12 @@
         statutSource(el, src, list.length, "article");
         reveler(el);
       }
-      construireFiltres(bar, tous, "Tous", afficher);
-      afficher("Tous");
+      construireFiltres(bar, tous, T("art.filtre.tous", null, "Tous"), afficher);
+      afficher(T("art.filtre.tous", null, "Tous"));
     }).catch(function (e) {
       console.error("[Articles] Erreur de chargement :", e);
-      el.innerHTML = etatVide("Impossible de charger les articles",
-        "Vérifiez la publication de l'onglet « Articles » du Google Sheet, puis rechargez la page.");
+      el.innerHTML = etatVide(T("art.erreur.titre"),
+        T("etat.sheet.onglet", { onglet: "Articles" }));
       statutSource(el, "erreur", 0, "article");
     });
   }

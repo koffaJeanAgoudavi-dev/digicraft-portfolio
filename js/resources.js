@@ -20,6 +20,13 @@
 (function () {
   "use strict";
 
+  /* Libellés d'interface traduits (js/i18n.js). Repli : texte passé en
+     second argument — le module reste lisible même si i18n.js manque. */
+  function T(cle, vars, secours) {
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars);
+    return secours !== undefined ? secours : cle;
+  }
+
   var COVER_COLORS = ["#8A6A08", "#3E5C50", "#5B4A8A", "#8A4A3E", "#2F5D7E", "#6B6A63"];
 
   /* Libellés FR des types connus (les autres passent tels quels) */
@@ -215,7 +222,7 @@
 
     return '<article class="card r-card reveal"' + (p.type ? ' data-ress-type="' + esc(p.type) + '"' : "") + ">" +
       "<a class=\"r-media\" href=\"" + esc(lien || "#") + "\"" + (lien ? ' target="_blank" rel="noopener"' : "") +
-        ' aria-label="' + esc(nom) + (lien ? " — ouvre la boutique externe" : "") + '">' +
+        ' aria-label="' + esc(nom) + (lien ? esc(T("ress.externe")) : "") + '">' +
         badge + couverture(nom) + img +
       "</a>" +
       '<div class="r-body">' +
@@ -228,7 +235,7 @@
             : "<span></span>") +
           (lien
             ? '<a class="link-arrow r-link" href="' + esc(lien) + '" target="_blank" rel="noopener"' +
-              ' aria-label="Voir « ' + esc(nom) + ' » sur la boutique externe">Voir sur la boutique' +
+              ' aria-label="' + esc(T("ress.aria.voir", { n: nom })) + '">' + T("ress.voir") +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
             : "") +
         "</div>" +
@@ -256,9 +263,9 @@
     if (ancien) ancien.remove();
     var div = document.createElement("p");
     div.className = "dyn-source" + (source === "local" ? " is-local" : "") + (source === "erreur" ? " is-erreur" : "");
-    if (source === "google-sheets") div.innerHTML = '<span class="dot"></span>Données : Google Sheets · ' + n + " ressource" + (n > 1 ? "s" : "");
-    else if (source === "local") div.innerHTML = '<span class="dot"></span>Données de secours (Google Sheets injoignable)';
-    else div.innerHTML = '<span class="dot"></span>Erreur de chargement — ouvrez la console (F12) pour le détail';
+    if (source === "google-sheets") div.innerHTML = '<span class="dot"></span>' + T("etat.donnees") + n + " " + (n > 1 ? T("ress.compteur.plur") : T("ress.compteur.sing"));
+    else if (source === "local") div.innerHTML = '<span class="dot"></span>' + T("etat.secours");
+    else div.innerHTML = '<span class="dot"></span>' + T("etat.erreur");
     el.parentElement.insertBefore(div, el.nextSibling);
   }
 
@@ -289,9 +296,7 @@
       var tous = trier(liste);
 
       if (!tous.length) {
-        el.innerHTML = etatVide("Ressources en cours d'alimentation",
-          "Les produits numériques (ebooks, formations, templates…) saisis dans l'onglet « Ressources » du Sheet apparaîtront ici, sans modification du code.",
-          "Aucun produit n'est affiché tant que le Sheet est vide — rien n'est inventé.");
+        el.innerHTML = etatVide(T("ress.vide.titre"), T("ress.vide.desc"), T("etat.rien.invente"));
         statutSource(el, src, 0);
         return;
       }
@@ -300,9 +305,7 @@
         var max = limite || (window.CONFIG && window.CONFIG.featuredRessourcesLimit) || 3;
         var featured = tous.filter(function (p) { return p.featured; }).slice(0, max);
         if (!featured.length) {
-          el.innerHTML = etatVide("Aucune ressource à la une",
-            "Le Sheet est rempli, mais aucune ligne n'a `featured = TRUE` : l'accueil n'affiche que les ressources marquées à la une.",
-            "Cochez `featured` sur les produits à mettre en avant — aucune modification de code n'est nécessaire.");
+          el.innerHTML = etatVide(T("ress.accueil.vide.titre"), T("ress.accueil.vide.desc"), T("ress.accueil.vide.hint"));
           statutSource(el, src, 0);
           return;
         }
@@ -328,8 +331,7 @@
       reveler(el);
     }).catch(function (e) {
       console.error("[Ressources] Erreur de chargement :", e);
-      el.innerHTML = etatVide("Impossible de charger les ressources",
-        "Vérifiez la publication de l'onglet « Ressources » du Google Sheet, puis rechargez la page.");
+      el.innerHTML = etatVide(T("ress.erreur.titre"), T("etat.sheet.onglet", { onglet: "Ressources" }));
       statutSource(el, "erreur", 0);
     });
   }

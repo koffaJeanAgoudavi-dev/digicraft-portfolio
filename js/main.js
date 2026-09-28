@@ -6,6 +6,17 @@
 (function () {
   "use strict";
 
+  /* Libellés d'interface traduits (js/i18n.js) — repli sur le texte fourni. */
+  function T(cle, vars, secours) {
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars);
+    return secours !== undefined ? secours : cle;
+  }
+
+  /* Adresse de secours affichée en cas d'échec du webhook (CMS d'abord). */
+  function emailSecours() {
+    return (window.PARAMS && window.PARAMS.email_contact) || "contact.agoudavi@gmail.com";
+  }
+
   function qs(s, c) { return (c || document).querySelector(s); }
   function qsa(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
 
@@ -241,8 +252,8 @@
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
         qs("#email", form).focus();
         if (errBox) {
-          errBox.querySelector("b").textContent = "Adresse email invalide.";
-          errBox.querySelector("p").textContent = "Vérifiez le format, par exemple : vous@exemple.com";
+          errBox.querySelector("b").textContent = T("contact.form.err.email.titre", null, "Adresse email invalide.");
+          errBox.querySelector("p").textContent = T("contact.form.err.email.desc", null, "Vérifiez le format, par exemple : vous@exemple.com");
           errBox.classList.add("is-visible");
         }
         return;
@@ -256,8 +267,8 @@
                     (window.CONFIG && window.CONFIG.defaults && window.CONFIG.defaults.url_webhook_contact);
       if (!webhook) {
         if (errBox) {
-          errBox.querySelector("b").textContent = "Envoi momentanément indisponible.";
-          errBox.querySelector("p").textContent = "Vous pouvez aussi m'écrire directement à contact.agoudavi@gmail.com";
+          errBox.querySelector("b").textContent = T("contact.form.err.indispo", null, "Envoi momentanément indisponible.");
+          errBox.querySelector("p").textContent = T("contact.form.err.ecrire", { email: emailSecours() });
           errBox.classList.add("is-visible");
         }
         return;
@@ -266,7 +277,7 @@
       /* Envoi JSON vers le webhook Make ; abandon après 15 s pour ne
          jamais laisser le visiteur sans réponse (scénario coupé…). */
       btn.disabled = true;
-      btn.textContent = "Envoi en cours…";
+      btn.textContent = T("contact.form.envoi.cours", null, "Envoi en cours…");
       var abort = "AbortController" in window ? new AbortController() : null;
       var timer = abort ? setTimeout(function () { abort.abort(); }, 15000) : null;
 
@@ -284,10 +295,10 @@
       }).catch(function () {
         if (timer) clearTimeout(timer);
         btn.disabled = false;
-        btn.textContent = "Envoyer le message";
+        btn.textContent = T("contact.form.envoyer", null, "Envoyer le message");
         if (errBox) {
-          errBox.querySelector("b").textContent = "Une erreur est survenue.";
-          errBox.querySelector("p").textContent = "Vous pouvez aussi m'écrire directement à contact.agoudavi@gmail.com";
+          errBox.querySelector("b").textContent = T("contact.form.err.titre", null, "Une erreur est survenue.");
+          errBox.querySelector("p").textContent = T("contact.form.err.ecrire", { email: emailSecours() });
           errBox.classList.add("is-visible");
         }
         if (window.Track) window.Track.event("contact_envoye", { statut: "erreur" });

@@ -18,6 +18,13 @@
 (function () {
   "use strict";
 
+  /* Libellés d'interface traduits (js/i18n.js). Repli : texte passé en
+     second argument — le module reste lisible même si i18n.js manque. */
+  function T(cle, vars, secours) {
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars);
+    return secours !== undefined ? secours : cle;
+  }
+
   var ICONS = {
     "IA": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a2 2 0 0 1 0 4h-3.27A6 6 0 0 1 12 20a6 6 0 0 1-5.73-2H3a2 2 0 0 1 0-4h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><path d="M12 12v4"/><path d="M9 13h6"/></svg>',
     "Automatisation": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="6" cy="10" r="2.5"/></svg>',
@@ -50,9 +57,16 @@
      type_lien (Bot, Demo, Jouer…). Les valeurs non-action (vides,
      "interne", "externe", "En savoir plus", "Voir le projet") sont
      remplacées par un libellé générique. */
+  /* Texte bilingue d'un projet : `_en` si la langue est EN et la valeur
+     non vide, sinon le français (jamais de case vide). */
+  function txt(p, base, secours) {
+    if (window.I18n && window.I18n.champ) return window.I18n.champ(p, base, secours);
+    return p && p[base] !== undefined && p[base] !== null ? p[base] : (secours || "");
+  }
+
   function libelleAction(p) {
     var t = (p.type_lien || "").trim();
-    if (["", "interne", "externe", "En savoir plus", "Voir le projet"].indexOf(t) !== -1) return "Accéder au projet";
+    if (["", "interne", "externe", "En savoir plus", "Voir le projet"].indexOf(t) !== -1) return T("projets.action.generique", null, "Accéder au projet");
     return t;
   }
 
@@ -91,7 +105,7 @@
   }
 
   function correspond(p, filtre) {
-    if (!filtre || filtre === "Tous") return true;
+    if (!filtre || filtre === T("projets.filtre.tous", null, "Tous") || filtre === "Tous") return true;
     var cible = String(filtre).toLowerCase();
     return familles(p).some(function (f) { return f.toLowerCase() === cible; });
   }
@@ -173,7 +187,7 @@
       return {
         href: (window.SITE_ROOT || "") + "projets/" + p.slug + "/",
         externe: false,
-        libelle: "Étude de cas"
+        libelle: T("projets.etude", null, "Étude de cas")
       };
     }
     var brut = String((p && p.url_destination) || "").trim();
@@ -212,27 +226,27 @@
     /* Visuel : image du Sheet si fournie, sinon visuel de remplacement
        (initiales réelles) — aucune image inventée. */
     var img = projet.image_url
-      ? '<img src="' + imgUrl(projet.image_url) + '" alt="' + esc(projet.titre) + '" loading="lazy" decoding="async" onerror="this.remove()">'
-      : '<span class="p-ph" aria-hidden="true"><b>' + esc(initiales(projet.titre)) + '</b><span>visuel à venir</span></span>';
+      ? '<img src="' + imgUrl(projet.image_url) + '" alt="' + esc(txt(projet, "titre")) + '" loading="lazy" decoding="async" onerror="this.remove()">'
+      : '<span class="p-ph" aria-hidden="true"><b>' + esc(initiales(txt(projet, "titre"))) + '</b><span>' + T("projets.visuel") + '</span></span>';
 
     var media = l
-      ? '<a class="p-media" href="' + href + '"' + cible + ' aria-label="' + esc(l.libelle) + ' : ' + esc(projet.titre) + '">' + img + '</a>'
+      ? '<a class="p-media" href="' + href + '"' + cible + ' aria-label="' + esc(l.libelle) + ' : ' + esc(txt(projet, "titre")) + '">' + img + '</a>'
       : '<div class="p-media">' + img + '</div>';
 
     var titre = l
-      ? '<a href="' + href + '"' + cible + '>' + esc(projet.titre) + '</a>'
-      : esc(projet.titre);
+      ? '<a href="' + href + '"' + cible + '>' + esc(txt(projet, "titre")) + '</a>'
+      : esc(txt(projet, "titre"));
 
     /* Pied de carte : lien vers l'étude de cas interne (si elle existe)
        puis bouton d'action externe (type_lien → url_destination). */
     var lienInterne = l && !l.externe
-      ? '<a class="link-arrow" href="' + href + '" aria-label="Étude de cas : ' + esc(projet.titre) + '">Étude de cas' + SVG_ARROW + '</a>'
+      ? '<a class="link-arrow" href="' + href + '" aria-label="' + esc(T("projets.etude.aria", { t: txt(projet, "titre") })) + '">' + T("projets.etude") + SVG_ARROW + '</a>'
       : "";
     var urlAction = String(projet.url_destination || "").trim();
     var action = (l && l.externe)
-      ? '<a class="btn btn-gold btn-xs" href="' + href + '" target="_blank" rel="noopener" aria-label="' + esc(l.libelle) + ' : ' + esc(projet.titre) + '">' + esc(l.libelle) + '</a>'
+      ? '<a class="btn btn-gold btn-xs" href="' + href + '" target="_blank" rel="noopener" aria-label="' + esc(l.libelle) + ' : ' + esc(txt(projet, "titre")) + '">' + esc(l.libelle) + '</a>'
       : (urlAction
-        ? '<a class="btn btn-gold btn-xs" href="' + extUrl(urlAction) + '" target="_blank" rel="noopener" aria-label="' + esc(libelleAction(projet)) + ' : ' + esc(projet.titre) + '">' + esc(libelleAction(projet)) + '</a>'
+        ? '<a class="btn btn-gold btn-xs" href="' + extUrl(urlAction) + '" target="_blank" rel="noopener" aria-label="' + esc(libelleAction(projet)) + ' : ' + esc(txt(projet, "titre")) + '">' + esc(libelleAction(projet)) + '</a>'
         : "");
     var pied = (lienInterne || action)
       ? '<div class="p-foot"><span class="p-status">' + esc(statut) + '</span><span class="p-actions">' + lienInterne + action + '</span></div>'
@@ -248,7 +262,7 @@
             '</div>'
           : "") +
         '<h3 class="p-title">' + titre + '</h3>' +
-        (projet.description_courte ? '<p class="p-desc">' + esc(projet.description_courte) + '</p>' : "") +
+        (projet.description_courte ? '<p class="p-desc">' + esc(txt(projet, "description_courte")) + '</p>' : "") +
         (ms ? '<p class="stack-mono">' + esc(ms) + '</p>' : "") +
         pied +
       '</div>' +
@@ -294,15 +308,16 @@
   function statutSource(containerId, source, n) {
     var el = document.getElementById(containerId);
     if (!el || !el.parentElement) return;
-    if (el.parentElement.querySelector(".dyn-source")) return; // déjà affiché
+    var ancien = el.parentElement.querySelector(".dyn-source");
+    if (ancien) ancien.remove();
     var div = document.createElement("p");
     div.className = "dyn-source" + (source === "local" ? " is-local" : "");
     if (source === "google-sheets") {
-      div.innerHTML = '<span class="dot"></span>Données : Google Sheets · ' + n + ' projet(s)';
+      div.innerHTML = '<span class="dot"></span>' + T("etat.donnees") + n + ' ' + (n > 1 ? T("projets.compteur.plur") : T("projets.compteur.sing"));
     } else if (source === "local") {
-      div.innerHTML = '<span class="dot"></span>Données de secours (Google Sheets injoignable)';
+      div.innerHTML = '<span class="dot"></span>' + T("etat.secours");
     } else {
-      div.innerHTML = '<span class="dot"></span>Erreur de chargement — ouvrez la console (F12) pour le détail';
+      div.innerHTML = '<span class="dot"></span>' + T("etat.erreur");
       div.classList.add("is-erreur");
     }
     el.parentElement.insertBefore(div, el.nextSibling);
@@ -327,6 +342,12 @@
             filtre: window.Sheets.champ(r, ["filtre", "filter"], ""),
             description_courte: window.Sheets.champ(r, ["description_courte", "description"], ""),
             description_longue: window.Sheets.champ(r, ["description_longue"], ""),
+            /* É10 — variantes anglaises : conservées telles quelles, le choix
+               se fait au rendu (window.I18n.champ) pour que la bascule de
+               langue reste instantanée même sans recharger les données. */
+            titre_en: window.Sheets.champ(r, ["titre_en", "title_en"], ""),
+            description_courte_en: window.Sheets.champ(r, ["description_courte_en"], ""),
+            description_longue_en: window.Sheets.champ(r, ["description_longue_en"], ""),
             image_url: window.Sheets.champ(r, ["image_url", "image"], ""),
             stack_tags: window.Sheets.champ(r, ["stack_tags", "tags"], ""),
             statut: window.Sheets.champ(r, ["statut", "status"], ""),
@@ -338,6 +359,10 @@
             solution: window.Sheets.champ(r, ["solution"], ""),
             technologies_detail: window.Sheets.champ(r, ["technologies_detail", "technologies"], ""),
             resultat: window.Sheets.champ(r, ["resultat", "résultat"], ""),
+            probleme_en: window.Sheets.champ(r, ["probleme_en", "problème_en"], ""),
+            solution_en: window.Sheets.champ(r, ["solution_en"], ""),
+            technologies_detail_en: window.Sheets.champ(r, ["technologies_detail_en"], ""),
+            resultat_en: window.Sheets.champ(r, ["resultat_en"], ""),
             featured: window.Sheets.toBool(window.Sheets.champ(r, ["featured"], "")),
             ordre: window.Sheets.champ(r, ["ordre", "order"], "0")
           });
@@ -374,7 +399,7 @@
     }).catch(function (e) {
       console.error("[Projets] Erreur de chargement :", e);
       statutSource(containerId, "erreur", 0);
-      el.innerHTML = etat("erreur", "Impossible de charger les projets", "Vérifiez la publication du Google Sheet puis rechargez la page.", "#", "Réessayer");
+      el.innerHTML = etat("erreur", T("projets.erreur.titre"), T("etat.sheet"), "#", T("commun.reessayer"));
     });
   }
 
@@ -386,7 +411,7 @@
   function grilleProjets(containerId, filterId, resumeId) {
     var el = document.getElementById(containerId);
     if (!el) return;
-    var actif = "Tous";
+    var actif = T("projets.filtre.tous", null, "Tous");
     var tous = [];
     var bar = document.getElementById(filterId);
     var resume = document.getElementById(resumeId || "");
@@ -394,7 +419,7 @@
     function peindreFiltres() {
       var famillesListe = listeFamilles(tous);
       if (bar) {
-        bar.innerHTML = ["Tous"].concat(famillesListe).map(function (f) {
+        bar.innerHTML = [T("projets.filtre.tous", null, "Tous")].concat(famillesListe).map(function (f) {
           var on = f === actif;
           return '<button class="f-btn' + (on ? " is-active" : "") + '" data-filtre="' + esc(f) + '"' +
             ' aria-pressed="' + (on ? "true" : "false") + '">' + esc(f) + '</button>';
@@ -405,7 +430,7 @@
       if (resume) {
         var n = tous.length;
         resume.innerHTML = '<span class="chip chip-gold">' +
-          n + (n > 1 ? " réalisations" : " réalisation") + '</span>' +
+          n + " " + (n > 1 ? T("projets.n.plur") : T("projets.n.sing")) + '</span>' +
           famillesListe.map(function (f) { return '<span class="chip">' + esc(f) + '</span>'; }).join("");
       }
     }
@@ -415,10 +440,10 @@
       if (!list.length) {
         statutSource(containerId, srcActuel, 0);
         el.innerHTML = etatVide(
-          tous.length ? "Aucun projet dans cette catégorie" : "Aucune réalisation publiée",
+          tous.length ? T("projets.vide.filtre.titre") : T("projets.vide.titre"),
           tous.length
-            ? "Aucun projet ne porte la catégorie « " + actif + " » pour le moment. Choisissez « Tous » pour voir l'ensemble."
-            : "Les projets publiés dans l'onglet Projets du Sheet apparaîtront ici automatiquement.");
+            ? T("projets.vide.filtre.desc", { cat: actif })
+            : T("projets.vide.desc"));
         return;
       }
       el.innerHTML = list.map(function (p) {
@@ -433,21 +458,21 @@
     recuperer().then(function (projets) {
       srcActuel = projets._source || "google-sheets";
       tous = projets;
-      if (actif !== "Tous" && !listeFamilles(tous).some(function (f) { return f.toLowerCase() === actif.toLowerCase(); })) {
-        actif = "Tous";
+      if (actif !== T("projets.filtre.tous", null, "Tous") && !listeFamilles(tous).some(function (f) { return f.toLowerCase() === actif.toLowerCase(); })) {
+        actif = T("projets.filtre.tous", null, "Tous");
       }
       peindreFiltres();
       render();
     }).catch(function (e) {
       console.error("[Projets] Erreur de chargement :", e);
       statutSource(containerId, "erreur", 0);
-      el.innerHTML = etat("erreur", "Impossible de charger les projets", "Vérifiez la publication du Google Sheet puis rechargez la page.", "", "");
+      el.innerHTML = etat("erreur", T("projets.erreur.titre"), T("etat.sheet"), "", "");
     });
 
     if (bar) bar.addEventListener("click", function (e) {
       var btn = e.target.closest(".f-btn");
       if (!btn) return;
-      actif = btn.getAttribute("data-filtre") || "Tous";
+      actif = btn.getAttribute("data-filtre") || T("projets.filtre.tous", null, "Tous");
       Array.prototype.forEach.call(bar.querySelectorAll(".f-btn"), function (b) {
         var on = b === btn;
         b.classList.toggle("is-active", on);
@@ -496,12 +521,12 @@
   function injecterMetaFiche(p, slug) {
     try {
       var urlPropre = origineSite() + "/projets/" + slug + "/";
-      var titre = String(p.titre || "").trim() || "Projet";
-      var desc = String(p.description_courte || p.description_longue || "")
+      var titre = String(txt(p, "titre") || "").trim() || "Projet";
+      var desc = String(txt(p, "description_courte") || txt(p, "description_longue") || "")
         .replace(/\s+/g, " ").trim();
       if (desc.length > 160) desc = desc.slice(0, 157).replace(/\s+\S*$/, "") + "…";
-      if (!desc) desc = "Étude de cas " + titre + " — DIGICRAFT Labs.";
-      document.title = titre + " | Étude de cas — DIGICRAFT Labs";
+      if (!desc) desc = T("projets.fiche.desc", { t: titre });
+      document.title = T("projets.fiche.titre", { t: titre });
       setMetaAttr('meta[name="description"]', "content", desc);
       setMetaAttr('link[rel="canonical"]', "href", urlPropre);
       setMetaAttr('meta[property="og:title"]', "content", titre + " | Étude de cas");
@@ -527,7 +552,7 @@
      fiches statiques existantes (return silencieux conservé). */
   function projetIntrouvable(page, slug) {
     try {
-      document.title = "Projet introuvable | DIGICRAFT Labs";
+      document.title = T("projets.introuvable.meta", null, "Projet introuvable | DIGICRAFT Labs");
       if (!document.querySelector('meta[name="robots"]')) {
         var m = document.createElement("meta");
         m.setAttribute("name", "robots");
@@ -538,10 +563,9 @@
       if (canon && canon.parentNode) canon.parentNode.removeChild(canon);
       var lien = (window.SITE_ROOT || "") + "projets/";
       page.innerHTML = '<section class="page-hero"><div class="container">' +
-        etat("vide", "Projet introuvable",
-          "Aucun projet ne correspond à cette adresse" + (slug ? " (« " + slug + " »)" : "") +
-          ". Il a peut-être été renommé, retiré, ou la page n'existe pas encore.",
-          lien, "Voir tous les projets") +
+        etat("vide", T("projets.introuvable.titre"),
+          slug ? T("projets.introuvable.desc.slug", { slug: slug }) : T("projets.introuvable.desc"),
+          lien, T("projets.voir.tous")) +
         '</div></section>';
     } catch (e) { console.error("[Projets] État introuvable :", e); }
   }
@@ -598,9 +622,9 @@
         return;
       }
 
-      if (elTitre && p.titre) elTitre.textContent = p.titre;
-      if (elDesc && p.description_courte) elDesc.textContent = p.description_courte;
-      if (p.titre) document.title = p.titre + " | Étude de cas — DIGICRAFT Labs";
+      if (elTitre && txt(p, "titre")) elTitre.textContent = txt(p, "titre");
+      if (elDesc && txt(p, "description_courte")) elDesc.textContent = txt(p, "description_courte");
+      if (txt(p, "titre")) document.title = T("projets.fiche.titre", { t: txt(p, "titre") });
       if (elStatut && p.statut) {
         elStatut.textContent = p.statut;
         /* Pilule v2 (blueprint §5) : même barème que les cartes de /projets/,
@@ -631,7 +655,7 @@
       }
       if (elMedia) {
         if (p.image_url) {
-          elMedia.innerHTML = '<img src="' + imgUrl(p.image_url) + '" alt="' + esc(p.titre || "") + '" loading="lazy" decoding="async" onerror="this.remove()">';
+          elMedia.innerHTML = '<img src="' + imgUrl(p.image_url) + '" alt="' + esc(txt(p, "titre")) + '" loading="lazy" decoding="async" onerror="this.remove()">';
           elMedia.style.display = ""; /* V1.3 : fiche générique pré-masquée */
         } else {
           var im = elMedia.querySelector("img");
@@ -646,7 +670,7 @@
         var urlA = extUrl(p.url_destination);
         elAction.textContent = libA;
         if (urlA !== "#") elAction.setAttribute("href", urlA);
-        elAction.setAttribute("aria-label", libA + " : " + (p.titre || ""));
+        elAction.setAttribute("aria-label", libA + " : " + txt(p, "titre"));
       }
 
       var map = {
@@ -659,12 +683,20 @@
         var section = page.querySelector('[data-cs-section="' + key + '"]');
         if (!section) return;
         var txtEl = section.querySelector("[data-cs-txt]");
-        var val = nettoyerContenu(p[key] || "");
+        var val = nettoyerContenu(txt(p, key));
         if (val) {
-          if (txtEl) txtEl.textContent = val;
+          if (txtEl) {
+            txtEl.textContent = val;
+            /* trace : ce texte vient du rendu JS (et non du HTML figé) */
+            txtEl.setAttribute("data-cs-rempli", "1");
+          }
           section.style.display = ""; /* V1.3 : fiche générique pré-masquée */
-        } else if (txtEl && !txtEl.textContent.trim()) {
-          section.style.display = "none";
+        } else if (txtEl) {
+          /* Champ vide dans la langue courante : on n'affiche jamais un
+             texte resté d'une autre langue (bascule EN → FR), mais on
+             préserve un éventuel paragraphe statique de la page. */
+          if (txtEl.getAttribute("data-cs-rempli") === "1") txtEl.textContent = "";
+          if (!txtEl.textContent.trim()) section.style.display = "none";
         }
       });
 
@@ -688,7 +720,7 @@
       if (dynamique) {
         try {
           page.innerHTML = '<section class="page-hero"><div class="container">' +
-            etat("erreur", "Impossible de charger le projet",
+            etat("erreur", T("projets.erreur.fiche"),
               "Vérifiez la publication du Google Sheet puis rechargez la page.",
               "", "") +
             '</div></section>';
@@ -729,6 +761,21 @@
       items.forEach(function (el) { el.classList.add("is-visible"); });
     }
   }
+  /* Changement de langue → nouveau rendu (les cartes, filtres et libellés
+     sont reconstruits depuis les colonnes `_en` du Sheet, repli FR). */
+  document.addEventListener("kj:langue", function () {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-prj-vue]"), function (el) {
+      var vue = el.getAttribute("data-prj-vue");
+      try {
+        if (vue === "carousel") carouselAccueil(el.id);
+        else if (vue === "grille") {
+          grilleProjets(el.id, el.getAttribute("data-prj-filtres"), el.getAttribute("data-prj-puces"));
+        } else if (vue === "fiche") caseStudy();
+        initReveal();
+      } catch (e) { console.error("[Projets] Re-rendu langue :", e); }
+    });
+  });
+
   window.Prjs = {
     carouselAccueil: carouselAccueil,
     grilleProjets: grilleProjets,

@@ -20,6 +20,13 @@
 (function () {
   "use strict";
 
+  /* Libellés d'interface traduits (js/i18n.js). Repli : texte passé en
+     second argument — le module reste lisible même si i18n.js manque. */
+  function T(cle, vars, secours) {
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars);
+    return secours !== undefined ? secours : cle;
+  }
+
   /* ---------- Icônes SVG (jetons de repli) ---------- */
   var SVG = {
     automatisation: '<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.1-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2 2 0 1 1 7.03 4.14l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.56V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.56 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/>',
@@ -155,7 +162,7 @@
          jamais de lien fabriqué. */
       return '<span class="xp-tag is-text">' + esc(nom) + '</span>';
     }).join("");
-    return '<div class="xp-projects"><span class="xp-projects-label">Exemples de réalisations</span>' + items + '</div>';
+    return '<div class="xp-projects"><span class="xp-projects-label">' + T("xp.exemples") + '</span>' + items + '</div>';
   }
 
   function carteComplete(x, index) {
@@ -186,7 +193,7 @@
     return '<div class="dyn-state">' +
       '<span class="ds-ico">' + svg('ia') + '</span>' +
       '<h3>' + esc(titre) + '</h3><p>' + esc(texte) + '</p>' +
-      (type === "erreur" ? '<p class="dyn-state-hint">Vérifiez la publication de l\'onglet « Expertise » du Google Sheet, puis rechargez la page.</p>' : '') +
+      (type === "erreur" ? '<p class="dyn-state-hint">' + esc(T("etat.sheet.onglet", { onglet: "Expertise" })) + '</p>' : '') +
       '</div>';
   }
 
@@ -203,9 +210,9 @@
     var p = document.createElement("p");
     p.className = "dyn-source" + (source === "local" ? " is-local" : "") + (source === "erreur" ? " is-erreur" : "");
     p.innerHTML = '<span class="dot"></span>' +
-      (source === "google-sheets" ? "Données : Google Sheets · " + n + " expertise(s)"
-        : source === "local" ? "Données de secours (Google Sheets injoignable)"
-        : "Erreur de chargement — ouvrez la console (F12) pour le détail");
+      (source === "google-sheets" ? T("etat.donnees") + n + " " + (n > 1 ? T("xp.compteur.plur") : T("xp.compteur.sing"))
+        : source === "local" ? T("etat.secours")
+        : T("etat.erreur"));
     el.parentElement.appendChild(p);
   }
 
@@ -228,8 +235,8 @@
       var src = items._source || "google-sheets";
       if (!items.length) {
         statutSource(el, src, 0);
-        el.innerHTML = etat("vide", "Expertise en cours d'intégration",
-          "Les compétences apparaîtront ici dès qu'elles seront saisies dans l'onglet « Expertise » du Google Sheets — rien n'est inventé.");
+        el.innerHTML = etat("vide", T("xp.vide.titre"),
+          T("xp.vide.desc"));
         return;
       }
       var liste = mode === "page" ? items : items.slice(0, limite || items.length);
@@ -247,7 +254,7 @@
           var x = liste[i];
           c.setAttribute("tabindex", "0");
           c.setAttribute("role", "link");
-          c.setAttribute("aria-label", x.titre + " — voir l'expertise");
+          c.setAttribute("aria-label", T("xp.aria", { t: x.titre }));
           var aller = function () { window.location.href = (window.SITE_ROOT || "") + "expertise/"; };
           c.addEventListener("click", aller);
           c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); aller(); } });
@@ -258,7 +265,7 @@
     }).catch(function (e) {
       console.error("[Expertise] Erreur de chargement :", e);
       statutSource(el, "erreur", 0);
-      el.innerHTML = etat("erreur", "Impossible de charger l'expertise", "Vérifiez la publication du Google Sheet puis rechargez la page.");
+      el.innerHTML = etat("erreur", T("xp.erreur.titre"), T("etat.sheet"));
     });
   }
 

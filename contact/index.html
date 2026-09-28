@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="google-site-verification" content="RwuhsveunXtvJvMHt2v_kQKeC2xaRPjTYuRsp_99o0s">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contact | Koffa Jean AGOUDAVI — DIGICRAFT Labs</title>
-  <meta name="description" content="Parlons de votre projet. Contactez Koffa Jean AGOUDAVI (DIGICRAFT Labs) par email, Telegram, LinkedIn ou Google Business.">
+  <title data-i18n="doc.contact.titre">Contact | Koffa Jean AGOUDAVI — DIGICRAFT Labs</title>
+  <meta name="description" content="Parlons de votre projet. Contactez Koffa Jean AGOUDAVI (DIGICRAFT Labs) par email, Telegram, LinkedIn ou Google Business." data-i18n-content="doc.contact.desc">
   <link rel="icon" type="image/svg+xml" href="../favicon.png">
   <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/contact/">
 
@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="../css/style.css?v=20260927b">
 </head>
 <body class="has-dock">
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <a class="skip-link" href="#contenu" data-i18n="commun.skip">Aller au contenu</a>
 
     <!-- ============ SIDE DOCK BAR (v2) ============ -->
   <aside class="dock" aria-label="Navigation principale">
@@ -97,9 +97,9 @@
   <main id="contenu">
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow reveal">Contact</p>
-        <h1 class="reveal">Parlons de votre projet.</h1>
-        <p class="lead reveal">Une idée à automatiser ? Un système à construire ? Une question sur l'IA ? Écrivez-moi — je réponds personnellement.</p>
+        <p class="eyebrow reveal" data-i18n="contact.eyebrow">Contact</p>
+        <h1 class="reveal" data-i18n="contact.titre">Parlons de votre projet.</h1>
+        <p class="lead reveal" data-i18n="contact.lead">Une idée à automatiser ? Un système à construire ? Une question sur l'IA ? Écrivez-moi — je réponds personnellement.</p>
       </div>
     </section>
 
@@ -107,78 +107,78 @@
       <div class="container">
         <div class="grid-2" style="align-items:start">
           <div class="card reveal" style="padding:clamp(1.5rem,3vw,2.2rem)">
-            <h3 style="margin-bottom:1.3rem">Envoyez-moi un message</h3>
+            <h3 style="margin-bottom:1.3rem" data-i18n="contact.form.titre">Envoyez-moi un message</h3>
 
             <div class="form-ok" data-form-ok role="status">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-              <div><b>Message envoyé, merci !</b><p>Je réponds généralement sous 24-48h. Vous pouvez aussi me joindre directement sur Telegram.</p></div>
+              <div><b data-i18n="contact.form.ok.titre">Message envoyé, merci !</b><p><span data-i18n="contact.form.ok.desc">Je réponds généralement sous 24-48h. Vous pouvez aussi me joindre directement sur Telegram.</span></p></div>
             </div>
 
             <div class="form-ok form-err" data-form-error role="alert">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-              <div><b>Une erreur est survenue.</b><p>Vous pouvez aussi m'écrire directement à <a data-p-email href="mailto:contact.agoudavi@gmail.com">contact.agoudavi@gmail.com</a>.</p></div>
+              <div><b data-i18n="contact.form.err.titre">Une erreur est survenue.</b><p><span data-i18n="contact.form.err.p1">Vous pouvez aussi m'écrire directement à</span> <a data-p-email href="mailto:contact.agoudavi@gmail.com">contact.agoudavi@gmail.com</a>.</p></div>
             </div>
 
             <form data-contact-form novalidate>
               <div class="form-grid">
                 <div class="field">
-                  <label for="nom">Nom</label>
-                  <input id="nom" name="nom" type="text" autocomplete="name" placeholder="Votre nom" required>
+                  <label for="nom" data-i18n="contact.form.nom">Nom</label>
+                  <input id="nom" name="nom" type="text" autocomplete="name" placeholder="Votre nom" data-i18n-placeholder="contact.ph.nom" required>
                 </div>
                 <div class="field">
-                  <label for="email">Email</label>
-                  <input id="email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.com" required>
+                  <label for="email" data-i18n="contact.form.email">Email</label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.com" data-i18n-placeholder="contact.ph.email" required>
                 </div>
                 <div class="field full">
-                  <label for="sujet">Sujet</label>
+                  <label for="sujet" data-i18n="contact.form.sujet">Sujet</label>
                   <select id="sujet" name="sujet" required>
-                    <option value="" selected disabled>Choisir un sujet…</option>
-                    <option value="Automatisation">Automatisation</option>
-                    <option value="Intelligence artificielle">Intelligence artificielle</option>
-                    <option value="Bot Telegram">Bot Telegram</option>
-                    <option value="Produit digital">Produit digital</option>
-                    <option value="Collaboration">Collaboration</option>
-                    <option value="Autre">Autre</option>
+                    <option value="" selected disabled data-i18n="contact.opt.invite">Choisir un sujet…</option>
+                    <option value="Automatisation" data-i18n="contact.opt.1">Automatisation</option>
+                    <option value="Intelligence artificielle" data-i18n="contact.opt.2">Intelligence artificielle</option>
+                    <option value="Bot Telegram" data-i18n="contact.opt.3">Bot Telegram</option>
+                    <option value="Produit digital" data-i18n="contact.opt.4">Produit digital</option>
+                    <option value="Collaboration" data-i18n="contact.opt.5">Collaboration</option>
+                    <option value="Autre" data-i18n="contact.opt.6">Autre</option>
                   </select>
                 </div>
                 <div class="field full">
-                  <label for="message">Message</label>
-                  <textarea id="message" name="message" placeholder="Décrivez votre besoin, votre idée ou votre projet…" required></textarea>
+                  <label for="message" data-i18n="contact.form.message">Message</label>
+                  <textarea id="message" name="message" placeholder="Décrivez votre besoin, votre idée ou votre projet…" data-i18n-placeholder="contact.ph.message" required></textarea>
                 </div>
               </div>
               <div style="margin-top:1.3rem;display:flex;flex-direction:column;gap:.8rem;align-items:flex-start">
-                <button class="btn btn-gold btn-block" type="submit">Envoyer le message</button>
-                <p class="form-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 11-14h-7l1-6z"/></svg> Envoyé instantanément via Make → Telegram. Réponse sous 24-48h.</p>
+                <button class="btn btn-gold btn-block" type="submit" data-i18n="contact.form.envoyer">Envoyer le message</button>
+                <p class="form-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 11-14h-7l1-6z"/></svg><span data-i18n="contact.form.note"> Envoyé instantanément via Make → Telegram. Réponse sous 24-48h.</span></p>
               </div>
             </form>
           </div>
 
           <div>
-            <h3 style="margin-bottom:1.2rem">Autres moyens de me joindre</h3>
+            <h3 style="margin-bottom:1.2rem" data-i18n="contact.canaux.titre">Autres moyens de me joindre</h3>
             <div class="coords-grid">
               <a class="card card-hover coord-card" data-canal="email" data-p-email href="mailto:contact.agoudavi@gmail.com">
                 <span class="coord-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 8l9 6 9-6"/></svg></span>
-                <span><b>Email</b><span data-p-email-txt>contact.agoudavi@gmail.com</span></span>
+                <span><b data-i18n="contact.canal.email.titre">Email</b><span data-p-email-txt>contact.agoudavi@gmail.com</span></span>
               </a>
               <a class="card card-hover coord-card" data-canal="whatsapp" data-p-whatsapp href="https://wa.me/22872556556?text=Bonjour%2C%20je%20viens%20de%20votre%20site%20DIGICRAFT%20Labs%20et%20j%27aimerais%20%C3%A9changer%20avec%20vous." target="_blank" rel="noopener">
                 <span class="coord-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-                <span><b>WhatsApp</b><span>Chat direct — réponse rapide</span></span>
+                <span><b>WhatsApp</b><span><span data-i18n="contact.canal.whatsapp.desc">Chat direct — réponse rapide</span></span></span>
               </a>
               <a class="card card-hover coord-card" data-canal="telegram" data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">
                 <span class="coord-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-                <span><b>Telegram</b><span>Réponse rapide — @johnnyokabe</span></span>
+                <span><b>Telegram</b><span><span data-i18n="contact.canal.telegram.desc">Réponse rapide — @johnnyokabe</span></span></span>
               </a>
               <a class="card card-hover coord-card" data-canal="linkedin" data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">
                 <span class="coord-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V9h4v1.5A6 6 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span>
-                <span><b>LinkedIn</b><span>Profil professionnel &amp; publications</span></span>
+                <span><b>LinkedIn</b><span><span data-i18n="contact.canal.linkedin.desc">Profil professionnel &amp; publications</span></span></span>
               </a>
               <a class="card card-hover coord-card" data-canal="youtube" data-p-youtube href="https://www.youtube.com/@KoffaJeanAgoudavi" target="_blank" rel="noopener">
                 <span class="coord-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></span>
-                <span><b>YouTube</b><span>Chaîne — démos &amp; tutoriels</span></span>
+                <span><b>YouTube</b><span><span data-i18n="contact.canal.youtube.desc">Chaîne — démos &amp; tutoriels</span></span></span>
               </a>
               <a class="card card-hover coord-card" data-canal="google" data-p-google href="https://share.google/ont9TyuWshpud74fL" target="_blank" rel="noopener">
                 <span class="coord-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-                <span><b>Google Business</b><span>Fiche établissement DIGICRAFT Labs</span></span>
+                <span><b>Google Business</b><span><span data-i18n="contact.canal.google.desc">Fiche établissement DIGICRAFT Labs</span></span></span>
               </a>
             </div>
           </div>
@@ -193,12 +193,12 @@
         <div class="footer-brand">
           <a class="brand" href="../index.html" aria-label="Koffa Jean AGOUDAVI — Accueil">
             <span class="dock-mono" aria-hidden="true">KJ</span>
-            <span class="brand-name">Koffa Jean AGOUDAVI<small>Portfolio personnel · DIGICRAFT Labs</small></span>
+            <span class="brand-name">Koffa Jean AGOUDAVI<small data-i18n="commun.footer.sub">Portfolio personnel · DIGICRAFT Labs</small></span>
           </a>
-          <p>Je transforme les idées complexes en systèmes digitaux intelligents — automatisations, agents IA, bots et produits digitaux.</p>
+          <p data-i18n="commun.footer.tagline">Je transforme les idées complexes en systèmes digitaux intelligents — automatisations, agents IA, bots et produits digitaux.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4 data-i18n="commun.footer.nav">Navigation</h4>
           <ul>
             <li><a href="../index.html" data-i18n="nav.accueil">Accueil</a></li>
             <li><a href="../expertise/" data-i18n="nav.expertise">Expertise</a></li>
@@ -211,7 +211,7 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Me retrouver</h4>
+          <h4 data-i18n="commun.footer.find">Me retrouver</h4>
           <ul>
             <li><a data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a></li>
@@ -226,7 +226,7 @@
         <span>© <span data-year>2026</span> Koffa Jean AGOUDAVI — DIGICRAFT Labs</span>
         <span class="fb-links">
           <a href="../projets/" data-i18n="nav.realisations">Réalisations</a>
-          <a href="../articles/">Articles</a>
+          <a href="../articles/" data-i18n="commun.footer.articles">Articles</a>
           <a href="../contact/" data-i18n="nav.contact">Contact</a>
         </span>
       </div>

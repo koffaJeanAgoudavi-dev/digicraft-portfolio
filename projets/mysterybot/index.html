@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="google-site-verification" content="RwuhsveunXtvJvMHt2v_kQKeC2xaRPjTYuRsp_99o0s">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MysteryBot | Étude de cas — DIGICRAFT Labs</title>
-  <meta name="description" content="Étude de cas MysteryBot : un jeu d'enquête narratif sur Telegram dont le scénario s'adapte en temps réel aux choix du joueur grâce à l'IA.">
+  <title data-i18n="doc.fiche.mysterybot.titre">MysteryBot | Étude de cas — DIGICRAFT Labs</title>
+  <meta name="description" content="Étude de cas MysteryBot : un jeu d'enquête narratif sur Telegram dont le scénario s'adapte en temps réel aux choix du joueur grâce à l'IA." data-i18n-content="doc.fiche.mysterybot.desc">
   <link rel="icon" type="image/png" href="../../favicon.png">
   <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/projets/mysterybot/">
 
@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="../../css/style.css?v=20260926b">
 </head>
 <body class="has-dock">
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <a class="skip-link" href="#contenu" data-i18n="commun.skip">Aller au contenu</a>
   <!-- ============ SIDE DOCK BAR (v2) ============ -->
   <aside class="dock" aria-label="Navigation principale">
       <a class="dock-brand" href="../../index.html" aria-label="Koffa Jean AGOUDAVI — Accueil">
@@ -97,8 +97,8 @@
     <!-- ===== HERO ===== -->
     <section class="page-hero">
       <div class="container">
-        <a class="back-link reveal is-visible" href="../index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Tous mes projets</a>
-        <p class="eyebrow reveal">Étude de cas</p>
+        <a class="back-link reveal is-visible" href="../index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span data-i18n="fiche.retour"> Tous mes projets</span></a>
+        <p class="eyebrow reveal" data-i18n="fiche.eyebrow">Étude de cas</p>
         <h1 class="reveal" data-cs-titre>MysteryBot</h1>
         <p class="lead reveal" data-cs-desc>Jeu de rôle narratif interactif sur Telegram.</p>
         <div class="page-extra reveal">
@@ -123,26 +123,26 @@
         <div class="cs-sections">
 
           <section class="cs-section reveal" data-cs-section="probleme">
-            <span class="cs-num">01 — Contexte</span>
-            <h2>Le problème</h2>
+            <span class="cs-num" data-i18n="fiche.s1.num">01 — Contexte</span>
+            <h2 data-i18n="fiche.s1.titre">Le problème</h2>
             <p data-cs-txt>Les jeux de rôle textuels classiques proposent souvent des scénarios prédéfinis et offrent peu d'adaptation aux décisions du joueur. L'expérience peut rapidement devenir répétitive et manquer d'interactivité.</p>
           </section>
 
           <section class="cs-section reveal" data-cs-section="solution">
-            <span class="cs-num">02 — La réponse</span>
-            <h2>La solution</h2>
+            <span class="cs-num" data-i18n="fiche.s2.num">02 — La réponse</span>
+            <h2 data-i18n="fiche.s2.titre">La solution</h2>
             <p data-cs-txt>MysteryBot transforme Telegram en interface de jeu d'enquête et de jeu de rôle interactif. L'IA génère et adapte progressivement le récit en fonction des choix, actions et décisions du joueur afin de créer une expérience narrative dynamique.</p>
           </section>
 
           <section class="cs-section reveal" data-cs-section="technologies_detail">
-            <span class="cs-num">03 — Outillage</span>
-            <h2>Technologies</h2>
+            <span class="cs-num" data-i18n="fiche.s3.num">03 — Outillage</span>
+            <h2 data-i18n="fiche.s3.titre">Technologies</h2>
             <p data-cs-txt>Telegram Bot API sert d'interface de jeu. Cloudflare Workers exécute la logique du bot. Cloudflare KV conserve l'état et la progression des parties. Groq avec un modèle Llama 3.3 sert de moteur narratif pour générer les événements, dialogues et évolutions du scénario.</p>
           </section>
 
           <section class="cs-section reveal" data-cs-section="resultat">
-            <span class="cs-num">04 — État actuel</span>
-            <h2>Résultat aujourd'hui</h2>
+            <span class="cs-num" data-i18n="fiche.s4.num">04 — État actuel</span>
+            <h2 data-i18n="fiche.s4.titre">Résultat aujourd'hui</h2>
             <p data-cs-txt>Un prototype de jeu narratif interactif capable de maintenir l'état d'une partie et d'adapter l'expérience aux actions du joueur. Le projet explore l'utilisation des LLM pour créer des expériences de jeu génératives directement dans Telegram.</p>
           </section>
 
@@ -151,16 +151,16 @@
         <!-- CTA -->
         <div class="cta-box reveal" style="margin-top:4.5rem">
           <svg class="star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4L2 9.6h7.6z"/></svg>
-          <h2>Un flux à automatiser, vous aussi ?</h2>
-          <p>Parlons de votre processus et voyons comment l'IA peut le rendre plus simple, plus rapide ou plus efficace.</p>
+          <h2 data-i18n="fiche.cta.titre">Un flux à automatiser, vous aussi ?</h2>
+          <p data-i18n="fiche.cta.desc">Parlons de votre processus et voyons comment l'IA peut le rendre plus simple, plus rapide ou plus efficace.</p>
           <div class="cta-actions">
-            <a class="btn btn-gold" href="../../contact/">Me contacter <span class="arr">→</span></a>
-            <a class="btn btn-ghost" href="../index.html">Tous mes projets</a>
+            <a class="btn btn-gold" href="../../contact/"><span data-i18n="fiche.cta.btn1">Me contacter</span> <span class="arr">→</span></a>
+            <a class="btn btn-ghost" href="../index.html" data-i18n="fiche.cta.btn2">Tous mes projets</a>
           </div>
         </div>
 
         <div style="text-align:center;margin-top:2.5rem">
-          <a class="link-arrow" href="../index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:.35rem"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Tous mes projets</a>
+          <a class="link-arrow" href="../index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:.35rem"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span data-i18n="fiche.retour"> Tous mes projets</span></a>
         </div>
       </div>
     </section>
@@ -172,12 +172,12 @@
         <div class="footer-brand">
           <a class="brand" href="../../index.html" aria-label="Koffa Jean AGOUDAVI — Accueil">
             <span class="dock-mono" aria-hidden="true">KJ</span>
-            <span class="brand-name">Koffa Jean AGOUDAVI<small>Portfolio personnel · DIGICRAFT Labs</small></span>
+            <span class="brand-name">Koffa Jean AGOUDAVI<small data-i18n="commun.footer.sub">Portfolio personnel · DIGICRAFT Labs</small></span>
           </a>
-          <p>Je transforme les idées complexes en systèmes digitaux intelligents — automatisations, agents IA, bots et produits digitaux.</p>
+          <p data-i18n="commun.footer.tagline">Je transforme les idées complexes en systèmes digitaux intelligents — automatisations, agents IA, bots et produits digitaux.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4 data-i18n="commun.footer.nav">Navigation</h4>
           <ul>
             <li><a href="../../index.html" data-i18n="nav.accueil">Accueil</a></li>
             <li><a href="../../expertise/" data-i18n="nav.expertise">Expertise</a></li>
@@ -190,7 +190,7 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Me retrouver</h4>
+          <h4 data-i18n="commun.footer.find">Me retrouver</h4>
           <ul>
             <li><a data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a></li>
@@ -205,7 +205,7 @@
         <span>© <span data-year>2026</span> Koffa Jean AGOUDAVI — DIGICRAFT Labs</span>
         <span class="fb-links">
           <a href="../../projets/" data-i18n="nav.realisations">Réalisations</a>
-          <a href="../../articles/">Articles</a>
+          <a href="../../articles/" data-i18n="commun.footer.articles">Articles</a>
           <a href="../../contact/" data-i18n="nav.contact">Contact</a>
         </span>
       </div>

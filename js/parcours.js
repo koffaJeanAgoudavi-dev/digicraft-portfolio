@@ -20,6 +20,13 @@
 (function () {
   "use strict";
 
+  /* Libellés d'interface traduits (js/i18n.js). Repli : texte passé en
+     second argument — le module reste lisible même si i18n.js manque. */
+  function T(cle, vars, secours) {
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars);
+    return secours !== undefined ? secours : cle;
+  }
+
   var MOIS_FR = ["janvier", "février", "mars", "avril", "mai", "juin",
                  "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   var MOIS_EN = ["January", "February", "March", "April", "May", "June",
@@ -33,6 +40,20 @@
     certification: 4, certifications: 4,
     projet: 5, projets: 5
   };
+  /* Libellé de groupe : traduit (étape 10). Un type inconnu garde le
+     texte du Sheet tel quel — aucune traduction inventée. */
+  var CLE_GROUPE = {
+    experience: "parc.type.experience", experiences: "parc.type.experience", "expérience": "parc.type.experience",
+    formation: "parc.type.formation", formations: "parc.type.formation",
+    licence: "parc.type.licence", diplome: "parc.type.licence", "diplôme": "parc.type.licence",
+    certification: "parc.type.certification", certifications: "parc.type.certification",
+    projet: "parc.type.projet", projets: "parc.type.projet"
+  };
+  function libelleGroupe(type) {
+    var brute = LIBELLE_GROUPE[type];
+    var cle = CLE_GROUPE[type];
+    return cle ? T(cle, null, brute) : brute;
+  }
   var LIBELLE_GROUPE = {
     experience: "Expériences", experiences: "Expériences", "expérience": "Expériences",
     formation: "Formations", formations: "Formations",
@@ -113,6 +134,15 @@
 
   /* Période : début → fin, en évitant les répétitions inutiles.
      Aucun mot n'est ajouté si la donnée est absente. */
+  /* Fin de période textuelle (« Présent », « En cours ») : vocabulaire
+     contrôlé traduit ; toute autre valeur du Sheet est affichée telle quelle. */
+  var FIN_TEXTE = { "présent": "parc.periode.present", "present": "parc.periode.present",
+                    "en cours": "parc.periode.en_cours" };
+  function finTexte(v, langue) {
+    var cle = FIN_TEXTE[String(v || "").trim().toLowerCase()];
+    return cle && langue === "en" ? T(cle, null, v) : v;
+  }
+
   function formaterPeriode(debut, fin, langue) {
     var d1 = analyserDate(debut), d2 = analyserDate(fin);
     var b1 = String(debut == null ? "" : debut).trim();
@@ -131,7 +161,7 @@
       }
       return formaterDate(b1, langue) + " → " + formaterDate(b2, langue);
     }
-    return formaterDate(b1, langue) + " → " + b2;                   /* fin textuelle : « → En cours » */
+    return formaterDate(b1, langue) + " → " + finTexte(b2, langue);  /* fin textuelle : « → En cours » */
   }
 
   /* ---------- Données ---------- */
@@ -193,7 +223,7 @@
     });
     return ordre.map(function (c) {
       var g = map[c];
-      g.libelle = LIBELLE_GROUPE[g.norm] || (c === "__sans_type__" ? "" : c);
+      g.libelle = libelleGroupe(g.norm) || (c === "__sans_type__" ? "" : c);
       return g;
     });
   }
@@ -226,7 +256,7 @@
       ? '<img class="parc-badge" src="' + esc(imgUrl(e.badge_image_url)) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">'
       : "";
     var verif = e.verification_url
-      ? '<a class="link-arrow parc-verif" href="' + esc(extUrl(e.verification_url)) + '" target="_blank" rel="noopener" aria-label="Vérifier : ' + esc(titre) + '">Vérifier' +
+      ? '<a class="link-arrow parc-verif" href="' + esc(extUrl(e.verification_url)) + '" target="_blank" rel="noopener" aria-label="' + esc(T("parc.aria.verifier", { t: titre })) + '">' + T("parc.verifier") +
         '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
       : "";
 
@@ -260,9 +290,9 @@
     if (ancien) ancien.remove();
     var div = document.createElement("p");
     div.className = "dyn-source" + (source === "local" ? " is-local" : "") + (source === "erreur" ? " is-erreur" : "");
-    if (source === "google-sheets") div.innerHTML = '<span class="dot"></span>Données : Google Sheets · ' + n + ' entrée(s)';
-    else if (source === "local") div.innerHTML = '<span class="dot"></span>Données de secours (Google Sheets injoignable)';
-    else div.innerHTML = '<span class="dot"></span>Erreur de chargement — ouvrez la console (F12) pour le détail';
+    if (source === "google-sheets") div.innerHTML = '<span class="dot"></span>' + T("etat.donnees") + n + ' ' + (n > 1 ? T("parc.compteur.plur") : T("parc.compteur.sing"));
+    else if (source === "local") div.innerHTML = '<span class="dot"></span>' + T("etat.secours");
+    else div.innerHTML = '<span class="dot"></span>' + T("etat.erreur");
     el.parentElement.insertBefore(div, el.nextSibling);
   }
 
@@ -294,9 +324,7 @@
       var tous = trier(liste);
 
       if (!tous.length) {
-        el.innerHTML = etatVide("Parcours en cours d'alimentation",
-          "Les expériences, formations et certifications saisies dans l'onglet « Parcours » du Sheet apparaîtront ici, sans modification du code.",
-          "Aucune entrée n'est affichée tant que le Sheet est vide — rien n'est inventé.");
+        el.innerHTML = etatVide(T("parc.vide.titre"), T("parc.vide.desc"), T("etat.rien.invente"));
         statutSource(el, src, 0);
         return;
       }
@@ -323,8 +351,8 @@
       reveler(el);
     }).catch(function (e) {
       console.error("[Parcours] Erreur de chargement :", e);
-      el.innerHTML = etatVide("Impossible de charger le parcours",
-        "Vérifiez la publication de l'onglet « Parcours » du Google Sheet, puis rechargez la page.");
+      el.innerHTML = etatVide(T("parc.erreur.titre"),
+        T("etat.sheet.onglet", { onglet: "Parcours" }));
       statutSource(el, "erreur", 0);
     });
   }

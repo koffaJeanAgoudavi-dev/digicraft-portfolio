@@ -22,6 +22,13 @@
 (function () {
   "use strict";
 
+  /* Libellés d'interface traduits (js/i18n.js). Repli : texte passé en
+     second argument — le module reste lisible même si i18n.js manque. */
+  function T(cle, vars, secours) {
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars);
+    return secours !== undefined ? secours : cle;
+  }
+
   var MOIS_FR = ["janvier", "février", "mars", "avril", "mai", "juin",
                  "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   var MOIS_EN = ["January", "February", "March", "April", "May", "June",
@@ -175,7 +182,7 @@
     '</div>';
 
     var lien = e.lien_optionnel
-      ? '<a class="link-arrow tl-link" href="' + esc(extUrl(e.lien_optionnel)) + '" target="_blank" rel="noopener" aria-label="Voir : ' + esc(titre) + '">Voir' +
+      ? '<a class="link-arrow tl-link" href="' + esc(extUrl(e.lien_optionnel)) + '" target="_blank" rel="noopener" aria-label="' + esc(T("actv.aria.voir", { t: titre })) + '">' + T("actv.voir") +
         '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
       : "";
     var statut = e.statut ? '<span class="tl-statut">' + esc(e.statut) + '</span>' : "";
@@ -225,11 +232,11 @@
     var div = document.createElement("p");
     div.className = "dyn-source" + (source === "local" ? " is-local" : "") + (source === "erreur" ? " is-erreur" : "");
     if (source === "google-sheets") {
-      div.innerHTML = '<span class="dot"></span>Données : Google Sheets · ' + n + ' entrée(s)';
+      div.innerHTML = '<span class="dot"></span>' + T("etat.donnees") + n + ' ' + (n > 1 ? T("actv.compteur.plur") : T("actv.compteur.sing"));
     } else if (source === "local") {
-      div.innerHTML = '<span class="dot"></span>Données de secours (Google Sheets injoignable)';
+      div.innerHTML = '<span class="dot"></span>' + T("etat.secours");
     } else {
-      div.innerHTML = '<span class="dot"></span>Erreur de chargement — ouvrez la console (F12) pour le détail';
+      div.innerHTML = '<span class="dot"></span>' + T("etat.erreur");
     }
     el.parentElement.insertBefore(div, el.nextSibling);
   }
@@ -265,9 +272,7 @@
       var visibles = mode === "apercu" ? dernieres.slice(0, limite || 4) : dernieres;
 
       if (!visibles.length) {
-        el.innerHTML = etat("vide", "Journal en cours d'alimentation",
-          "Les entrées saisies dans l'onglet « Timeline » du Sheet apparaîtront ici, sans modification du code.",
-          "Aucune entrée n'est affichée tant que le Sheet est vide — rien n'est inventé.");
+        el.innerHTML = etat("vide", T("actv.vide.titre"), T("actv.vide.desc"), T("etat.rien.invente"));
         statutSource(el, src, 0);
         return;
       }
@@ -279,8 +284,8 @@
       reveler(el);
     }).catch(function (e) {
       console.error("[Activité] Erreur de chargement :", e);
-      el.innerHTML = etat("erreur", "Impossible de charger le journal",
-        "Vérifiez la publication de l'onglet « Timeline » du Google Sheet, puis rechargez la page.");
+      el.innerHTML = etat("erreur", T("actv.erreur.titre"),
+        T("etat.sheet.onglet", { onglet: "Timeline" }));
       statutSource(el, "erreur", 0);
     });
   }
