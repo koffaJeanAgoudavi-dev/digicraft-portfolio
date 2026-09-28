@@ -1,8 +1,8 @@
 /* ============================================================
    ACTIVITE.JS — Journal chronologique (blueprint v0.2 §6)
    ------------------------------------------------------------
-   Source unique : onglet « Timeline » du classeur (GID 1733530302,
-   ex-BuildInPublic). Colonnes lues :
+   Source unique : onglet « Timeline » du classeur (GID 1733530302).
+   Colonnes lues :
    id, type, titre, description, image_url, statut, date,
    lien_optionnel, featured, ordre [, titre_en, description_en]
 
@@ -102,7 +102,7 @@
 
   /* ---------- 2) DONNÉES ---------- */
   function recuperer() {
-    return window.Sheets.loadSheet("buildinpublic").then(function (rows) {
+    return window.Sheets.loadSheet("timeline").then(function (rows) {
       var out = [];
       rows.forEach(function (r, i) {
         try {

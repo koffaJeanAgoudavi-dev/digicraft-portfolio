@@ -12,38 +12,45 @@ Aucun framework, aucune dépendance — volontairement léger et rapide.
 
 ```
 portfolio/
-├── index.html            ← Accueil
+├── index.html            ← Accueil (10 blocs v2)
 ├── 404.html
-├── favicon.svg
+├── favicon.png
 ├── robots.txt
-├── sitemap.xml
+├── sitemap.xml           ← Toutes les routes v2 (fiches dynamiques à ajouter à la main)
 ├── _headers              ← En-têtes de sécurité (Cloudflare Pages) + CSP optionnelle
+├── _redirects            ← /build-in-public/ → /activite/ (301, page retirée en v2)
 ├── _routes.json          ← Limite les invocations de la Function aux nouveaux slugs
 ├── functions/
 │   └── projets/[slug].js ← Fallback /projets/<slug>/ : asset statique → fiche
 │                            générique (Sheet) → vrai 404 (+ injection SEO serveur)
+├── expertise/index.html  ← Expertise (v2)
 ├── projets/index.html    ← Grille + filtres (tous les projets)
 ├── projets/fiche.html    ← Fiche projet GÉNÉRIQUE (V1.3) : servie sur
 │                            /projets/<slug>/ quand aucune page statique n'existe
-├── projets/<slug>/index.html ← Études de cas statiques existantes (prioritaires,
-│                                inchangées) : smartreply-agent, scriboai-bot, mysterybot
+├── projets/<slug>/index.html ← Études de cas statiques (prioritaires) :
+│                                smartreply-agent, scriboai-bot, mysterybot
+├── activite/index.html   ← Journal d'activité (onglet Timeline)
+├── parcours/index.html   ← Parcours, formations & certifications
 ├── articles/index.html   ← Tous les articles + filtres plateforme
 ├── boutique/index.html   ← Tous les produits digitaux
 ├── a-propos/index.html   ← Page personnelle
 ├── contact/index.html    ← Formulaire + coordonnées
 ├── assets/
-│   ├── images/           ← koffa-agoudavi.jpg (photo) + visuels projets
-│   └── logo/             ← digicraft-labs.svg
+│   └── images/           ← koffa-agoudavi.jpg (photo) + visuels projets + og-cover.jpg
 ├── css/style.css         ← Design system complet
 ├── js/
+│   ├── i18n.js           ← Bilinguisme FR/EN (dictionnaire + bascule client)
 │   ├── config.js         ← ⚙️ ID du Google Sheet + défauts
 │   ├── sheets.js         ← Couche CMS (fetch CSV publié + parser + secours)
 │   ├── projects.js       ← Rendu projets (carousel accueil / grille / études de cas)
+│   ├── expertise.js      ← Rendu expertise
+│   ├── activite.js       ← Rendu journal d'activité
+│   ├── parcours.js       ← Rendu parcours
 │   ├── articles.js       ← Rendu articles
 │   ├── resources.js      ← Rendu produits
-│   └── main.js           ← Header, menu, paramètres, formulaire
-├── js/data/*.json        ← Données de secours locales (démo hors CMS)
-└── sheets-exports/*.csv  ← À importer dans Google Sheets (colonnes exactes)
+│   └── main.js           ← Header, menu, paramètres, formulaire, révélation
+├── js/data/*.json        ← Données de secours locales (miroir du Sheet)
+└── outils/               ← Outillage de génération du dictionnaire i18n (non chargé par le site)
 ```
 
 ---
@@ -103,7 +110,9 @@ visite, comme tout le CMS).
 
 ## 3. Images
 
-- `assets/logo/digicraft-labs.png` — **logo officiel** (fond sombre retiré, PNG transparent). Toutes les pages le référencent (header + footer). `favicon.png` est dérivé du même logo.
+- `favicon.png` — icône du site (référencée par toutes les pages).
+- `assets/images/og-cover.jpg` — image d'aperçu social (`og:image`), utilisée sur toutes les pages.
+- *Le logo bitmap `assets/logo/digicraft-labs.png` a été retiré en v2 : la marque est désormais composée en SVG inline + texte dans le dock et le footer (aucun fichier de logo à charger, -352 Ko).*
 - `assets/images/koffa-agoudavi.jpg` — **photo professionnelle** de Koffa (720×900).
 - `assets/images/` — visuels des projets (WebP, ~1280px) :
   - `smartreply-agent-visuel.webp` · `scriboai.webp` · `mysterybot-visuel.webp`
@@ -232,38 +241,31 @@ natif (mobile, scroll-snap). Cartes `.a-card` à 84 % / 46 % / 33 %.
 droite ~0.9fr, gap 4rem). Le visuel apparaît immédiatement à droite du
 texte sur desktop, sans grand espace vide.
 
-## 10. Section Build in public (V1.4)
+## 10. Journal d'activité — onglet Timeline (v0.2)
 
-Nouvel onglet Sheet `BuildInPublic` (gid 1733530302, colonnes : id,
-titre, description, image_url, statut, date, lien_optionnel, featured,
-ordre) — prototypes et expérimentations en cours, avant qu'ils ne
-deviennent des projets finis.
+Le journal suit les prototypes et expérimentations en cours, avant qu'ils
+ne deviennent des projets finis. **Onglet Sheet `Timeline`** (gid
+1733530302, colonnes : id, type, titre, description, image_url, statut,
+date, lien_optionnel, featured, ordre).
 
-- **Accueil** : section carousel « Build in public » (même composant
-  que Projets/Ressources/Articles), placée **entre Projets à la une et
-  Articles** (ordre accueil : Hero → Expertise → Projets → Build in
-  public → Articles → Boutique/Ressources → À propos → CTA final).
-  Affiche `featured = TRUE` (max `featuredBuildLimit` = 4), CTA
-  « Tout voir → » vers `/build-in-public/`.
-- **Affichage conditionnel (V1.5)** : la section (accueil + page) et le
-  lien footer sont **masqués automatiquement tant que l'onglet
-  `BuildInPublic` ne contient aucune ligne de données réelles** — aucun
-  message « aucune donnée » visible publiquement. Dès qu'une ligne est
-  ajoutée dans le Sheet, tout réapparaît au rechargement. `js/sheets.js`
-  : onglet BuildInPublic vide → tableau vide (pas de bascule locale).
-  `js/data/buildinpublic.json` est volontairement vide (`[]`).
-- **Page `/build-in-public/`** : grille de toutes les entrées (featured
-  ou non). Statuts colorés : En test (bleu), Exploration (violet),
-  Abandonné (rouge), Devenu un projet (vert). Lien optionnel externe
-  « Voir → » si `lien_optionnel` est renseigné, date formatée.
-- **Navigation** : lien « Build in public » dans le footer (toutes les
-  pages), absent du header (section secondaire).
-- Renderer : `js/build.js` → `window.Bld.accueil("carousel-build")` /
-  `window.Bld.page("grille-build")`. Données de secours :
-  `js/data/buildinpublic.json`.
-- **Indicateur de source corrigé** (les 4 renderers) : `_source` du
-  Sheet était perdu par le `.sort()` → l'indicateur affichait
-  « Google Sheets » même en mode secours. Recopié avant retour.
+- **Accueil** : section « Coulisses » (`js/activite.js` → `Actv.apercu()`),
+  placée entre Projets et Articles (ordre accueil : Hero → Expertise →
+  Projets → Coulisses → Articles → Boutique → Parcours → À propos → CTA).
+  Affiche les entrées `featured = TRUE` (max 4).
+- **Page `/activite/`** : frise chronologique complète (`Actv.page()`),
+  regroupée par mois, statut coloré et lien externe « Voir → » quand
+  `lien_optionnel` est renseigné.
+- **Onglet vide** : état vide explicite (« Journal en cours
+  d'alimentation »), **aucune bascule** sur les données locales
+  (`js/sheets.js` : onglet `timeline` joignable mais vide → tableau vide).
+  Rien n'est inventé.
+- **Renommage (Étape 11)** : la clé `buildinpublic` est devenue `timeline`
+  dans `js/config.js`, `js/sheets.js` et `js/activite.js` ; le fichier de
+  secours est `js/data/timeline.json`.
+- **Page `/build-in-public/` supprimée (Étape 11)** : elle faisait doublon
+  avec `/activite/`. Une redirection permanente est posée dans `_redirects`
+  (`/build-in-public/` et `/build-in-public` → `/activite/`, code 301) pour
+  préserver les liens et l'indexation. `js/build.js` a été supprimé.
 
 ## 11. Analytics — GA4 + Microsoft Clarity (V1.6)
 
@@ -374,7 +376,8 @@ Pages en place — template identique, chacune alimentée par le Sheet :
 - `/projets/smartreply-agent/` (page statique)
 - `/projets/scriboai-bot/` (page statique)
 - `/projets/mysterybot/` (page statique)
-- `/projets/marketpulse-ai/` (**fiche générique V1.3** — aucun fichier dans le dépôt)
+- `/projets/<slug>/` d'un projet publié dans le Sheet (par exemple `/projets/signaldesk/`)
+  — **fiche générique V1.3**, aucun fichier dans le dépôt
 
 ### V1.3 — Fiche projet générique (aucun fichier à créer par projet)
 
@@ -519,3 +522,31 @@ italique doré, sans autre changement de structure.
   `/projets` (grille seule) · pas d'animations lourdes.
 - ✅ Mobile d'abord · états loading/erreur/vide gérés · images lazy ·
   accessibilité (skip link, aria, focus, prefers-reduced-motion).
+
+---
+
+## 14. Bilinguisme FR/EN (v0.2 — étape 10)
+
+Le site est bilingue **côté client** : pas de `/en/`, aucune URL supplémentaire.
+
+- **Français par défaut** ; le choix du visiteur (bouton `FR` / `EN` du dock) est
+  mémorisé dans `localStorage` (`kj_langue`) et survit au rechargement.
+- **Bascule instantanée** : `<html lang>`, tous les textes marqués `data-i18n`,
+  les attributs `data-i18n-aria` / `-title` / `-placeholder` / `-content`, les
+  `<title>` et les modules de contenu se mettent à jour **sans rechargement et
+  sans changement d'URL**.
+- **Contenus du Google Sheet** : les colonnes `_en` (par ex. `titre_en`,
+  `description_en`, `probleme_en`, `solution_en`, `resultat_en`) sont utilisées
+  quand elles sont remplies ; **sinon le contenu français est affiché** (jamais
+  de case vide, jamais de traduction inventée). Pour traduire une page, il
+  suffit donc de remplir la colonne `_en` correspondante dans le classeur.
+- **Ajouter un texte traduit** : écrire le texte français dans la page avec
+  `data-i18n="ma.cle"`, puis ajouter `"ma.cle"` dans les dictionnaires
+  `fr` et `en` de `js/i18n.js` (fichier généré par `outils/generer-i18n.py`,
+  voir l'en-tête du fichier).
+- **Outillage** (`outils/`, non chargé par le site) : `marquer-i18n.py`
+  (marque les textes FR et produit `_fr.json`), `i18n-en.json` (traductions),
+  `i18n-modules.json` (libellés des modules), `generer-i18n.py` (assemble
+  `js/i18n.js`), `verif-textes-fr.py` (contrôle : aucun texte statique oublié).
+- **Hors périmètre** : le contenu du Sheet sans colonne `_en`
+  (Timeline, notamment) reste en français en mode anglais — c'est le repli prévu.

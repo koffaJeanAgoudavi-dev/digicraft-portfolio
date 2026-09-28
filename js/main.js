@@ -20,39 +20,6 @@
   function qs(s, c) { return (c || document).querySelector(s); }
   function qsa(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
 
-  /* ---------- Header : ombre au scroll ---------- */
-  function initHeader() {
-    var header = qs(".site-header");
-    if (!header) return;
-    var onScroll = function () {
-      header.classList.toggle("is-scrolled", window.scrollY > 10);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-  }
-
-  /* ---------- Menu mobile plein écran ---------- */
-  function initMenu() {
-    var toggle = qs(".nav-toggle");
-    var menu = qs(".mobile-menu");
-    if (!toggle || !menu) return;
-    var set = function (open) {
-      toggle.setAttribute("aria-expanded", String(open));
-      menu.classList.toggle("is-open", open);
-      menu.setAttribute("aria-hidden", String(!open));
-      document.body.style.overflow = open ? "hidden" : "";
-    };
-    toggle.addEventListener("click", function () {
-      set(toggle.getAttribute("aria-expanded") !== "true");
-    });
-    menu.addEventListener("click", function (e) {
-      if (e.target.closest("a")) set(false);
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && menu.classList.contains("is-open")) set(false);
-    });
-  }
-
   /* ---------- Carousel : flèches desktop ---------- */
   function initCarousel() {
     qsa(".carousel").forEach(function (track) {
@@ -331,32 +298,6 @@
     window.revealObserver = obs;
   }
 
-  /* ---------- Build in public : visibilité conditionnelle ---------- */
-  /* La section (accueil + page dédiée) et le lien footer ne s'affichent
-     que si l'onglet BuildInPublic du Sheet contient au moins une vraie
-     ligne de données. Onglet vide → masqués automatiquement ; dès
-     qu'une ligne est ajoutée, tout réapparaît au rechargement. */
-  function initBuildPublic() {
-    window.Sheets.loadSheet("buildinpublic").then(function (items) {
-      if (items.length) return;
-      qsa(".site-footer a").forEach(function (a) {
-        if (a.textContent.indexOf("Build in public") === -1) return;
-        var li = a.closest("li");
-        if (li) li.style.display = "none"; else a.style.display = "none";
-      });
-      /* La section d'accueil a été renommée « Activité » (v0.2 §6) ;
-         l'état vide est géré par js/activite.js, on ne masque donc plus
-         la section, mais on garde la règle pour l'ancien gabarit. */
-      var ancien = document.getElementById("build-in-public");
-      if (ancien) ancien.style.display = "none";
-      var grille = document.getElementById("grille-build");
-      if (grille) {
-        var sec = grille.closest("section");
-        if (sec) sec.style.display = "none";
-      }
-    }).catch(function () {});
-  }
-
   /* ---------- Divers ---------- */
   function initMisc() {
     /* Année du copyright */
@@ -365,19 +306,16 @@
     var norm = function (u) { return String(u || "").replace(/\.html$/, "").replace(/\/+$/, ""); };
     var here = window.location.pathname;
     if (here.charAt(here.length - 1) === "/") here += "index.html";
-    qsa(".dock-nav a, .main-nav a, .mobile-menu nav a").forEach(function (a) {
+    qsa(".dock-nav a").forEach(function (a) {
       var href = new URL(a.getAttribute("href") || "", window.location.href).pathname;
       if (norm(href) === norm(here)) a.setAttribute("aria-current", "page");
     });
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    initHeader();
-    initMenu();
     initCarousel();
     initParametres();
     initContact();
-    initBuildPublic();
     initRevealGlobal();
     initMisc();
 

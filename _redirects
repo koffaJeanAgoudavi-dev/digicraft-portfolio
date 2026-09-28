@@ -1,0 +1,13 @@
+# ============================================================
+# DIGICRAFT Labs — _redirects (Cloudflare Pages)
+# ------------------------------------------------------------
+# Une seule règle : la page « Build in public » (v1.3) a été retirée
+# au profit de /activite/ (journal d'activité v2). Redirection
+# permanente pour préserver les liens et l'indexation existants.
+#
+# ⚠️ Ne jamais rediriger une URL servie par une Function :
+#    /projets/* est réécrit côté serveur (V1.3) et une redirection
+#    y créerait une boucle.
+# ============================================================
+/build-in-public/   /activite/   301
+/build-in-public    /activite/   301

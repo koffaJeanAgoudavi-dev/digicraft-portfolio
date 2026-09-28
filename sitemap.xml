@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ============================================================
-     DIGICRAFT Labs — sitemap.xml
-     À placer à la racine du projet (à côté de index.html).
-     ⚠️ Au passage au domaine final (ex. digicraftlabs.com),
-     remplacer toutes les URLs ci-dessous.
+     DIGICRAFT Labs — sitemap.xml (v0.2)
+     ------------------------------------------------------------
+     Toutes les routes publiées du site. À mettre à jour quand une
+     nouvelle page publique est créée OU quand un nouveau projet est
+     publié dans l'onglet Projets du Sheet (sa fiche /projets/<slug>/
+     est servie dynamiquement : il faut l'ajouter ici à la main).
+
+     ⚠️ Au passage au domaine final (ex. digicraftlabs.com), remplacer
+     toutes les URLs ci-dessous (et celles de robots.txt, _headers,
+     des balises canonical/og:url et de js/config.js).
      ============================================================ -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Page d'accueil -->
+  <!-- Accueil -->
   <url>
     <loc>https://digicraft-labs-drf.pages.dev/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -18,72 +24,81 @@
   <!-- Pages principales -->
   <url>
     <loc>https://digicraft-labs-drf.pages.dev/projets/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://digicraft-labs-drf.pages.dev/expertise/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digicraft-labs-drf.pages.dev/activite/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digicraft-labs-drf.pages.dev/articles/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://digicraft-labs-drf.pages.dev/boutique/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digicraft-labs-drf.pages.dev/parcours/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://digicraft-labs-drf.pages.dev/a-propos/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://digicraft-labs-drf.pages.dev/contact/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- Études de cas -->
+  <!-- Études de cas : pages statiques du dépôt -->
   <url>
     <loc>https://digicraft-labs-drf.pages.dev/projets/smartreply-agent/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://digicraft-labs-drf.pages.dev/projets/scriboai-bot/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://digicraft-labs-drf.pages.dev/projets/mysterybot/</loc>
-    <lastmod>2026-09-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <!-- Fiche projet générique (V1.3) : servie dynamiquement depuis le
-       Google Sheet — aucune page statique dans le dépôt. Penser à
-       ajouter ici chaque nouveau slug publié dans le Sheet. -->
-  <url>
-    <loc>https://digicraft-labs-drf.pages.dev/projets/marketpulse-ai/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Build in public
-       (optionnel : retire ce bloc si tu préfères ne pas indexer
-       la page tant que l'onglet BuildInPublic du Sheet est vide) -->
+  <!-- Étude de cas servie dynamiquement (fiche générique V1.3, données du
+       Sheet — aucun fichier dans le dépôt). Ajouter ici chaque nouveau
+       slug publié dans l'onglet Projets. -->
   <url>
-    <loc>https://digicraft-labs-drf.pages.dev/build-in-public/</loc>
-    <lastmod>2026-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://digicraft-labs-drf.pages.dev/projets/signaldesk/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
