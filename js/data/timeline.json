@@ -1,0 +1,74 @@
+[
+  {
+    "id": "BIP02",
+    "type": "",
+    "titre": "SmartReply Agent — De l’automatisation no-code au SaaS",
+    "description": "SmartReply Agent est un projet que je développe pour automatiser le traitement des emails professionnels grâce à l’IA.\nLe projet a commencé comme une automatisation no-code avec Make, Gmail et Google Sheets. Après plusieurs itérations, notamment l'intégration de Telegram pour la validation des réponses, j'ai décidé de reconstruire le système en Python/FastAPI afin de préparer son évolution vers un véritable SaaS.\nAujourd'hui, le pipeline V1.5 est fonctionnel et automatisé. La prochaine étape consiste à transformer cette architecture en système multi-utilisateur, avec des comptes et des intégrations propres à chaque entreprise.",
+    "image_url": "",
+    "statut": "Étape 1 terminée — Pipeline V1.5 recodé et déployé",
+    "date": "2026-09-15",
+    "lien_optionnel": "https://github.com/koffaJeanAgoudavi-dev/smartreply-backend",
+    "featured": "TRUE",
+    "ordre": "1"
+  },
+  {
+    "id": "",
+    "type": "",
+    "titre": "Prototype initial",
+    "description": "Création du premier prototype de SmartReply Agent pour automatiser le traitement des emails avec Make, Gmail, Google Sheets et l'IA.",
+    "image_url": "",
+    "statut": "Terminé",
+    "date": "2026-09",
+    "lien_optionnel": "",
+    "featured": "TRUE",
+    "ordre": "1,1"
+  },
+  {
+    "id": "",
+    "type": "",
+    "titre": "Intégration Telegram",
+    "description": "Intégration de Telegram pour recevoir les analyses et brouillons générés par l'IA sans avoir à surveiller constamment Gmail. Les actions principales deviennent « Envoyer » ou « Ignorer ».",
+    "image_url": "",
+    "statut": "Terminé",
+    "date": "2026-09-14",
+    "lien_optionnel": "",
+    "featured": "TRUE",
+    "ordre": "1,2"
+  },
+  {
+    "id": "",
+    "type": "",
+    "titre": "Passage à Python/FastAPI",
+    "description": "Après plusieurs itérations du prototype, reconstruction du backend en Python/FastAPI afin de disposer d'une architecture plus adaptée à l'évolution du projet.",
+    "image_url": "",
+    "statut": "Terminé",
+    "date": "2026-09-16",
+    "lien_optionnel": "",
+    "featured": "TRUE",
+    "ordre": "1,3"
+  },
+  {
+    "id": "",
+    "type": "",
+    "titre": "Pipeline V1.5",
+    "description": "Le pipeline complet est maintenant chaîné :\nGmail → Filtrage → Gemini → Google Sheets → Brouillon Gmail → Telegram → Action utilisateur\nLe système est déployé et configuré pour s'exécuter automatiquement toutes les 5 minutes.",
+    "image_url": "",
+    "statut": "Terminé",
+    "date": "2026-09-16",
+    "lien_optionnel": "",
+    "featured": "TRUE",
+    "ordre": "1,4"
+  },
+  {
+    "id": "",
+    "type": "",
+    "titre": "Prochaine étape : le SaaS",
+    "description": "Transformation progressive du système actuel en architecture multi-utilisateur : authentification, connexion Gmail individuelle, connexion Google Sheets par entreprise et isolation des données.",
+    "image_url": "",
+    "statut": "Terminé",
+    "date": "2026-09-17",
+    "lien_optionnel": "",
+    "featured": "TRUE",
+    "ordre": "1,5"
+  }
+]

@@ -1,19 +1,51 @@
 [
   {
-    "cle": "nom_complet",
+    "cle": "hero_titre",
     "valeur": "Koffa Jean AGOUDAVI"
   },
   {
-    "cle": "titre_professionnel",
-    "valeur": "Fondateur de DIGICRAFT Labs"
+    "cle": "hero_role",
+    "valeur": "Fondateur & Lead Product"
   },
   {
-    "cle": "slogan_hero",
+    "cle": "hero_accroche",
     "valeur": "Je transforme les idées complexes en systèmes digitaux intelligents."
   },
   {
-    "cle": "description_hero",
-    "valeur": "Je conçois des automatisations, des agents IA, des bots et des produits digitaux pour simplifier les workflows et créer des solutions concrètes."
+    "cle": "hero_accroche_en",
+    "valeur": ""
+  },
+  {
+    "cle": "hero_promesse",
+    "valeur": "Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules."
+  },
+  {
+    "cle": "marque_lab",
+    "valeur": "DIGICRAFT Labs"
+  },
+  {
+    "cle": "stat_projets_count",
+    "valeur": "5+"
+  },
+  {
+    "cle": "stat_workflows_count",
+    "valeur": "6+"
+  },
+  {
+    "cle": "stat_certifs_count",
+    "valeur": "4+"
+  },
+  {
+    "cle": "photo_hero_url",
+    "valeur": "https://res.cloudinary.com/mdebk4xz/image/upload/v1790377761/photo_5805309034477850602_y.jpg"
+  },
+  {
+    "cle": "hero_cta_label",
+    "valeur": "Découvrir mes réalisations"
+  },
+  {
+    "cle": "hero_cta_url",
+    "valeur": "/projets/"
   },
   {
     "cle": "email_contact",
@@ -25,19 +57,11 @@
   },
   {
     "cle": "url_telegram",
-    "valeur": "https://t.me/johnnyokabe"
+    "valeur": "t.me/johnnyokabe"
   },
   {
     "cle": "url_google_business",
     "valeur": "https://share.google/ont9TyuWshpud74fL"
-  },
-  {
-    "cle": "url_whatsapp",
-    "valeur": "https://wa.me/22872556556?text=Bonjour%2C%20je%20viens%20de%20votre%20site%20DIGICRAFT%20Labs%20et%20j%27aimerais%20%C3%A9changer%20avec%20vous."
-  },
-  {
-    "cle": "url_youtube",
-    "valeur": "https://www.youtube.com/@KoffaJeanAgoudavi"
   },
   {
     "cle": "url_boutique",
@@ -48,8 +72,12 @@
     "valeur": "https://hook.eu1.make.com/wjgpk28nmywizvm7kl95hv45gt7n6quq"
   },
   {
-    "cle": "statut_disponibilite",
-    "valeur": "AVAILABLE FOR PROJECTS"
+    "cle": "url_youtube",
+    "valeur": "www.youtube.com/@KoffaJeanAgoudavi"
+  },
+  {
+    "cle": "url_whatsapp",
+    "valeur": "https://wa.me/22872556556?text=Bonjour%2C%20je%20viens%20de%20votre%20site%20DIGICRAFT%20Labs%20et%20j%27aimerais%20échanger%20avec%20vous."
   },
   {
     "cle": "ga4_id",
@@ -58,5 +86,17 @@
   {
     "cle": "clarity_id",
     "valeur": "yaxx6uxxws"
+  },
+  {
+    "cle": "statut_disponibilite",
+    "valeur": "Disponible pour de nouveaux projets"
+  },
+  {
+    "cle": "lab_description",
+    "valeur": ""
+  },
+  {
+    "cle": "langue_defaut",
+    "valeur": "FR"
   }
 ]

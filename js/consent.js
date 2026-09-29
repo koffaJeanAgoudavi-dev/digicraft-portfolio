@@ -72,6 +72,12 @@
   var banner = null, modal = null, info = null;
   var dernierFocus = null;
 
+  /* Libellés traduits (js/i18n.js) — repli sur le texte passé en secours. */
+  function T(cle, secours) {
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle);
+    return secours !== undefined ? secours : cle;
+  }
+
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function creerEl(html) {
     var t = document.createElement("template");
@@ -80,17 +86,17 @@
   }
 
   function markupBanniere() {
-    return '<div class="dl-banner" id="dl-banner" role="region" aria-label="Gestion du consentement cookies">' +
+    return '<div class="dl-banner" id="dl-banner" role="region" aria-label="' + T("ck.banniere.aria") + '">' +
       '<div class="dl-banner-inner">' +
         '<div class="dl-banner-text">' +
-          '<strong class="dl-banner-title">Votre confidentialité compte</strong>' +
-          '<p>Nous utilisons des outils d\'analyse pour comprendre comment notre site est utilisé et améliorer votre expérience. Vous pouvez accepter, refuser ou personnaliser votre choix.</p>' +
-          '<button type="button" class="dl-text-btn" data-dl-infos>En savoir plus sur les cookies</button>' +
+          '<strong class="dl-banner-title">' + T("ck.banniere.titre") + '</strong>' +
+          '<p>' + T("ck.banniere.texte") + '</p>' +
+          '<button type="button" class="dl-text-btn" data-dl-infos>' + T("ck.banniere.infos") + '</button>' +
         '</div>' +
         '<div class="dl-banner-actions">' +
-          '<button type="button" class="btn btn-gold btn-sm" data-dl-accept>Accepter</button>' +
-          '<button type="button" class="btn btn-ghost btn-sm" data-dl-refuse>Refuser</button>' +
-          '<button type="button" class="dl-text-btn" data-dl-custom>Personnaliser</button>' +
+          '<button type="button" class="btn btn-gold btn-sm" data-dl-accept>' + T("ck.accepter") + '</button>' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-dl-refuse>' + T("ck.refuser") + '</button>' +
+          '<button type="button" class="dl-text-btn" data-dl-custom>' + T("ck.personnaliser") + '</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -100,17 +106,17 @@
     return '<div class="dl-modal" id="dl-modal" role="dialog" aria-modal="true" aria-labelledby="dl-modal-title" hidden>' +
       '<div class="dl-backdrop" data-dl-close></div>' +
       '<div class="dl-box" role="document">' +
-        '<h3 id="dl-modal-title">Préférences de confidentialité</h3>' +
+        '<h3 id="dl-modal-title">' + T("ck.pref.titre") + '</h3>' +
         '<div class="dl-cat">' +
-          '<div class="dl-cat-txt"><strong>Nécessaires</strong><p>Permettent le fonctionnement du site (navigation, sécurité, sauvegarde de vos préférences). Toujours actifs.</p></div>' +
-          '<span class="dl-pill">Toujours actifs</span>' +
+          '<div class="dl-cat-txt"><strong>' + T("ck.cat.necessaires.titre") + '</strong><p>' + T("ck.cat.necessaires.desc") + '</p></div>' +
+          '<span class="dl-pill">' + T("ck.cat.necessaires.pill") + '</span>' +
         '</div>' +
         '<div class="dl-cat">' +
-          '<div class="dl-cat-txt"><strong>Statistiques</strong><p>Nous permettent de comprendre comment les visiteurs utilisent le site afin d\'améliorer son fonctionnement. (Google Analytics 4, Microsoft Clarity)</p></div>' +
-          '<label class="dl-switch"><input type="checkbox" id="dl-stats-cb" aria-label="Activer les statistiques"><span class="dl-slider"></span></label>' +
+          '<div class="dl-cat-txt"><strong>' + T("ck.cat.stats.titre") + '</strong><p>' + T("ck.cat.stats.desc") + '</p></div>' +
+          '<label class="dl-switch"><input type="checkbox" id="dl-stats-cb" aria-label="' + T("ck.cat.stats.aria") + '"><span class="dl-slider"></span></label>' +
         '</div>' +
         '<div class="dl-modal-actions">' +
-          '<button type="button" class="btn btn-gold btn-sm" data-dl-save>Enregistrer mes préférences</button>' +
+          '<button type="button" class="btn btn-gold btn-sm" data-dl-save>' + T("ck.enregistrer") + '</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -120,17 +126,17 @@
     return '<div class="dl-modal" id="dl-info" role="dialog" aria-modal="true" aria-labelledby="dl-info-title" hidden>' +
       '<div class="dl-backdrop" data-dl-close></div>' +
       '<div class="dl-box" role="document">' +
-        '<h3 id="dl-info-title">En savoir plus sur les cookies</h3>' +
+        '<h3 id="dl-info-title">' + T("ck.infos.titre") + '</h3>' +
         '<div class="dl-info-body">' +
-          '<p>Ce site n\'utilise <strong>aucun cookie publicitaire ou marketing</strong>. Seuls des outils d\'analyse sont proposés :</p>' +
+          '<p>' + T("ck.infos.p1") + '</p>' +
           '<ul>' +
-            '<li><strong>Google Analytics 4</strong> — mesure d\'audience anonymisée (pages vues, provenance, comportement).</li>' +
-            '<li><strong>Microsoft Clarity</strong> — enregistrements de sessions et cartes de chaleur pour améliorer l\'ergonomie.</li>' +
+            '<li>' + T("ck.infos.li1") + '</li>' +
+            '<li>' + T("ck.infos.li2") + '</li>' +
           '</ul>' +
-          '<p>Ces outils nous aident à comprendre comment le site est utilisé, sans collecter votre nom, votre email ou le contenu de vos messages. Vous pouvez modifier votre choix à tout moment via « Gérer mes cookies » dans le pied de page.</p>' +
+          '<p>' + T("ck.infos.p2") + '</p>' +
         '</div>' +
         '<div class="dl-modal-actions">' +
-          '<button type="button" class="btn btn-gold btn-sm" data-dl-close>Fermer</button>' +
+          '<button type="button" class="btn btn-gold btn-sm" data-dl-close>' + T("ck.fermer") + '</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -213,6 +219,20 @@
       setTimeout(function () { banner.classList.add("is-visible"); }, 600);
     }
   }
+
+  /* Changement de langue : reconstruction du contenu des panneaux sans
+     recréer les conteneurs (les écouteurs délégués restent en place) et
+     sans toucher à la visibilité ni au consentement déjà enregistré. */
+  function rafraichirTextes() {
+    if (!banner) return;
+    [[banner, markupBanniere()], [modal, markupPreferences()], [info, markupInfos()]].forEach(function (x) {
+      var el = x[0], html = x[1];
+      if (!el) return;
+      var neuf = creerEl(html);
+      if (neuf) el.innerHTML = neuf.innerHTML;
+    });
+  }
+  document.addEventListener("kj:langue", rafraichirTextes);
 
   /* ---------- API publique ---------- */
   window.Consent = {

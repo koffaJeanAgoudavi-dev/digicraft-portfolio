@@ -23,7 +23,9 @@ window.CONFIG = {
     projets: 690207518,      // onglet Projets
     articles: 982421678,     // onglet Articles
     ressources: 1306651993,  // onglet Ressources
-    buildinpublic: 1733530302 // onglet BuildInPublic
+    timeline: 1733530302,      // onglet Timeline (journal d'activité)
+    expertise: 1879096907,    // onglet Expertise
+    parcours: 834951448       // onglet Parcours (ex-Certifications)
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
@@ -33,7 +35,9 @@ window.CONFIG = {
     projets: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=690207518&single=true&output=csv",
     articles: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=982421678&single=true&output=csv",
     ressources: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1306651993&single=true&output=csv",
-    buildinpublic: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1733530302&single=true&output=csv"
+    timeline: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1733530302&single=true&output=csv",
+    expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1879096907&single=true&output=csv",
+    parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=834951448&single=true&output=csv"
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement
@@ -42,25 +46,44 @@ window.CONFIG = {
   // (insensible à la casse / espaces, alias acceptés).
   colonnesAttendues: {
     parametres: ["cle", "valeur"],
-    projets: ["titre", "slug", "categorie", "description_courte", "image_url", "stack_tags", "statut", "date", "type_lien", "url_destination", "featured", "ordre", "probleme", "solution", "technologies_detail", "resultat"],
-    articles: ["titre", "plateforme", "description", "temps_lecture", "url", "date", "featured", "ordre"],
-    ressources: ["nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre"],
-    buildinpublic: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"]
+    projets: ["titre", "slug", "categorie", "badge_statut", "description_courte", "image_url", "stack_tags", "statut", "date", "type_lien", "url_destination", "featured", "ordre", "probleme", "solution", "technologies_detail", "resultat"],
+    articles: ["titre", "plateforme", "description", "temps_lecture", "url", "date", "featured", "ordre", "titre_en", "description_en"],
+    ressources: ["type", "nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre", "nom_produit_en", "description_en"],
+    timeline: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"],
+    expertise: ["titre", "description_courte", "description_longue", "icone", "categorie", "exemples_projets", "ordre"],
+    parcours: ["type", "titre", "organisation", "date_obtention", "date_fin", "description", "verification_url", "ordre"]
   },
 
-  // Données par défaut (utilisées si le Sheet n'est pas joignable)
+  // Données par défaut (utilisées seulement si le Sheet ET le JSON local
+  // sont injoignables). v2 : les clés hero_* du CMS v0.2 ont la priorité ;
+  // les anciennes clés (nom_complet, slogan_hero…) restent en repli pour
+  // les pages pas encore migrées.
   defaults: {
+    /* --- Identité / Hero (blueprint v0.2 §4 et §7) --- */
+    hero_titre: "Koffa Jean AGOUDAVI",
+    hero_role: "Fondateur & Lead Product",
+    hero_accroche: "Je transforme les idées complexes en systèmes digitaux intelligents.",
+    hero_promesse: "Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules.",
+    marque_lab: "DIGICRAFT Labs",
+    photo_hero_url: "",           // vide → photo locale assets/images/koffa-agoudavi.jpg
+    hero_cta_label: "Découvrir mes réalisations",
+    hero_cta_url: "/projets/",
+    stat_projets_count: "",       // vide → la tuile correspondante est masquée
+    stat_workflows_count: "",
+    stat_certifs_count: "",
+    langue_defaut: "fr",
+    /* --- Ancien nommage (repli ; conservé jusqu'à la fin des migrations) --- */
     nom_complet: "Koffa Jean AGOUDAVI",
-    titre_professionnel: "Fondateur de DIGICRAFT Labs",
+    titre_professionnel: "Fondateur & Lead Product",
     slogan_hero: "Je transforme les idées complexes en systèmes digitaux intelligents.",
-    description_hero: "Je conçois des automatisations, des agents IA, des bots et des produits digitaux pour simplifier les workflows et créer des solutions concrètes.",
+    description_hero: "Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives.",
     email_contact: "contact.agoudavi@gmail.com",
     url_linkedin: "https://www.linkedin.com/in/koffa-jean-agoudavi-514895423",
     url_telegram: "https://t.me/johnnyokabe",
     url_google_business: "https://share.google/ont9TyuWshpud74fL",
     url_boutique: "https://digicraft.mychariow.shop",
     url_webhook_contact: "https://hook.eu1.make.com/wjgpk28nmywizvm7kl95hv45gt7n6quq",
-    statut_disponibilite: "AVAILABLE FOR PROJECTS"
+    statut_disponibilite: "Disponible pour de nouveaux projets"
   },
 
   // Domaine du site — À REMPLACER par votre domaine final

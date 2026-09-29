@@ -107,10 +107,10 @@
       return fetchText(sheetUrl(name)).then(function (text) {
         var rows = rowsToObjects(parseCSV(text));
         if (!rows.length) {
-          /* Onglet BuildInPublic joignable mais vide : ne PAS basculer
-             sur les données locales — la section Build in public ne doit
-             s'afficher que si le Sheet contient de vraies données. */
-          if (name === "buildinpublic") {
+          /* Onglet Timeline joignable mais vide : ne PAS basculer sur les
+             données locales — le journal d'activité ne doit afficher que
+             de vraies données du Sheet (jamais un contenu figé). */
+          if (name === "timeline") {
             var vides = [];
             vides._source = "google-sheets";
             return vides;

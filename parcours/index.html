@@ -2,31 +2,23 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="RwuhsveunXtvJvMHt2v_kQKeC2xaRPjTYuRsp_99o0s">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n="doc.projets.titre">Mes projets | Koffa Jean AGOUDAVI — DIGICRAFT Labs</title>
-  <meta name="description" content="Systèmes, automatisations et expériences construits par Koffa Jean AGOUDAVI autour de l'IA et du digital : SmartReply Agent, ScriboAI, MysteryBot et plus." data-i18n-content="doc.projets.desc">
+  <title data-i18n="doc.parcours.titre">Parcours | Koffa Jean AGOUDAVI</title>
+  <meta name="description" content="Expériences, formations, certifications et licences de Koffa Jean AGOUDAVI." data-i18n-content="doc.parcours.desc">
+  <!-- TEMPORAIRE : section pas encore alimentée par le CMS.
+       Retirer cette ligne à l'étape qui remplit la page (3, 6 ou 7). -->
   <link rel="icon" type="image/svg+xml" href="../favicon.png">
-  <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/projets/">
-
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="fr_FR">
-  <meta property="og:site_name" content="DIGICRAFT Labs">
-  <meta property="og:title" content="Mes projets | Koffa Jean AGOUDAVI">
-  <meta property="og:description" content="Systèmes, automatisations et expériences construits autour de l'IA et du digital.">
-  <meta property="og:url" content="https://digicraft-labs-drf.pages.dev/projets/">
-  <meta property="og:image" content="https://digicraft-labs-drf.pages.dev/assets/images/og-cover.jpg">
-  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/parcours/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/style.css?v=20260926a">
+  <link rel="stylesheet" href="../css/style.css?v=20260926d">
 </head>
 <body class="has-dock">
   <a class="skip-link" href="#contenu" data-i18n="commun.skip">Aller au contenu</a>
 
-    <!-- ============ SIDE DOCK BAR (v2) ============ -->
+  <!-- ============ SIDE DOCK BAR (v2) ============ -->
   <aside class="dock" aria-label="Navigation principale">
     <a class="dock-brand" href="../index.html" aria-label="Koffa Jean AGOUDAVI — Accueil">
       <span class="dock-mono" aria-hidden="true">KJ</span>
@@ -41,7 +33,7 @@
         <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.2 5.4L20 10l-5.8 1.6L12 17l-2.2-5.4L4 10l5.8-1.6z"/></svg>
         <span data-i18n="nav.expertise">Expertise</span>
       </a>
-      <a class="dock-item" href="../projets/" aria-current="page">
+      <a class="dock-item" href="../projets/">
         <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>
         <span data-i18n="nav.realisations">Réalisations</span>
       </a>
@@ -49,7 +41,7 @@
         <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2.5-6 4 12L16 12h5"/></svg>
         <span data-i18n="nav.activite">Activité</span>
       </a>
-      <a class="dock-item dock-item-secondary" href="../parcours/">
+      <a class="dock-item dock-item-secondary" href="../parcours/" aria-current="page">
         <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 3 2 3H5"/></svg>
         <span data-i18n="nav.parcours">Parcours</span>
       </a>
@@ -94,33 +86,26 @@
       <button type="button" class="dock-sheet-close" data-dock-close data-i18n="dock.close">Fermer</button>
     </div>
   </div>
+
   <main id="contenu">
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow reveal" data-i18n="projets.eyebrow">Portfolio</p>
-        <h1 class="reveal" data-i18n="projets.titre">Mes réalisations</h1>
-        <p class="lead reveal" data-i18n="projets.lead">Des systèmes, des automatisations et des expériences construits autour de l'IA et du digital. Chaque projet part d'un problème concret et aboutit à un système fonctionnel.</p>
-        <div class="page-extra reveal" id="puces-projets" aria-live="polite">
-          <!-- compte + catégories réelles, injectés par js/projects.js -->
-        </div>
+        <p class="eyebrow reveal" data-i18n="parcours.eyebrow">Parcours</p>
+        <h1 class="reveal" data-i18n="parcours.titre">Expériences, formations &amp; certifications</h1>
+        <p class="lead reveal" data-i18n="parcours.lead">Ce que j'ai appris, construit et validé — formations, expériences et certifications, avec leur lien de vérification quand il existe.</p>
       </div>
     </section>
 
-    <section class="section" style="padding-top:1.5rem">
+    <section class="section" style="padding-top:0">
       <div class="container">
-        <div class="filters reveal" id="filtres-projets" role="group" aria-label="Filtrer les projets" data-i18n-aria="projets.filtre.ariane"">
-          <!-- Filtres générés depuis l'onglet Projets (js/projects.js) :
-               « Tous » sert de repli si JavaScript est désactivé. -->
-          <button class="f-btn is-active" data-filtre="Tous" aria-pressed="true" data-i18n="projets.filtre.tous">Tous</button>
-        </div>
-        <div class="grid-3" id="grille-projets" data-prj-vue="grille" data-prj-filtres="filtres-projets" data-prj-puces="puces-projets">
-          <!-- injecté par js/projects.js -->
+        <div id="parcours-liste" data-parc-mode="page" aria-live="polite" aria-busy="true">
+          <!-- injecté par js/parcours.js depuis l'onglet « Parcours » (ex-Certifications) -->
         </div>
       </div>
     </section>
   </main>
 
-    <footer class="site-footer">
+  <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -165,22 +150,18 @@
       </div>
     </div>
   </footer>
-
   <script>window.SITE_ROOT = "../";</script>
-  <script src="../js/config.js?v=20260926a"></script>
-  <script src="../js/consent.js?v=20260926a"></script>
-  <script src="../js/analytics.js?v=20260926a"></script>
-  <script src="../js/sheets.js?v=20260926a"></script>
-  <script src="../js/projects.js?v=20260926a"></script>
-  <script src="../js/articles.js?v=20260926a"></script>
-  <script src="../js/resources.js?v=20260926a"></script>
-  <script src="../js/i18n.js?v=20260926a"></script>
-  <script src="../js/main.js?v=20260926a"></script>
-  <script src="../js/dock.js?v=20260926a"></script>
+  <script src="../js/config.js?v=20260926d"></script>
+  <script src="../js/consent.js?v=20260926d"></script>
+  <script src="../js/analytics.js?v=20260926d"></script>
+  <script src="../js/sheets.js?v=20260926d"></script>
+  <script src="../js/i18n.js?v=20260926d"></script>
+  <script src="../js/main.js?v=20260926d"></script>
+  <script src="../js/parcours.js?v=20260926d"></script>
+  <script src="../js/dock.js?v=20260926d"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      window.Prjs.grilleProjets("grille-projets", "filtres-projets", "puces-projets");
-      window.Prjs.initReveal();
+      window.Parcs.page("parcours-liste");
     });
   </script>
 </body>

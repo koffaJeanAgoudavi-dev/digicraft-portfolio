@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="google-site-verification" content="RwuhsveunXtvJvMHt2v_kQKeC2xaRPjTYuRsp_99o0s">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Koffa Jean AGOUDAVI | IA, Automatisation &amp; No-Code — DIGICRAFT Labs</title>
-  <meta name="description" content="Koffa Jean AGOUDAVI — Fondateur de DIGICRAFT Labs. Je transforme les idées complexes en systèmes digitaux intelligents : automatisations, agents IA, bots Telegram et produits digitaux.">
+  <title data-i18n="doc.accueil.titre">Koffa Jean AGOUDAVI | IA, Automatisation &amp; No-Code — DIGICRAFT Labs</title>
+  <meta name="description" content="Koffa Jean AGOUDAVI — Fondateur de DIGICRAFT Labs. Je transforme les idées complexes en systèmes digitaux intelligents : automatisations, agents IA, bots Telegram et produits digitaux." data-i18n-content="doc.accueil.desc">
   <link rel="icon" type="image/svg+xml" href="favicon.png">
   <link rel="canonical" href="https://digicraft-labs-drf.pages.dev/">
 
@@ -27,109 +27,118 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20260828u">
+  <link rel="stylesheet" href="css/style.css?v=20260927a">
 </head>
-<body>
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
-
-  <!-- ============ HEADER ============ -->
-  <header class="site-header">
-    <div class="container">
-      <a class="brand" href="index.html" aria-label="DIGICRAFT Labs — Accueil">
-        <img class="brand-logo" src="assets/logo/digicraft-labs.png" alt="" width="38" height="38">
-        <span class="brand-name">DIGICRAFT Labs<small>Koffa Jean Agoudavi</small></span>
+<body class="has-dock">
+  <a class="skip-link" href="#contenu" data-i18n="commun.skip">Aller au contenu</a>
+  <!-- ============ SIDE DOCK BAR (v2) ============ -->
+  <aside class="dock" aria-label="Navigation principale">
+    <a class="dock-brand" href="index.html" aria-label="Koffa Jean AGOUDAVI — Accueil">
+      <span class="dock-mono" aria-hidden="true">KJ</span>
+      <span class="dock-brand-sub" data-i18n="dock.portfolio">Portfolio</span>
+    </a>
+    <nav class="dock-nav">
+      <a class="dock-item" href="index.html" aria-current="page">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.6 12 3l9 7.6"/><path d="M5 9.6V21h14V9.6"/></svg>
+        <span data-i18n="nav.accueil">Accueil</span>
       </a>
-      <nav class="main-nav" aria-label="Navigation principale">
-        <a href="index.html">Accueil</a>
-        <a href="projets/">Projets</a>
-        <a href="articles/">Articles</a>
-        <a href="boutique/">Boutique</a>
-        <a href="a-propos/">À propos</a>
-      </nav>
-      <a class="btn btn-gold btn-sm header-cta" href="contact/">Me contacter</a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
-        <span class="bars"><i></i><i></i><i></i></span>
+      <a class="dock-item" href="expertise/">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.2 5.4L20 10l-5.8 1.6L12 17l-2.2-5.4L4 10l5.8-1.6z"/></svg>
+        <span data-i18n="nav.expertise">Expertise</span>
+      </a>
+      <a class="dock-item" href="projets/">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>
+        <span data-i18n="nav.realisations">Réalisations</span>
+      </a>
+      <a class="dock-item" href="activite/">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2.5-6 4 12L16 12h5"/></svg>
+        <span data-i18n="nav.activite">Activité</span>
+      </a>
+      <a class="dock-item dock-item-secondary" href="parcours/">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 3 2 3H5"/></svg>
+        <span data-i18n="nav.parcours">Parcours</span>
+      </a>
+      <a class="dock-item dock-item-secondary" href="a-propos/">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.2-4 4-5.4 7-5.4s5.8 1.4 7 5.4"/></svg>
+        <span data-i18n="nav.apropos">À propos</span>
+      </a>
+      <a class="dock-item dock-item-secondary" href="contact/">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <span data-i18n="nav.contact">Contact</span>
+      </a>
+      <button type="button" class="dock-item dock-more" aria-expanded="false" aria-controls="dock-sheet">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <span data-i18n="dock.more">Plus</span>
       </button>
-    </div>
-  </header>
-
-  <!-- Menu mobile plein écran -->
-  <div class="mobile-menu" id="menu-mobile" aria-hidden="true">
-    <nav aria-label="Navigation mobile">
-      <a href="index.html">Accueil</a>
-      <a href="projets/">Projets</a>
-      <a href="articles/">Articles</a>
-      <a href="boutique/">Boutique</a>
-      <a href="a-propos/">À propos</a>
     </nav>
-    <div class="menu-foot">
-      <a class="btn btn-gold" href="contact/">Me contacter</a>
-      <div class="menu-social">
-        <a data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">LinkedIn</a>
-        <a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a>
+    <div class="dock-foot">
+      <p class="dock-avail" hidden><span class="dot" aria-hidden="true"></span><span data-p-statut></span></p>
+      <div class="dock-lang" role="group" data-i18n-aria="lang.label">
+        <button type="button" class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
       </div>
-      <p class="menu-note">DIGICRAFT Labs — Koffa Jean AGOUDAVI</p>
+    </div>
+  </aside>
+
+  <!-- Feuille mobile « Plus » -->
+  <div class="dock-sheet" id="dock-sheet" hidden role="dialog" aria-modal="true" aria-label="Plus de navigation">
+    <div class="dock-sheet-backdrop" data-dock-close></div>
+    <div class="dock-sheet-inner">
+      <p class="dock-sheet-title" data-i18n="dock.nav">Navigation</p>
+      <div class="dock-sheet-grid">
+        <div class="dock-lang dock-lang-sheet" role="group" data-i18n-aria="lang.label">
+          <button type="button" class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a href="parcours/" data-i18n="nav.parcours">Parcours</a>
+        <a href="a-propos/" data-i18n="nav.apropos">À propos</a>
+        <a href="contact/" data-i18n="nav.contact">Contact</a>
+        <a href="boutique/" data-i18n="dock.ressources">Ressources</a>
+        <button type="button" class="dl-manage-btn" data-consent-manage data-i18n="dock.cookies">Gérer mes cookies</button>
+      </div>
+      <button type="button" class="dock-sheet-close" data-dock-close data-i18n="dock.close">Fermer</button>
     </div>
   </div>
 
+
+  <!-- Menu mobile plein écran -->
   <main id="contenu">
 
-    <!-- ============ HERO ============ -->
+    <!-- ============ HERO (v2 — blueprint v0.2 §3-§4) ============
+         Textes, photo, chiffres clés et CTA : tous administrables depuis
+         l'onglet Parametres (clés hero_*, marque_lab, photo_hero_url). -->
     <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <span class="status-pill"><span class="dot"></span><span data-p-statut>AVAILABLE FOR PROJECTS</span></span>
-          <p class="eyebrow">Koffa Jean Agoudavi · Digicraft Labs</p>
-          <h1 data-p-slogan>Je transforme les idées complexes en <em>systèmes digitaux intelligents</em>.</h1>
-          <p class="hero-desc" data-p-desc-hero>Je transforme les idées complexes en systèmes digitaux intelligents : automatisations, agents IA, bots Telegram et produits digitaux.</p>
-          <div class="hero-tags">
-            <span class="chip chip-gold">IA</span>
-            <span class="chip">Automatisation</span>
-            <span class="chip">No-Code</span>
-            <span class="chip">Bots</span>
-            <span class="chip">Produits digitaux</span>
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-body">
+            <p class="eyebrow"><span data-p-marque>DIGICRAFT Labs</span> · <span data-i18n="hero.portfolio">Portfolio personnel</span></p>
+            <h1 data-p-nom>Koffa Jean AGOUDAVI</h1>
+            <p class="hero-role" data-p-titre>Fondateur &amp; Lead Product</p>
+            <p class="hero-slogan" data-p-slogan>Je transforme les idées complexes en systèmes digitaux intelligents.</p>
+            <p class="hero-promesse" data-p-desc-hero>Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules.</p>
+            <div class="hero-cta">
+              <a class="btn btn-gold" data-p-cta href="projets/"><span data-p-cta-label>Découvrir mes réalisations</span> <span class="arr" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="contact/" data-i18n="hero.contact">Me contacter</a>
+            </div>
           </div>
-          <div class="hero-cta">
-            <a class="btn btn-gold" href="projets/">Explorer mes projets <span class="arr">→</span></a>
-            <a class="btn btn-ghost" href="a-propos/">Découvrir DIGICRAFT Labs</a>
+          <div class="hero-media">
+            <figure class="hero-photo">
+              <img data-p-photo
+                   src="assets/images/koffa-agoudavi.jpg"
+                   data-photo-fallback="assets/images/koffa-agoudavi.jpg"
+                   alt="Portrait de Koffa Jean AGOUDAVI"
+                   width="912" height="898" fetchpriority="high" decoding="async">
+              <figcaption class="hero-badge"><span data-i18n="hero.badge">Fondateur</span> @ <span data-p-marque>DIGICRAFT Labs</span></figcaption>
+            </figure>
           </div>
         </div>
 
-        <!-- Signature visuelle : workflow -->
-        <div class="workflow reveal" aria-label="Exemple de workflow : Gmail vers Make vers IA vers Google Sheets vers Telegram">
-          <div class="workflow-head">
-            <span class="wf-title">Un workflow que je construis</span>
-            <span class="wf-live"><span class="dot"></span>En direct</span>
-          </div>
-          <div class="wf-node">
-            <span class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 8l9 6 9-6"/></svg></span>
-            <span><span class="wf-label">Gmail</span><span class="wf-sub" style="display:block">Nouveau message</span></span>
-          </div>
-          <div class="wf-link" style="--t:0s"><span class="wf-dot"></span><span class="wf-arrow"></span></div>
-          <div class="wf-node">
-            <span class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M7 12l3 3 7-7"/></svg></span>
-            <span><span class="wf-label">Make</span><span class="wf-sub" style="display:block">Scénario automatisé</span></span>
-          </div>
-          <div class="wf-link" style="--t:.5s"><span class="wf-dot"></span><span class="wf-arrow"></span></div>
-          <div class="wf-node">
-            <span class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a2 2 0 0 1 0 4h-3.27A6 6 0 0 1 12 20a6 6 0 0 1-5.73-2H3a2 2 0 0 1 0-4h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><path d="M12 12v4"/><path d="M9 13h6"/></svg></span>
-            <span><span class="wf-label">Groq / IA</span><span class="wf-sub" style="display:block">Analyse &amp; réponse</span></span>
-          </div>
-          <div class="wf-link" style="--t:1s"><span class="wf-dot"></span><span class="wf-arrow"></span></div>
-          <div class="wf-node">
-            <span class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 3v18"/></svg></span>
-            <span><span class="wf-label">Google Sheets</span><span class="wf-sub" style="display:block">Données structurées</span></span>
-          </div>
-          <div class="wf-link" style="--t:1.5s"><span class="wf-dot"></span><span class="wf-arrow"></span></div>
-          <div class="wf-node">
-            <span class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-            <span><span class="wf-label">Telegram</span><span class="wf-sub" style="display:block">Notification &amp; validation</span></span>
-          </div>
-          <div class="workflow-foot">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 11-14h-7l1-6z"/></svg>
-            De l'idée au système fonctionnel.
-          </div>
-        </div>
+        <!-- Chiffres clés (clés stat_* du CMS ; une valeur vide masque sa tuile) -->
+        <ul class="figures" aria-label="Chiffres clés">
+          <li class="figure"><b data-p-stat1></b><span data-i18n="hero.stat.projets">Projets</span></li>
+          <li class="figure"><b data-p-stat2></b><span data-i18n="hero.stat.workflows">Workflows</span></li>
+          <li class="figure"><b data-p-stat3></b><span data-i18n="hero.stat.certifs">Certifications</span></li>
+        </ul>
       </div>
     </section>
 
@@ -145,40 +154,17 @@
     <section class="section" id="expertise">
       <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow">Expertise</p>
-          <p class="section-intro">Chaque projet part d'un problème réel : trop de temps perdu, trop de tâches répétitives, un processus qui pourrait être plus simple. Voici comment je les transforme en systèmes qui fonctionnent.</p>
-          <h2>Ce que je construis</h2>
-          <p>De l'idée au prototype, je combine IA, automatisation et outils no-code pour créer des solutions simples, utiles et évolutives.</p>
+          <p class="eyebrow" data-i18n="accueil.eyebrow.xp">Expertise</p>
+          <p class="section-intro" data-i18n="accueil.xp.intro">Chaque projet part d'un problème réel : trop de temps perdu, trop de tâches répétitives, un processus qui pourrait être plus simple. Voici comment je les transforme en systèmes qui fonctionnent.</p>
+          <h2 data-i18n="accueil.xp.titre">Ce que je construis</h2>
+          <p data-i18n="accueil.xp.desc">De l'idée au prototype, je combine IA, automatisation et outils no-code pour créer des solutions simples, utiles et évolutives.</p>
         </div>
-        <div class="grid-4">
-          <article class="card card-hover exp-card reveal" style="--d:.05s">
-            <span class="exp-num">01</span>
-            <span class="exp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="6" cy="10" r="2.5"/></svg></span>
-            <h3>Automatisation</h3>
-            <p>Concevoir des workflows capables d'exécuter automatiquement les tâches répétitives.</p>
-            <div class="exp-tags"><span class="tag">Make</span><span class="tag">Webhooks</span><span class="tag">APIs</span></div>
-          </article>
-          <article class="card card-hover exp-card reveal" style="--d:.1s">
-            <span class="exp-num">02</span>
-            <span class="exp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a2 2 0 0 1 0 4h-3.27A6 6 0 0 1 12 20a6 6 0 0 1-5.73-2H3a2 2 0 0 1 0-4h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><path d="M12 12v4"/><path d="M9 13h6"/></svg></span>
-            <h3>Intelligence artificielle</h3>
-            <p>Intégrer les modèles IA dans des workflows et applications utiles.</p>
-            <div class="exp-tags"><span class="tag">Groq</span><span class="tag">Gemini</span><span class="tag">LLM</span></div>
-          </article>
-          <article class="card card-hover exp-card reveal" style="--d:.15s">
-            <span class="exp-num">03</span>
-            <span class="exp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/><path d="M9.5 13.5h.01M14.5 13.5h.01"/><path d="M8 17c1.1 1 2.6 1.5 4 1.5s2.9-.5 4-1.5"/></svg></span>
-            <h3>Bots &amp; assistants</h3>
-            <p>Concevoir des assistants conversationnels et outils accessibles directement depuis Telegram.</p>
-            <div class="exp-tags"><span class="tag">Telegram</span><span class="tag">Groq</span><span class="tag">OCR</span></div>
-          </article>
-          <article class="card card-hover exp-card reveal" style="--d:.2s">
-            <span class="exp-num">04</span>
-            <span class="exp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/><path d="M8 14h3"/></svg></span>
-            <h3>Produits digitaux</h3>
-            <p>Transformer une expertise ou une idée en ressource numérique exploitable.</p>
-            <div class="exp-tags"><span class="tag">Ebooks</span><span class="tag">Guides</span><span class="tag">Templates</span></div>
-          </article>
+        <div class="grid-3" id="apercu-expertise" data-xp-mode="apercu" data-xp-limit="6"
+             aria-live="polite" aria-busy="true">
+          <!-- injecté par js/expertise.js depuis l'onglet « Expertise » -->
+        </div>
+        <div style="text-align:center;margin-top:1.75rem">
+          <a class="btn btn-ghost" href="expertise/"><span data-i18n="accueil.xp.btn">Voir toute l'expertise</span> <span class="arr">→</span></a>
         </div>
       </div>
     </section>
@@ -189,46 +175,38 @@
         <div class="carousel-wrap">
           <div class="carousel-head reveal">
             <div class="section-head">
-              <p class="eyebrow">Preuves concrètes</p>
-              <h2>Mes projets</h2>
-              <p>Une sélection de systèmes, automatisations et expériences que je construis autour de l'IA et du digital.</p>
+              <p class="eyebrow" data-i18n="accueil.eyebrow.projets">Preuves concrètes</p>
+              <h2 data-i18n="accueil.projets.titre">Mes projets</h2>
+              <p data-i18n="accueil.projets.desc">Une sélection de systèmes, automatisations et expériences que je construis autour de l'IA et du digital.</p>
             </div>
             <div class="carousel-arrows">
-              <button class="c-arrow" data-carousel-prev aria-label="Projets précédents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
-              <button class="c-arrow" data-carousel-next aria-label="Projets suivants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <button class="c-arrow" data-carousel-prev aria-label="Projets précédents" data-i18n-aria="accueil.projets.prev""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+              <button class="c-arrow" data-carousel-next aria-label="Projets suivants" data-i18n-aria="accueil.projets.next""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
           </div>
-          <div class="carousel" id="carousel-projets" aria-label="Projets à la une, défilement horizontal">
+          <div class="carousel" id="carousel-projets" data-prj-vue="carousel" aria-label="Projets à la une, défilement horizontal" data-i18n-aria="accueil.projets.aria">
             <!-- injecté par js/projects.js -->
           </div>
         </div>
         <div style="text-align:center;margin-top:.75rem">
-          <a class="btn btn-ghost" href="projets/">Tous mes projets <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="projets/"><span data-i18n="accueil.projets.btn">Tous mes projets</span> <span class="arr">→</span></a>
         </div>
       </div>
     </section>
 
-    <!-- ============ BUILD IN PUBLIC (carousel) ============ -->
-    <section class="section" id="build-in-public">
+    <!-- ============ ACTIVITÉ — journal d'ingénieur (v0.2 §6) ============ -->
+    <section class="section" id="activite">
       <div class="container">
-        <div class="carousel-wrap">
-          <div class="carousel-head reveal">
-            <div class="section-head">
-              <p class="eyebrow">Coulisses</p>
-              <h2>Build in public</h2>
-              <p>Ce que je teste et construis en ce moment, avant que ça devienne un projet fini.</p>
-            </div>
-            <div class="carousel-arrows">
-              <button class="c-arrow" data-carousel-prev aria-label="Expérimentations précédentes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
-              <button class="c-arrow" data-carousel-next aria-label="Expérimentations suivantes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-            </div>
-          </div>
-          <div class="carousel" id="carousel-build" aria-label="Build in public, défilement horizontal">
-            <!-- injecté par js/build.js — featured uniquement -->
-          </div>
+        <div class="section-head reveal">
+          <p class="eyebrow" data-i18n="accueil.eyebrow.actv">Coulisses</p>
+          <h2 data-i18n="accueil.actv.titre">Activité — journal d'ingénieur</h2>
+          <p data-i18n="accueil.actv.desc">Ce que je construis, teste et apprends en ce moment, avant que ça devienne un projet fini.</p>
         </div>
-        <div style="text-align:center;margin-top:.75rem">
-          <a class="btn btn-ghost" href="build-in-public/">Tout voir <span class="arr">→</span></a>
+        <ol class="tl" id="apercu-activite" data-actv-mode="apercu" data-actv-limit="4" aria-live="polite" aria-busy="true">
+          <!-- injecté par js/activite.js depuis l'onglet « Timeline » -->
+        </ol>
+        <div style="text-align:center;margin-top:1.5rem">
+          <a class="btn btn-ghost" href="activite/"><span data-i18n="accueil.actv.btn">Toute l'activité</span> <span class="arr">→</span></a>
         </div>
       </div>
     </section>
@@ -239,21 +217,21 @@
         <div class="carousel-wrap">
           <div class="carousel-head reveal">
             <div class="section-head">
-              <p class="eyebrow">Publications</p>
-              <h2>Articles &amp; publications</h2>
-              <p>Je partage mes expériences, méthodes et découvertes autour de l'IA et de l'automatisation.</p>
+              <p class="eyebrow" data-i18n="accueil.eyebrow.art">Publications</p>
+              <h2 data-i18n="accueil.art.titre">Articles &amp; publications</h2>
+              <p data-i18n="accueil.art.desc">Je partage mes expériences, méthodes et découvertes autour de l'IA et de l'automatisation.</p>
             </div>
             <div class="carousel-arrows">
               <button class="c-arrow" data-carousel-prev aria-label="Articles précédents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
               <button class="c-arrow" data-carousel-next aria-label="Articles suivants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
           </div>
-          <div class="carousel" id="carousel-articles" aria-label="Articles à la une, défilement horizontal">
+          <div class="carousel" id="carousel-articles" data-art-mode="apercu" data-art-limit="3" aria-label="Articles à la une, défilement horizontal">
             <!-- injecté par js/articles.js — featured uniquement -->
           </div>
         </div>
         <div style="text-align:center;margin-top:.75rem">
-          <a class="btn btn-ghost" href="articles/">Tous les articles <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="articles/"><span data-i18n="accueil.art.btn">Tous les articles</span> <span class="arr">→</span></a>
         </div>
       </div>
     </section>
@@ -264,22 +242,39 @@
         <div class="carousel-wrap">
           <div class="carousel-head reveal">
             <div class="section-head">
-              <p class="eyebrow">Boutique</p>
-              <h2>Mes ressources</h2>
-              <p>Des guides et produits digitaux pour apprendre, expérimenter et passer à l'action.</p>
+              <p class="eyebrow" data-i18n="accueil.eyebrow.ress">Boutique</p>
+              <h2 data-i18n="accueil.ress.titre">Mes ressources</h2>
+              <p data-i18n="accueil.ress.desc">Des guides et produits digitaux pour apprendre, expérimenter et passer à l'action.</p>
             </div>
             <div class="carousel-arrows">
               <button class="c-arrow" data-carousel-prev aria-label="Ressources précédentes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
               <button class="c-arrow" data-carousel-next aria-label="Ressources suivantes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
           </div>
-          <div class="carousel" id="carousel-ressources" aria-label="Ressources à la une, défilement horizontal">
+          <div class="carousel" id="carousel-ressources" data-ress-mode="apercu" data-ress-limit="3" aria-label="Ressources à la une, défilement horizontal">
             <!-- injecté par js/resources.js — max 3 produits featured -->
           </div>
         </div>
-        <p class="r-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 11-14h-7l1-6z"/></svg> Les achats se font sur la boutique externe — le paiement n'est pas traité ici.</p>
+        <p class="r-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 11-14h-7l1-6z"/></svg><span data-i18n="accueil.ress.note"> Les achats se font sur la boutique externe — le paiement n'est pas traité ici.</span></p>
         <div style="text-align:center;margin-top:.75rem">
-          <a class="btn btn-ghost" href="boutique/">Voir toute la boutique <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="boutique/"><span data-i18n="accueil.ress.btn">Voir toute la boutique</span> <span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PARCOURS (aperçu, v0.2 §7) ============ -->
+    <section class="section" id="parcours" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow" data-i18n="accueil.eyebrow.parc">Profil</p>
+          <h2 data-i18n="accueil.parc.titre">Parcours</h2>
+          <p data-i18n="accueil.parc.desc">Formations, expériences et certifications — alimentées depuis le CMS, avec leur lien de vérification quand il existe.</p>
+        </div>
+        <div id="apercu-parcours" data-parc-mode="apercu" data-parc-limit="3" aria-live="polite" aria-busy="true">
+          <!-- injecté par js/parcours.js -->
+        </div>
+        <div style="text-align:center;margin-top:1.5rem">
+          <a class="btn btn-ghost" href="parcours/"><span data-i18n="accueil.parc.btn">Tout mon parcours</span> <span class="arr">→</span></a>
         </div>
       </div>
     </section>
@@ -289,21 +284,21 @@
       <div class="container about-grid">
         <div class="about-photo reveal">
           <img src="assets/images/koffa-agoudavi.jpg" alt="Koffa Jean AGOUDAVI, fondateur de DIGICRAFT Labs" width="720" height="900" loading="lazy" decoding="async" onerror="this.remove()">
-          <span class="about-photo-cap">Koffa Jean Agoudavi · Fondateur</span>
+          <span class="about-photo-cap" data-i18n="portrait.legende">Koffa Jean Agoudavi · Fondateur</span>
         </div>
         <div class="about-body">
-          <p class="eyebrow reveal">À propos</p>
-          <h2 class="reveal">Derrière les systèmes, il y a une personne.</h2>
-          <p class="reveal">Je m'intéresse à l'intersection entre intelligence artificielle, automatisation, No-Code et création de produits digitaux. Je construis des systèmes concrets, je les expérimente en conditions réelles, et je partage ce que j'apprends.</p>
-          <p class="reveal">DIGICRAFT Labs est l'espace où cette démarche prend forme : un laboratoire numérique personnel où chaque idée complexe devient un système fonctionnel — puis une preuve.</p>
+          <p class="eyebrow reveal" data-i18n="accueil.eyebrow.apropos">À propos</p>
+          <h2 class="reveal" data-i18n="accueil.apropos.titre">Derrière les systèmes, il y a une personne.</h2>
+          <p class="reveal" data-i18n="accueil.apropos.p1">Je m'intéresse à l'intersection entre intelligence artificielle, automatisation, No-Code et création de produits digitaux. Je construis des systèmes concrets, je les expérimente en conditions réelles, et je partage ce que j'apprends.</p>
+          <p class="reveal" data-i18n="accueil.apropos.p2">DIGICRAFT Labs est l'espace où cette démarche prend forme : un laboratoire numérique personnel où chaque idée complexe devient un système fonctionnel — puis une preuve.</p>
           <div class="about-facts reveal">
-            <div class="fact"><b>Fondateur</b><span>DIGICRAFT Labs</span></div>
-            <div class="fact"><b>Focus</b><span>IA · Automatisation · No-Code</span></div>
-            <div class="fact"><b>Systèmes</b><span>Agents, bots &amp; workflows</span></div>
+            <div class="fact"><b data-i18n="accueil.facts.f1.k">Fondateur</b><span data-i18n="accueil.facts.f1.v">DIGICRAFT Labs</span></div>
+            <div class="fact"><b data-i18n="accueil.facts.f2.k">Focus</b><span data-i18n="accueil.facts.f2.v">IA · Automatisation · No-Code</span></div>
+            <div class="fact"><b data-i18n="accueil.facts.f3.k">Systèmes</b><span data-i18n="accueil.facts.f3.v">Agents, bots &amp; workflows</span></div>
           </div>
           <div class="about-cta reveal">
-            <a class="btn btn-gold" href="a-propos/">En savoir plus <span class="arr">→</span></a>
-            <a class="btn btn-ghost" data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">Voir mon profil LinkedIn</a>
+            <a class="btn btn-gold" href="a-propos/"><span data-i18n="accueil.apropos.btn">En savoir plus</span> <span class="arr">→</span></a>
+            <a class="btn btn-ghost" data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener" data-i18n="accueil.apropos.linkedin">Voir mon profil LinkedIn</a>
           </div>
         </div>
       </div>
@@ -314,11 +309,11 @@
       <div class="container">
         <div class="cta-box reveal">
           <svg class="star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4L2 9.6h7.6z"/></svg>
-          <h2>Vous avez une idée à automatiser ?</h2>
-          <p>Parlons de votre projet et voyons comment l'IA ou l'automatisation peut le rendre plus simple, plus rapide ou plus efficace.</p>
+          <h2 data-i18n="accueil.cta.titre">Vous avez une idée à automatiser ?</h2>
+          <p data-i18n="accueil.cta.desc">Parlons de votre projet et voyons comment l'IA ou l'automatisation peut le rendre plus simple, plus rapide ou plus efficace.</p>
           <div class="cta-actions">
-            <a class="btn btn-gold" href="contact/">Me contacter <span class="arr">→</span></a>
-            <a class="btn btn-ghost" href="projets/">Voir mes projets</a>
+            <a class="btn btn-gold" href="contact/"><span data-i18n="accueil.cta.btn1">Me contacter</span> <span class="arr">→</span></a>
+            <a class="btn btn-ghost" href="projets/" data-i18n="accueil.cta.btn2">Voir mes projets</a>
           </div>
         </div>
       </div>
@@ -326,68 +321,74 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="site-footer">
+    <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a class="brand" href="index.html">
-            <img class="brand-logo" src="assets/logo/digicraft-labs.png" alt="" width="38" height="38">
-            <span class="brand-name">DIGICRAFT Labs</span>
+          <a class="brand" href="index.html" aria-label="Koffa Jean AGOUDAVI — Accueil">
+            <span class="dock-mono" aria-hidden="true">KJ</span>
+            <span class="brand-name">Koffa Jean AGOUDAVI<small data-i18n="commun.footer.sub">Portfolio personnel · DIGICRAFT Labs</small></span>
           </a>
-          <p><strong>Koffa Jean Agoudavi</strong><br>Fondateur de DIGICRAFT Labs. Je construis des systèmes digitaux intelligents : automatisations, agents IA, bots et produits digitaux.</p>
+          <p data-i18n="commun.footer.tagline">Je transforme les idées complexes en systèmes digitaux intelligents — automatisations, agents IA, bots et produits digitaux.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4 data-i18n="commun.footer.nav">Navigation</h4>
           <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="projets/">Projets</a></li>
-            <li><a href="articles/">Articles</a></li>
-            <li><a href="boutique/">Boutique</a></li>
-            <li><a href="a-propos/">À propos</a></li>
-            <li><a href="contact/">Contact</a></li>
-            <li><a href="build-in-public/">Build in public</a></li>
-            <li><button type="button" class="dl-manage-btn" data-consent-manage>Gérer mes cookies</button></li>
+            <li><a href="index.html" data-i18n="nav.accueil">Accueil</a></li>
+            <li><a href="expertise/" data-i18n="nav.expertise">Expertise</a></li>
+            <li><a href="projets/" data-i18n="nav.realisations">Réalisations</a></li>
+            <li><a href="activite/" data-i18n="nav.activite">Activité</a></li>
+            <li><a href="parcours/" data-i18n="nav.parcours">Parcours</a></li>
+            <li><a href="a-propos/" data-i18n="nav.apropos">À propos</a></li>
+            <li><a href="contact/" data-i18n="nav.contact">Contact</a></li>
+            <li><a href="boutique/" data-i18n="dock.ressources">Ressources</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Me retrouver</h4>
+          <h4 data-i18n="commun.footer.find">Me retrouver</h4>
           <ul>
             <li><a data-p-linkedin href="https://www.linkedin.com/in/koffa-jean-agoudavi-514895423" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a></li>
-            <li><a data-p-youtube href="https://www.youtube.com/@KoffaJeanAgoudavi" target="_blank" rel="noopener">YouTube</a></li>
-            <li><a data-p-whatsapp href="https://wa.me/22872556556?text=Bonjour%2C%20je%20viens%20de%20votre%20site%20DIGICRAFT%20Labs%20et%20j%27aimerais%20%C3%A9changer%20avec%20vous." target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a data-p-whatsapp href="https://wa.me/22872556556" target="_blank" rel="noopener">WhatsApp</a></li>
             <li><a data-p-google href="https://share.google/ont9TyuWshpud74fL" target="_blank" rel="noopener">Google Business</a></li>
             <li><a data-p-email href="mailto:contact.agoudavi@gmail.com" data-p-email-txt>contact.agoudavi@gmail.com</a></li>
+            <li><button type="button" class="dl-manage-btn" data-consent-manage data-i18n="dock.cookies">Gérer mes cookies</button></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© <span data-year>2026</span> DIGICRAFT Labs — Koffa Jean Agoudavi</span>
+        <span>© <span data-year>2026</span> Koffa Jean AGOUDAVI — DIGICRAFT Labs</span>
         <span class="fb-links">
-          <a href="projets/">Projets</a>
-          <a href="articles/">Articles</a>
-          <a href="contact/">Contact</a>
+          <a href="projets/" data-i18n="nav.realisations">Réalisations</a>
+          <a href="articles/" data-i18n="commun.footer.articles">Articles</a>
+          <a href="contact/" data-i18n="nav.contact">Contact</a>
         </span>
       </div>
     </div>
   </footer>
 
   <script>window.SITE_ROOT = "";</script>
-  <script src="js/config.js?v=20260828u"></script>
-  <script src="js/consent.js?v=20260828u"></script>
-  <script src="js/analytics.js?v=20260828u"></script>
-  <script src="js/sheets.js?v=20260828u"></script>
-  <script src="js/projects.js?v=20260828u"></script>
-  <script src="js/articles.js?v=20260828u"></script>
-  <script src="js/resources.js?v=20260828u"></script>
-  <script src="js/build.js?v=20260828u"></script>
-  <script src="js/main.js?v=20260828u"></script>
+  <script src="js/config.js?v=20260927a"></script>
+  <script src="js/consent.js?v=20260927a"></script>
+  <script src="js/analytics.js?v=20260927a"></script>
+  <script src="js/sheets.js?v=20260927a"></script>
+  <script src="js/projects.js?v=20260927a"></script>
+  <script src="js/articles.js?v=20260927a"></script>
+  <script src="js/resources.js?v=20260927a"></script>
+  <script src="js/expertise.js?v=20260927a"></script>
+  <script src="js/activite.js?v=20260927a"></script>
+  <script src="js/parcours.js?v=20260927a"></script>
+  <script src="js/i18n.js?v=20260927a"></script>
+  <script src="js/main.js?v=20260927a"></script>
+  <script src="js/dock.js?v=20260927a"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       window.Prjs.carouselAccueil("carousel-projets");
-      window.Bld.accueil("carousel-build");
+      window.Actv.apercu("apercu-activite", 4);
+      window.Parcs.apercu("apercu-parcours", 3);
       window.Ress.accueil("carousel-ressources");
       window.Arts.accueil("carousel-articles");
+      window.Xpr.apercu("apercu-expertise", 6);
       window.Prjs.initReveal();
     });
   </script>

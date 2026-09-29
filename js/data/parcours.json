@@ -1,0 +1,41 @@
+[
+  {
+    "type": "Formation",
+    "titre": "Licence Mathématiques",
+    "organisation": "Université de Lomé",
+    "date_obtention": "2025-10",
+    "date_fin": "En cours",
+    "description": "Formation universitaire axée sur l'analyse et la logique quantitative",
+    "verification_url": "https://univ-lome.tg",
+    "badge_image_url": "",
+    "ordre": "1",
+    "titre_en": "",
+    "description_en": ""
+  },
+  {
+    "type": "Experience",
+    "titre": "Fondateur & Lead Product,",
+    "organisation": "DIGICRAFT Labs / SignalDesk",
+    "date_obtention": "01-2026",
+    "date_fin": "Présent",
+    "description": "Création de solutions SaaS et développement d'automatisations IA",
+    "verification_url": "",
+    "badge_image_url": "",
+    "ordre": "2",
+    "titre_en": "",
+    "description_en": ""
+  },
+  {
+    "type": "Projet",
+    "titre": "Développement SmartReply Agent",
+    "organisation": "DIGICRAFT Labs",
+    "date_obtention": "2026-08",
+    "date_fin": "2026-08",
+    "description": "Conception d'un agent IA conversationnel avec Python et FastAPI.",
+    "verification_url": "",
+    "badge_image_url": "",
+    "ordre": "3",
+    "titre_en": "",
+    "description_en": ""
+  }
+]
