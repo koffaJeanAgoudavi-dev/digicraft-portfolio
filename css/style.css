@@ -1240,3 +1240,97 @@ body.has-dock{padding-left:96px}
   .motion-ready .hero-body > *, .motion-ready .hero-media, .motion-ready .figures{animation:none}
   .card-hover,.hero-photo{transform:none!important;transition:none!important}
 }
+
+
+/* ============================================================
+   DIGICRAFT — LAVENDER PRODUCT DIRECTION
+   Hero clair, photo détourée en buste, palette violette inspirée
+   de la référence visuelle fournie par Koffa.
+   ============================================================ */
+:root{
+  --lav-bg:#f8f6ff;
+  --lav-soft:#f0ebff;
+  --lav-panel:#ffffff;
+  --lav:#7048d8;
+  --lav-dark:#4b2a9f;
+  --lav-line:#e7defb;
+  --lav-text:#171522;
+  --lav-muted:#716b80;
+}
+
+body{background:var(--lav-bg);color:var(--lav-text)}
+.dock{background:#fff;border-right:1px solid var(--lav-line);box-shadow:8px 0 30px rgba(76,43,159,.06)}
+.dock-brand{border-bottom-color:var(--lav-line)}
+.dock-mono{background:var(--lav-soft);border-color:#cbb8fa;color:var(--lav-dark)}
+.dock-brand-sub,.dock-item{color:var(--lav-muted)}
+.dock-item:hover{background:var(--lav-soft);color:var(--lav-dark)}
+.dock-item[aria-current="page"]{background:var(--lav-soft);color:var(--lav-dark);box-shadow:inset 3px 0 0 var(--lav)}
+.dock-foot{border-top-color:var(--lav-line)}
+.dock-lang{border-color:#d9cdf5}
+.lang-btn{color:var(--lav-muted)}
+.lang-btn:hover{color:var(--lav-dark)}
+.lang-btn[aria-pressed="true"]{background:var(--lav);color:#fff}
+
+.hero{
+  background:var(--lav-bg);color:var(--lav-text);padding:clamp(4rem,8vw,7rem) 0 clamp(3.5rem,6vw,5rem);
+}
+.hero::before{
+  background:radial-gradient(600px 460px at 78% 18%,rgba(210,192,255,.6),transparent 68%),radial-gradient(520px 380px at 5% 100%,rgba(235,226,255,.9),transparent 72%);
+}
+.hero::after{background-image:linear-gradient(rgba(112,72,216,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(112,72,216,.045) 1px,transparent 1px);opacity:.45}
+.hero-grid{grid-template-columns:minmax(0,1fr) minmax(360px,.82fr);gap:clamp(2rem,5vw,5.5rem)}
+.hero-body .eyebrow{color:var(--lav-dark)}
+.hero-body .eyebrow::before{background:var(--lav)}
+.hero h1{color:var(--lav-text);font-size:clamp(3rem,6.7vw,5.8rem);max-width:10ch}
+.hero-role{color:var(--lav-dark)}
+.hero-slogan{color:var(--lav);font-style:normal;font-weight:650}
+.hero-promesse{color:var(--lav-muted)}
+.hero .btn-ghost{border-color:#d7c9f6;color:var(--lav-dark)}
+.hero .btn-ghost:hover{background:var(--lav-soft);border-color:var(--lav)}
+.hero .btn-gold{background:var(--lav);color:#fff;box-shadow:0 16px 32px -14px rgba(112,72,216,.7)}
+.hero .btn-gold:hover{background:var(--lav-dark);color:#fff}
+
+.hero-media{min-height:430px;display:grid;place-items:end center}
+.hero-media::after{content:"";position:absolute;z-index:-1;width:min(100%,520px);height:82%;right:0;bottom:4%;border-radius:48% 52% 22% 28%;background:linear-gradient(145deg,#eee6ff,#d8c7ff);transform:rotate(-5deg)}
+.hero-media::before{inset:10% 2% 2% 8%;border-color:rgba(112,72,216,.22);border-radius:48% 52% 26% 20%;transform:rotate(4deg)}
+.hero-photo{width:min(100%,500px);height:auto;aspect-ratio:1/1;background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible;transform:none!important}
+.hero-photo img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 24px 24px rgba(76,43,159,.16))}
+.hero-photo::after{display:none}
+.hero-badge{left:auto;right:0;bottom:8%;background:#fff;color:var(--lav-dark);border:1px solid var(--lav-line);box-shadow:0 12px 30px rgba(76,43,159,.12)}
+.hero .figure{background:rgba(255,255,255,.82);border-color:var(--lav-line);box-shadow:0 10px 28px rgba(76,43,159,.07)}
+.hero .figure b{color:var(--lav)}
+.hero .figure span{color:var(--lav-muted)}
+
+.band{background:#fff;border-color:var(--lav-line)}
+.band-track span{color:var(--lav-muted)}
+.band-track span::after{color:var(--lav)}
+.section[style*="background:var(--bg-2)"]{background:var(--lav-soft) !important;border-color:var(--lav-line) !important}
+.section-head h2{color:var(--lav-text)}
+.eyebrow{color:var(--lav-dark)}
+.eyebrow::before{background:var(--lav)}
+.card{background:var(--lav-panel);border-color:var(--lav-line);box-shadow:0 8px 24px rgba(76,43,159,.055)}
+.card-hover:hover{border-color:#cbb8fa;box-shadow:0 24px 50px -24px rgba(76,43,159,.25)}
+.xp-card .xp-ico{background:var(--lav-soft);border-color:#d9cafa;color:var(--lav-dark)}
+.stack-mono{background:var(--lav-soft);border-color:var(--lav-line);color:var(--lav-dark)}
+
+.cta-box{background:linear-gradient(135deg,var(--lav-dark),var(--lav));border-color:#8f72e5;box-shadow:0 28px 60px -34px rgba(76,43,159,.55)}
+.site-footer{background:#21163f;border-top-color:#39266c}
+.site-footer .footer-col h4{color:#d9c9ff}
+
+@media (max-width:1023px){
+  .dock{background:rgba(255,255,255,.95)}
+  .dock-item[aria-current="page"]{box-shadow:inset 0 3px 0 var(--lav)}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-body{max-width:720px;margin-inline:auto;text-align:center}
+  .hero-body .eyebrow::before{display:none}
+  .hero-slogan,.hero-promesse{margin-inline:auto}
+  .hero-cta{justify-content:center}
+  .hero-media{max-width:500px;margin:0 auto}
+}
+@media (max-width:719px){
+  .hero{padding-top:3.5rem}
+  .hero h1{font-size:clamp(2.8rem,14vw,4.2rem)}
+  .hero-media{min-height:350px}
+  .hero-photo{width:min(100%,390px)}
+  .hero-badge{right:2%;bottom:5%;font-size:.7rem}
+}
