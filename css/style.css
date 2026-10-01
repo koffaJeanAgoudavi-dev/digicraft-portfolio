@@ -1163,3 +1163,81 @@ body.has-dock{padding-left:96px}
   .section-head h2{font-size:2.2rem}
   .cta-box{border-radius:20px}
 }
+
+
+/* ============================================================
+   INTERACTIVE EDITORIAL LAYER — mouvement ciblé, jamais décoratif
+   ============================================================ */
+:root{
+  --pointer-x:50vw;
+  --pointer-y:20vh;
+}
+
+/* Progression de lecture : une seule ligne, presque invisible. */
+.scroll-progress{
+  position:fixed;top:0;left:0;right:0;height:3px;z-index:120;
+  transform:scaleX(0);transform-origin:0 50%;
+  background:linear-gradient(90deg,#d39a4d,#f0c786,#fff1cb);
+  box-shadow:0 0 16px rgba(211,154,77,.55);
+  pointer-events:none;
+}
+
+/* Texture et lumière du hero. */
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.2;z-index:-1;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:linear-gradient(135deg,rgba(0,0,0,.8),transparent 62%);
+}
+.hero-media::before{
+  content:"";position:absolute;inset:-18px -18px 18px 18px;border:1px solid rgba(211,154,77,.28);
+  border-radius:34px;transform:rotate(3deg);pointer-events:none;transition:transform .7s var(--ease),border-color .7s var(--ease);
+}
+.hero-media:hover::before{transform:rotate(-2deg) translate(4px,-3px);border-color:rgba(240,199,134,.65)}
+
+/* Les cartes gagnent en relief seulement lorsque l’utilisateur les explore. */
+.card-hover,.hero-photo{
+  --rx:0deg;--ry:0deg;
+  transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style:preserve-3d;
+}
+.card-hover.is-tilting,.hero-photo.is-tilting{
+  transition:transform .12s ease-out,box-shadow .28s var(--ease),border-color .28s var(--ease);
+}
+.card-hover:not(.is-tilting),.hero-photo:not(.is-tilting){transition:transform .55s var(--ease),box-shadow .28s var(--ease),border-color .28s var(--ease)}
+.card-hover:hover .p-media,.card-hover:hover .r-media,.card-hover:hover .a-media{filter:saturate(1.06)}
+.card-hover:hover h3{color:#8c5c1f}
+
+/* Spotlight desktop : réduit l’impression de page statique sans distraire. */
+.cursor-spotlight{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .4s ease;
+  background:radial-gradient(360px circle at var(--pointer-x) var(--pointer-y),rgba(201,139,60,.065),transparent 72%);
+}
+body>*:not(.cursor-spotlight):not(.scroll-progress){position:relative}
+.dock,.dock-sheet{z-index:90}
+
+/* Entrée initiale plus narrative : le contenu arrive par petits groupes. */
+.motion-ready .hero-body > *{animation:editorialIn .8s var(--ease) both;}
+.motion-ready .hero-body > :nth-child(1){animation-delay:.08s}
+.motion-ready .hero-body > :nth-child(2){animation-delay:.16s}
+.motion-ready .hero-body > :nth-child(3){animation-delay:.24s}
+.motion-ready .hero-body > :nth-child(4){animation-delay:.32s}
+.motion-ready .hero-body > :nth-child(5){animation-delay:.4s}
+.motion-ready .hero-media{animation:editorialIn .9s .22s var(--ease) both}
+.motion-ready .figures{animation:editorialIn .8s .48s var(--ease) both}
+@keyframes editorialIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* États focus/hover plus tactiles sur les commandes importantes. */
+.btn,.c-arrow,.f-btn,.dock-item{will-change:transform}
+.btn:active,.c-arrow:active,.f-btn:active{transform:translateY(1px) scale(.98)}
+
+@media (max-width:1023px){
+  .cursor-spotlight{display:none}
+  .hero-media::before{inset:-10px -10px 10px 10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .scroll-progress{display:none}
+  .hero::after,.hero-media::before,.cursor-spotlight{display:none}
+  .motion-ready .hero-body > *, .motion-ready .hero-media, .motion-ready .figures{animation:none}
+  .card-hover,.hero-photo{transform:none!important;transition:none!important}
+}

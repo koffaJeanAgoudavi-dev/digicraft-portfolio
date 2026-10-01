@@ -312,12 +312,72 @@
     });
   }
 
+  /* ---------- Micro-interactions : présence visuelle sans surcharge ---------- */
+  function initInteractiveLayer() {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var finePointer = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+
+    /* Barre de progression : un repère discret qui donne de la profondeur à la page. */
+    if (!document.querySelector(".scroll-progress")) {
+      var progress = document.createElement("div");
+      progress.className = "scroll-progress";
+      progress.setAttribute("aria-hidden", "true");
+      document.body.appendChild(progress);
+      var updateProgress = function () {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.transform = "scaleX(" + (max > 0 ? window.scrollY / max : 0) + ")";
+      };
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      window.addEventListener("resize", updateProgress, { passive: true });
+      updateProgress();
+    }
+
+    if (reduce) return;
+
+    document.body.classList.add("motion-ready");
+    qsa(".section-head.reveal, .about-body .reveal, .cta-box.reveal").forEach(function (el, i) {
+      el.style.setProperty("--d", Math.min(i * 70, 280) + "ms");
+    });
+
+    if (!finePointer) return;
+
+    /* Spotlight très léger sur desktop : il suit le regard sans déplacer le contenu. */
+    var spotlight = document.createElement("div");
+    spotlight.className = "cursor-spotlight";
+    spotlight.setAttribute("aria-hidden", "true");
+    document.body.appendChild(spotlight);
+    window.addEventListener("pointermove", function (e) {
+      document.documentElement.style.setProperty("--pointer-x", e.clientX + "px");
+      document.documentElement.style.setProperty("--pointer-y", e.clientY + "px");
+      spotlight.style.opacity = "1";
+    }, { passive: true });
+    window.addEventListener("pointerleave", function () { spotlight.style.opacity = "0"; });
+
+    /* Inclinaison imperceptible des cartes : délégation pour couvrir les
+       cartes injectées après le chargement par le Google Sheet. */
+    document.addEventListener("pointermove", function (e) {
+      var card = e.target.closest ? e.target.closest(".card-hover, .hero-photo") : null;
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - .5;
+      var y = (e.clientY - r.top) / r.height - .5;
+      card.style.setProperty("--rx", (-y * 2.2).toFixed(2) + "deg");
+      card.style.setProperty("--ry", (x * 2.2).toFixed(2) + "deg");
+      card.classList.add("is-tilting");
+    }, { passive: true });
+    document.addEventListener("pointerout", function (e) {
+      var card = e.target.closest ? e.target.closest(".card-hover, .hero-photo") : null;
+      if (card && (!e.relatedTarget || !card.contains(e.relatedTarget))) card.classList.remove("is-tilting");
+    }, { passive: true });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initCarousel();
     initParametres();
     initContact();
     initRevealGlobal();
     initMisc();
+    initInteractiveLayer();
 
     /* Changement de langue (js/i18n.js) : ré-injection des textes CMS
        avec les variantes `_en` (repli FR si la variante est vide).
