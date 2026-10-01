@@ -104,11 +104,14 @@
         fig.hidden = !(b && (b.textContent || "").trim());
       });
 
-      /* Photo du hero : URL administrable ; si l'image ne charge pas,
-         repli sur la photo locale (data-photo-fallback). */
+      /* Photo du hero : URL administrable ; si l'ancien visuel est encore
+         présent dans le Sheet, on bascule vers le nouveau visuel local.
+         Toute nouvelle URL renseignée dans le CMS reste prioritaire. */
       var photo = valeur(P, "photo_hero_url", "");
       qsa("[data-p-photo]").forEach(function (img) {
         var secours = img.getAttribute("data-photo-fallback");
+        var legacy = img.getAttribute("data-photo-legacy-url");
+        if (photo && legacy && photo === legacy && secours) photo = secours;
         if (!photo) return;
         img.addEventListener("error", function () {
           if (secours && img.getAttribute("src") !== secours) img.setAttribute("src", secours);
