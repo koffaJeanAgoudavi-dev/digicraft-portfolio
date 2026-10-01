@@ -1210,10 +1210,9 @@ body.has-dock{padding-left:96px}
 
 /* Spotlight desktop : réduit l’impression de page statique sans distraire. */
 .cursor-spotlight{
-  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .4s ease;
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .4s ease;
   background:radial-gradient(360px circle at var(--pointer-x) var(--pointer-y),rgba(201,139,60,.065),transparent 72%);
 }
-body>*:not(.cursor-spotlight):not(.scroll-progress){position:relative}
 .dock,.dock-sheet{z-index:90}
 
 /* Entrée initiale plus narrative : le contenu arrive par petits groupes. */
