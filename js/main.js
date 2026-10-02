@@ -37,7 +37,7 @@
           fadeFrame = 0;
           var trackBox = track.getBoundingClientRect();
           var center = trackBox.left + trackBox.width / 2;
-          qsa(".p-card, .r-card, .a-card, .skel", track).forEach(function (card) {
+          qsa(".p-card, .r-card, .a-card, .xp-card, .skel", track).forEach(function (card) {
             var box = card.getBoundingClientRect();
             var distance = Math.abs((box.left + box.width / 2) - center);
             var intensity = Math.min(distance / Math.max(trackBox.width * .62, 1), 1);
