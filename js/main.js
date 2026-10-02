@@ -25,6 +25,33 @@
     qsa(".carousel").forEach(function (track) {
       var prev = qs("[data-carousel-prev]", track.closest(".carousel-wrap"));
       var next = qs("[data-carousel-next]", track.closest(".carousel-wrap"));
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* Fondu lié au scroll : la carte la plus proche du centre du viewport
+         reste pleine, les cartes qui sortent s'effacent doucement. Le calcul
+         reste délégué au track pour fonctionner avec les cartes injectées
+         plus tard depuis Google Sheets. */
+      if (!reduce) {
+        var fadeFrame = 0;
+        var updateFade = function () {
+          fadeFrame = 0;
+          var trackBox = track.getBoundingClientRect();
+          var center = trackBox.left + trackBox.width / 2;
+          qsa(".p-card, .r-card, .a-card, .skel", track).forEach(function (card) {
+            var box = card.getBoundingClientRect();
+            var distance = Math.abs((box.left + box.width / 2) - center);
+            var intensity = Math.min(distance / Math.max(trackBox.width * .62, 1), 1);
+            card.style.opacity = (1 - intensity * .72).toFixed(3);
+          });
+        };
+        var scheduleFade = function () {
+          if (!fadeFrame) fadeFrame = window.requestAnimationFrame(updateFade);
+        };
+        track.addEventListener("scroll", scheduleFade, { passive: true });
+        window.addEventListener("resize", scheduleFade, { passive: true });
+        scheduleFade();
+      }
+
       if (!prev || !next) return;
       var step = function (dir) {
         var w = track.clientWidth;

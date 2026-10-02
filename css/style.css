@@ -1334,3 +1334,19 @@ body{background:var(--lav-bg);color:var(--lav-text)}
   .hero-photo{width:min(100%,390px)}
   .hero-badge{right:2%;bottom:5%;font-size:.7rem}
 }
+
+
+/* ---------- Carousel crossfade : le prochain élément prend la place du précédent ---------- */
+.carousel .p-card,
+.carousel .r-card,
+.carousel .a-card,
+.carousel .skel{
+  opacity:1;
+  transition:opacity .28s ease, border-color .28s var(--ease), box-shadow .28s var(--ease);
+}
+@media (prefers-reduced-motion:reduce){
+  .carousel .p-card,
+  .carousel .r-card,
+  .carousel .a-card,
+  .carousel .skel{opacity:1!important;transition:none}
+}
