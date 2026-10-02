@@ -49,6 +49,7 @@
         };
         track.addEventListener("scroll", scheduleFade, { passive: true });
         window.addEventListener("resize", scheduleFade, { passive: true });
+        new MutationObserver(scheduleFade).observe(track, { childList: true });
         scheduleFade();
       }
 
