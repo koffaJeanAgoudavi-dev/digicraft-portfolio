@@ -1402,3 +1402,21 @@ body{background:var(--lav-bg);color:var(--lav-text)}
   .band-track .tool-pill{padding:.28rem .6rem;gap:.45rem;font-size:.7rem}
   .tool-pill img,.tool-mark{width:20px;height:20px}
 }
+
+
+/* ---------- Défilement infini de la bande outils ---------- */
+.band[aria-label] .band-track{
+  width:max-content;justify-content:flex-start;flex-wrap:nowrap;gap:0;
+  animation:toolsMarquee 38s linear infinite;
+}
+.band-set{display:flex;align-items:center;gap:.7rem 2rem;padding-right:2rem;flex:none}
+@keyframes toolsMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.band[aria-label]:hover .band-track{animation-play-state:paused}
+@media (max-width:719px){
+  .band[aria-label] .band-track{animation-duration:30s}
+  .band-set{gap:.35rem .65rem;padding-right:.65rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .band[aria-label] .band-track{animation:none;transform:none}
+  .band-set[aria-hidden="true"]{display:none}
+}
