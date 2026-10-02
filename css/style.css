@@ -1350,3 +1350,18 @@ body{background:var(--lav-bg);color:var(--lav-text)}
   .carousel .a-card,
   .carousel .skel{opacity:1!important;transition:none}
 }
+
+
+/* Une carte estompée redevient nette dès que l’utilisateur la cible. */
+@media (hover:hover) and (pointer:fine){
+  .carousel .p-card:hover,
+  .carousel .r-card:hover,
+  .carousel .a-card:hover,
+  .carousel .skel:hover,
+  .carousel .p-card:focus-within,
+  .carousel .r-card:focus-within,
+  .carousel .a-card:focus-within,
+  .carousel .skel:focus-within{
+    opacity:1!important;
+  }
+}
