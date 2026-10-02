@@ -264,12 +264,23 @@
     var el = document.getElementById(containerId);
     if (!el) return;
     var langue = (window.I18n && window.I18n.langue && window.I18n.langue()) || "fr";
-    el.innerHTML = chargement(mode === "apercu" ? Math.min(limite || 4, 4) : 6);
+    el.innerHTML = chargement(mode === "apercu" ? Math.min(limite || 3, 3) : 6);
 
     return recuperer().then(function (liste) {
       var src = liste._source || "google-sheets";
       dernieres = trier(liste);
-      var visibles = mode === "apercu" ? dernieres.slice(0, limite || 4) : dernieres;
+      var visibles;
+      if (mode === "apercu") {
+        var limiteAccueil = Math.min(limite || 3, 3);
+        var misesEnAvant = dernieres.filter(function (e) { return e.featured; });
+        /* Le propriétaire contrôle l’accueil depuis le Sheet : dès qu’au
+           moins une activité est marquée featured, seules ces activités
+           sont affichées (maximum trois). Sans featured, repli propre sur
+           les trois activités les plus récentes. */
+        visibles = (misesEnAvant.length ? misesEnAvant : dernieres).slice(0, limiteAccueil);
+      } else {
+        visibles = dernieres;
+      }
 
       if (!visibles.length) {
         el.innerHTML = etat("vide", T("actv.vide.titre"), T("actv.vide.desc"), T("etat.rien.invente"));
