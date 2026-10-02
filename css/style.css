@@ -1377,3 +1377,28 @@ body{background:var(--lav-bg);color:var(--lav-text)}
   .carousel .xp-card:focus-within{opacity:1!important}
 }
 @media (prefers-reduced-motion:reduce){.carousel .xp-card{opacity:1!important;transition:none}}
+
+
+/* ---------- Bande outils : logos + noms ---------- */
+.band[aria-label]{background:#fff;border-color:var(--lav-line);padding:1.25rem 0}
+.band-track{align-items:center;gap:.7rem 2rem}
+.band-track .tool-pill{
+  display:inline-flex;align-items:center;gap:.62rem;
+  min-height:34px;padding:.35rem .8rem;border:1px solid transparent;border-radius:999px;
+  color:var(--lav-muted);font-size:.78rem;font-weight:700;letter-spacing:.02em;
+  white-space:nowrap;transition:color .25s var(--ease),background .25s var(--ease),border-color .25s var(--ease),transform .25s var(--ease)
+}
+.band-track .tool-pill::after{display:none}
+.tool-pill img{width:22px;height:22px;object-fit:contain;opacity:.66;filter:grayscale(1);transition:opacity .25s var(--ease),filter .25s var(--ease),transform .25s var(--ease)}
+.tool-mark{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;font-size:.8rem;font-weight:800;line-height:1;color:#fff;opacity:.68;transition:opacity .25s var(--ease),transform .25s var(--ease)}
+.tool-mark-canva{background:linear-gradient(135deg,#7048d8,#d9c9ff);font-family:var(--font-display);font-style:italic}
+.tool-mark-manus{background:var(--lav-dark);font-family:var(--font-display)}
+.band-track .tool-pill:hover{color:var(--lav-dark);background:var(--lav-soft);border-color:var(--lav-line);transform:translateY(-2px)}
+.band-track .tool-pill:hover img{opacity:1;filter:grayscale(0);transform:scale(1.06)}
+.band-track .tool-pill:hover .tool-mark{opacity:1;transform:scale(1.06)}
+@media (max-width:719px){
+  .band[aria-label]{padding:.85rem 0}
+  .band-track{gap:.35rem .65rem}
+  .band-track .tool-pill{padding:.28rem .6rem;gap:.45rem;font-size:.7rem}
+  .tool-pill img,.tool-mark{width:20px;height:20px}
+}
