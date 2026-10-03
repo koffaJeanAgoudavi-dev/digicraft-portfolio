@@ -2,7 +2,7 @@
    PROJECTS.JS — Rendu des réalisations (carousel accueil / grille /projets)
    Colonnes attendues dans le Sheet "Projets" (blueprint §18 + v0.2) :
    id, titre, slug, categorie, badge_statut, description_courte,
-   description_longue, image_url, stack_tags, statut, date, type_lien,
+   image_url, stack_tags, statut, date, type_lien,
    url_destination, featured, ordre [, probleme, solution,
    technologies_detail, resultat]
 
@@ -341,13 +341,11 @@
             badge_statut: window.Sheets.champ(r, ["badge_statut", "badge"], ""),
             filtre: window.Sheets.champ(r, ["filtre", "filter"], ""),
             description_courte: window.Sheets.champ(r, ["description_courte", "description"], ""),
-            description_longue: window.Sheets.champ(r, ["description_longue"], ""),
             /* É10 — variantes anglaises : conservées telles quelles, le choix
                se fait au rendu (window.I18n.champ) pour que la bascule de
                langue reste instantanée même sans recharger les données. */
             titre_en: window.Sheets.champ(r, ["titre_en", "title_en"], ""),
             description_courte_en: window.Sheets.champ(r, ["description_courte_en"], ""),
-            description_longue_en: window.Sheets.champ(r, ["description_longue_en"], ""),
             image_url: window.Sheets.champ(r, ["image_url", "image"], ""),
             stack_tags: window.Sheets.champ(r, ["stack_tags", "tags"], ""),
             statut: window.Sheets.champ(r, ["statut", "status"], ""),
@@ -522,7 +520,7 @@
     try {
       var urlPropre = origineSite() + "/projets/" + slug + "/";
       var titre = String(txt(p, "titre") || "").trim() || "Projet";
-      var desc = String(txt(p, "description_courte") || txt(p, "description_longue") || "")
+      var desc = String(txt(p, "description_courte") || "")
         .replace(/\s+/g, " ").trim();
       if (desc.length > 160) desc = desc.slice(0, 157).replace(/\s+\S*$/, "") + "…";
       if (!desc) desc = T("projets.fiche.desc", { t: titre });

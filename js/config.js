@@ -56,27 +56,24 @@ window.CONFIG = {
 
   // Données par défaut (utilisées seulement si le Sheet ET le JSON local
   // sont injoignables). v2 : les clés hero_* du CMS v0.2 ont la priorité ;
-  // les anciennes clés (nom_complet, slogan_hero…) restent en repli pour
-  // les pages pas encore migrées.
   defaults: {
     /* --- Identité / Hero (blueprint v0.2 §4 et §7) --- */
     hero_titre: "Koffa Jean AGOUDAVI",
-    hero_role: "Fondateur & Lead Product",
-    hero_accroche: "Je transforme les idées complexes en systèmes digitaux intelligents.",
-    hero_promesse: "Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules.",
+    hero_role: "Fondateur & Lead Product · Architecte IA",
+    hero_accroche: "DES SYSTEMES INTELLIGENTS  · VOTRE MEILLEUR ATOUT",
+    hero_promesse: "Vous n'êtes pas ici par hasard. Vous êtes au bon endroit si vous en avez marre des tâches manuelles et que vous voulez un système qui travaille à votre place.",
     marque_lab: "DIGICRAFT Labs",
     photo_hero_url: "",           // vide → photo locale assets/images/koffa-agoudavi.jpg
-    hero_cta_label: "Découvrir mes réalisations",
+    hero_cta_label: "Voir mes réalisations",
+    hero_role_en: "Founder & Lead Product · AI Architect",
+    hero_accroche_en: "INTELLIGENT SYSTEMS · YOUR GREATEST ASSET",
+    hero_promesse_en: "You are not here by accident. You are in the right place if you are tired of manual tasks and want a system that works for you.",
+    hero_cta_label_en: "View My Work",
     hero_cta_url: "/projets/",
     stat_projets_count: "",       // vide → la tuile correspondante est masquée
     stat_workflows_count: "",
     stat_certifs_count: "",
     langue_defaut: "fr",
-    /* --- Ancien nommage (repli ; conservé jusqu'à la fin des migrations) --- */
-    nom_complet: "Koffa Jean AGOUDAVI",
-    titre_professionnel: "Fondateur & Lead Product",
-    slogan_hero: "Je transforme les idées complexes en systèmes digitaux intelligents.",
-    description_hero: "Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives.",
     email_contact: "contact.agoudavi@gmail.com",
     url_linkedin: "https://www.linkedin.com/in/koffa-jean-agoudavi-514895423",
     url_telegram: "https://t.me/johnnyokabe",

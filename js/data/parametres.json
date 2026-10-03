@@ -5,19 +5,27 @@
   },
   {
     "cle": "hero_role",
-    "valeur": "Fondateur & Lead Product"
+    "valeur": "Fondateur & Lead Product · Architecte IA"
+  },
+  {
+    "cle": "hero_role_en",
+    "valeur": "Founder & Lead Product · AI Architect"
   },
   {
     "cle": "hero_accroche",
-    "valeur": "Je transforme les idées complexes en systèmes digitaux intelligents."
+    "valeur": "DES SYSTEMES INTELLIGENTS  · VOTRE MEILLEUR ATOUT"
   },
   {
     "cle": "hero_accroche_en",
-    "valeur": ""
+    "valeur": "INTELLIGENT SYSTEMS · YOUR GREATEST ASSET"
   },
   {
     "cle": "hero_promesse",
-    "valeur": "Je conçois pour les entrepreneurs et entreprises des systèmes automatisés et des agents IA qui remplacent vos tâches répétitives et font tourner vos opérations seules."
+    "valeur": "Vous n'êtes pas ici par hasard. Vous êtes au bon endroit si vous en avez marre des tâches manuelles et que vous voulez un système qui travaille à votre place."
+  },
+  {
+    "cle": "hero_promesse_en",
+    "valeur": "You are not here by accident. You are in the right place if you are tired of manual tasks and want a system that works for you."
   },
   {
     "cle": "marque_lab",
@@ -41,7 +49,11 @@
   },
   {
     "cle": "hero_cta_label",
-    "valeur": "Découvrir mes réalisations"
+    "valeur": "Voir mes réalisations"
+  },
+  {
+    "cle": "hero_cta_label_en",
+    "valeur": "View My Work"
   },
   {
     "cle": "hero_cta_url",

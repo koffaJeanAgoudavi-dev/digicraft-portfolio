@@ -98,13 +98,22 @@
     });
   }
 
+  /* Un onglet est une source stable pendant une page : plusieurs modules
+     (Expertise, Projets, accueil) peuvent le demander en même temps.
+     Une promesse partagée évite les appels réseau doublés sans créer de
+     cache persistant ni empêcher un nouveau chargement après navigation. */
+  var cacheOnglets = Object.create(null);
+
   /* Charge un onglet : Sheet d'abord, secours local ensuite.
      Le tableau retourné porte une propriété _source :
      "google-sheets" ou "local" (utilisée par l'indicateur visuel). */
   function loadSheet(name) {
+    if (cacheOnglets[name]) return cacheOnglets[name];
+
     var useSheet = window.CONFIG.sheetId && !window.CONFIG.forceLocal;
+    var promise;
     if (useSheet) {
-      return fetchText(sheetUrl(name)).then(function (text) {
+      promise = fetchText(sheetUrl(name)).then(function (text) {
         var rows = rowsToObjects(parseCSV(text));
         if (!rows.length) {
           /* Onglet Timeline joignable mais vide : ne PAS basculer sur les
@@ -128,11 +137,14 @@
           return rows;
         });
       });
+    } else {
+      promise = loadLocal(name).then(function (rows) {
+        rows._source = "local";
+        return rows;
+      });
     }
-    return loadLocal(name).then(function (rows) {
-      rows._source = "local";
-      return rows;
-    });
+    cacheOnglets[name] = promise;
+    return promise;
   }
 
   function loadLocal(name) {
@@ -196,6 +208,7 @@
     byOrder: byOrder,
     formatDate: formatDate,
     formatMinutes: formatMinutes,
-    champ: champ
+    champ: champ,
+    clearCache: function () { cacheOnglets = Object.create(null); }
   };
 })();

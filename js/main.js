@@ -74,16 +74,11 @@
     return "https://" + u;
   }
 
-  /* Valeur CMS : clé v2 d'abord (+ variante _en si langue = anglais et
-     valeur non vide), puis ancien nommage, sinon chaîne vide (le HTML ou
-     les defaults de config.js font office de secours). */
-  function valeur(P, base, alias) {
+  /* Valeur CMS du Hero : la clé officielle, puis la valeur par défaut. */
+  function valeur(P, base) {
     var en = window.I18n && window.I18n.langue() === "en";
     if (en && P[base + "_en"]) return P[base + "_en"];
-    if (en && alias && P[alias + "_en"]) return P[alias + "_en"];
-    if (P[base]) return P[base];
-    if (alias && P[alias]) return P[alias];
-    return "";
+    return P[base] || "";
   }
 
   /* Page d'accueil ? (la meta description n'est mise à jour que là) */
@@ -106,15 +101,15 @@
       });
       window.PARAMS_BRUT = BRUT;
 
-      /* Textes — clés v2 (CMS v0.2) avec repli sur l'ancien nommage */
+      /* Textes — clés officielles du CMS v0.2 */
       var textMap = {
-        "[data-p-nom]": valeur(P, "hero_titre", "nom_complet"),
-        "[data-p-titre]": valeur(P, "hero_role", "titre_professionnel"),
-        "[data-p-slogan]": valeur(P, "hero_accroche", "slogan_hero"),
-        "[data-p-desc-hero]": valeur(P, "hero_promesse", "description_hero"),
-        "[data-p-statut]": valeur(P, "statut_disponibilite", ""),
-        "[data-p-marque]": valeur(P, "marque_lab", ""),
-        "[data-p-cta-label]": valeur(P, "hero_cta_label", ""),
+        "[data-p-nom]": valeur(P, "hero_titre"),
+        "[data-p-titre]": valeur(P, "hero_role"),
+        "[data-p-slogan]": valeur(P, "hero_accroche"),
+        "[data-p-desc-hero]": valeur(P, "hero_promesse"),
+        "[data-p-statut]": valeur(P, "statut_disponibilite"),
+        "[data-p-marque]": valeur(P, "marque_lab"),
+        "[data-p-cta-label]": valeur(P, "hero_cta_label"),
         "[data-p-stat1]": valeur(P, "stat_projets_count", ""),
         "[data-p-stat2]": valeur(P, "stat_workflows_count", ""),
         "[data-p-stat3]": valeur(P, "stat_certifs_count", "")
@@ -132,8 +127,8 @@
         fig.hidden = !(b && (b.textContent || "").trim());
       });
 
-      /* Photo du hero : URL administrable ; si l'ancien visuel est encore
-         présent dans le Sheet, on bascule vers le nouveau visuel local.
+      /* Photo du Hero : URL administrable ; la valeur historique du Sheet
+         est temporairement redirigée vers le visuel local actuel.
          Toute nouvelle URL renseignée dans le CMS reste prioritaire. */
       var photo = valeur(P, "photo_hero_url", "");
       qsa("[data-p-photo]").forEach(function (img) {

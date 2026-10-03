@@ -79,7 +79,7 @@ portfolio/
 
 | clé | rôle |
 |---|---|
-| `nom_complet`, `titre_professionnel`, `slogan_hero`, `description_hero`, `statut_disponibilite` | Textes injectés (hero, header, meta description) |
+| `hero_titre`, `hero_role`, `hero_accroche`, `hero_promesse`, `statut_disponibilite` | Textes injectés (Hero, header, meta description) |
 | `email_contact` | Adresse affichée + liens `mailto:` |
 | `url_linkedin`, `url_telegram`, `url_google_business`, `url_youtube` | Liens sociaux (footer, contact, à-propos) — le protocole `https://` est ajouté automatiquement s'il manque |
 | `url_whatsapp` | Lien WhatsApp **avec message pré-rempli** (`https://wa.me/…?text=…`) — footer + carte Contact |
@@ -97,7 +97,7 @@ visite, comme tout le CMS).
 - Le site lit le **CSV publié** de chaque onglet à chaque visite (cache court).
 - Ajouter une ligne = le site l'affiche. **Aucun re-déploiement nécessaire.**
 - Les lignes vides et les lignes d'instructions du Sheet sont ignorées.
-- Les colonnes attendues : voir `sheets-exports/*.csv` (référence exacte).
+- Les colonnes attendues sont déclarées dans `js/config.js` (`colonnesAttendues`) et validées à chaque lecture du Sheet.
 
 ### Convention `type_lien` (onglet Projets)
 
