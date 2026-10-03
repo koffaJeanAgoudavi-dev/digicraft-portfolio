@@ -46,7 +46,7 @@
     gtag('config', 'G-LH9R3H5XYX', { send_page_view: false, anonymize_ip: true });
   </script>
 </head>
-<body class="has-dock">
+<body class="has-dock case-study-page">
   <a class="skip-link" href="#contenu" data-i18n="commun.skip">Aller au contenu</a>
   <!-- ============ SIDE DOCK BAR (v2) ============ -->
   <aside class="dock" aria-label="Navigation principale">
@@ -137,38 +137,43 @@
     <section class="section" style="padding-top:1.5rem">
       <div class="container">
 
-        <!-- Visuel projet (image_url du Sheet) -->
-        <div class="cs-media reveal" data-cs-media>
+        <!-- Grille bento : contenus statiques conservés, disposition harmonisée -->
+        <div class="cs-bento-grid">
+          <article class="cs-card cs-card-visual reveal" data-cs-visual-card>
+            <header class="cs-card-head">
+              <div class="cs-card-label"><span class="cs-index">01</span><span data-i18n="fiche.bento.architecture">Architecture &amp; flux</span></div>
+              <span class="cs-card-kicker" data-i18n="fiche.bento.media">Schéma technique</span>
+            </header>
+            <div class="cs-media" data-cs-media>
           <img src="https://res.cloudinary.com/mdebk4xz/image/upload/v1787947761/scriboai.png" alt="ScriboAI Bot" width="1280" height="800" loading="lazy" decoding="async">
         </div>
+            <footer class="cs-card-foot"><span class="cs-foot-dot"></span><span data-i18n="fiche.bento.media">Visuel du système</span><span class="cs-foot-mono">DIGITAL SYSTEM</span></footer>
+          </article>
 
-        <!-- Sections de l'étude de cas -->
-        <div class="cs-sections">
-
-          <section class="cs-section reveal" data-cs-section="probleme">
-            <span class="cs-num" data-i18n="fiche.s1.num">01 — Contexte</span>
+          <section class="cs-card reveal" data-cs-section="probleme">
+            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">02</span><span data-i18n="fiche.s1.num">01 — Contexte</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.diagnostic">Diagnostic</span></header>
             <h2 data-i18n="fiche.s1.titre">Le problème</h2>
-            <p data-cs-txt>Rédiger rapidement des contenus de qualité peut être chronophage, surtout lorsqu'il faut reformuler, résumer ou structurer des informations directement depuis son téléphone.</p>
+            <p class="cs-card-text" data-cs-txt>Rédiger rapidement des contenus de qualité peut être chronophage, surtout lorsqu'il faut reformuler, résumer ou structurer des informations directement depuis son téléphone.</p>
+            <footer class="cs-card-foot"><span data-i18n="fiche.bento.diagnostic">Problématique opérationnelle</span><span class="cs-foot-mono">CONTEXT</span></footer>
           </section>
 
-          <section class="cs-section reveal" data-cs-section="solution">
-            <span class="cs-num" data-i18n="fiche.s2.num">02 — La réponse</span>
+          <section class="cs-card reveal" data-cs-section="solution">
+            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">03</span><span data-i18n="fiche.s2.num">02 — La réponse</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.engineering">Ingénierie</span></header>
             <h2 data-i18n="fiche.s2.titre">La solution</h2>
-            <p data-cs-txt>ScriboAI est un assistant rédactionnel accessible depuis Telegram. Il utilise l'IA pour générer, reformuler et synthétiser des textes rapidement, avec une interface conversationnelle simple et accessible sans application dédiée.</p>
+            <p class="cs-card-text" data-cs-txt>ScriboAI est un assistant rédactionnel accessible depuis Telegram. Il utilise l'IA pour générer, reformuler et synthétiser des textes rapidement, avec une interface conversationnelle simple et accessible sans application dédiée.</p>
+            <div class="cs-tech-detail" data-cs-section="technologies_detail">
+              <span class="cs-inline-label" data-i18n="fiche.bento.technologies">Stack technique</span>
+              <p data-cs-txt>Telegram Bot API assure l'interface avec l'utilisateur. Cloudflare Workers exécute la logique du bot et gère les requêtes. Groq fournit les modèles de langage pour la génération et la transformation de texte. Gemini est utilisé pour les fonctionnalités liées à la génération et au traitement d'images.</p>
+            </div>
+            <footer class="cs-card-foot"><span data-i18n="fiche.bento.engineering">Système déployé</span><span class="cs-foot-mono">ENGINEERING</span></footer>
           </section>
 
-          <section class="cs-section reveal" data-cs-section="technologies_detail">
-            <span class="cs-num" data-i18n="fiche.s3.num">03 — Outillage</span>
-            <h2 data-i18n="fiche.s3.titre">Technologies</h2>
-            <p data-cs-txt>Telegram Bot API assure l'interface avec l'utilisateur. Cloudflare Workers exécute la logique du bot et gère les requêtes. Groq fournit les modèles de langage pour la génération et la transformation de texte. Gemini est utilisé pour les fonctionnalités liées à la génération et au traitement d'images.</p>
-          </section>
-
-          <section class="cs-section reveal" data-cs-section="resultat">
-            <span class="cs-num" data-i18n="fiche.s4.num">04 — État actuel</span>
+          <section class="cs-card cs-card-result reveal" data-cs-section="resultat">
+            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">04</span><span data-i18n="fiche.s4.num">04 — État actuel</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.results">Résultats &amp; métriques</span></header>
             <h2 data-i18n="fiche.s4.titre">Résultat aujourd'hui</h2>
-            <p data-cs-txt>Un assistant accessible directement dans Telegram, conçu pour réduire le temps nécessaire à la rédaction et à la synthèse. Le projet démontre l'intégration de plusieurs services IA dans une architecture légère et accessible.</p>
+            <p class="cs-card-text" data-cs-txt>Un assistant accessible directement dans Telegram, conçu pour réduire le temps nécessaire à la rédaction et à la synthèse. Le projet démontre l'intégration de plusieurs services IA dans une architecture légère et accessible.</p>
+            <footer class="cs-card-foot"><span class="cs-foot-dot cs-foot-dot-live"></span><span data-i18n="fiche.bento.results">Impact observé</span><span class="cs-foot-mono">LIVE STATUS</span></footer>
           </section>
-
         </div>
 
         <!-- CTA -->
