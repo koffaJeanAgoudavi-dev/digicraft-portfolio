@@ -338,32 +338,6 @@
       </div>
     </section>
 
-    <!-- ============ RESSOURCES / BOUTIQUE (carousel) ============ -->
-    <section class="section" id="ressources">
-      <div class="container">
-        <div class="carousel-wrap">
-          <div class="carousel-head reveal">
-            <div class="section-head">
-              <p class="eyebrow" data-i18n="accueil.eyebrow.ress">Boutique</p>
-              <h2 data-i18n="accueil.ress.titre">Mes ressources</h2>
-              <p data-i18n="accueil.ress.desc">Des guides et produits digitaux pour apprendre, expérimenter et passer à l'action.</p>
-            </div>
-            <div class="carousel-arrows">
-              <button class="c-arrow" data-carousel-prev aria-label="Ressources précédentes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
-              <button class="c-arrow" data-carousel-next aria-label="Ressources suivantes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-            </div>
-          </div>
-          <div class="carousel" id="carousel-ressources" data-ress-mode="apercu" data-ress-limit="3" aria-label="Ressources à la une, défilement horizontal">
-            <!-- injecté par js/resources.js — max 3 produits featured -->
-          </div>
-        </div>
-        <p class="r-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 11-14h-7l1-6z"/></svg><span data-i18n="accueil.ress.note"> Les achats se font sur la boutique externe — le paiement n'est pas traité ici.</span></p>
-        <div style="text-align:center;margin-top:.75rem">
-          <a class="btn btn-ghost" href="boutique/"><span data-i18n="accueil.ress.btn">Voir toute la boutique</span> <span class="arr">→</span></a>
-        </div>
-      </div>
-    </section>
-
     <!-- ============ PARCOURS (aperçu, v0.2 §7) ============ -->
     <section class="section" id="parcours" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
       <div class="container">
@@ -488,7 +462,6 @@
       window.Prjs.carouselAccueil("carousel-projets");
       window.Actv.apercu("apercu-activite", 4);
       window.Parcs.apercu("apercu-parcours", 3);
-      window.Ress.accueil("carousel-ressources");
       window.Arts.accueil("carousel-articles");
       window.Xpr.apercu("apercu-expertise", 6);
       window.Prjs.initReveal();
