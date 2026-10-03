@@ -19,6 +19,7 @@
   "use strict";
 
   var injectes = { ga4: false, clarity: false };
+  var ga4Configure = false;
 
   function ids() {
     var defs = (window.CONFIG && window.CONFIG.tracking) || {};
@@ -36,16 +37,20 @@
   }
 
   function chargerGA4(id) {
-    if (injectes.ga4) return;
-    if (document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) { injectes.ga4 = true; return; }
-    var s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
-    document.head.appendChild(s);
+    if (injectes.ga4 && ga4Configure) return;
+    var presentDansHead = document.querySelector('script[src*="googletagmanager.com/gtag/js"]');
+    if (!presentDansHead) {
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+      document.head.appendChild(s);
+    }
     window.dataLayer = window.dataLayer || [];
     if (!window.gtag) window.gtag = function () { window.dataLayer.push(arguments); };
-    window.gtag("js", new Date());
-    window.gtag("config", id, { anonymize_ip: true });
+    if (!ga4Configure) {
+      window.gtag("config", id, { anonymize_ip: true });
+      ga4Configure = true;
+    }
     injectes.ga4 = true;
   }
 
