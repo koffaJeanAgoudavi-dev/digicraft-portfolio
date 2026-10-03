@@ -652,12 +652,17 @@
         }
       }
       if (elMedia) {
+        var visualCard = elMedia.closest ? elMedia.closest("[data-cs-visual-card]") : null;
         if (p.image_url) {
           elMedia.innerHTML = '<img src="' + imgUrl(p.image_url) + '" alt="' + esc(txt(p, "titre")) + '" loading="lazy" decoding="async" onerror="this.remove()">';
           elMedia.style.display = ""; /* V1.3 : fiche générique pré-masquée */
+          if (visualCard) visualCard.style.display = "";
         } else {
           var im = elMedia.querySelector("img");
-          if (!im || !im.getAttribute("src")) elMedia.style.display = "none";
+          if (!im || !im.getAttribute("src")) {
+            elMedia.style.display = "none";
+            if (visualCard) visualCard.style.display = "none";
+          }
         }
       }
 

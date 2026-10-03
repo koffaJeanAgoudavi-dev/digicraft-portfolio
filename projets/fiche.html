@@ -57,7 +57,7 @@
     gtag('config', 'G-LH9R3H5XYX', { send_page_view: false, anonymize_ip: true });
   </script>
 </head>
-<body class="has-dock">
+<body class="has-dock case-study-page">
   <a class="skip-link" href="#contenu" data-i18n="commun.skip">Aller au contenu</a>
   <!-- ============ SIDE DOCK BAR (v2) ============ -->
   <aside class="dock" aria-label="Navigation principale">
@@ -151,37 +151,50 @@
     <section class="section" style="padding-top:1.5rem">
       <div class="container">
 
-        <!-- Visuel projet (image_url du Sheet) — masqué tant que vide -->
-        <div class="cs-media reveal" data-cs-media style="display:none"></div>
+        <!-- Grille bento : chaque carte reste alimentée par les colonnes du Sheet -->
+        <div class="cs-bento-grid">
+          <article class="cs-card cs-card-visual reveal" data-cs-visual-card>
+            <header class="cs-card-head">
+              <div class="cs-card-label"><span class="cs-index">01</span><span data-i18n="fiche.bento.architecture">Architecture &amp; flux</span></div>
+              <span class="cs-card-kicker" data-i18n="fiche.bento.media">Schéma technique</span>
+            </header>
+            <div class="cs-media" data-cs-media style="display:none"></div>
+            <footer class="cs-card-foot"><span class="cs-foot-dot"></span><span data-i18n="fiche.bento.media">Visuel du système</span><span class="cs-foot-mono">DIGITAL SYSTEM</span></footer>
+          </article>
 
-        <!-- Sections de l'étude de cas — chacune ne s'affiche que si la
-             colonne correspondante du Sheet est renseignée -->
-        <div class="cs-sections">
-
-          <section class="cs-section reveal" data-cs-section="probleme" style="display:none">
-            <span class="cs-num" data-i18n="fiche.s1.num">01 — Contexte</span>
+          <section class="cs-card reveal" data-cs-section="probleme" style="display:none">
+            <header class="cs-card-head">
+              <div class="cs-card-label"><span class="cs-index">02</span><span data-i18n="fiche.s1.num">01 — Contexte</span></div>
+              <span class="cs-card-kicker" data-i18n="fiche.bento.diagnostic">Diagnostic</span>
+            </header>
             <h2 data-i18n="fiche.s1.titre">Le problème</h2>
-            <p data-cs-txt></p>
+            <p class="cs-card-text" data-cs-txt></p>
+            <footer class="cs-card-foot"><span data-i18n="fiche.bento.diagnostic">Problématique opérationnelle</span><span class="cs-foot-mono">CONTEXT</span></footer>
           </section>
 
-          <section class="cs-section reveal" data-cs-section="solution" style="display:none">
-            <span class="cs-num" data-i18n="fiche.s2.num">02 — La réponse</span>
+          <section class="cs-card reveal" data-cs-section="solution" style="display:none">
+            <header class="cs-card-head">
+              <div class="cs-card-label"><span class="cs-index">03</span><span data-i18n="fiche.s2.num">02 — La réponse</span></div>
+              <span class="cs-card-kicker" data-i18n="fiche.bento.engineering">Ingénierie</span>
+            </header>
             <h2 data-i18n="fiche.s2.titre">La solution</h2>
-            <p data-cs-txt></p>
+            <p class="cs-card-text" data-cs-txt></p>
+            <div class="cs-tech-detail" data-cs-section="technologies_detail" style="display:none">
+              <span class="cs-inline-label" data-i18n="fiche.bento.technologies">Stack technique</span>
+              <p data-cs-txt></p>
+            </div>
+            <footer class="cs-card-foot"><span data-i18n="fiche.bento.engineering">Système déployé</span><span class="cs-foot-mono">ENGINEERING</span></footer>
           </section>
 
-          <section class="cs-section reveal" data-cs-section="technologies_detail" style="display:none">
-            <span class="cs-num" data-i18n="fiche.s3.num">03 — Outillage</span>
-            <h2 data-i18n="fiche.s3.titre">Technologies</h2>
-            <p data-cs-txt></p>
-          </section>
-
-          <section class="cs-section reveal" data-cs-section="resultat" style="display:none">
-            <span class="cs-num" data-i18n="fiche.s4.num">04 — État actuel</span>
+          <section class="cs-card cs-card-result reveal" data-cs-section="resultat" style="display:none">
+            <header class="cs-card-head">
+              <div class="cs-card-label"><span class="cs-index">04</span><span data-i18n="fiche.s4.num">04 — État actuel</span></div>
+              <span class="cs-card-kicker" data-i18n="fiche.bento.results">Résultats &amp; métriques</span>
+            </header>
             <h2 data-i18n="fiche.s4.titre">Résultat aujourd'hui</h2>
-            <p data-cs-txt></p>
+            <p class="cs-card-text" data-cs-txt></p>
+            <footer class="cs-card-foot"><span class="cs-foot-dot cs-foot-dot-live"></span><span data-i18n="fiche.bento.results">Impact observé</span><span class="cs-foot-mono">LIVE STATUS</span></footer>
           </section>
-
         </div>
 
         <!-- CTA -->
