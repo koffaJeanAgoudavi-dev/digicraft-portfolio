@@ -1557,3 +1557,83 @@ body.case-study-page{
 .case-study-page .cta-box .btn-gold:hover{background:#17243A;border-color:#17243A}
 .case-study-page .cta-box .btn-ghost{border-color:rgba(255,255,255,.3);color:#FFFDF8}
 .case-study-page .cta-box .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:#D9C9FF;color:#FFFDF8}
+
+
+/* ============================================================
+   CARTES PROJETS — direction "feature cards"
+   Visuel dominant, contenu éditorial compact et actions ancrées en bas.
+   Le markup et les champs du CMS restent inchangés.
+   ============================================================ */
+.p-card{
+  min-height:100%;
+  border-radius:22px;
+  background:#fffdfb;
+  border:1px solid #e4dff0;
+  box-shadow:0 16px 34px -24px rgba(49,38,91,.34);
+  transition:transform .32s var(--ease),box-shadow .32s var(--ease),border-color .32s var(--ease);
+}
+.p-card:hover{
+  transform:translateY(-6px);
+  border-color:#cbb8fa;
+  box-shadow:0 24px 46px -24px rgba(70,49,137,.34);
+}
+.p-media{
+  aspect-ratio:1.28 / 1;
+  background:#f0ebff;
+  border-bottom:1px solid #ebe6f5;
+}
+.p-media img{
+  object-fit:cover;
+  transition:transform .55s var(--ease),filter .35s var(--ease);
+}
+.p-card:hover .p-media img{transform:scale(1.035);filter:saturate(1.04)}
+.p-media .p-ph{background:linear-gradient(145deg,#f4f0ff 0%,#e8e0ff 100%)}
+.p-media .p-ph b{font-size:clamp(2.4rem,5vw,4rem);color:#4b2a9f}
+.p-body{
+  padding:1.35rem 1.35rem 1.25rem;
+  gap:.72rem;
+  background:#fffdfb;
+}
+.p-top{align-items:center;margin-bottom:.05rem}
+.p-card .badge-statut{
+  padding:.32rem .72rem;
+  font-size:.64rem;
+  letter-spacing:.1em;
+  box-shadow:none;
+}
+.p-card .p-cat{
+  font-size:.68rem;
+  letter-spacing:.1em;
+  color:#7b8190;
+}
+.p-title{font-size:clamp(1.2rem,1.7vw,1.48rem);line-height:1.18}
+.p-title a:hover{color:var(--gold-2)}
+.p-desc{font-size:.91rem;line-height:1.58;min-height:4.45em}
+.p-card .stack-mono{
+  margin-top:auto;
+  padding:.72rem .82rem;
+  border:1px solid #e4dafa;
+  border-radius:10px;
+  background:#f0ebff;
+  color:#4b2a9f;
+  font-size:.7rem;
+  line-height:1.5;
+}
+.p-foot{
+  padding-top:.7rem;
+  border-top:1px solid #eeeaf5;
+  gap:.7rem;
+}
+.p-foot .p-status{font-size:.68rem;color:#7b8190}
+.p-actions{gap:.6rem}
+.p-foot .link-arrow{font-size:.82rem;color:#4b2a9f}
+.p-foot .link-arrow:hover{color:#7048d8}
+.p-card .btn-xs{padding:.58rem .9rem;font-size:.75rem}
+@media (max-width:719px){
+  .p-media{aspect-ratio:1.18 / 1}
+  .p-body{padding:1.25rem 1.2rem 1.15rem}
+  .p-desc{min-height:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .p-card,.p-media img{transition:none}
+}
