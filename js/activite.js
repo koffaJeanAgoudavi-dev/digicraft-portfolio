@@ -187,7 +187,7 @@
       : "";
     var statut = e.statut ? '<span class="tl-statut">' + esc(e.statut) + '</span>' : "";
     var img = e.image_url
-      ? '<img class="tl-img" src="' + esc(imgUrl(e.image_url)) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">'
+      ? '<img class="tl-img" src="' + esc(imgUrl(e.image_url)) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
 
     return '<li class="tl-item' + (index === 0 ? " is-first" : "") + '">' +

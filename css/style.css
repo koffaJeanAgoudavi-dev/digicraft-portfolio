@@ -1891,3 +1891,41 @@ body.case-study-page{
     transform:none;
   }
 }
+
+/* ---------- Performance 60fps : cartes et ombres ---------- */
+.p-card,.xp-card,.r-card,.a-card,.parc-card{
+  contain:layout;
+  will-change:auto;
+  box-shadow:var(--feature-shadow,0 16px 34px -24px rgba(49,38,91,.34));
+  transition:transform .36s cubic-bezier(.22,.61,.36,1),border-color .24s ease;
+}
+/* L’ombre renforcée passe par l’opacité d’une couche dédiée,
+   plutôt que par une interpolation continue de box-shadow. */
+.p-card::after,.xp-card::after,.r-card::after,.a-card::after,.parc-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  border-radius:inherit;
+  box-shadow:0 26px 48px -28px rgba(70,49,137,.42);
+  opacity:0;
+  transition:opacity .24s ease;
+}
+.p-card:hover,.xp-card:hover,.r-card:hover,.a-card:hover,.parc-card:hover,
+.p-card:focus-within,.xp-card:focus-within,.r-card:focus-within,.a-card:focus-within,.parc-card:focus-within{
+  will-change:transform;
+  box-shadow:var(--feature-shadow,0 16px 34px -24px rgba(49,38,91,.34));
+}
+.p-card:hover::after,.xp-card:hover::after,.r-card:hover::after,.a-card:hover::after,.parc-card:hover::after,
+.p-card:focus-within::after,.xp-card:focus-within::after,.r-card:focus-within::after,.a-card:focus-within::after,.parc-card:focus-within::after{
+  opacity:1;
+}
+/* Les images lazy gardent leur ratio réservé par le conteneur : pas de CLS. */
+.p-media img,.a-media img,.r-media-inner img,.parc-badge{
+  backface-visibility:hidden;
+}
+@media (prefers-reduced-motion:reduce){
+  .p-card,.xp-card,.r-card,.a-card,.parc-card{will-change:auto;transition:none}
+  .p-card::after,.xp-card::after,.r-card::after,.a-card::after,.parc-card::after{display:none}
+}

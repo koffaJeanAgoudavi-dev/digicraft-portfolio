@@ -226,7 +226,7 @@
     /* Visuel : image du Sheet si fournie, sinon visuel de remplacement
        (initiales réelles) — aucune image inventée. */
     var img = projet.image_url
-      ? '<img src="' + imgUrl(projet.image_url) + '" alt="' + esc(txt(projet, "titre")) + '" loading="lazy" decoding="async" onerror="this.remove()">'
+      ? '<img src="' + imgUrl(projet.image_url) + '" alt="' + esc(txt(projet, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : '<span class="p-ph" aria-hidden="true"><b>' + esc(initiales(txt(projet, "titre"))) + '</b><span>' + T("projets.visuel") + '</span></span>';
 
     var mediaInner = '<div class="p-media-inner">' + img + '</div>';
@@ -655,7 +655,7 @@
       if (elMedia) {
         var visualCard = elMedia.closest ? elMedia.closest("[data-cs-visual-card]") : null;
         if (p.image_url) {
-          elMedia.innerHTML = '<img src="' + imgUrl(p.image_url) + '" alt="' + esc(txt(p, "titre")) + '" loading="lazy" decoding="async" onerror="this.remove()">';
+          elMedia.innerHTML = '<img src="' + imgUrl(p.image_url) + '" alt="' + esc(txt(p, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">';
           elMedia.style.display = ""; /* V1.3 : fiche générique pré-masquée */
           if (visualCard) visualCard.style.display = "";
         } else {

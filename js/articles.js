@@ -203,7 +203,7 @@
     if (a.image_url) {
       media = '<a class="a-media" href="' + esc(lien || "#") + '"' + (lien ? ' target="_blank" rel="noopener"' : "") +
         ' aria-label="' + esc(titre) + '">' +
-        '<img src="' + esc(imgUrl(a.image_url)) + '" alt="" loading="lazy" decoding="async" onerror="this.closest(\'.a-media\').remove()">' +
+        '<img src="' + esc(imgUrl(a.image_url)) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()">' +
       '</a>';
     }
 

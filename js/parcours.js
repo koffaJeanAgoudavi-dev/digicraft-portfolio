@@ -254,7 +254,7 @@
     var desc = choisir(e.description, e.description_en, langue);
     var periode = formaterPeriode(e.date_obtention, e.date_fin, langue);
     var badge = e.badge_image_url
-      ? '<img class="parc-badge" src="' + esc(imgUrl(e.badge_image_url)) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">'
+      ? '<img class="parc-badge" src="' + esc(imgUrl(e.badge_image_url)) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
     var verif = e.verification_url
       ? '<a class="link-arrow parc-verif" href="' + esc(extUrl(e.verification_url)) + '" target="_blank" rel="noopener" aria-label="' + esc(T("parc.aria.verifier", { t: titre })) + '">' + T("parc.verifier") +

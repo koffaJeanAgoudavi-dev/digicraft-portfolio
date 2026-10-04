@@ -217,7 +217,7 @@
     var type = etiquetteType(p.type);
     var pr = prixTexte(p.prix, p.devise);
     var img = p.image_cover
-      ? '<img src="' + esc(imgUrl(p.image_cover)) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">'
+      ? '<img src="' + esc(imgUrl(p.image_cover)) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
 
     return '<article class="card r-card reveal"' + (p.type ? ' data-ress-type="' + esc(p.type) + '"' : "") + ">" +

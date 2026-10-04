@@ -60,7 +60,7 @@
     var v = String(cle || "").trim();
     if (!v) return svg("ia");
     if (/^(https?:)?\/\//i.test(v)) {
-      return '<img src="' + esc(v) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">';
+      return '<img src="' + esc(v) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">';
     }
     /* emoji / pictogramme = caractère non ASCII ; un mot ASCII (« saas »)
        est traité comme un jeton et reçoit une icône SVG. */
