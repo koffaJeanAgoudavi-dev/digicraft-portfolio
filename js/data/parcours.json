@@ -9,6 +9,7 @@
     "verification_url": "https://univ-lome.tg",
     "badge_image_url": "",
     "ordre": "1",
+    "featured": true,
     "titre_en": "",
     "description_en": ""
   },
@@ -22,6 +23,7 @@
     "verification_url": "",
     "badge_image_url": "",
     "ordre": "2",
+    "featured": true,
     "titre_en": "",
     "description_en": ""
   },
@@ -35,6 +37,7 @@
     "verification_url": "",
     "badge_image_url": "",
     "ordre": "3",
+    "featured": true,
     "titre_en": "",
     "description_en": ""
   }

@@ -184,6 +184,7 @@
             description_en: window.Sheets.champ(r, ["description_en"], ""),
             verification_url: window.Sheets.champ(r, ["verification_url", "url_verification", "url"], ""),
             badge_image_url: window.Sheets.champ(r, ["badge_image_url", "badge"], ""),
+            featured: window.Sheets.toBool(window.Sheets.champ(r, ["featured", "a_la_une", "mis_en_avant"], "")),
             ordre: window.Sheets.champ(r, ["ordre", "order"], "")
           });
         } catch (e) {
@@ -330,7 +331,12 @@
       }
 
       if (mode === "apercu") {
-        var sel = tous.slice(0, limite || 3);
+        var sel = tous.filter(function (e) { return e.featured; }).slice(0, limite || 3);
+        if (!sel.length) {
+          el.innerHTML = etatVide(T("parc.accueil.vide.titre"), T("parc.accueil.vide.desc"), T("parc.accueil.vide.hint"));
+          statutSource(el, src, 0);
+          return;
+        }
         el.innerHTML = '<div class="parc-grid">' + sel.map(function (e) {
           try { return carte(e, langue); } catch (err) { console.error("[Parcours] Entrée non rendue :", e.titre, err); return ""; }
         }).join("") + '</div>';
@@ -347,7 +353,7 @@
           '</section>';
         }).join("");
       }
-      statutSource(el, src, mode === "apercu" ? Math.min(tous.length, limite || 3) : tous.length);
+      statutSource(el, src, mode === "apercu" ? sel.length : tous.length);
       reveler(el);
     }).catch(function (e) {
       console.error("[Parcours] Erreur de chargement :", e);
