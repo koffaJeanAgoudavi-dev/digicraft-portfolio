@@ -1542,3 +1542,18 @@ body.case-study-page{
   .case-study-page .cs-card-text{font-size:.92rem;line-height:1.65}
   .case-study-page .cs-foot-mono{margin-left:auto}
 }
+
+
+/* ---------- CTA études de cas : palette de la maquette restaurée ---------- */
+.case-study-page .cta-box{
+  background:linear-gradient(135deg,#4B2A9F 0%,#7048D8 100%);
+  border-color:#8F72E5;
+  box-shadow:0 28px 60px -34px rgba(76,43,159,.55);
+}
+.case-study-page .cta-box h2{color:#FFFDF8}
+.case-study-page .cta-box p{color:#D9C9FF}
+.case-study-page .cta-box .star{color:#D9C9FF}
+.case-study-page .cta-box .btn-gold{background:#0B1424;color:#FFFDF8;border-color:#0B1424}
+.case-study-page .cta-box .btn-gold:hover{background:#17243A;border-color:#17243A}
+.case-study-page .cta-box .btn-ghost{border-color:rgba(255,255,255,.3);color:#FFFDF8}
+.case-study-page .cta-box .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:#D9C9FF;color:#FFFDF8}
