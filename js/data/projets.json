@@ -36,8 +36,8 @@
     "ordre": "2",
     "probleme": "Les entrepreneurs perdent du temps à trier leurs emails, identifier les demandes importantes et préparer leurs réponses.",
     "solution": "SmartReply Agent automatise le premier traitement des emails : filtrage des messages non pertinents, analyse et classification avec l’IA, génération d’un brouillon dans Gmail, puis notification sur Telegram pour permettre à l’utilisateur de valider l’action.",
-    "technologies_detail": "Python · FastAPI · Gmail API · Gemini · Google Sheets · Telegram Bot API · GitHub · Render · cron-job.org",
-    "resultat": "Le pipeline V1.5 a été entièrement recodé en Python/FastAPI et déployé. Il enchaîne automatiquement Gmail → filtrage → analyse IA → Google Sheets → brouillon Gmail → Telegram, avec validation de l’action « Envoyer » ou « Ignorer »."
+    "technologies_detail": "Python · FastAPI · Gmail API · Gemini · Data layer · Telegram Bot API · GitHub · Render · cron-job.org",
+    "resultat": "Le pipeline V1.5 a été entièrement recodé en Python/FastAPI et déployé. Il enchaîne automatiquement Gmail → filtrage → analyse IA → base structurée → brouillon Gmail → Telegram, avec validation de l’action « Envoyer » ou « Ignorer »."
   },
   {
     "id": "P02",
