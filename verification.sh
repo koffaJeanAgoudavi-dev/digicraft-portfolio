@@ -42,7 +42,9 @@ echo "2) Étude de cas statique — contenu et gabarit v2"
 CODE=$(curl -s -o "$TMP/a.html" -w "%{http_code}" "$BASE/projets/smartreply-agent/")
 [ "$CODE" = "200" ]; check $? "GET /projets/smartreply-agent/ → 200 (obtenu : $CODE)"
 grep -q 'data-cs-page="smartreply-agent"' "$TMP/a.html"; check $? "page statique servie (data-cs-page figé)"
-grep -q 'Le workflow' "$TMP/a.html"; check $? "contenu spécifique SmartReply présent"
+grep -q 'data-cs-section="solution"' "$TMP/a.html" && \
+grep -q 'data-cs-section="resultat"' "$TMP/a.html"; \
+check $? "contenu spécifique SmartReply présent"
 
 echo
 echo "3) Fiche générique dynamique (slug publié dans le Sheet : $SLUG)"
