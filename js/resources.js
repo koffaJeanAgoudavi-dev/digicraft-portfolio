@@ -223,7 +223,7 @@
     return '<article class="card r-card reveal"' + (p.type ? ' data-ress-type="' + esc(p.type) + '"' : "") + ">" +
       "<a class=\"r-media\" href=\"" + esc(lien || "#") + "\"" + (lien ? ' target="_blank" rel="noopener"' : "") +
         ' aria-label="' + esc(nom) + (lien ? esc(T("ress.externe")) : "") + '">' +
-        badge + couverture(nom) + img +
+        '<div class="r-media-inner">' + badge + couverture(nom) + img + '</div>' +
       "</a>" +
       '<div class="r-body">' +
         (type ? '<p class="r-type"><span>' + esc(type) + "</span></p>" : "") +
