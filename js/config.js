@@ -60,15 +60,15 @@ window.CONFIG = {
     /* --- Identité / Hero (blueprint v0.2 §4 et §7) --- */
     hero_titre: "Koffa Jean AGOUDAVI",
     hero_role: "Fondateur & Lead Product · Architecte IA",
-    hero_accroche: "DES SYSTEMES INTELLIGENTS  · VOTRE MEILLEUR ATOUT",
-    hero_promesse: "Vous n'êtes pas ici par hasard. Vous êtes au bon endroit si vous en avez marre des tâches manuelles et que vous voulez un système qui travaille à votre place.",
+    hero_accroche: "DES SYSTÈMES IA QUI FONT AVANCER VOS OPÉRATIONS",
+    hero_promesse: "Je transforme les tâches répétitives et les processus bloqués en systèmes simples, utiles et prêts à l’emploi.",
     marque_lab: "DIGICRAFT Labs",
     photo_hero_url: "",           // vide → photo locale assets/images/koffa-agoudavi.jpg
-    hero_cta_label: "Voir mes réalisations",
+    hero_cta_label: "Parler de mon besoin",
     hero_role_en: "Founder & Lead Product · AI Architect",
-    hero_accroche_en: "INTELLIGENT SYSTEMS · YOUR GREATEST ASSET",
-    hero_promesse_en: "You are not here by accident. You are in the right place if you are tired of manual tasks and want a system that works for you.",
-    hero_cta_label_en: "View My Work",
+    hero_accroche_en: "AI SYSTEMS THAT MOVE YOUR OPERATIONS FORWARD",
+    hero_promesse_en: "I turn repetitive tasks and blocked processes into simple, useful systems ready for real work.",
+    hero_cta_label_en: "Talk about my process",
     hero_cta_url: "/projets/",
     stat_projets_count: "",       // vide → la tuile correspondante est masquée
     stat_workflows_count: "",
