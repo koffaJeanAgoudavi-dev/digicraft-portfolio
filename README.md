@@ -1,10 +1,41 @@
 # DIGICRAFT Labs — Portfolio de Koffa Jean AGOUDAVI
 
-Site vitrine personnel : **ivoire / blanc + or**, premium et minimaliste.
+Site vitrine personnel : **lavande / violet profond**, premium, éditorial et orienté conversion.
 Il présente → démontre → redirige. Il ne vend pas et n'héberge pas de contenu.
 
 Stack : **HTML + CSS + JavaScript vanilla + Google Sheets (CMS) + Cloudflare Pages.**
 Aucun framework, aucune dépendance — volontairement léger et rapide.
+
+### Règles de design
+
+Le design de référence est celui du site actuellement publié sur Cloudflare Pages. Toute
+nouvelle interface doit reprendre cette direction visuelle plutôt que les anciens exemples
+ivoire / blanc + or.
+
+- **Palette principale** : fond lavande très clair `#F8F6FF`, surfaces blanches `#FFFFFF`,
+  violet principal `#7048D8`, violet profond `#4B2A9F`, texte sombre `#171522` et texte
+  secondaire `#716B80`.
+- **Surfaces et bordures** : panneaux `#FFFFFF`, fonds doux `#F0EBFF`, bordures lavande
+  `#E7DEFB`, avec ombres diffuses violettes très légères.
+- **Actions** : boutons principaux violets avec texte blanc ; survol en violet profond ;
+  boutons secondaires transparents avec contour lavande.
+- **CTA final** : bloc à dégradé violet profond → violet principal, avec texte clair et
+  contraste élevé.
+- **Navigation et footer** : dock clair sur desktop/mobile ; footer violet très foncé
+  `#21163F` avec textes clairs et accents lavande.
+- **Typographies** : `Fraunces` pour les titres éditoriaux, `Inter` pour les textes et
+  contrôles, monospace système pour les métadonnées et labels techniques.
+- **Rayons et rythme** : cartes arrondies, espaces généreux, transitions courtes et fluides ;
+  respecter `prefers-reduced-motion`.
+- **Exceptions** : les étoiles du badge Google restent jaunes classiques ; le contour,
+  le fond et le texte de sa pilule utilisent les variables lavande du contexte. Sur le
+  footer sombre, la pilule utilise une variante claire adaptée au contraste.
+
+Variables CSS de référence : `--lav-bg`, `--lav-soft`, `--lav-panel`, `--lav`,
+`--lav-dark`, `--lav-line`, `--lav-text`, `--lav-muted`, `--font-body`,
+`--font-display` et `--font-mono`. Les anciennes variables nommées `--gold` sont
+conservées pour compatibilité avec les composants existants, mais leur valeur actuelle
+correspond au violet du design publié.
 
 ---
 
@@ -73,7 +104,7 @@ portfolio/
 | Ressources | `image_cover` | `https://exemple.com/…` | Vraie couverture (ou vide → couverture générée) |
 
 > 💡 Tant que les images sont placeholder, le site affiche des icônes/covers
-> dorées de secours : aucune carte cassée.
+> violettes de secours : aucune carte cassée.
 
 ### Clés de l'onglet Parametres (liens & configuration)
 
@@ -116,7 +147,7 @@ visite, comme tout le CMS).
 - `assets/images/koffa-agoudavi.jpg` — **photo professionnelle** de Koffa (720×900).
 - `assets/images/` — visuels des projets (WebP, ~1280px) :
   - `smartreply-agent-visuel.webp` · `scriboai.webp` · `mysterybot-visuel.webp`
-  - Les autres projets sans visuel affichent une icône dorée de secours (pas de placeholder cassé).
+  - Les autres projets sans visuel affichent une icône violette de secours (pas de placeholder cassé).
 - Projets / produits : renseignez `image_url` / `image_cover` dans le Sheet. Chemin relatif (`assets/images/...`) **ou** URL absolue (`https://…`) — les deux fonctionnent, sur toutes les pages.
 - **Astuce :** si votre logo n'a pas de fond transparent, fournissez le PNG et signalez-le — le fond peut être retiré par traitement (flood fill) comme ce fut le cas ici.
 
