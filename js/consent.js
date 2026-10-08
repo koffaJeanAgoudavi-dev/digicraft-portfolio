@@ -91,7 +91,7 @@
         '<div class="dl-banner-text">' +
           '<strong class="dl-banner-title">' + T("ck.banniere.titre") + '</strong>' +
           '<p>' + T("ck.banniere.texte") + '</p>' +
-          '<button type="button" class="dl-text-btn" data-dl-infos>' + T("ck.banniere.infos") + '</button>' +
+          '<a class="dl-text-btn" data-dl-infos href="' + (window.SITE_ROOT || "/") + 'confidentialite/">' + T("ck.banniere.infos") + '</a>' +
         '</div>' +
         '<div class="dl-banner-actions">' +
           '<button type="button" class="btn btn-gold btn-sm" data-dl-accept>' + T("ck.accepter") + '</button>' +
@@ -191,7 +191,6 @@
       if (t.closest("[data-dl-accept]")) { window.Consent.accept(); }
       else if (t.closest("[data-dl-refuse]")) { window.Consent.refuse(); }
       else if (t.closest("[data-dl-custom]")) { ouvrirPreferences(); }
-      else if (t.closest("[data-dl-infos]")) { ouvrirInfos(); }
     });
 
     /* Panneaux : fermeture, sauvegarde */
