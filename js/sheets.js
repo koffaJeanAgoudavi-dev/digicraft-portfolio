@@ -161,6 +161,7 @@
     rows.forEach(function (r) {
       var k = (r.cle || "").trim(), v = (r.valeur !== undefined ? String(r.valeur).trim() : "");
       if (!k || /^Remplacer/i.test(k) || /^Remplacer/i.test(v)) return;
+      if (k === "url_webhook_contact") return;
       out[k] = v;
     });
     Object.keys(window.CONFIG.defaults).forEach(function (k) {

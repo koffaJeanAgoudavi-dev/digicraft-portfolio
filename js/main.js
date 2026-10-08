@@ -209,14 +209,7 @@
     });
   }
 
-  /* ---------- Formulaire de contact : Make → Telegram ---------- */
-  /* V2 : la soumission envoie une notification Telegram via le webhook
-     Make. L'URL est lue depuis le Google Sheet (onglet Parametres →
-     clé `url_webhook_contact`) pour pouvoir la changer (ex. nouveau
-     compte Make) sans toucher au code. En secours, la valeur locale
-     de config.js est utilisée. Si aucune URL n'est disponible, le
-     formulaire affiche l'erreur avec l'email de secours au lieu
-     d'échouer silencieusement. */
+  /* ---------- Formulaire de contact : API interne → Make → Telegram ---------- */
 
   function initContact() {
     var form = qs("[data-contact-form]");
@@ -224,6 +217,8 @@
     var btn = qs("[type=submit]", form);
     var okBox = qs("[data-form-ok]");
     var errBox = qs("[data-form-error]");
+    var started = qs('input[name="form_started_at"]', form);
+    if (started) started.value = String(Date.now());
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -252,32 +247,25 @@
         return;
       }
 
-      /* URL du webhook : Sheet d'abord (url_webhook_contact), sinon la
-         valeur locale de secours (config.js defaults). Aucune URL
-         disponible (Sheet injoignable + pas de fallback) → erreur
-         explicite avec l'email de secours, jamais d'échec silencieux. */
-      var webhook = (window.PARAMS && window.PARAMS.url_webhook_contact) ||
-                    (window.CONFIG && window.CONFIG.defaults && window.CONFIG.defaults.url_webhook_contact);
-      if (!webhook) {
-        if (errBox) {
-          errBox.querySelector("b").textContent = T("contact.form.err.indispo", null, "Envoi momentanément indisponible.");
-          errBox.querySelector("p").textContent = T("contact.form.err.ecrire", { email: emailSecours() });
-          errBox.classList.add("is-visible");
-        }
-        return;
-      }
-
-      /* Envoi JSON vers le webhook Make ; abandon après 15 s pour ne
-         jamais laisser le visiteur sans réponse (scénario coupé…). */
+      /* Envoi JSON vers l'API interne ; l'URL Make reste secrète dans
+         la variable Cloudflare MAKE_CONTACT_WEBHOOK. Abandon après 15 s. */
       btn.disabled = true;
       btn.textContent = T("contact.form.envoi.cours", null, "Envoi en cours…");
       var abort = "AbortController" in window ? new AbortController() : null;
       var timer = abort ? setTimeout(function () { abort.abort(); }, 15000) : null;
+      var website = qs('input[name="website"]', form);
 
-      fetch(webhook, {
+      fetch((window.SITE_ROOT || "") + "api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nom: nom, email: email, sujet: sujet, message: message }),
+        body: JSON.stringify({
+          nom: nom,
+          email: email,
+          sujet: sujet,
+          message: message,
+          website: website ? website.value : "",
+          form_started_at: started ? started.value : ""
+        }),
         signal: abort ? abort.signal : undefined
       }).then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status);
