@@ -1930,3 +1930,17 @@ body.case-study-page{
   .p-card,.xp-card,.r-card,.a-card,.parc-card{will-change:auto;transition:none}
   .p-card::after,.xp-card::after,.r-card::after,.a-card::after,.parc-card::after{display:none}
 }
+
+
+/* Chantier 4 — pages légales, même système lavande/violet */
+.legal-page .container { max-width: 980px; }
+.legal-page .lead { max-width: 760px; }
+.legal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+.legal-stack { display: grid; gap: 1rem; margin-top: 2rem; }
+.legal-card { background: rgba(255,255,255,.84); border: 1px solid var(--line, #E7DEFB); border-radius: 22px; padding: clamp(1.25rem, 3vw, 2rem); box-shadow: 0 16px 40px rgba(75,42,159,.08); }
+.legal-card h2 { margin: 0 0 .75rem; font-size: clamp(1.15rem, 2vw, 1.45rem); }
+.legal-card p { margin: 0; color: var(--ink-2, #716B80); line-height: 1.75; white-space: pre-line; }
+.legal-card a { color: var(--violet, #7048D8); font-weight: 600; }
+.legal-note { margin-top: 1rem !important; font-size: .85rem; }
+.legal-warning { margin: 1.5rem 0 0; padding: 1rem 1.2rem; border-left: 3px solid var(--violet, #7048D8); color: var(--ink-2, #716B80); background: rgba(112,72,216,.06); border-radius: 0 14px 14px 0; }
+@media (max-width: 720px) { .legal-grid { grid-template-columns: 1fr; } .legal-card { border-radius: 18px; } }

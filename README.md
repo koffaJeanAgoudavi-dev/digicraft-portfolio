@@ -47,7 +47,8 @@ portfolio/
 ├── 404.html
 ├── favicon.png
 ├── robots.txt
-├── sitemap.xml           ← Toutes les routes v2 (fiches dynamiques à ajouter à la main)
+├── functions/sitemap.xml.js ← Sitemap automatique avec slugs du Sheet
+├── robots.txt            ← Directives robots + sitemap canonique
 ├── _headers              ← En-têtes de sécurité (Cloudflare Pages) + CSP optionnelle
 ├── _redirects            ← /build-in-public/ → /activite/ (301, page retirée en v2)
 ├── _routes.json          ← Limite les invocations de la Function aux nouveaux slugs
@@ -164,7 +165,7 @@ visite, comme tout le CMS).
    renseigné dans :
    - `js/config.js` → `siteUrl`
    - les balises `<link rel="canonical">` et les `<meta og:url>` de chaque page
-   - `sitemap.xml` et `robots.txt`
+   - `functions/sitemap.xml.js` et `robots.txt`
 5. Publiez le `og-cover.jpg` dans `assets/images/` (image 1200×630)
    pour les partages LinkedIn/X.
 
@@ -461,9 +462,9 @@ Slug inconnu côté client → état « Projet introuvable » + `noindex`.
 > largement suffisant. En cas d'épuisement, le réglage « fail open »
 > (dashboard Pages) ressert les assets statiques normalement.
 
-> 🗺️ **Sitemap** : `sitemap.xml` reste manuel — ajouter une entrée
-> `<url>` pour chaque nouveau slug publié (les pages sont de toute façon
-> découvertes par Google via les liens internes de `/projets/`).
+> 🗺️ **Sitemap automatique** : `/sitemap.xml` est généré par une Pages Function.
+> Il inclut les routes statiques et les slugs présents dans l’onglet Projets du Sheet,
+> avec un cache de 5 minutes et un repli statique si le Sheet est indisponible.
 
 ### Fonctionnement générique
 
@@ -527,7 +528,7 @@ nouvel onglet.
 1. Ajoutez la ligne du projet dans l'onglet Projets du Sheet, avec son `slug`
 2. Renseignez les 4 colonnes (`probleme`, `solution`, `technologies_detail`, `resultat`)
 3. `/projets/<slug>/` fonctionne automatiquement (fiche générique) ;
-   ajoutez éventuellement l'URL au `sitemap.xml`
+   le sitemap automatique inclut les nouveaux slugs du Sheet
 
 **Page sur mesure (méthode V2 — prioritaire sur la fiche générique) :**
 1. Dupliquez `projets/smartreply-agent/index.html` → `projets/<slug>/index.html`
@@ -581,3 +582,8 @@ Le site est bilingue **côté client** : pas de `/en/`, aucune URL supplémentai
   `js/i18n.js`), `verif-textes-fr.py` (contrôle : aucun texte statique oublié).
 - **Hors périmètre** : le contenu du Sheet sans colonne `_en`
   (Timeline, notamment) reste en français en mode anglais — c'est le repli prévu.
+
+
+## 13. Pages légales
+
+Les routes `/mentions-legales/` et `/confidentialite/` utilisent le template lavande/violet existant et restent disponibles en français et en anglais. Elles ne dépendent d’aucun contenu éditorial du Sheet. Les champs explicitement marqués `[À COMPLÉTER]` doivent être renseignés par le propriétaire du site avant une publication juridique définitive.

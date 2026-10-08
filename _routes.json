@@ -1,6 +1,11 @@
 {
   "version": 1,
-  "include": ["/projets/*", "/googleeca0ca06ec68601a.html", "/api/contact"],
+  "include": [
+    "/projets/*",
+    "/googleeca0ca06ec68601a.html",
+    "/api/contact",
+    "/sitemap.xml"
+  ],
   "exclude": [
     "/projets/",
     "/projets/index.html",

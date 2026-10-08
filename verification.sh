@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================
-# verification.sh — Contrôle post-déploiement (v0.2)
+# verification.sh — Contrôle post-déploiement (v0.3)
 # ------------------------------------------------------------
 # Usage :
 #   bash verification.sh                                  → production
@@ -27,12 +27,13 @@ check() { # $1 = code retour (0 = succès), $2 = libellé
   else FAIL=$((FAIL+1)); echo "  ❌ $2"; fi
 }
 
-echo "Vérification v0.2 sur : $BASE"
+echo "Vérification v0.3 sur : $BASE"
 echo
 
 echo "1) Accueil et pages principales (toutes doivent répondre 200)"
 for CHEMIN in "/" "/expertise/" "/projets/" "/activite/" "/parcours/" \
-              "/articles/" "/boutique/" "/a-propos/" "/contact/"; do
+              "/articles/" "/boutique/" "/a-propos/" "/contact/" \
+              "/mentions-legales/" "/confidentialite/"; do
   CODE=$(curl -s -o /dev/null -w "%{http_code}" "$BASE$CHEMIN")
   [ "$CODE" = "200" ]; check $? "GET $CHEMIN → 200 (obtenu : $CODE)"
 done
@@ -90,6 +91,8 @@ CODE=$(curl -s -o "$TMP/s.xml" -w "%{http_code}" "$BASE/sitemap.xml")
 [ "$CODE" = "200" ]; check $? "GET /sitemap.xml → 200"
 ! grep -q 'marketpulse' "$TMP/s.xml"; check $? "aucune référence à un projet retiré"
 ! grep -q 'build-in-public' "$TMP/s.xml"; check $? "aucune référence à Build in Public"
+grep -q '/mentions-legales/' "$TMP/s.xml" && grep -q '/confidentialite/' "$TMP/s.xml"; check $? "pages légales présentes dans le sitemap"
+grep -q "/projets/$SLUG/" "$TMP/s.xml"; check $? "slug dynamique $SLUG présent dans le sitemap"
 CODE=$(curl -s -o /dev/null -w "%{http_code}" "$BASE/robots.txt")
 [ "$CODE" = "200" ]; check $? "GET /robots.txt → 200"
 
@@ -103,5 +106,5 @@ done
 echo
 rm -rf "$TMP"
 echo "════════ Résultat : $PASS réussis, $FAIL échoués ════════"
-if [ "$FAIL" -eq 0 ]; then echo "v0.2 conforme ✅ — fusion dans main possible"; exit 0
+if [ "$FAIL" -eq 0 ]; then echo "v0.3 conforme ✅ — fusion dans main possible"; exit 0
 else echo "Non conforme ❌ — ne pas fusionner, inspecter les échecs ci-dessus"; exit 1; fi
