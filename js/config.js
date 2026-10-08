@@ -79,7 +79,6 @@ window.CONFIG = {
     url_telegram: "https://t.me/johnnyokabe",
     url_google_business: "https://share.google/ont9TyuWshpud74fL",
     url_boutique: "https://digicraft.mychariow.shop",
-    url_webhook_contact: "https://hook.eu1.make.com/wjgpk28nmywizvm7kl95hv45gt7n6quq",
     statut_disponibilite: "Disponible pour de nouveaux projets"
   },
 

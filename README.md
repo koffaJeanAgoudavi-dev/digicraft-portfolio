@@ -115,7 +115,6 @@ portfolio/
 | `url_linkedin`, `url_telegram`, `url_google_business`, `url_youtube` | Liens sociaux (footer, contact, à-propos) — le protocole `https://` est ajouté automatiquement s'il manque |
 | `url_whatsapp` | Lien WhatsApp **avec message pré-rempli** (`https://wa.me/…?text=…`) — footer + carte Contact |
 | `url_boutique` | Boutique externe |
-| `url_webhook_contact` | Webhook Make du formulaire (§5) |
 | `ga4_id`, `clarity_id` | Identifiants GA4 / Clarity (§11) |
 
 Ajouter ou modifier une clé = re-déploiement **non nécessaire** (lu à chaque
@@ -207,36 +206,37 @@ commentaires du fichier pour les détails.
 
 ## 5. Formulaire de contact
 
-**V1** : le formulaire ouvre le client email de l'utilisateur avec un message
-pré-rempli (zéro backend). Pour aller plus loin, deux options :
-
-- **Formspree** (2 min) : créez un formulaire, remplacez le `setTimeout` de
-  `main.js` par un `fetch` POST vers `https://formspree.io/f/<id>`.
-- **Make → Telegram** (le blueprint le prévoit en V2) : le POST Formspree
-  déclenche un scénario Make qui envoie le message dans votre Telegram.
+Le formulaire utilise une Function Cloudflare interne : le navigateur envoie
+les quatre champs à `/api/contact`, puis la Function relaie le message vers
+Make et Telegram. L'URL Make n'est jamais envoyée au navigateur.
 
 ---
 
 ## 6. Formulaire de contact — Make → Telegram (V2)
 
-Le formulaire `/contact/` n'utilise plus `mailto:` : la soumission envoie
-un `POST` JSON (4 champs : `nom`, `email`, `sujet`, `message`) vers le
-webhook Make du scénario **« Formulaire de contact »** (Custom Webhook →
-Telegram Bot — Send a Text Message), qui notifie le télégramme de Koffa.
+Le formulaire `/contact/` n'utilise plus `mailto:` : la soumission envoie un
+`POST` JSON (4 champs : `nom`, `email`, `sujet`, `message`) vers `/api/contact`.
+La Pages Function vérifie l'origine, les longueurs, le format de l'email, un
+champ anti-robot invisible et un délai minimal avant de transmettre le message
+au webhook Make du scénario **« Formulaire de contact »**.
 
-- **URL du webhook** : lue depuis le Google Sheet, onglet Parametres
-  → clé `url_webhook_contact` (nouvelle ligne à ajouter, valeur = URL du
-  webhook Make du scénario « Formulaire de contact »). Pour changer de
-  webhook (ex. nouveau compte Make) : modifiez la cellule du Sheet, rien
-  à coder. En secours si le Sheet est injoignable : valeur locale
-  (`config.js` → `defaults.url_webhook_contact`). Si aucune URL n'est
-  disponible → le formulaire affiche l'erreur avec l'email de secours
-  (jamais d'échec silencieux).
+- **Secret Cloudflare** : créer la variable secrète `MAKE_CONTACT_WEBHOOK`
+  dans les paramètres du projet Pages, pour l'environnement Preview puis
+  Production. Sa valeur est l'URL du Custom Webhook Make ; elle ne doit être
+  ni dans GitHub, ni dans le Sheet, ni dans le navigateur.
+- **Sheet** : supprimer l'ancienne ligne du webhook dans l'onglet
+  `Parametres`. La Function ne lit plus cette valeur.
+- **CSP** : le navigateur autorise `/api/contact` sur la même origine ; Make
+  n'est plus présent dans `connect-src`.
+- **Rotation** : dans Make, ouvrir le Custom Webhook du scénario, générer une
+  nouvelle URL ou recréer le webhook, désactiver l'ancien, puis remplacer la
+  valeur de `MAKE_CONTACT_WEBHOOK` dans Cloudflare et relancer le déploiement.
 - **Succès** : le formulaire est remplacé par « Message envoyé, merci !
   Je réponds généralement sous 24-48h. »
 - **Échec / timeout 15 s** : message d'erreur avec l'email alternatif
   `contact.agoudavi@gmail.com` ; le bouton est réactivé pour réessayer.
-- **Validation** : champs non vides + format email basique, avant l'envoi.
+- **Validation** : champs non vides + format email côté navigateur et côté
+  serveur, longueurs maximales, contrôle Origin, honeypot et délai minimal.
 - Format du message Telegram :
   `📩 Nouveau message depuis le site` / `De : {{nom}} ({{email}})` /
   `Sujet : {{sujet}}` / `{{message}}`
