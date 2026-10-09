@@ -25,7 +25,8 @@ window.CONFIG = {
     ressources: 775775749,  // onglet Ressources
     timeline: 1732881613,      // onglet Timeline (journal d'activité)
     expertise: 686585981,    // onglet Expertise
-    parcours: 1357681272       // onglet Parcours (ex-Certifications)
+    parcours: 1357681272,      // onglet Parcours (ex-Certifications)
+    temoignages: null          // onglet Témoignages — renseigner le GID après publication
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
@@ -37,7 +38,8 @@ window.CONFIG = {
     ressources: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=775775749&single=true&output=csv",
     timeline: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1732881613&single=true&output=csv",
     expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=686585981&single=true&output=csv",
-    parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1357681272&single=true&output=csv"
+    parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1357681272&single=true&output=csv",
+    temoignages: ""
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement
@@ -51,7 +53,8 @@ window.CONFIG = {
     ressources: ["type", "nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre", "nom_produit_en", "description_en"],
     timeline: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"],
     expertise: ["titre", "description_courte", "description_longue", "icone", "categorie", "exemples_projets", "ordre"],
-    parcours: ["type", "titre", "organisation", "date_obtention", "date_fin", "description", "verification_url", "ordre"]
+    parcours: ["type", "titre", "organisation", "date_obtention", "date_fin", "description", "verification_url", "ordre"],
+    temoignages: ["id", "nom", "role", "entreprise", "texte", "texte_en", "source_url", "featured", "ordre"]
   },
 
   // Données par défaut (utilisées seulement si le Sheet ET le JSON local
@@ -73,6 +76,8 @@ window.CONFIG = {
     stat_projets_count: "",       // vide → la tuile correspondante est masquée
     stat_workflows_count: "",
     stat_certifs_count: "",
+    google_note: "",
+    google_nb_avis: "",
     langue_defaut: "fr",
     email_contact: "contact.agoudavi@gmail.com",
     url_linkedin: "https://www.linkedin.com/in/koffa-jean-agoudavi-514895423",

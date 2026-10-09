@@ -106,5 +106,13 @@
   {
     "cle": "langue_defaut",
     "valeur": "FR"
+  },
+  {
+    "cle": "google_note",
+    "valeur": ""
+  },
+  {
+    "cle": "google_nb_avis",
+    "valeur": ""
   }
 ]

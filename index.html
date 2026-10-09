@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261002d">
+  <link rel="stylesheet" href="css/style.css?v=20261009a">
 
   <meta name="author" content="Koffa Jean Agoudavi">
   <meta property="og:image:width" content="1730">
@@ -194,6 +194,9 @@
               <a class="btn btn-gold" data-p-cta href="projets/"><span data-p-cta-label>Voir mes réalisations</span> <span class="arr" aria-hidden="true">→</span></a>
               <a class="btn btn-ghost" href="contact/" data-i18n="hero.contact">Me contacter</a>
             </div>
+            <a class="gr-google-badge" data-gr-google-badge href="https://share.google/ont9TyuWshpud74fL" target="_blank" rel="noopener" aria-label="Avis Google" hidden>
+              <span class="gr-stars" aria-hidden="true">★★★★★</span><span data-gr-google-copy>5,0 sur Google · 5 avis</span>
+            </a>
           </div>
           <div class="hero-media">
             <figure class="hero-photo">
@@ -382,6 +385,17 @@
       </div>
     </section>
 
+    <!-- ============ TÉMOIGNAGES ============ -->
+    <section class="section gr-testimonials" id="temoignages" data-gr-testimonials hidden>
+      <div class="container">
+        <div class="section-head center">
+          <p class="eyebrow" data-i18n="accueil.temoignages.eyebrow">Retours clients</p>
+          <h2 data-i18n="accueil.temoignages.titre">Ce que disent les personnes accompagnées</h2>
+          <p data-i18n="accueil.temoignages.intro">Des commentaires partagés après l’utilisation de systèmes conçus pour leurs opérations.</p>
+        </div>
+        <div class="gr-testimonials-grid" data-gr-testimonials-list></div>
+      </div>
+    </section>
     <!-- ============ CTA FINAL ============ -->
     <section class="section" style="padding-top:0">
       <div class="container">
@@ -429,6 +443,7 @@
             <li><a data-p-telegram href="https://t.me/johnnyokabe" target="_blank" rel="noopener">Telegram</a></li>
             <li><a data-p-whatsapp href="https://wa.me/22872556556" target="_blank" rel="noopener">WhatsApp</a></li>
             <li><a data-p-google href="https://share.google/ont9TyuWshpud74fL" target="_blank" rel="noopener">Google Business</a></li>
+            <li><a class="gr-google-badge gr-google-badge-footer" data-gr-google-badge data-p-google href="https://share.google/ont9TyuWshpud74fL" target="_blank" rel="noopener" aria-label="Avis Google" hidden><span class="gr-stars" aria-hidden="true">★★★★★</span><span data-gr-google-copy>5,0 sur Google · 5 avis</span></a></li>
             <li><a data-p-email href="mailto:contact.agoudavi@gmail.com" data-p-email-txt>contact.agoudavi@gmail.com</a></li>
             <li data-legal-links><a href="mentions-legales/" data-i18n="footer.legal">Mentions légales</a></li>
             <li data-legal-links><a href="confidentialite/" data-i18n="footer.privacy">Confidentialité</a></li>
@@ -448,18 +463,19 @@
   </footer>
 
   <script>window.SITE_ROOT = "";</script>
-  <script src="js/config.js?v=20260927a"></script>
+  <script src="js/config.js?v=20261009a"></script>
   <script src="js/consent.js?v=20260927a"></script>
   <script src="js/analytics.js?v=20260927a"></script>
-  <script src="js/sheets.js?v=20260927a"></script>
+  <script src="js/sheets.js?v=20261009a"></script>
   <script src="js/projects.js?v=20260927a"></script>
   <script src="js/articles.js?v=20260927a"></script>
   <script src="js/resources.js?v=20260927a"></script>
   <script src="js/expertise.js?v=20260927a"></script>
   <script src="js/activite.js?v=20261002b"></script>
   <script src="js/parcours.js?v=20260927a"></script>
-  <script src="js/i18n.js?v=20260927a"></script>
-  <script src="js/main.js?v=20261002c"></script>
+  <script src="js/temoignages.js?v=20261009a"></script>
+  <script src="js/i18n.js?v=20261009a"></script>
+  <script src="js/main.js?v=20261009a"></script>
   <script src="js/dock.js?v=20260927a"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -468,6 +484,7 @@
       window.Parcs.apercu("apercu-parcours", 3);
       window.Arts.accueil("carousel-articles");
       window.Xpr.apercu("apercu-expertise", 6);
+      window.Temoignages.init();
       window.Prjs.initReveal();
     });
   </script>
