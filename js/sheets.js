@@ -165,31 +165,64 @@
       out[k] = v;
     });
     Object.keys(window.CONFIG.defaults).forEach(function (k) {
-      if (!out[k]) out[k] = window.CONFIG.defaults[k];
+      if (!Object.prototype.hasOwnProperty.call(out, k)) out[k] = window.CONFIG.defaults[k];
     });
     return out;
   }
 
-  /* booléens du Sheet : TRUE/true/1/oui/vrai */
-  function toBool(v) {
-    return /^(true|1|oui|vrai|yes)$/i.test(String(v).trim());
+  /* Valeurs de contrôle ou URLs factices : ne jamais les afficher comme lien.
+     Les espaces sont également refusés dans une URL, car ils signalent presque
+     toujours une cellule mal saisie. */
+  function isInvalidResource(v) {
+    var s = String(v == null ? "" : v).trim();
+    return !s || /example\.com|remplacer|placeholder|your[-_ ]?(url|link)|à compléter|a compléter/i.test(s) || /\s/.test(s);
   }
 
-  /* tri par colonne `ordre` croissant */
+  function safeExternalUrl(v) {
+    var s = String(v == null ? "" : v).trim();
+    if (isInvalidResource(s)) return "";
+    if (/^(mailto:|tel:|#|\/)/i.test(s)) return s;
+    if (/^\/\//.test(s)) return "https:" + s;
+    return /^https?:\/\//i.test(s) ? s : "https://" + s;
+  }
+
+  function safeImageUrl(v) {
+    var s = String(v == null ? "" : v).trim();
+    if (isInvalidResource(s)) return "";
+    if (/^(https?:)?\/\//i.test(s)) return s;
+    return (window.SITE_ROOT || "") + s.replace(/^\/+/, "");
+  }
+
+  /* booléens : TRUE/FALSE, casse et espaces indifférents. */
+  function toBool(v) {
+    return /^(true|1|oui|vrai|yes)$/i.test(String(v == null ? "" : v).trim());
+  }
+
+  /* tri numérique : accepte 1, 1.1 et la virgule décimale. */
   function byOrder(a, b) {
-    var na = parseInt(a.ordre, 10) || 0, nb = parseInt(b.ordre, 10) || 0;
+    var na = parseFloat(String(a && a.ordre != null ? a.ordre : "").replace(",", "."));
+    var nb = parseFloat(String(b && b.ordre != null ? b.ordre : "").replace(",", "."));
+    na = isNaN(na) ? Number.POSITIVE_INFINITY : na;
+    nb = isNaN(nb) ? Number.POSITIVE_INFINITY : nb;
     return na - nb;
   }
 
-  /* formatage date ISO -> "Juil. 2026" */
-  function formatDate(v) {
-    if (!v) return "";
-    var s = String(v).trim();
-    if (/^\d{4}-\d{2}$/.test(s)) s += "-15"; // année-mois seulement
-    var d = new Date(s + "T00:00:00");
-    if (isNaN(d.getTime())) return s;
-    var m = d.toLocaleDateString("fr-FR", { month: "short", year: "numeric" });
-    return m.charAt(0).toUpperCase() + m.slice(1).replace(".", ".");
+  /* Dates Sheet tolérantes, uniformisées en mois/année. */
+  function formatDate(v, langue) {
+    var s = String(v == null ? "" : v).trim();
+    if (!s) return "";
+    var t = s.toLowerCase();
+    if (/^(present|présent|en cours)$/.test(t)) return (langue || (window.I18n && window.I18n.langue && window.I18n.langue()) || "fr") === "en" ? "Present" : "Présent";
+    var m = s.match(/^(\d{1,2})[\/. -](\d{1,2})[\/. -](\d{4})$/) || s.match(/^(\d{1,2})[\/-](\d{4})$/);
+    var year, month;
+    if (m && m.length === 4 && s.match(/^\d{1,2}[\/. -]\d{1,2}[\/. -]\d{4}$/)) { month=+m[2]; year=+m[3]; }
+    else if (m) { month=+m[1]; year=+m[2]; }
+    else { m=s.match(/^(\d{4})[-\/.](\d{1,2})(?:[-\/.]\d{1,2})?$/); if (m) { year=+m[1]; month=+m[2]; } }
+    if (!year || !month || month < 1 || month > 12) return s;
+    var fr=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+    var en=["January","February","March","April","May","June","July","August","September","October","November","December"];
+    var l=langue || (window.I18n && window.I18n.langue && window.I18n.langue()) || "fr";
+    return (l === "en" ? en[month-1] : fr[month-1]) + " " + year;
   }
 
   /* temps de lecture -> "5 min" */
@@ -208,6 +241,9 @@
     toBool: toBool,
     byOrder: byOrder,
     formatDate: formatDate,
+    safeExternalUrl: safeExternalUrl,
+    safeImageUrl: safeImageUrl,
+    isInvalidResource: isInvalidResource,
     formatMinutes: formatMinutes,
     champ: champ,
     clearCache: function () { cacheOnglets = Object.create(null); }

@@ -68,20 +68,8 @@
     return obj[base] === undefined || obj[base] === null ? "" : String(obj[base]);
   }
 
-  function extUrl(u) {
-    var v = String(u || "").trim();
-    if (!v) return "";
-    if (/^https?:\/\//i.test(v)) return v;
-    if (/^\/\//.test(v)) return "https:" + v;
-    if (v.charAt(0) === "/") return (window.SITE_ROOT || "") + v.replace(/^\/+/, "");
-    return "https://" + v;
-  }
-  function imgUrl(u) {
-    var v = String(u || "").trim();
-    if (!v) return "";
-    if (/^(https?:)?\/\//i.test(v)) return v;
-    return (window.SITE_ROOT || "") + v.replace(/^\/+/, "");
-  }
+  function extUrl(u) { return window.Sheets.safeExternalUrl(u); }
+  function imgUrl(u) { return window.Sheets.safeImageUrl(u); }
 
   /* Badge du Sheet → pilule v2. Aucun libellé n'est réécrit : le texte
      affiché est celui du Sheet, seule la couleur dépend du mot-clé.

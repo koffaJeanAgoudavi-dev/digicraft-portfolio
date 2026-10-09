@@ -123,14 +123,7 @@
   }
 
   /* Une date seule : « Octobre 2025 » ou « 15 août 2026 » */
-  function formaterDate(v, langue) {
-    var brut = String(v == null ? "" : v).trim();
-    var d = analyserDate(brut);
-    if (!d) return brut;                       /* « En cours », « Présent »… tels quels */
-    return d.precision === "jour"
-      ? d.jour + " " + moisTexte(d, langue).toLowerCase() + " " + d.annee
-      : moisTexte(d, langue) + " " + d.annee;
-  }
+  function formaterDate(v, langue) { return window.Sheets.formatDate(v, langue); }
 
   /* Période : début → fin, en évitant les répétitions inutiles.
      Aucun mot n'est ajouté si la donnée est absente. */
@@ -147,6 +140,7 @@
     var d1 = analyserDate(debut), d2 = analyserDate(fin);
     var b1 = String(debut == null ? "" : debut).trim();
     var b2 = String(fin == null ? "" : fin).trim();
+    if (/^(present|présent|en cours)$/i.test(b2)) return (b1 ? window.Sheets.formatDate(b1, langue) + " → " : "") + window.Sheets.formatDate(b2, langue);
 
     if (!d1 && !d2) {
       return b1 && b2 ? b1 + " → " + b2 : (b1 || b2);
@@ -235,29 +229,20 @@
   }
 
   /* ---------- Rendu ---------- */
-  function extUrl(u) {
-    var v = String(u || "").trim();
-    if (!v) return "";
-    if (/^https?:\/\//i.test(v)) return v;
-    if (v.charAt(0) === "/") return (window.SITE_ROOT || "") + v.replace(/^\//, "");
-    return "https://" + v;
-  }
-  function imgUrl(u) {
-    var v = String(u || "").trim();
-    if (!v) return "";
-    if (/^(https?:)?\/\//i.test(v)) return v;
-    return (window.SITE_ROOT || "") + v.replace(/^\/+/, "");
-  }
+  function extUrl(u) { return window.Sheets.safeExternalUrl(u); }
+  function imgUrl(u) { return window.Sheets.safeImageUrl(u); }
 
   function carte(e, langue) {
     var titre = choisir(e.titre, e.titre_en, langue);
     var desc = choisir(e.description, e.description_en, langue);
     var periode = formaterPeriode(e.date_obtention, e.date_fin, langue);
-    var badge = e.badge_image_url
-      ? '<img class="parc-badge" src="' + esc(imgUrl(e.badge_image_url)) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
+    var badgeImageSrc = imgUrl(e.badge_image_url);
+    var badge = badgeImageSrc
+      ? '<img class="parc-badge" src="' + esc(badgeImageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
-    var verif = e.verification_url
-      ? '<a class="link-arrow parc-verif" href="' + esc(extUrl(e.verification_url)) + '" target="_blank" rel="noopener" aria-label="' + esc(T("parc.aria.verifier", { t: titre })) + '">' + T("parc.verifier") +
+    var verificationUrl = extUrl(e.verification_url);
+    var verif = verificationUrl
+      ? '<a class="link-arrow parc-verif" href="' + esc(verificationUrl) + '" target="_blank" rel="noopener" aria-label="' + esc(T("parc.aria.verifier", { t: titre })) + '">' + T("parc.verifier") +
         '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
       : "";
 
