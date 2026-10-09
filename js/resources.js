@@ -204,15 +204,19 @@
     var badge = piluleBadge(p.badge);
     var type = etiquetteType(p.type);
     var pr = prixTexte(p.prix, p.devise);
-    var img = p.image_cover
-      ? '<img src="' + esc(imgUrl(p.image_cover)) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
+    var resourceImageSrc = imgUrl(p.image_cover);
+    var img = resourceImageSrc
+      ? '<img src="' + esc(resourceImageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
+    var mediaOpen = lien
+      ? "<a class=\"r-media\" href=\"" + esc(lien) + "\" target=\"_blank\" rel=\"noopener\" aria-label=\"" + esc(nom + " " + T("ress.externe")) + "\">"
+      : '<div class="r-media" aria-label="' + esc(nom) + '">';
+    var mediaClose = lien ? "</a>" : "</div>";
 
     return '<article class="card r-card reveal"' + (p.type ? ' data-ress-type="' + esc(p.type) + '"' : "") + ">" +
-      "<a class=\"r-media\" href=\"" + esc(lien || "#") + "\"" + (lien ? ' target="_blank" rel="noopener"' : "") +
-        ' aria-label="' + esc(nom) + (lien ? esc(T("ress.externe")) : "") + '">' +
+      mediaOpen +
         '<div class="r-media-inner">' + badge + couverture(nom) + img + '</div>' +
-      "</a>" +
+      mediaClose +
       '<div class="r-body">' +
         (type ? '<p class="r-type"><span>' + esc(type) + "</span></p>" : "") +
         "<h3>" + esc(nom) + "</h3>" +
