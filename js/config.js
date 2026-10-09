@@ -26,7 +26,7 @@ window.CONFIG = {
     timeline: 1732881613,      // onglet Timeline (journal d'activité)
     expertise: 686585981,    // onglet Expertise
     parcours: 1357681272,      // onglet Parcours (ex-Certifications)
-    temoignages: null          // onglet Témoignages — renseigner le GID après publication
+    temoignages: 1989663815   // onglet Témoignages
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
@@ -39,7 +39,7 @@ window.CONFIG = {
     timeline: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1732881613&single=true&output=csv",
     expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=686585981&single=true&output=csv",
     parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1357681272&single=true&output=csv",
-    temoignages: ""
+    temoignages: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1989663815&single=true&output=csv"
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement
