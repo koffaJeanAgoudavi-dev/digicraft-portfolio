@@ -17,27 +17,27 @@ window.CONFIG = {
   // COMMENT TROUVER UN GID : ouvrez le classeur → cliquez sur l'onglet
   // (Parametres, Projets, Articles, Ressources) → l'URL de votre navigateur
   // affiche ...#gid=XXXXXXX → copiez ce nombre ici.
-  // Le premier onglet (Parametres) vaut toujours 0.
+  // Les GID publiés peuvent changer après une nouvelle publication : mettez à jour cette table, puis les URLs ci-dessous.
   sheetGids: {
-    parametres: 45262670,    // onglet Parametres
-    projets: 690207518,      // onglet Projets
-    articles: 982421678,     // onglet Articles
-    ressources: 1306651993,  // onglet Ressources
-    timeline: 1733530302,      // onglet Timeline (journal d'activité)
-    expertise: 1879096907,    // onglet Expertise
-    parcours: 834951448       // onglet Parcours (ex-Certifications)
+    parametres: 2043920918,    // onglet Parametres
+    projets: 992675999,      // onglet Projets
+    articles: 353173161,     // onglet Articles
+    ressources: 775775749,  // onglet Ressources
+    timeline: 1732881613,      // onglet Timeline (journal d'activité)
+    expertise: 686585981,    // onglet Expertise
+    parcours: 1357681272       // onglet Parcours (ex-Certifications)
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
   // Utilisées en priorité — plus fiables que l'export généré.
   sheetUrls: {
-    parametres: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=45262670&single=true&output=csv",
+    parametres: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=2043920918&single=true&output=csv",
     projets: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=992675999&single=true&output=csv",
-    articles: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=982421678&single=true&output=csv",
-    ressources: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1306651993&single=true&output=csv",
-    timeline: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1733530302&single=true&output=csv",
-    expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1879096907&single=true&output=csv",
-    parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=834951448&single=true&output=csv"
+    articles: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=353173161&single=true&output=csv",
+    ressources: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=775775749&single=true&output=csv",
+    timeline: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1732881613&single=true&output=csv",
+    expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=686585981&single=true&output=csv",
+    parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1357681272&single=true&output=csv"
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement
