@@ -1959,3 +1959,13 @@ body.case-study-page{
 .gr-testimonial-meta{margin-top:auto;color:var(--ink-2);font-size:.82rem}
 .gr-testimonial-meta strong{display:block;color:var(--ink);font-size:.9rem}
 .gr-testimonial-source{font-size:.78rem;color:var(--gold-2);font-weight:600}
+
+/* ---------- Pré-rendu SEO (affiché uniquement sans JavaScript) ---------- */
+.prerender-content{display:block;margin-top:1.5rem}
+.prerender-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1rem}
+.prerender-card{padding:1.35rem}
+.prerender-card h3{margin:.25rem 0 .55rem}
+.prerender-card p{margin:0 0 .35rem}
+.prerender-card .prerender-meta{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-2)}
+.prerender-card a{color:var(--gold-2);font-weight:600}
+@media (min-width:720px){.prerender-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}

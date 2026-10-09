@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "python3 scripts/prerender.py"
+  }
+}
