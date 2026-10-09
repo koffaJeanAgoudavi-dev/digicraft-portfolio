@@ -604,4 +604,4 @@ Le site est bilingue **côté client** : pas de `/en/`, aucune URL supplémentai
 
 ## 13. Pages légales
 
-Les routes `/mentions-legales/` et `/confidentialite/` utilisent le template lavande/violet existant et restent disponibles en français et en anglais. Elles ne dépendent d’aucun contenu éditorial du Sheet. Les champs explicitement marqués `[À COMPLÉTER]` doivent être renseignés par le propriétaire du site avant une publication juridique définitive.
+Les routes `/mentions-legales/` et `/confidentialite/` utilisent le template lavande/violet existant et restent disponibles en français et en anglais. Elles ne dépendent d’aucun contenu éditorial du Sheet. Les champs légaux sont renseignés dans les pages dédiées et doivent être maintenus à jour par le propriétaire du site.
