@@ -80,7 +80,7 @@ TOUTES = ["index.html", "expertise/index.html", "projets/index.html", "projets/f
 r(TOUTES, r'(<a class="skip-link" href="#contenu">)([^<]+)(</a>)', "commun.skip")
 r(TOUTES, r'(<h4>)(Navigation)(</h4>)', "commun.footer.nav")
 r(TOUTES, r'(<h4>)(Me retrouver)(</h4>)', "commun.footer.find")
-r(TOUTES, r'(<small>)(Portfolio personnel · DIGICRAFT Labs)(</small>)', "commun.footer.sub")
+r(TOUTES, r'(<small>)(Automatisation IA · DIGICRAFT Labs)(</small>)', "commun.footer.sub")
 r(TOUTES, r'(<p>)(Je transforme les idées complexes en systèmes digitaux intelligents [^<]*)(</p>)',
   "commun.footer.tagline")
 r(TOUTES, r'(<a href="(?:\.\./)*articles/">)(Articles)(</a>)', "commun.footer.articles")

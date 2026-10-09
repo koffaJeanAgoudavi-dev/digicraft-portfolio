@@ -151,6 +151,24 @@
         if (lab && !(lab.textContent || "").trim()) a.hidden = true;
       });
 
+      /* Badge Google : affiché uniquement si les deux valeurs CMS existent. */
+      qsa("[data-gr-google-badge]").forEach(function (badge) {
+        var note = String(P.google_note || "").trim();
+        var avis = String(P.google_nb_avis || "").trim();
+        if (!note || !avis) { badge.hidden = true; return; }
+        var en = window.I18n && window.I18n.langue() === "en";
+        var noteEn = note.replace(",", ".");
+        var label = en ? noteEn + " on Google · " + avis + " reviews" : note + " sur Google · " + avis + " avis";
+        var href = window.Sheets.safeExternalUrl(P.url_google_business || "");
+        if (!href) { badge.hidden = true; return; }
+        badge.href = href;
+        badge.target = "_blank";
+        badge.rel = "noopener";
+        badge.setAttribute("aria-label", en ? "Google reviews: " + label : "Avis Google : " + label);
+        var copy = badge.querySelector("[data-gr-google-copy]");
+        if (copy) copy.textContent = label;
+        badge.hidden = false;
+      });
       /* Liens (normalisation : ajoute https:// si le protocole manque) */
       var linkMap = {
         "[data-p-linkedin]": normUrl(P.url_linkedin),

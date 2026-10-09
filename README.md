@@ -104,6 +104,19 @@ recopié dans les modules métier).
 | `parcours` | Parcours | `1357681272` |
 | `expertise` | Expertise | `686585981` |
 | `timeline` | ActiviteTimeline | `1732881613` |
+| `temoignages` | Témoignages | non renseigné |
+
+**Témoignages et badge Google :** l’onglet optionnel `Témoignages` doit contenir exactement
+les colonnes `id`, `nom`, `role`, `entreprise`, `texte`, `texte_en`, `source_url`,
+`featured`, `ordre`. Pour récupérer son GID : publiez l’onglet via **Fichier → Publier sur le web**,
+ouvrez l’onglet `Témoignages`, puis copiez le nombre situé après `gid=` dans l’URL générée.
+Placez ce nombre dans `js/config.js`, aux deux endroits `sheetGids.temoignages` et
+`sheetUrls.temoignages` (en remplaçant le GID dans l’URL CSV). Sans GID ou sans ligne
+`featured=TRUE`, la section n’apparaît pas.
+
+Dans l’onglet `Parametres`, ajoutez `google_note` (ex. `5,0`) et `google_nb_avis`
+(ex. `5`). Le badge reprend automatiquement `url_google_business`, s’affiche uniquement
+si les deux valeurs sont renseignées et n’ajoute aucun balisage de note schema.org.
 
 **Mise à jour simple :** dans Google Sheets, utilisez **Fichier → Publier sur le web**,
 ouvrez l’onglet concerné, copiez le nombre après `gid=` dans l’URL, puis mettez à jour

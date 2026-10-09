@@ -22,7 +22,7 @@ SOCLE_FR = {
     "dock.portfolio": "Portfolio", "dock.more": "Plus", "dock.nav": "Navigation",
     "dock.ressources": "Ressources", "dock.cookies": "Gérer mes cookies", "dock.close": "Fermer",
     "lang.label": "Langue du site",
-    "hero.portfolio": "Portfolio personnel", "hero.badge": "Fondateur",
+    "hero.portfolio": "Automatisation IA", "hero.badge": "Fondateur",
     "hero.contact": "Me contacter",
     "hero.stat.projets": "Projets", "hero.stat.workflows": "Workflows",
     "hero.stat.certifs": "Certifications",

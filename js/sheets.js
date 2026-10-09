@@ -111,8 +111,15 @@
     if (cacheOnglets[name]) return cacheOnglets[name];
 
     var useSheet = window.CONFIG.sheetId && !window.CONFIG.forceLocal;
+    var optionalEmpty = name === "temoignages" &&
+      !(window.CONFIG.sheetUrls && window.CONFIG.sheetUrls[name]) &&
+      !(window.CONFIG.sheetGids && window.CONFIG.sheetGids[name]);
     var promise;
-    if (useSheet) {
+    if (optionalEmpty) {
+      var absentes = [];
+      absentes._source = "google-sheets";
+      promise = Promise.resolve(absentes);
+    } else if (useSheet) {
       promise = fetchText(sheetUrl(name)).then(function (text) {
         var rows = rowsToObjects(parseCSV(text));
         if (!rows.length) {
