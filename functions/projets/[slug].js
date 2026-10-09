@@ -31,7 +31,7 @@
    Identique à js/config.js → sheetUrls.projets (source de vérité :
    config.js ; à garder synchronisée si le Sheet est republié). */
 const SHEET_PROJETS_CSV =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=690207518&single=true&output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=992675999&single=true&output=csv";
 
 const CACHE_TTL_SECONDS = 300;
 
@@ -191,9 +191,15 @@ async function reponse404(context) {
 
 async function servirFiche(context, projet, slugPropre) {
   const url = new URL(context.request.url);
-  let html = await recupererAssetHtml(context, "/projets/fiche");
-  if (html === null) html = await recupererAssetHtml(context, "/projets/fiche.html");
-  if (html === null) {
+  /* /projets/fiche peut être résolu par Pages vers le shell /projets/.
+     Le fichier .html est le template réel : vérifier son marqueur avant
+     toute injection pour ne jamais servir la liste comme fiche. */
+  let html = await recupererAssetHtml(context, "/projets/fiche.html");
+  if (!html || !html.includes("data-cs-dynamic")) {
+    const candidat = await recupererAssetHtml(context, "/projets/fiche");
+    if (candidat && candidat.includes("data-cs-dynamic")) html = candidat;
+  }
+  if (!html || !html.includes("data-cs-dynamic")) {
     /* Template introuvable (ne devrait jamais arriver) : 404 propre. */
     return reponse404(context);
   }
@@ -212,11 +218,11 @@ export async function onRequest(context) {
   const { request, env, params } = context;
   const url = new URL(request.url);
 
-  /* 1) Priorité absolue aux assets statiques : les anciennes fiches
-        projets (projets/<slug>/index.html) sont renvoyées telles
-        quelles, sans aucune modification. */
-  const asset = await env.ASSETS.fetch(request);
-  if (asset.status !== 404) return asset;
+  /* 1) Cette route est un catch-all. Cloudflare Pages peut répondre
+        200 avec le shell /projets/ pour un chemin inconnu : ce fallback
+        n'est pas un asset de projet et ne doit pas court-circuiter le
+        chargement du Sheet. Les anciennes fiches sont exclues via
+        _routes.json et restent servies directement par Pages. */
 
   /* 2) Normalisation : /projets/<slug> → 308 → /projets/<slug>/
         (même comportement que Pages pour les pages existantes).

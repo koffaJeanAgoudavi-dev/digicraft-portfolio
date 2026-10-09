@@ -87,14 +87,7 @@
     var m = (l || "fr") === "en" ? MOIS_EN[d.mois - 1] : MOIS_FR[d.mois - 1];
     return m.charAt(0).toUpperCase() + m.slice(1);
   }
-  function formaterDate(v, l) {
-    var brut = String(v == null ? "" : v).trim();
-    var d = analyserDate(brut);
-    if (!d) return brut;                        /* valeur illisible : telle quelle */
-    return d.precision === "jour"
-      ? d.jour + " " + moisTexte(d, l).toLowerCase() + " " + d.annee
-      : moisTexte(d, l) + " " + d.annee;
-  }
+  function formaterDate(v, langue) { return window.Sheets.formatDate(v, langue); }
 
   /* « 3 min » reste « 3 min » ; « 3 » devient « 3 min » ; vide → vide */
   function dureeTexte(v) {
@@ -104,20 +97,8 @@
     return s;
   }
 
-  function extUrl(u) {
-    var v = String(u || "").trim();
-    if (!v) return "";
-    if (/^https?:\/\//i.test(v)) return v;
-    if (/^\/\//.test(v)) return "https:" + v;
-    if (v.charAt(0) === "/") return (window.SITE_ROOT || "") + v.replace(/^\/+/, "");
-    return "https://" + v;
-  }
-  function imgUrl(u) {
-    var v = String(u || "").trim();
-    if (!v) return "";
-    if (/^(https?:)?\/\//i.test(v)) return v;
-    return (window.SITE_ROOT || "") + v.replace(/^\/+/, "");
-  }
+  function extUrl(u) { return window.Sheets.safeExternalUrl(u); }
+  function imgUrl(u) { return window.Sheets.safeImageUrl(u); }
 
   /* ---------- Données ---------- */
   function recuperer() {
@@ -200,10 +181,11 @@
     if (date) meta.push(date);
 
     var media = "";
-    if (a.image_url) {
+    var imageSrc = imgUrl(a.image_url);
+    if (imageSrc) {
       media = '<a class="a-media" href="' + esc(lien || "#") + '"' + (lien ? ' target="_blank" rel="noopener"' : "") +
         ' aria-label="' + esc(titre) + '">' +
-        '<img src="' + esc(imgUrl(a.image_url)) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()">' +
+        '<img src="' + esc(imageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()">' +
       '</a>';
     }
 

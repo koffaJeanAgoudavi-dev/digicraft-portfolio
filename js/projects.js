@@ -37,21 +37,11 @@
 
   /* Les URLs d'images peuvent venir du Sheet (http…) ou être relatives
      (assets/…) : dans ce cas on les préfixe du chemin racine du site. */
-  function imgUrl(u) {
-    if (!u) return "";
-    if (/^(https?:)?\/\//i.test(u)) return u;
-    return (window.SITE_ROOT || "") + u;
-  }
+  function imgUrl(u) { return window.Sheets.safeImageUrl(u); }
   /* URL externe : ajoute https:// si le protocole manque ; les liens
      internes (commençant par /) sont résolus via SITE_ROOT pour
      fonctionner à n'importe quelle profondeur de page. */
-  function extUrl(u) {
-    if (!u) return "#";
-    var v = String(u).trim();
-    if (/^https?:\/\//i.test(v)) return v;
-    if (v.charAt(0) === "/") return (window.SITE_ROOT || "") + v.replace(/^\//, "");
-    return "https://" + v;
-  }
+  function extUrl(u) { return window.Sheets.safeExternalUrl(u); }
 
   /* Libellé du bouton d'action directe : la valeur de la colonne
      type_lien (Bot, Demo, Jouer…). Les valeurs non-action (vides,
@@ -160,7 +150,7 @@
   /* Statut affiché sous la carte : `statut` puis `date` — uniquement
      les valeurs présentes (jamais de séparateur orphelin). */
   function ligneStatut(p) {
-    return [String((p && p.statut) || "").trim(), String((p && p.date) || "").trim()]
+    return [String((p && p.statut) || "").trim(), window.Sheets.formatDate((p && p.date) || "")]
       .filter(Boolean).join(" · ");
   }
 
@@ -225,8 +215,9 @@
 
     /* Visuel : image du Sheet si fournie, sinon visuel de remplacement
        (initiales réelles) — aucune image inventée. */
-    var img = projet.image_url
-      ? '<img src="' + imgUrl(projet.image_url) + '" alt="' + esc(txt(projet, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
+    var imageSrc = imgUrl(projet.image_url);
+    var img = imageSrc
+      ? '<img src="' + imageSrc + '" alt="' + esc(txt(projet, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : '<span class="p-ph" aria-hidden="true"><b>' + esc(initiales(txt(projet, "titre"))) + '</b><span>' + T("projets.visuel") + '</span></span>';
 
     var mediaInner = '<div class="p-media-inner">' + img + '</div>';

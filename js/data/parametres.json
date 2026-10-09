@@ -5,11 +5,11 @@
   },
   {
     "cle": "hero_role",
-    "valeur": "Fondateur & Lead Product · Architecte IA"
+    "valeur": "Automatisation IA pour indépendants et petites équipes"
   },
   {
     "cle": "hero_role_en",
-    "valeur": "Founder & Lead Product · AI Architect"
+    "valeur": "AI Automation for Freelancers and Small Teams"
   },
   {
     "cle": "hero_accroche",
@@ -21,11 +21,11 @@
   },
   {
     "cle": "hero_promesse",
-    "valeur": "Vous n'êtes pas ici par hasard. Vous êtes au bon endroit si vous en avez marre des tâches manuelles et que vous voulez un système qui travaille à votre place."
+    "valeur": "Je crée des automatisations, des agents IA et des outils sur mesure qui trient vos messages, préparent vos réponses et relancent vos clients. Vous retrouvez du temps pour votre activité."
   },
   {
     "cle": "hero_promesse_en",
-    "valeur": "You are not here by accident. You are in the right place if you are tired of manual tasks and want a system that works for you."
+    "valeur": "I build custom automations, AI agents, and tools that sort through your messages, prepare your replies, and follow up with your clients—so you have more time for your business."
   },
   {
     "cle": "marque_lab",

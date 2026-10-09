@@ -89,8 +89,26 @@ portfolio/
 
 ## 2. Connecter Google Sheets (CMS)
 
-✅ **Déjà fait** : le Sheet `Portfolio_CMS_DIGICRAFT` est connecté
-(`js/config.js` → `sheetId` + GID des 4 onglets).
+✅ **Déjà fait** : le Sheet `Portfolio_CMS_DIGICRAFT` est connecté.
+Les GID et les URLs CSV sont centralisés dans `js/config.js` (aucun GID ne doit être
+recopié dans les modules métier).
+
+### GID publiés actuels
+
+| Clé locale | Nom de l’onglet publié | GID |
+|---|---|---:|
+| `parametres` | Parametres | `2043920918` |
+| `projets` | Projets | `992675999` |
+| `articles` | Articles | `353173161` |
+| `ressources` | Ressources | `775775749` |
+| `parcours` | Parcours | `1357681272` |
+| `expertise` | Expertise | `686585981` |
+| `timeline` | ActiviteTimeline | `1732881613` |
+
+**Mise à jour simple :** dans Google Sheets, utilisez **Fichier → Publier sur le web**,
+ouvrez l’onglet concerné, copiez le nombre après `gid=` dans l’URL, puis mettez à jour
+la ligne correspondante dans `sheetGids` et l’URL CSV de `js/config.js`. Les noms d’onglets
+ne sont pas utilisables comme paramètre CSV public ; le GID reste donc la source technique.
 
 ### À corriger dans le Sheet (liens et visuels)
 
@@ -586,4 +604,4 @@ Le site est bilingue **côté client** : pas de `/en/`, aucune URL supplémentai
 
 ## 13. Pages légales
 
-Les routes `/mentions-legales/` et `/confidentialite/` utilisent le template lavande/violet existant et restent disponibles en français et en anglais. Elles ne dépendent d’aucun contenu éditorial du Sheet. Les champs explicitement marqués `[À COMPLÉTER]` doivent être renseignés par le propriétaire du site avant une publication juridique définitive.
+Les routes `/mentions-legales/` et `/confidentialite/` utilisent le template lavande/violet existant et restent disponibles en français et en anglais. Elles ne dépendent d’aucun contenu éditorial du Sheet. Les champs légaux sont renseignés dans les pages dédiées et doivent être maintenus à jour par le propriétaire du site.

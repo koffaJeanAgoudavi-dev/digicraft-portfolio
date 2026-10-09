@@ -89,16 +89,7 @@
   }
 
   /* Affichage lisible, sans invention : « 15 septembre 2026 » / « Septembre 2026 » */
-  function formaterDate(v, langue) {
-    var d = (v && v.ts !== undefined) ? v : analyserDate(v);
-    var brut = String(v && v.brut !== undefined ? v.brut : v == null ? "" : v).trim();
-    if (!d) return brut;                       /* illisible → tel quel */
-    var mois = (langue || "fr") === "en" ? MOIS_EN[d.mois - 1] : MOIS_FR[d.mois - 1];
-    if (d.precision === "mois") {
-      return mois.charAt(0).toUpperCase() + mois.slice(1) + " " + d.annee;
-    }
-    return d.jour + " " + mois + " " + d.annee;
-  }
+  function formaterDate(v, langue) { return window.Sheets.formatDate(v, langue); }
 
   /* ---------- 2) DONNÉES ---------- */
   function recuperer() {
@@ -158,18 +149,8 @@
   }
 
   /* ---------- 3) RENDU ---------- */
-  function imgUrl(u) {
-    if (!u) return "";
-    if (/^(https?:)?\/\//i.test(u)) return u;
-    return (window.SITE_ROOT || "") + u;
-  }
-  function extUrl(u) {
-    var v = String(u || "").trim();
-    if (!v) return "";
-    if (/^https?:\/\//i.test(v)) return v;
-    if (v.charAt(0) === "/") return (window.SITE_ROOT || "") + v.replace(/^\//, "");
-    return "https://" + v;
-  }
+  function imgUrl(u) { return window.Sheets.safeImageUrl(u); }
+  function extUrl(u) { return window.Sheets.safeExternalUrl(u); }
 
   function item(e, index, langue) {
     var titre = choisir(e.titre, e.titre_en, langue);
@@ -181,13 +162,15 @@
       (e.type ? '<span class="tl-type">' + esc(e.type) + '</span>' : "") +
     '</div>';
 
-    var lien = e.lien_optionnel
-      ? '<a class="link-arrow tl-link" href="' + esc(extUrl(e.lien_optionnel)) + '" target="_blank" rel="noopener" aria-label="' + esc(T("actv.aria.voir", { t: titre })) + '">' + T("actv.voir") +
+    var linkUrl = extUrl(e.lien_optionnel);
+    var lien = linkUrl
+      ? '<a class="link-arrow tl-link" href="' + esc(linkUrl) + '" target="_blank" rel="noopener" aria-label="' + esc(T("actv.aria.voir", { t: titre })) + '">' + T("actv.voir") +
         '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
       : "";
     var statut = e.statut ? '<span class="tl-statut">' + esc(e.statut) + '</span>' : "";
-    var img = e.image_url
-      ? '<img class="tl-img" src="' + esc(imgUrl(e.image_url)) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
+    var activityImageSrc = imgUrl(e.image_url);
+    var img = activityImageSrc
+      ? '<img class="tl-img" src="' + esc(activityImageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
 
     return '<li class="tl-item' + (index === 0 ? " is-first" : "") + '">' +

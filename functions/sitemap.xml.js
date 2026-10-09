@@ -1,12 +1,12 @@
 const ORIGIN = "https://digicraft-labs-drf.pages.dev";
-const PROJECTS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=690207518&single=true&output=csv";
+const PROJECTS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=992675999&single=true&output=csv";
 const STATIC_ROUTES = [
   ["/", "weekly", "1.0"], ["/projets/", "weekly", "0.9"], ["/expertise/", "monthly", "0.8"],
   ["/activite/", "weekly", "0.8"], ["/articles/", "weekly", "0.8"], ["/boutique/", "monthly", "0.7"],
   ["/parcours/", "monthly", "0.7"], ["/a-propos/", "monthly", "0.7"], ["/contact/", "monthly", "0.7"],
   ["/mentions-legales/", "yearly", "0.4"], ["/confidentialite/", "yearly", "0.4"],
   ["/projets/smartreply-agent/", "monthly", "0.8"], ["/projets/scriboai-bot/", "monthly", "0.8"],
-  ["/projets/mysterybot/", "monthly", "0.8"]
+  ["/projets/mysterybot/", "monthly", "0.8"], ["/projets/signaldesk/", "monthly", "0.8"]
 ];
 
 function csvRows(text) {
