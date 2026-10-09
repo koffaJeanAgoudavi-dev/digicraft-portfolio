@@ -1969,3 +1969,6 @@ body.case-study-page{
 .prerender-card .prerender-meta{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-2)}
 .prerender-card a{color:var(--gold-2);font-weight:600}
 @media (min-width:720px){.prerender-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Disponibilité du dock : contraste AA sur le fond lavande, sans modifier le gabarit. */
+.dock-avail{color:var(--ink-2)}
