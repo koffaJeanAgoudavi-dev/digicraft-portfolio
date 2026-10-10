@@ -15,7 +15,7 @@ window.CONFIG = {
 
   // GID des onglets du classeur Portfolio_CMS_DIGICRAFT
   // COMMENT TROUVER UN GID : ouvrez le classeur → cliquez sur l'onglet
-  // (Parametres, Projets, Articles, Ressources) → l'URL de votre navigateur
+  // (Parametres, Projets, Articles, Ressources, Outils) → l'URL de votre navigateur
   // affiche ...#gid=XXXXXXX → copiez ce nombre ici.
   // Les GID publiés peuvent changer après une nouvelle publication : mettez à jour cette table, puis les URLs ci-dessous.
   sheetGids: {
@@ -26,7 +26,8 @@ window.CONFIG = {
     timeline: 1732881613,      // onglet Timeline (journal d'activité)
     expertise: 686585981,    // onglet Expertise
     parcours: 1357681272,      // onglet Parcours (ex-Certifications)
-    temoignages: 1989663815   // onglet Témoignages
+    temoignages: 1989663815,  // onglet Témoignages
+    outils: 521002585         // onglet Outils
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
@@ -39,7 +40,8 @@ window.CONFIG = {
     timeline: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1732881613&single=true&output=csv",
     expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=686585981&single=true&output=csv",
     parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1357681272&single=true&output=csv",
-    temoignages: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1989663815&single=true&output=csv"
+    temoignages: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1989663815&single=true&output=csv",
+    outils: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=521002585&single=true&output=csv"
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement
@@ -54,7 +56,8 @@ window.CONFIG = {
     timeline: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"],
     expertise: ["titre", "description_courte", "description_longue", "icone", "categorie", "exemples_projets", "ordre"],
     parcours: ["type", "titre", "organisation", "date_obtention", "date_fin", "description", "verification_url", "ordre"],
-    temoignages: ["id", "nom", "role", "entreprise", "texte", "texte_en", "source_url", "featured", "ordre"]
+    temoignages: ["id", "nom", "role", "entreprise", "texte", "texte_en", "source_url", "featured", "ordre"],
+    outils: ["id", "nom", "logo", "categorie", "categorie_en", "featured", "ordre"]
   },
 
   // Données par défaut (utilisées seulement si le Sheet ET le JSON local

@@ -1972,3 +1972,19 @@ body.case-study-page{
 
 /* Disponibilité du dock : contraste AA sur le fond lavande, sans modifier le gabarit. */
 .dock-avail{color:var(--ink-2)}
+
+/* ---------- Boîte à outils CMS de la page À propos ---------- */
+.outils-groups{display:grid;gap:1.25rem;margin-top:1.4rem}
+.outils-group{padding:1rem 0 0;border-top:1px solid var(--lav-line)}
+.outils-category{margin:0 0 .7rem;color:var(--lav-dark);font-size:.77rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+.outils-list{display:flex;flex-wrap:wrap;gap:.55rem;list-style:none;margin:0;padding:0}
+.outils-pill{display:inline-flex;align-items:center;gap:.55rem;min-height:42px;padding:.45rem .78rem;border:1px solid var(--lav-line);border-radius:999px;background:rgba(255,255,255,.78);color:var(--lav-text);font-size:.86rem;font-weight:650;box-shadow:0 6px 18px rgba(76,43,159,.045)}
+.outils-logo-wrap{display:grid;place-items:center;width:24px;height:24px;flex:none;border-radius:7px;background:var(--lav-soft);overflow:hidden}
+.outils-logo{display:block;width:22px;height:22px;object-fit:contain}
+.outils-empty{margin:0;color:var(--lav-muted)}
+@media (max-width:719px){
+  .outils-groups{gap:1rem}
+  .outils-group{padding-top:.85rem}
+  .outils-list{gap:.45rem}
+  .outils-pill{min-height:40px;padding:.4rem .65rem;font-size:.8rem}
+}
