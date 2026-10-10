@@ -63,8 +63,8 @@
         var name = text(row, "nom");
         var url = logoUrl(row);
         var image = url
-          ? '<img class="outils-logo" src="' + esc(url) + '" alt="" width="22" height="22" loading="lazy" decoding="async" data-outils-logo>'
-          : '<img class="outils-logo" src="' + esc(genericLogo()) + '" alt="" width="22" height="22" loading="lazy" decoding="async">';
+          ? '<img class="outils-logo" src="' + esc(url) + '" alt="' + esc(name) + '" width="22" height="22" loading="lazy" decoding="async" data-outils-logo>'
+          : '<img class="outils-logo" src="' + esc(genericLogo()) + '" alt="' + esc(name) + '" width="22" height="22" loading="lazy" decoding="async">';
         return '<li class="outils-pill"><span class="outils-logo-wrap">' + image + '</span><span>' + esc(name) + '</span></li>';
       }).join("");
       return '<div class="outils-group"><h3 class="outils-category">' + esc(group.cat.label) + '</h3><ul class="outils-list">' + items + '</ul></div>';
