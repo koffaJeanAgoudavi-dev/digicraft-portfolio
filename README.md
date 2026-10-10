@@ -104,7 +104,8 @@ recopié dans les modules métier).
 | `parcours` | Parcours | `1357681272` |
 | `expertise` | Expertise | `686585981` |
 | `timeline` | ActiviteTimeline | `1732881613` |
-| `temoignages` | Témoignages | non renseigné |
+| `temoignages` | Témoignages | `1989663815` |
+| `outils` | Outils | non renseigné |
 
 **Témoignages et badge Google :** l’onglet optionnel `Témoignages` doit contenir exactement
 les colonnes `id`, `nom`, `role`, `entreprise`, `texte`, `texte_en`, `source_url`,
@@ -113,6 +114,13 @@ ouvrez l’onglet `Témoignages`, puis copiez le nombre situé après `gid=` dan
 Placez ce nombre dans `js/config.js`, aux deux endroits `sheetGids.temoignages` et
 `sheetUrls.temoignages` (en remplaçant le GID dans l’URL CSV). Sans GID ou sans ligne
 `featured=TRUE`, la section n’apparaît pas.
+
+**Boîte à outils :** l’onglet optionnel `Outils` doit contenir exactement les colonnes
+`id`, `nom`, `logo`, `categorie`, `categorie_en`, `featured`, `ordre`. Le GID se renseigne
+au même endroit dans `js/config.js` : `window.CONFIG.sheetGids.outils` (ligne de configuration
+située dans le bloc `sheetGids`). Si l’onglet n’est pas encore publié, laissez ce champ vide :
+`js/data/outils.json` fournit automatiquement la liste de secours. Pour activer le Sheet,
+remplacez aussi `sheetUrls.outils` par l’URL CSV publiée correspondante.
 
 Dans l’onglet `Parametres`, ajoutez `google_note` (ex. `5,0`) et `google_nb_avis`
 (ex. `5`). Le badge reprend automatiquement `url_google_business`, s’affiche uniquement

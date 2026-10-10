@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/style.css?v=20260930a">
+  <link rel="stylesheet" href="../css/style.css?v=20261010a">
 
   <meta name="author" content="Koffa Jean Agoudavi">
   <meta property="og:image:width" content="1730">
@@ -178,24 +178,49 @@
             <p data-i18n="apropos.s4.p2a">Chaque système doit être : <strong data-i18n="apropos.s4.p2b">simple</strong><span data-i18n="apropos.s4.p2c"> à comprendre, </span><strong data-i18n="apropos.s4.p2d">utile</strong><span data-i18n="apropos.s4.p2e"> au quotidien et </span><strong data-i18n="apropos.s4.p2f">évolutif</strong><span data-i18n="apropos.s4.p2g"> pour grandir avec le besoin.</span></p>
           </div>
 
-          <!-- Technologies / outils -->
+          <!-- Technologies / outils — source Google Sheets, secours local -->
           <div class="ap-row reveal">
             <span class="ap-num" data-i18n="apropos.s5.num">05 — Technologies &amp; outils</span>
             <h2 data-i18n="apropos.s5.titre">Ma boîte à outils</h2>
-            <ul class="tech-tags">
-              <li data-i18n="apropos.s5.tag1">Make</li>
-              <li data-i18n="apropos.s5.tag2">Groq</li>
-              <li data-i18n="apropos.s5.tag3">Gemini</li>
-              <li data-i18n="apropos.s5.tag4">LLM / IA</li>
-              <li data-i18n="apropos.s5.tag5">Telegram Bots</li>
-              <li data-i18n="apropos.s5.tag6">Google AI Studio</li>
-              <li data-i18n="apropos.s5.tag7">Webhooks</li>
-              <li data-i18n="apropos.s5.tag8">APIs</li>
-              <li data-i18n="apropos.s5.tag9">OCR</li>
-              <li data-i18n="apropos.s5.tag10">No-Code</li>
-              <li data-i18n="apropos.s5.tag11">HTML / CSS / JS</li>
-              <li data-i18n="apropos.s5.tag12">Cloudflare Pages</li>
-            </ul>
+            <div class="outils-groups" data-outils-list aria-live="polite">
+              <div class="outils-group">
+                <h3 class="outils-category">IA et modèles</h3>
+                <ul class="outils-list">
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/claude.svg" alt="Claude" width="22" height="22" loading="lazy" decoding="async"></span><span>Claude</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/google.svg" alt="Gemini" width="22" height="22" loading="lazy" decoding="async"></span><span>Gemini</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/generic.svg" alt="Groq" width="22" height="22" loading="lazy" decoding="async"></span><span>Groq</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/google.svg" alt="Google AI Studio" width="22" height="22" loading="lazy" decoding="async"></span><span>Google AI Studio</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/generic.svg" alt="Manus AI" width="22" height="22" loading="lazy" decoding="async"></span><span>Manus AI</span></li>
+                </ul>
+              </div>
+              <div class="outils-group">
+                <h3 class="outils-category">Automatisation et intégration</h3>
+                <ul class="outils-list">
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/make.svg" alt="Make" width="22" height="22" loading="lazy" decoding="async"></span><span>Make</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/generic.svg" alt="Webhooks et API" width="22" height="22" loading="lazy" decoding="async"></span><span>Webhooks et API</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/telegram.svg" alt="Telegram" width="22" height="22" loading="lazy" decoding="async"></span><span>Telegram</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/google.svg" alt="Gmail" width="22" height="22" loading="lazy" decoding="async"></span><span>Gmail</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/google.svg" alt="Google Sheets" width="22" height="22" loading="lazy" decoding="async"></span><span>Google Sheets</span></li>
+                </ul>
+              </div>
+              <div class="outils-group">
+                <h3 class="outils-category">Développement et hébergement</h3>
+                <ul class="outils-list">
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/generic.svg" alt="Python" width="22" height="22" loading="lazy" decoding="async"></span><span>Python</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/generic.svg" alt="FastAPI" width="22" height="22" loading="lazy" decoding="async"></span><span>FastAPI</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/github.svg" alt="GitHub" width="22" height="22" loading="lazy" decoding="async"></span><span>GitHub</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/cloudflare.svg" alt="Cloudflare" width="22" height="22" loading="lazy" decoding="async"></span><span>Cloudflare</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/neon.svg" alt="Neon DB" width="22" height="22" loading="lazy" decoding="async"></span><span>Neon DB</span></li>
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/generic.svg" alt="Render" width="22" height="22" loading="lazy" decoding="async"></span><span>Render</span></li>
+                </ul>
+              </div>
+              <div class="outils-group">
+                <h3 class="outils-category">Design</h3>
+                <ul class="outils-list">
+                  <li class="outils-pill"><span class="outils-logo-wrap"><img class="outils-logo" src="../assets/brands/outils/generic.svg" alt="Canva" width="22" height="22" loading="lazy" decoding="async"></span><span>Canva</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
 
           <!-- Parcours / expériences -->
@@ -288,14 +313,15 @@
   </footer>
 
   <script>window.SITE_ROOT = "../";</script>
-  <script src="../js/config.js?v=20260927b"></script>
+  <script src="../js/config.js?v=20261010a"></script>
   <script src="../js/consent.js?v=20260927b"></script>
   <script src="../js/analytics.js?v=20260927b"></script>
-  <script src="../js/sheets.js?v=20260927b"></script>
+  <script src="../js/sheets.js?v=20261010a"></script>
   <script src="../js/projects.js?v=20260927b"></script>
   <script src="../js/articles.js?v=20260927b"></script>
   <script src="../js/resources.js?v=20260927b"></script>
-  <script src="../js/i18n.js?v=20260927b"></script>
+  <script src="../js/outils.js?v=20261010a"></script>
+  <script src="../js/i18n.js?v=20261010a"></script>
   <script src="../js/main.js?v=20260927b"></script>
   <script src="../js/dock.js?v=20260927b"></script>
   <script>

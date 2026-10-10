@@ -1,0 +1,19 @@
+[
+  {"id":"OUT-01","nom":"Claude","logo":"assets/brands/outils/claude.svg","categorie":"IA et modèles","categorie_en":"AI & models","featured":"TRUE","ordre":"1"},
+  {"id":"OUT-02","nom":"Gemini","logo":"assets/brands/outils/google.svg","categorie":"IA et modèles","categorie_en":"AI & models","featured":"TRUE","ordre":"2"},
+  {"id":"OUT-03","nom":"Groq","logo":"assets/brands/outils/generic.svg","categorie":"IA et modèles","categorie_en":"AI & models","featured":"TRUE","ordre":"3"},
+  {"id":"OUT-04","nom":"Google AI Studio","logo":"assets/brands/outils/google.svg","categorie":"IA et modèles","categorie_en":"AI & models","featured":"TRUE","ordre":"4"},
+  {"id":"OUT-05","nom":"Manus AI","logo":"assets/brands/outils/generic.svg","categorie":"IA et modèles","categorie_en":"AI & models","featured":"TRUE","ordre":"5"},
+  {"id":"OUT-06","nom":"Make","logo":"assets/brands/outils/make.svg","categorie":"Automatisation et intégration","categorie_en":"Automation & integration","featured":"TRUE","ordre":"6"},
+  {"id":"OUT-07","nom":"Webhooks et API","logo":"assets/brands/outils/generic.svg","categorie":"Automatisation et intégration","categorie_en":"Automation & integration","featured":"TRUE","ordre":"7"},
+  {"id":"OUT-08","nom":"Telegram","logo":"assets/brands/outils/telegram.svg","categorie":"Automatisation et intégration","categorie_en":"Automation & integration","featured":"TRUE","ordre":"8"},
+  {"id":"OUT-09","nom":"Gmail","logo":"assets/brands/outils/google.svg","categorie":"Automatisation et intégration","categorie_en":"Automation & integration","featured":"TRUE","ordre":"9"},
+  {"id":"OUT-10","nom":"Google Sheets","logo":"assets/brands/outils/google.svg","categorie":"Automatisation et intégration","categorie_en":"Automation & integration","featured":"TRUE","ordre":"10"},
+  {"id":"OUT-11","nom":"Python","logo":"assets/brands/outils/generic.svg","categorie":"Développement et hébergement","categorie_en":"Development & hosting","featured":"TRUE","ordre":"11"},
+  {"id":"OUT-12","nom":"FastAPI","logo":"assets/brands/outils/generic.svg","categorie":"Développement et hébergement","categorie_en":"Development & hosting","featured":"TRUE","ordre":"12"},
+  {"id":"OUT-13","nom":"GitHub","logo":"assets/brands/outils/github.svg","categorie":"Développement et hébergement","categorie_en":"Development & hosting","featured":"TRUE","ordre":"13"},
+  {"id":"OUT-14","nom":"Cloudflare","logo":"assets/brands/outils/cloudflare.svg","categorie":"Développement et hébergement","categorie_en":"Development & hosting","featured":"TRUE","ordre":"14"},
+  {"id":"OUT-15","nom":"Neon DB","logo":"assets/brands/outils/neon.svg","categorie":"Développement et hébergement","categorie_en":"Development & hosting","featured":"TRUE","ordre":"15"},
+  {"id":"OUT-16","nom":"Render","logo":"assets/brands/outils/generic.svg","categorie":"Développement et hébergement","categorie_en":"Development & hosting","featured":"TRUE","ordre":"16"},
+  {"id":"OUT-17","nom":"Canva","logo":"assets/brands/outils/generic.svg","categorie":"Design","categorie_en":"Design","featured":"TRUE","ordre":"17"}
+]

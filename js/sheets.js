@@ -111,11 +111,16 @@
     if (cacheOnglets[name]) return cacheOnglets[name];
 
     var useSheet = window.CONFIG.sheetId && !window.CONFIG.forceLocal;
-    var optionalEmpty = name === "temoignages" &&
+    var optionalEmpty = (name === "temoignages" || name === "outils") &&
       !(window.CONFIG.sheetUrls && window.CONFIG.sheetUrls[name]) &&
       !(window.CONFIG.sheetGids && window.CONFIG.sheetGids[name]);
     var promise;
-    if (optionalEmpty) {
+    if (optionalEmpty && name === "outils") {
+      promise = loadLocal(name).then(function (rows) {
+        rows._source = "local";
+        return rows;
+      });
+    } else if (optionalEmpty) {
       var absentes = [];
       absentes._source = "google-sheets";
       promise = Promise.resolve(absentes);

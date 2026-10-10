@@ -270,6 +270,7 @@
   "legal.privacy.title": "Politique de confidentialité",
   "legal.privacy.update.body": "Cette politique pourra être mise à jour si les services utilisés, les fonctionnalités du site ou les pratiques de conservation évoluent.",
   "legal.privacy.update.title": "Mise à jour",
+  "outils.vide": "Aucun outil à afficher.",
   "parc.accueil.vide.desc": "Les formations, expériences et certifications marquées featured apparaîtront ici.",
   "parc.accueil.vide.hint": "Marquez les entrées à afficher sur l’accueil avec featured=True.",
   "parc.accueil.vide.titre": "Aucun élément mis en avant",

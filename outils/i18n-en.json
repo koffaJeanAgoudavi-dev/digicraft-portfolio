@@ -270,6 +270,7 @@
   "legal.privacy.title": "Privacy policy",
   "legal.privacy.update.body": "This policy may be updated if the services used, website features or retention practices change.",
   "legal.privacy.update.title": "Updates",
+  "outils.vide": "No tools to display.",
   "parc.accueil.vide.desc": "Education, experience and certifications marked featured will appear here.",
   "parc.accueil.vide.hint": "Mark the entries to show on the home page with featured=True.",
   "parc.accueil.vide.titre": "No featured journey item",
