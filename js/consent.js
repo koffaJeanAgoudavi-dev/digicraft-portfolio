@@ -74,7 +74,7 @@
 
   /* Libellés traduits (js/i18n.js) — repli sur le texte passé en secours. */
   function T(cle, secours) {
-    if (window.I18n && window.I18n.t) return window.I18n.t(cle);
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, null, secours);
     return secours !== undefined ? secours : cle;
   }
 

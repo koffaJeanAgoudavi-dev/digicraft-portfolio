@@ -225,6 +225,8 @@
   "fiche.wf.sheets.sub": "Données structurées",
   "fiche.wf.telegram.sub": "Validation & notifications",
   "fiche.wf.titre": "Le workflow",
+  "footer.legal": "Mentions légales",
+  "footer.privacy": "Confidentialité",
   "hero.portfolio": "Automatisation IA",
   "legal.mentions.address.body": "Lomé, Togo. Contact : contact.agoudavi@gmail.com.",
   "legal.mentions.address.title": "Adresse de l’éditeur",
@@ -280,6 +282,7 @@
   "projets.filtre.tous": "Tous",
   "projets.lead": "Des systèmes, des automatisations et des expériences construits autour de l'IA et du digital. Chaque projet part d'un problème concret et aboutit à un système fonctionnel.",
   "projets.titre": "Mes réalisations",
+  "seo.description": "Étude de cas d'un projet d'automatisation ou d'agent IA conçu par Koffa Jean Agoudavi avec DIGICRAFT Labs.",
   "xp.eyebrow": "Expertise",
   "xp.lead": "Je transforme vos processus complexes en systèmes simples, automatisés et prêts à l'emploi.",
   "xp.titre": "Expertise"

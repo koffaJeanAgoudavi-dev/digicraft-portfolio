@@ -8,7 +8,7 @@
 
   /* Libellés d'interface traduits (js/i18n.js) — repli sur le texte fourni. */
   function T(cle, vars, secours) {
-    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars);
+    if (window.I18n && window.I18n.t) return window.I18n.t(cle, vars, secours);
     return secours !== undefined ? secours : cle;
   }
 
