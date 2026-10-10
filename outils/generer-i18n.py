@@ -19,7 +19,7 @@ SOCLE_FR = {
     "nav.accueil": "Accueil", "nav.expertise": "Expertise", "nav.realisations": "Réalisations",
     "nav.activite": "Activité", "nav.parcours": "Parcours", "nav.apropos": "À propos",
     "nav.contact": "Contact",
-    "dock.portfolio": "Portfolio", "dock.more": "Plus", "dock.nav": "Navigation",
+    "dock.portfolio": "DIGICRAFT", "dock.more": "Plus", "dock.nav": "Navigation",
     "dock.ressources": "Ressources", "dock.cookies": "Gérer mes cookies", "dock.close": "Fermer",
     "lang.label": "Langue du site",
     "hero.portfolio": "Automatisation IA", "hero.badge": "Fondateur",
@@ -31,10 +31,10 @@ SOCLE_EN = {
     "nav.accueil": "Home", "nav.expertise": "Expertise", "nav.realisations": "Work",
     "nav.activite": "Activity", "nav.parcours": "Journey", "nav.apropos": "About",
     "nav.contact": "Contact",
-    "dock.portfolio": "Portfolio", "dock.more": "More", "dock.nav": "Navigation",
+    "dock.portfolio": "DIGICRAFT", "dock.more": "More", "dock.nav": "Navigation",
     "dock.ressources": "Resources", "dock.cookies": "Manage cookies", "dock.close": "Close",
     "lang.label": "Site language",
-    "hero.portfolio": "Personal portfolio", "hero.badge": "Founder",
+    "hero.portfolio": "AI Automation", "hero.badge": "Founder",
     "hero.contact": "Get in touch",
     "hero.stat.projets": "Projects", "hero.stat.workflows": "Workflows",
     "hero.stat.certifs": "Certifications",
@@ -117,10 +117,10 @@ contenu = '''/* ============================================================
   }
 
   /* Libellé traduit. `vars` remplit les {jetons} : t("art.aria.lire", {t: "…", p: "…"}) */
-  function t(cle, vars) {
+  function t(cle, vars, secours) {
     var v = DICT[langue()][cle];
     if (v === undefined) v = DICT.fr[cle];
-    if (v === undefined) return cle;
+    if (v === undefined) return secours !== undefined ? secours : "Texte indisponible";
     if (vars) {
       v = String(v).replace(/\\{(\\w+)\\}/g, function (m, nom) {
         return vars[nom] === undefined ? m : vars[nom];
@@ -149,11 +149,11 @@ contenu = '''/* ============================================================
     function chaque(sel, fn) {
       Array.prototype.forEach.call(document.querySelectorAll(sel), fn);
     }
-    chaque("[data-i18n]", function (el) { el.textContent = t(el.getAttribute("data-i18n")); });
-    chaque("[data-i18n-aria]", function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria"))); });
-    chaque("[data-i18n-title]", function (el) { el.setAttribute("title", t(el.getAttribute("data-i18n-title"))); });
-    chaque("[data-i18n-placeholder]", function (el) { el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder"))); });
-    chaque("[data-i18n-content]", function (el) { el.setAttribute("content", t(el.getAttribute("data-i18n-content"))); });
+    chaque("[data-i18n]", function (el) { var k = el.getAttribute("data-i18n"); var v = t(k); if (v !== "Texte indisponible") el.textContent = v; });
+    chaque("[data-i18n-aria]", function (el) { var k = el.getAttribute("data-i18n-aria"); var v = t(k); if (v !== "Texte indisponible") el.setAttribute("aria-label", v); });
+    chaque("[data-i18n-title]", function (el) { var k = el.getAttribute("data-i18n-title"); var v = t(k); if (v !== "Texte indisponible") el.setAttribute("title", v); });
+    chaque("[data-i18n-placeholder]", function (el) { var k = el.getAttribute("data-i18n-placeholder"); var v = t(k); if (v !== "Texte indisponible") el.setAttribute("placeholder", v); });
+    chaque("[data-i18n-content]", function (el) { var k = el.getAttribute("data-i18n-content"); var v = t(k); if (v !== "Texte indisponible") el.setAttribute("content", v); });
     /* Une page peut porter son titre traduit dans <title data-i18n="…"> */
     chaque("[data-lang]", function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === l));

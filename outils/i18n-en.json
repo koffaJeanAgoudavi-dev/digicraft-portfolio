@@ -225,6 +225,8 @@
   "fiche.wf.sheets.sub": "Structured data",
   "fiche.wf.telegram.sub": "Validation & notifications",
   "fiche.wf.titre": "The workflow",
+  "footer.legal": "Legal notice",
+  "footer.privacy": "Privacy policy",
   "hero.portfolio": "AI Automation",
   "legal.mentions.address.body": "Lomé, Togo. Contact: contact.agoudavi@gmail.com.",
   "legal.mentions.address.title": "Publisher address",
@@ -280,6 +282,7 @@
   "projets.filtre.tous": "All",
   "projets.lead": "Systems, automations and experiments built around AI and digital. Every project starts from a concrete problem and ends in a working system.",
   "projets.titre": "My work",
+  "seo.description": "Case study of an automation or AI agent project designed by Koffa Jean Agoudavi with DIGICRAFT Labs.",
   "xp.eyebrow": "Expertise",
   "xp.lead": "I transform your complex processes into simple, automated, ready-to-use systems.",
   "xp.titre": "Expertise"

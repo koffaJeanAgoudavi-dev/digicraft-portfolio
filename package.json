@@ -1,6 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "build": "python3 scripts/prerender.py"
+    "build": "python3 outils/generer-i18n.py && python3 outils/verifier-i18n.py && python3 scripts/prerender.py"
   }
 }
