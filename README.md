@@ -244,6 +244,46 @@ Make et Telegram. L'URL Make n'est jamais envoyée au navigateur.
 
 ---
 
+## 5 bis. Pré-rendu HTML manuel — Cloudflare Pages + Make
+
+Le script `scripts/prerender.py` génère, avant publication, un bloc HTML à partir des
+CSV publiés du Sheet pour l’accueil, l’expertise, les projets, l’activité, les articles,
+le parcours et la boutique. Le JavaScript existant reste chargé et rafraîchit ensuite les
+mêmes conteneurs : le pré-rendu n’est pas une nouvelle source de vérité.
+
+Le build est **bloquant** : si un CSV est injoignable, si une colonne requise manque,
+si un onglet est vide ou si les paramètres obligatoires du hero manquent, la commande
+échoue. Cloudflare ne publie alors pas ce build : la version actuellement en ligne reste
+active. Les écritures HTML sont préparées après validation des sources.
+
+### Configuration Cloudflare Pages (à faire une seule fois)
+
+1. Ouvrir **Cloudflare → Workers & Pages → votre projet → Settings → Builds & deployments**.
+2. Dans **Build configurations**, définir le **Build command** sur `python3 scripts/prerender.py`
+   (ou `npm run build`) et le **Build output directory** sur `.`. Ne pas utiliser une
+   commande qui supprime `_headers`, `_redirects`, `_routes.json` ou `functions/`.
+3. Laisser la branche de production sur `main`, enregistrer, puis lancer un déploiement
+   manuel pour vérifier les logs `[prerender] OK`.
+4. Le script utilise les URLs CSV et les GID de `js/config.js`. Si un GID change, le
+   modifier dans ce fichier et committer avant de relancer un déploiement manuel.
+
+### Republier depuis un téléphone via Make, sans déclenchement automatique du Sheet
+
+1. Dans Cloudflare Pages, ouvrir **Settings → Builds & deployments → Deploy hooks → Add deploy hook**.
+2. Nommer le hook `republier-digicraft`, choisir la branche `main`, puis copier l’URL
+   secrète générée. Ne pas la publier dans GitHub ni dans le Sheet.
+3. Dans Make, créer un scénario manuel avec **Webhooks → Custom webhook**, par exemple
+   `digicraft-republier`, puis copier l’URL du webhook Make. Ajouter ensuite **HTTP → Make a request**.
+4. Configurer ce module en `POST`, coller l’URL secrète du Deploy Hook Cloudflare,
+   choisir `No authorization`, sans body obligatoire, puis enregistrer et activer le scénario.
+5. Ouvrir l’URL du webhook Make depuis le téléphone pour lancer la republication.
+   Le scénario appelle Cloudflare, Cloudflare clone `main`, exécute le pré-rendu puis
+   publie seulement si le build réussit. Aucun module Make ne surveille les modifications
+   du Google Sheet : il n’y a donc pas de déploiement automatique à chaque modification.
+6. Contrôler dans Make le statut HTTP du module et dans Cloudflare le log du build.
+   Un échec doit laisser la version précédente en ligne ; corriger le Sheet ou le code,
+   puis rappeler le même lien.
+
 ## 6. Formulaire de contact — Make → Telegram (V2)
 
 Le formulaire `/contact/` n'utilise plus `mailto:` : la soumission envoie un

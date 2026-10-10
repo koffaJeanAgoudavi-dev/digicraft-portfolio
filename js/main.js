@@ -158,7 +158,8 @@
         if (!note || !avis) { badge.hidden = true; return; }
         var en = window.I18n && window.I18n.langue() === "en";
         var noteEn = note.replace(",", ".");
-        var label = en ? noteEn + " on Google · " + avis + " reviews" : note + " sur Google · " + avis + " avis";
+        var noteFr = note.replace(".", ",");
+        var label = en ? noteEn + " on Google · " + avis + " reviews" : noteFr + " sur Google · " + avis + " avis";
         var href = window.Sheets.safeExternalUrl(P.url_google_business || "");
         if (!href) { badge.hidden = true; return; }
         badge.href = href;
