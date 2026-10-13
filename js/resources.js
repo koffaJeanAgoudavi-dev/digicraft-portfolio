@@ -208,6 +208,7 @@
     var img = resourceImageSrc
       ? '<img src="' + esc(resourceImageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
+    var adaptStyle = resourceImageSrc ? ' style="--media-adapt-image:url(\'' + esc(resourceImageSrc) + '\')"' : '';
     var mediaOpen = lien
       ? "<a class=\"r-media\" href=\"" + esc(lien) + "\" target=\"_blank\" rel=\"noopener\" aria-label=\"" + esc(nom + " " + T("ress.externe")) + "\">"
       : '<div class="r-media" aria-label="' + esc(nom) + '">';
@@ -215,7 +216,7 @@
 
     return '<article class="card r-card reveal"' + (p.type ? ' data-ress-type="' + esc(p.type) + '"' : "") + ">" +
       mediaOpen +
-        '<div class="r-media-inner">' + badge + couverture(nom) + img + '</div>' +
+        '<div class="r-media-inner"' + adaptStyle + '>' + badge + couverture(nom) + img + '</div>' +
       mediaClose +
       '<div class="r-body">' +
         (type ? '<p class="r-type"><span>' + esc(type) + "</span></p>" : "") +

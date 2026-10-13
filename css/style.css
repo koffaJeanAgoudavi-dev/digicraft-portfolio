@@ -2086,3 +2086,22 @@ body.case-study-page{
   .outils-list{gap:.45rem}
   .outils-pill{min-height:40px;padding:.4rem .65rem;font-size:.8rem}
 }
+
+/* ---------- Teinte adaptative subtile des cadres image ---------- */
+.r-media-inner,.a-media-inner,.p-media-inner{isolation:isolate}
+.r-media-inner::before,.a-media-inner::before,.p-media-inner::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:var(--media-adapt-image,none);
+  background-position:center;
+  background-size:cover;
+  filter:blur(22px) saturate(1.12);
+  opacity:.12;
+  transform:scale(1.08);
+}
+@media (prefers-reduced-motion:reduce){
+  .r-media-inner::before,.a-media-inner::before,.p-media-inner::before{filter:blur(18px);opacity:.1}
+}

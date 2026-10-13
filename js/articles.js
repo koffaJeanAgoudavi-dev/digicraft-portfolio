@@ -185,7 +185,7 @@
     if (imageSrc) {
       media = '<a class="a-media" href="' + esc(lien || "#") + '"' + (lien ? ' target="_blank" rel="noopener"' : "") +
         ' aria-label="' + esc(titre) + '">' +
-        '<div class="a-media-inner"><img src="' + esc(imageSrc) + '" alt="' + esc(titre) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()"></div>' +
+        '<div class="a-media-inner" style="--media-adapt-image:url(\'' + esc(imageSrc) + '\')"><img src="' + esc(imageSrc) + '" alt="' + esc(titre) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()"></div>' +
       '</a>';
     }
 

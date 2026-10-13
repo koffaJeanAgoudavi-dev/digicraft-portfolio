@@ -220,7 +220,7 @@
       ? '<img src="' + imageSrc + '" alt="' + esc(txt(projet, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : '<span class="p-ph" aria-hidden="true"><b>' + esc(initiales(txt(projet, "titre"))) + '</b><span>' + T("projets.visuel") + '</span></span>';
 
-    var mediaInner = '<div class="p-media-inner">' + img + '</div>';
+    var mediaInner = '<div class="p-media-inner"' + (imageSrc ? ' style="--media-adapt-image:url(\'' + esc(imageSrc) + '\')"' : '') + '>' + img + '</div>';
     var media = l
       ? '<a class="p-media" href="' + href + '"' + cible + ' aria-label="' + esc(l.libelle) + ' : ' + esc(txt(projet, "titre")) + '">' + mediaInner + '</a>'
       : '<div class="p-media">' + mediaInner + '</div>';
