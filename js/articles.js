@@ -185,26 +185,28 @@
     if (imageSrc) {
       media = '<a class="a-media" href="' + esc(lien || "#") + '"' + (lien ? ' target="_blank" rel="noopener"' : "") +
         ' aria-label="' + esc(titre) + '">' +
-        '<img src="' + esc(imageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()">' +
+        '<div class="a-media-inner"><img src="' + esc(imageSrc) + '" alt="' + esc(titre) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()"></div>' +
       '</a>';
     }
 
     return '<article class="card a-card reveal">' +
       media +
-      '<div class="a-top">' +
-        '<span class="a-plat">' + esc(plat) + '</span>' +
-        (meta.length ? '<span class="a-meta">' + esc(meta.join(" · ")) + '</span>' : "") +
+      '<div class="a-body">' +
+        '<div class="a-top">' +
+          '<span class="a-plat">' + esc(plat) + '</span>' +
+          (meta.length ? '<span class="a-meta">' + esc(meta.join(" · ")) + '</span>' : "") +
+        '</div>' +
+        '<h3>' + (lien
+          ? '<a href="' + esc(lien) + '" target="_blank" rel="noopener">' + esc(titre) + '</a>'
+          : esc(titre)) + '</h3>' +
+        (desc ? '<p>' + esc(desc) + '</p>' : "") +
+        (lien
+          ? '<div class="a-foot"><a class="link-arrow" href="' + esc(lien) + '" target="_blank" rel="noopener"' +
+            ' aria-label="' + esc(T("art.aria.lire", { t: titre, p: plat })) + '">' + T("art.lire") +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+            '<span class="a-ext">↗ ' + esc(plat) + '</span></div>'
+          : "") +
       '</div>' +
-      '<h3>' + (lien
-        ? '<a href="' + esc(lien) + '" target="_blank" rel="noopener">' + esc(titre) + '</a>'
-        : esc(titre)) + '</h3>' +
-      (desc ? '<p>' + esc(desc) + '</p>' : "") +
-      (lien
-        ? '<div class="a-foot"><a class="link-arrow" href="' + esc(lien) + '" target="_blank" rel="noopener"' +
-          ' aria-label="' + esc(T("art.aria.lire", { t: titre, p: plat })) + '">' + T("art.lire") +
-          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
-          '<span class="a-ext">↗ ' + esc(plat) + '</span></div>'
-        : "") +
     '</article>';
   }
 

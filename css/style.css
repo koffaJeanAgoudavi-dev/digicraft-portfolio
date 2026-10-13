@@ -1679,9 +1679,10 @@ body.case-study-page{
 .xp-card .xp-title{font-size:1.28rem;line-height:1.18}
 .xp-card .xp-desc{font-size:.91rem;line-height:1.58}
 .xp-card .xp-projects{margin-top:auto;border-top:1px solid #eeeaf5;padding-top:.8rem}
-.a-card{min-height:350px;padding:0 1.35rem 1.25rem;gap:.72rem}
-.a-card .a-media{margin:0 -1.35rem .4rem}
-.a-card .a-top{margin-top:.25rem}
+.a-card{min-height:350px;padding:0;gap:0}
+.a-card .a-media{margin:0}
+.a-card .a-top{margin-top:0}
+.a-body{display:flex;flex:1;flex-direction:column;gap:.85rem;padding:1.5rem 1.55rem 1.55rem}
 .a-card h3{font-size:1.25rem;line-height:1.2}
 .a-card p{font-size:.91rem;line-height:1.58}
 .a-card .a-foot{margin-top:auto;border-top:1px solid #eeeaf5;padding-top:.75rem}
@@ -1699,8 +1700,7 @@ body.case-study-page{
   .p-card,.xp-card,.a-card,.parc-card{border-radius:19px}
   .p-media,.a-media{aspect-ratio:1.2 / 1}
   .xp-card,.a-card,.parc-card{min-height:0}
-  .a-card{padding-left:1.2rem;padding-right:1.2rem}
-  .a-card .a-media{margin-left:-1.2rem;margin-right:-1.2rem}
+  .a-body{padding:1.35rem 1.25rem 1.35rem}
   .p-card .p-body{padding-left:1.2rem;padding-right:1.2rem}
 }
 @media (prefers-reduced-motion:reduce){
@@ -1843,14 +1843,52 @@ body.case-study-page{
 .r-card .r-body h3{font-size:1.28rem;line-height:1.18}
 .r-card .r-desc{font-size:.91rem;line-height:1.58;min-height:4.45em}
 .r-card .r-foot{margin-top:auto;padding-top:.85rem;border-top:1px solid #eeeaf5}
+
+/* ---------- Articles : même cadre visuel que les Ressources ---------- */
+.a-card .a-media{
+  position:relative;
+  aspect-ratio:1.25 / 1;
+  padding:.9rem;
+  background:#f8f9fa;
+  border-bottom:0;
+  overflow:hidden;
+}
+.a-media-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  min-height:0;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  padding:1rem;
+  border:1px solid rgba(224,218,238,.9);
+  border-radius:16px;
+  background:rgba(255,255,255,.86);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+}
+.a-media-inner img{
+  position:relative;
+  inset:auto;
+  z-index:2;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:10px;
+  transition:transform .55s var(--ease),filter .35s var(--ease);
+}
+.a-card:hover .a-media-inner img{transform:scale(1.025);filter:saturate(1.04)}
 @media (max-width:719px){
   .r-card{border-radius:19px}
   .r-card .r-media{padding:.7rem;aspect-ratio:1.2 / 1}
   .r-media-inner{padding:.75rem;border-radius:14px}
   .r-card .r-body{padding:1.35rem 1.25rem 1.35rem}
+  .a-card .a-media{padding:.7rem;aspect-ratio:1.2 / 1}
+  .a-media-inner{padding:.75rem;border-radius:14px}
+  .a-body{padding:1.35rem 1.25rem 1.35rem}
 }
 @media (prefers-reduced-motion:reduce){
-  .r-card,.r-media-inner img{transition:none}
+  .r-card,.r-media-inner img,.a-card,.a-media-inner img{transition:none}
 }
 
 /* ---------- Micro-interactions des cartes ---------- */
