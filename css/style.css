@@ -2105,3 +2105,43 @@ body.case-study-page{
 @media (prefers-reduced-motion:reduce){
   .r-media-inner::before,.a-media-inner::before,.p-media-inner::before{filter:blur(18px);opacity:.1}
 }
+
+/* ---------- Cadre média unifié : Ressources = Articles = Projets ---------- */
+.r-card .r-media,.a-card .a-media,.p-card .p-media{
+  position:relative;
+  aspect-ratio:1.25 / 1;
+  padding:.9rem;
+  background:#f8f9fa;
+  border:0;
+  overflow:hidden;
+}
+.r-media-inner,.a-media-inner,.p-media-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  min-height:0;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  padding:1rem;
+  border:1px solid rgba(224,218,238,.9);
+  border-radius:16px;
+  background:rgba(255,255,255,.86);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+}
+.r-media-inner img,.a-media-inner img,.p-media-inner img,
+.r-media-inner .r-cover,.a-media-inner .a-cover,.p-media-inner .p-ph{
+  border-radius:10px;
+}
+.r-media-inner img,.a-media-inner img,.p-media-inner img{
+  position:relative;
+  inset:auto;
+  z-index:2;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+@media (max-width:719px){
+  .r-card .r-media,.a-card .a-media,.p-card .p-media{padding:.7rem;aspect-ratio:1.2 / 1}
+  .r-media-inner,.a-media-inner,.p-media-inner{padding:.75rem;border-radius:14px}
+}
