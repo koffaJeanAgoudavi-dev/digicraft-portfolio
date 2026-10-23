@@ -168,9 +168,10 @@
         '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
       : "";
     var statut = e.statut ? '<span class="tl-statut">' + esc(e.statut) + '</span>' : "";
-    var activityImageSrc = imgUrl(e.image_url);
+    var activityImageSrc = window.Sheets.optimizedImageUrl(e.image_url, 800);
+    var activitySrcset = window.Sheets.responsiveImageSrcset(e.image_url, [400, 800, 1200]);
     var img = activityImageSrc
-      ? '<img class="tl-img" src="' + esc(activityImageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
+      ? '<img class="tl-img" src="' + esc(activityImageSrc) + '"' + (activitySrcset ? ' srcset="' + esc(activitySrcset) + '" sizes="(max-width: 720px) 88vw, 640px"' : '') + ' alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
 
     return '<li class="tl-item' + (index === 0 ? " is-first" : "") + '">' +

@@ -205,6 +205,40 @@
     return (window.SITE_ROOT || "") + s.replace(/^\/+/, "");
   }
 
+  /* Cloudinary : optimisation uniquement au rendu, sans modifier le Sheet.
+     Les URLs non-Cloudinary restent inchangées afin de préserver les assets
+     locaux et les autres CDN. */
+  function isCloudinaryImageUrl(v) {
+    return /^https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\//i.test(String(v || ""));
+  }
+
+  function optimizedImageUrl(v, width) {
+    var url = safeImageUrl(v);
+    if (!url || !isCloudinaryImageUrl(url)) return url;
+    var match = url.match(/^(https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\/)(.*)$/i);
+    if (!match) return url;
+    var segments = match[2].split("/");
+    var versionIndex = -1;
+    for (var i = 0; i < segments.length; i += 1) {
+      if (/^v\d+$/.test(segments[i])) { versionIndex = i; break; }
+    }
+    if (versionIndex < 0) return url;
+    var transform = ["f_auto", "q_auto"];
+    if (width) transform.push("w_" + Math.round(width));
+    var existing = segments.slice(0, versionIndex);
+    var tail = segments.slice(versionIndex).join("/");
+    return match[1] + transform.join(",") + (existing.length ? "/" + existing.join("/") : "") + "/" + tail;
+  }
+
+  function responsiveImageSrcset(v, widths) {
+    var url = safeImageUrl(v);
+    if (!url || !isCloudinaryImageUrl(url)) return "";
+    var values = widths || [400, 800, 1200];
+    return values.map(function (width) {
+      return optimizedImageUrl(url, width) + " " + width + "w";
+    }).join(", ");
+  }
+
   /* booléens : TRUE/FALSE, casse et espaces indifférents. */
   function toBool(v) {
     return /^(true|1|oui|vrai|yes)$/i.test(String(v == null ? "" : v).trim());
@@ -255,6 +289,9 @@
     formatDate: formatDate,
     safeExternalUrl: safeExternalUrl,
     safeImageUrl: safeImageUrl,
+    isCloudinaryImageUrl: isCloudinaryImageUrl,
+    optimizedImageUrl: optimizedImageUrl,
+    responsiveImageSrcset: responsiveImageSrcset,
     isInvalidResource: isInvalidResource,
     formatMinutes: formatMinutes,
     champ: champ,

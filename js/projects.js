@@ -215,9 +215,10 @@
 
     /* Visuel : image du Sheet si fournie, sinon visuel de remplacement
        (initiales réelles) — aucune image inventée. */
-    var imageSrc = imgUrl(projet.image_url);
+    var imageSrc = window.Sheets.optimizedImageUrl(projet.image_url, 800);
+    var imageSrcset = window.Sheets.responsiveImageSrcset(projet.image_url, [400, 800, 1200]);
     var img = imageSrc
-      ? '<img src="' + imageSrc + '" alt="' + esc(txt(projet, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
+      ? '<img src="' + esc(imageSrc) + '"' + (imageSrcset ? ' srcset="' + esc(imageSrcset) + '" sizes="(max-width: 720px) 84vw, (max-width: 1100px) 42vw, 360px"' : '') + ' alt="' + esc(txt(projet, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : '<span class="p-ph" aria-hidden="true"><b>' + esc(initiales(txt(projet, "titre"))) + '</b><span>' + T("projets.visuel") + '</span></span>';
 
     var mediaInner = '<div class="p-media-inner"' + (imageSrc ? ' style="--media-adapt-image:url(\'' + esc(imageSrc) + '\')"' : '') + '>' + img + '</div>';
@@ -646,7 +647,9 @@
       if (elMedia) {
         var visualCard = elMedia.closest ? elMedia.closest("[data-cs-visual-card]") : null;
         if (p.image_url) {
-          elMedia.innerHTML = '<img src="' + imgUrl(p.image_url) + '" alt="' + esc(txt(p, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">';
+          var detailImage = window.Sheets.optimizedImageUrl(p.image_url, 800);
+          var detailSrcset = window.Sheets.responsiveImageSrcset(p.image_url, [400, 800, 1200]);
+          elMedia.innerHTML = '<img src="' + esc(detailImage) + '"' + (detailSrcset ? ' srcset="' + esc(detailSrcset) + '" sizes="(max-width: 760px) 88vw, 760px"' : '') + ' alt="' + esc(txt(p, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">';
           elMedia.style.display = ""; /* V1.3 : fiche générique pré-masquée */
           if (visualCard) visualCard.style.display = "";
         } else {
