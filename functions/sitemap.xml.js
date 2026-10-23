@@ -1,5 +1,7 @@
 const ORIGIN = "https://digicraft-labs-drf.pages.dev";
 const PROJECTS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=992675999&single=true&output=csv";
+const XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>';
+const URLSET_OPEN = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 const STATIC_ROUTES = [
   ["/", "weekly", "1.0"], ["/projets/", "weekly", "0.9"], ["/expertise/", "monthly", "0.8"],
   ["/activite/", "weekly", "0.8"], ["/articles/", "weekly", "0.8"], ["/boutique/", "monthly", "0.7"],
@@ -54,7 +56,14 @@ export async function onRequest(context) {
   } catch (_) {
     // Static routes remain available when the public Sheet is unreachable.
   }
-  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths.map(([path, freq, priority]) => entry(path, freq, priority, lastmod)).join('\n')}\n</urlset>\n`;
+  /* Construire ligne par ligne garantit que la déclaration XML est l'octet
+     initial de la réponse, sans indentation ni ligne vide accidentelle. */
+  const body = [
+    XML_DECLARATION,
+    URLSET_OPEN,
+    ...paths.map(([path, freq, priority]) => entry(path, freq, priority, lastmod)),
+    '</urlset>'
+  ].join('\n') + '\n';
   return new Response(body, { status: 200, headers: {
     "content-type": "application/xml; charset=UTF-8",
     "cache-control": "public, max-age=300, s-maxage=300",
