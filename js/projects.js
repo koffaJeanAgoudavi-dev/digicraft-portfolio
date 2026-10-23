@@ -523,13 +523,9 @@
       setMetaAttr('meta[property="og:title"]', "content", titre + " | Étude de cas");
       setMetaAttr('meta[property="og:description"]', "content", desc);
       setMetaAttr('meta[property="og:url"]', "content", urlPropre);
-      var img = String(p.image_url || "").trim();
-      if (img) {
-        var imgAbs = /^(https?:)?\/\//i.test(img)
-          ? (img.charAt(0) === "/" ? "https:" + img : img)
-          : origineSite() + "/" + img.replace(/^(\.\/|\/)+/, "");
-        setMetaAttr('meta[property="og:image"]', "content", imgAbs);
-      }
+      var shareImage = "https://res.cloudinary.com/mdebk4xz/image/upload/v1791052651/Screenshot_2026-10-03_18.35.23.png";
+      setMetaAttr('meta[property="og:image"]', "content", shareImage);
+      setMetaAttr('meta[name="twitter:image"]', "content", shareImage);
       /* Lève un éventuel noindex posé avant résolution des données. */
       var robots = document.querySelector('meta[name="robots"]');
       if (robots && /noindex/i.test(robots.getAttribute("content") || "")) {

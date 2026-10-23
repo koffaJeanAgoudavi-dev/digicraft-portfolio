@@ -68,7 +68,7 @@ portfolio/
 ├── a-propos/index.html   ← Page personnelle
 ├── contact/index.html    ← Formulaire + coordonnées
 ├── assets/
-│   └── images/           ← koffa-agoudavi.jpg (photo) + visuels projets + og-cover.jpg
+│   └── images/           ← koffa-agoudavi.jpg (photo) + visuels projets
 ├── css/style.css         ← Design system complet
 ├── js/
 │   ├── i18n.js           ← Bilinguisme FR/EN (dictionnaire + bascule client)
@@ -181,7 +181,7 @@ visite, comme tout le CMS).
 ## 3. Images
 
 - `favicon.png` — icône du site (référencée par toutes les pages).
-- `assets/images/og-cover.jpg` — image d'aperçu social (`og:image`), utilisée sur toutes les pages.
+- Image sociale Cloudinary — utilisée par `og:image` et `twitter:image` sur toutes les pages (URL indiquée ci-dessus).
 - *Le logo bitmap `assets/logo/digicraft-labs.png` a été retiré en v2 : la marque est désormais composée en SVG inline + texte dans le dock et le footer (aucun fichier de logo à charger, -352 Ko).*
 - `assets/images/koffa-agoudavi.jpg` — **photo professionnelle** de Koffa (720×900).
 - `assets/images/` — visuels des projets (WebP, ~1280px) :
@@ -205,8 +205,7 @@ visite, comme tout le CMS).
    - `js/config.js` → `siteUrl`
    - les balises `<link rel="canonical">` et les `<meta og:url>` de chaque page
    - `functions/sitemap.xml.js` et `robots.txt`
-5. Publiez le `og-cover.jpg` dans `assets/images/` (image 1200×630)
-   pour les partages LinkedIn/X.
+5. L’image sociale Cloudinary ci-dessus est utilisée pour les partages LinkedIn/X et les autres plateformes.
 
 ### Google Search Console (vérification de propriété)
 

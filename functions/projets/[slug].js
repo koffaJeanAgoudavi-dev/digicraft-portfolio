@@ -151,12 +151,7 @@ function injecterMeta(html, projet, urlCanonique, origine) {
   if (desc.length > 160) desc = desc.slice(0, 157).replace(/\s+\S*$/, "") + "…";
   if (!desc) desc = "Étude de cas " + titre + " — DIGICRAFT Labs.";
 
-  const image = lireChamp(projet, "image_url");
-  const imageAbsolue = image
-    ? (/^(https?:)?\/\//i.test(image)
-        ? (image.charAt(0) === "/" ? "https:" + image : image)
-        : origine + "/" + image.replace(/^(\.\/|\/)+/, ""))
-    : "";
+  const imageAbsolue = "https://res.cloudinary.com/mdebk4xz/image/upload/v1791052651/Screenshot_2026-10-03_18.35.23.png";
 
   html = remplacer(html, /(<title>)[\s\S]*?(<\/title>)/i,
     echapper(titre + " | Étude de cas — DIGICRAFT Labs"));
@@ -166,9 +161,8 @@ function injecterMeta(html, projet, urlCanonique, origine) {
     echapper(titre + " | Étude de cas"));
   html = remplacer(html, /(<meta property="og:description" content=")[^"]*(")/i, echapper(desc));
   html = remplacer(html, /(<meta property="og:url" content=")[^"]*(")/i, echapper(urlCanonique));
-  if (imageAbsolue) {
-    html = remplacer(html, /(<meta property="og:image" content=")[^"]*(")/i, echapper(imageAbsolue));
-  }
+  html = remplacer(html, /(<meta property="og:image" content=")[^"]*(")/i, echapper(imageAbsolue));
+  html = remplacer(html, /(<meta name="twitter:image" content=")[^"]*(")/i, echapper(imageAbsolue));
   return html;
 }
 
