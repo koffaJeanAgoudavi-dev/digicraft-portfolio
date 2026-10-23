@@ -137,9 +137,19 @@
         if (photo && legacy && photo === legacy && secours) photo = secours;
         if (!photo) return;
         img.addEventListener("error", function () {
-          if (secours && img.getAttribute("src") !== secours) img.setAttribute("src", secours);
+          if (secours && img.getAttribute("src") !== secours) {
+            img.setAttribute("src", secours);
+            img.removeAttribute("srcset");
+          }
         });
-        img.setAttribute("src", photo);
+        var heroSrc = window.Sheets.optimizedImageUrl(photo, 800);
+        var heroSrcset = window.Sheets.responsiveImageSrcset(photo, [400, 800, 1200]);
+        img.setAttribute("src", heroSrc);
+        if (heroSrcset) img.setAttribute("srcset", heroSrcset);
+        else img.removeAttribute("srcset");
+        img.setAttribute("sizes", "(max-width: 760px) 86vw, 46vw");
+        img.setAttribute("loading", "eager");
+        img.setAttribute("decoding", "async");
       });
 
       /* CTA du hero : libellé + destination administrables ; un libellé

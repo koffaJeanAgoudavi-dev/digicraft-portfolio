@@ -236,9 +236,10 @@
     var titre = choisir(e.titre, e.titre_en, langue);
     var desc = choisir(e.description, e.description_en, langue);
     var periode = formaterPeriode(e.date_obtention, e.date_fin, langue);
-    var badgeImageSrc = imgUrl(e.badge_image_url);
+    var badgeImageSrc = window.Sheets.optimizedImageUrl(e.badge_image_url, 400);
+    var badgeSrcset = window.Sheets.responsiveImageSrcset(e.badge_image_url, [200, 400, 800]);
     var badge = badgeImageSrc
-      ? '<img class="parc-badge" src="' + esc(badgeImageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
+      ? '<img class="parc-badge" src="' + esc(badgeImageSrc) + '"' + (badgeSrcset ? ' srcset="' + esc(badgeSrcset) + '" sizes="96px"' : '') + ' alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
     var verificationUrl = extUrl(e.verification_url);
     var verif = verificationUrl

@@ -181,11 +181,12 @@
     if (date) meta.push(date);
 
     var media = "";
-    var imageSrc = imgUrl(a.image_url);
+    var imageSrc = window.Sheets.optimizedImageUrl(a.image_url, 800);
+    var imageSrcset = window.Sheets.responsiveImageSrcset(a.image_url, [400, 800, 1200]);
     if (imageSrc) {
       media = '<a class="a-media" href="' + esc(lien || "#") + '"' + (lien ? ' target="_blank" rel="noopener"' : "") +
         ' aria-label="' + esc(titre) + '">' +
-        '<div class="a-media-inner" style="--media-adapt-image:url(\'' + esc(imageSrc) + '\')"><img src="' + esc(imageSrc) + '" alt="' + esc(titre) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()"></div>' +
+        '<div class="a-media-inner" style="--media-adapt-image:url(\'' + esc(imageSrc) + '\')"><img src="' + esc(imageSrc) + '"' + (imageSrcset ? ' srcset="' + esc(imageSrcset) + '" sizes="(max-width: 720px) 88vw, (max-width: 1100px) 42vw, 360px"' : '') + ' alt="' + esc(titre) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.closest(\'.a-media\').remove()"></div>' +
       '</a>';
     }
 

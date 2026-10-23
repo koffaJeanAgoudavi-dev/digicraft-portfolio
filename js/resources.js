@@ -204,9 +204,10 @@
     var badge = piluleBadge(p.badge);
     var type = etiquetteType(p.type);
     var pr = prixTexte(p.prix, p.devise);
-    var resourceImageSrc = imgUrl(p.image_cover);
+    var resourceImageSrc = window.Sheets.optimizedImageUrl(p.image_cover, 800);
+    var resourceSrcset = window.Sheets.responsiveImageSrcset(p.image_cover, [400, 800, 1200]);
     var img = resourceImageSrc
-      ? '<img src="' + esc(resourceImageSrc) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
+      ? '<img src="' + esc(resourceImageSrc) + '"' + (resourceSrcset ? ' srcset="' + esc(resourceSrcset) + '" sizes="(max-width: 720px) 88vw, (max-width: 1100px) 42vw, 360px"' : '') + ' alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
     var adaptStyle = resourceImageSrc ? ' style="--media-adapt-image:url(\'' + esc(resourceImageSrc) + '\')"' : '';
     var mediaOpen = lien
