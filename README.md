@@ -131,6 +131,8 @@ Les champs facultatifs `titre_en`, `description_en`, `livrables_en` et `cta_text
 sont acceptés pour l’anglais. Les champs `livrables` et `stack` acceptent plusieurs
 éléments séparés par `|`, `;` ou un retour à la ligne. Renseignez le GID et l’URL CSV
 dans `js/config.js` après publication ; tant qu’ils sont vides, la section reste masquée.
+Le filtre de la section est construit automatiquement à partir des valeurs distinctes de
+la colonne `type` : aucune catégorie n’est codée dans le HTML ou le JavaScript.
 
 Dans l’onglet `Parametres`, ajoutez `google_note` (ex. `5,0`) et `google_nb_avis`
 (ex. `5`). Le badge reprend automatiquement `url_google_business`, s’affiche uniquement

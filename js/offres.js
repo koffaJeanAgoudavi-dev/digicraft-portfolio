@@ -63,21 +63,56 @@
       '</article>';
   }
 
-  function render(container) {
+  function typeKey(row) {
+    return String(row && row.type || "").trim();
+  }
+
+  function renderFilters(filter, offers, active) {
+    if (!filter) return;
+    var types = [];
+    offers.forEach(function (row) {
+      var type = typeKey(row);
+      if (type && types.indexOf(type) === -1) types.push(type);
+    });
+    filter.innerHTML = ['<button type="button" class="offers-filter-btn' + (!active ? ' is-active' : '') +
+      '" data-offres-filter="" aria-pressed="' + (!active ? 'true' : 'false') + '">' +
+      esc(window.I18n && window.I18n.t ? window.I18n.t("offres.filtre.tous", null, "Tous") : "Tous") + '</button>']
+      .concat(types.map(function (type) {
+        var selected = type === active;
+        return '<button type="button" class="offers-filter-btn' + (selected ? ' is-active' : '') +
+          '" data-offres-filter="' + esc(type) + '" aria-pressed="' + (selected ? 'true' : 'false') + '">' +
+          esc(type) + '</button>';
+      })).join("");
+  }
+
+  function paint(container, filter, offers, active) {
+    renderFilters(filter, offers, active);
+    var visible = active ? offers.filter(function (row) { return typeKey(row) === active; }) : offers;
+    container.innerHTML = visible.map(card).join("");
+    container.setAttribute("aria-busy", "false");
+  }
+
+  function render(container, filter, activeType) {
     return window.Sheets.loadSheet("offres").then(function (rows) {
       var section = container.closest("[data-offres-section]");
       var offers = (rows || []).filter(published).sort(window.Sheets.byOrder);
       if (!offers.length) {
         container.innerHTML = "";
+        if (filter) filter.innerHTML = "";
         if (section) section.hidden = true;
         return;
       }
-      container.innerHTML = offers.map(card).join("");
+      var active = activeType && offers.some(function (row) { return typeKey(row) === activeType; }) ? activeType : "";
+      paint(container, filter, offers, active);
       if (section) section.hidden = false;
       if (window.I18n && typeof window.I18n.appliquer === "function") window.I18n.appliquer();
+      container._offresRows = offers;
+      container._offresFilter = filter;
+      container._offresActive = active;
     }).catch(function (error) {
       console.error("[Offres] Échec de chargement :", error);
       container.innerHTML = "";
+      if (filter) filter.innerHTML = "";
       var section = container.closest("[data-offres-section]");
       if (section) section.hidden = true;
     });
@@ -86,8 +121,16 @@
   function init() {
     var container = document.getElementById("grille-offres");
     if (!container) return;
-    render(container);
-    document.addEventListener("kj:langue", function () { render(container); });
+    var filter = document.getElementById("filtres-offres");
+    render(container, filter, "");
+    if (filter) filter.addEventListener("click", function (event) {
+      var button = event.target.closest ? event.target.closest("[data-offres-filter]") : null;
+      if (!button || !container._offresRows) return;
+      var active = button.getAttribute("data-offres-filter") || "";
+      container._offresActive = active;
+      paint(container, filter, container._offresRows, active);
+    });
+    document.addEventListener("kj:langue", function () { render(container, filter, container._offresActive || ""); });
   }
 
   window.Offres = { init: init, render: render };

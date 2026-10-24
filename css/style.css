@@ -2229,3 +2229,38 @@ body.case-study-page{
   .offer-card{padding:1.4rem;border-radius:18px}
 }
 @media (prefers-reduced-motion:reduce){.offer-card{transition:none}.offer-card:hover,.offer-card:focus-within{transform:none}}
+
+
+/* Filtre par type : les boutons sont générés depuis la colonne `type` du Sheet. */
+.offers-filter{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.55rem;
+  margin:-1rem 0 2rem;
+}
+.offers-filter-btn{
+  appearance:none;
+  border:1px solid #E7DEFB;
+  border-radius:999px;
+  padding:.55rem .9rem;
+  background:rgba(255,255,255,.72);
+  color:#4B2A9F;
+  cursor:pointer;
+  font:600 .78rem/1.2 var(--font-body,Inter,sans-serif);
+  transition:background .2s ease,color .2s ease,border-color .2s ease,transform .2s ease;
+}
+.offers-filter-btn:hover,.offers-filter-btn:focus-visible{
+  border-color:#BBA5F3;
+  background:#F0EBFF;
+  transform:translateY(-1px);
+}
+.offers-filter-btn.is-active{
+  border-color:#7048D8;
+  background:#7048D8;
+  color:#fff;
+}
+@media (max-width:620px){
+  .offers-filter{margin:-.8rem 0 1.5rem;gap:.45rem}
+  .offers-filter-btn{padding:.5rem .75rem;font-size:.74rem}
+}
+@media (prefers-reduced-motion:reduce){.offers-filter-btn{transition:none}.offers-filter-btn:hover,.offers-filter-btn:focus-visible{transform:none}}
