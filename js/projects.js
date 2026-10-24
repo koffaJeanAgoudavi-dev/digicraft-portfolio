@@ -523,7 +523,12 @@
       setMetaAttr('meta[property="og:title"]', "content", titre + " | Étude de cas");
       setMetaAttr('meta[property="og:description"]', "content", desc);
       setMetaAttr('meta[property="og:url"]', "content", urlPropre);
-      var shareImage = "https://res.cloudinary.com/mdebk4xz/image/upload/v1791052651/Screenshot_2026-10-03_18.35.23.png";
+      var img = String(p.image_url || "").trim();
+      var shareImage = img
+        ? (/^(https?:)?\/\//i.test(img)
+            ? (img.charAt(0) === "/" ? "https:" + img : img)
+            : origineSite() + "/" + img.replace(/^(\.\/|\/)+/, ""))
+        : "https://res.cloudinary.com/mdebk4xz/image/upload/v1791052651/Screenshot_2026-10-03_18.35.23.png";
       setMetaAttr('meta[property="og:image"]', "content", shareImage);
       setMetaAttr('meta[name="twitter:image"]', "content", shareImage);
       /* Lève un éventuel noindex posé avant résolution des données. */

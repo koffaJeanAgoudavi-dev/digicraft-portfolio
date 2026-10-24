@@ -151,7 +151,12 @@ function injecterMeta(html, projet, urlCanonique, origine) {
   if (desc.length > 160) desc = desc.slice(0, 157).replace(/\s+\S*$/, "") + "…";
   if (!desc) desc = "Étude de cas " + titre + " — DIGICRAFT Labs.";
 
-  const imageAbsolue = "https://res.cloudinary.com/mdebk4xz/image/upload/v1791052651/Screenshot_2026-10-03_18.35.23.png";
+  const image = lireChamp(projet, "image_url");
+  const imageAbsolue = image
+    ? (/^(https?:)?\/\//i.test(image)
+        ? (image.charAt(0) === "/" ? "https:" + image : image)
+        : origine + "/" + image.replace(/^(\.\/|\/)+/, ""))
+    : "https://res.cloudinary.com/mdebk4xz/image/upload/v1791052651/Screenshot_2026-10-03_18.35.23.png";
 
   html = remplacer(html, /(<title>)[\s\S]*?(<\/title>)/i,
     echapper(titre + " | Étude de cas — DIGICRAFT Labs"));
