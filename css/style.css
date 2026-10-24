@@ -2281,3 +2281,11 @@ body.case-study-page{
   .offers-filter-btn:hover,.offers-filter-btn:focus-visible{transform:none}
   .offers-grid.is-leaving,.offers-grid.is-entering{opacity:1;transform:none}
 }
+
+
+/* Hero : un CTA primaire Offres, deux actions secondaires alignées. */
+.hero-cta{align-items:center}
+.hero-cta .btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.hero-cta .btn[hidden]{display:none}
+@media (min-width:1024px){.hero-cta .btn{white-space:nowrap}}
+@media (max-width:719px){.hero-cta{align-items:stretch}.hero-cta .btn{width:100%}}

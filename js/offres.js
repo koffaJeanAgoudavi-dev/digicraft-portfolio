@@ -115,16 +115,19 @@
   function render(container, filter, activeType) {
     return window.Sheets.loadSheet("offres").then(function (rows) {
       var section = container.closest("[data-offres-section]");
+      var cta = document.querySelector("[data-offres-cta]");
       var offers = (rows || []).filter(published).sort(window.Sheets.byOrder);
       if (!offers.length) {
         container.innerHTML = "";
         if (filter) filter.innerHTML = "";
         if (section) section.hidden = true;
+        if (cta) cta.hidden = true;
         return;
       }
       var active = activeType && offers.some(function (row) { return typeKey(row) === activeType; }) ? activeType : "";
       paint(container, filter, offers, active, false);
       if (section) section.hidden = false;
+      if (cta) cta.hidden = false;
       if (window.I18n && typeof window.I18n.appliquer === "function") window.I18n.appliquer();
       container._offresRows = offers;
       container._offresFilter = filter;
@@ -135,6 +138,8 @@
       if (filter) filter.innerHTML = "";
       var section = container.closest("[data-offres-section]");
       if (section) section.hidden = true;
+      var cta = document.querySelector("[data-offres-cta]");
+      if (cta) cta.hidden = true;
     });
   }
 
