@@ -28,7 +28,7 @@ window.CONFIG = {
     parcours: 1357681272,      // onglet Parcours (ex-Certifications)
     temoignages: 1989663815,  // onglet Témoignages
     outils: 521002585,        // onglet Outils
-    offres: ""               // onglet Offres — renseigner le GID après publication
+    offres: 2095230316        // onglet Offres
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
@@ -43,7 +43,7 @@ window.CONFIG = {
     parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1357681272&single=true&output=csv",
     temoignages: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1989663815&single=true&output=csv",
     outils: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=521002585&single=true&output=csv",
-    offres: ""              // URL CSV après publication de l’onglet Offres
+    offres: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=2095230316&single=true&output=csv"
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement

@@ -2259,8 +2259,25 @@ body.case-study-page{
   background:#7048D8;
   color:#fff;
 }
+.offers-grid.is-leaving{
+  opacity:0;
+  transform:translateY(8px);
+}
+.offers-grid.is-entering{
+  opacity:0;
+  transform:translateY(-8px);
+}
+.offers-grid{
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity .18s ease,transform .24s ease;
+}
 @media (max-width:620px){
   .offers-filter{margin:-.8rem 0 1.5rem;gap:.45rem}
   .offers-filter-btn{padding:.5rem .75rem;font-size:.74rem}
 }
-@media (prefers-reduced-motion:reduce){.offers-filter-btn{transition:none}.offers-filter-btn:hover,.offers-filter-btn:focus-visible{transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .offers-filter-btn,.offers-grid{transition:none}
+  .offers-filter-btn:hover,.offers-filter-btn:focus-visible{transform:none}
+  .offers-grid.is-leaving,.offers-grid.is-entering{opacity:1;transform:none}
+}

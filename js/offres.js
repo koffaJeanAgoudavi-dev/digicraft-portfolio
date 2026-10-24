@@ -85,11 +85,31 @@
       })).join("");
   }
 
-  function paint(container, filter, offers, active) {
+  function paint(container, filter, offers, active, animate) {
     renderFilters(filter, offers, active);
     var visible = active ? offers.filter(function (row) { return typeKey(row) === active; }) : offers;
-    container.innerHTML = visible.map(card).join("");
-    container.setAttribute("aria-busy", "false");
+    var html = visible.map(card).join("");
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!animate || reduceMotion || !container.children.length) {
+      container.innerHTML = html;
+      container.setAttribute("aria-busy", "false");
+      return;
+    }
+    var token = (container._offresAnimationToken || 0) + 1;
+    container._offresAnimationToken = token;
+    container.classList.remove("is-entering", "is-leaving");
+    void container.offsetWidth;
+    container.classList.add("is-leaving");
+    window.setTimeout(function () {
+      if (container._offresAnimationToken !== token) return;
+      container.innerHTML = html;
+      container.setAttribute("aria-busy", "false");
+      container.classList.remove("is-leaving");
+      container.classList.add("is-entering");
+      window.requestAnimationFrame(function () {
+        if (container._offresAnimationToken === token) container.classList.remove("is-entering");
+      });
+    }, 180);
   }
 
   function render(container, filter, activeType) {
@@ -103,7 +123,7 @@
         return;
       }
       var active = activeType && offers.some(function (row) { return typeKey(row) === activeType; }) ? activeType : "";
-      paint(container, filter, offers, active);
+      paint(container, filter, offers, active, false);
       if (section) section.hidden = false;
       if (window.I18n && typeof window.I18n.appliquer === "function") window.I18n.appliquer();
       container._offresRows = offers;
@@ -128,7 +148,7 @@
       if (!button || !container._offresRows) return;
       var active = button.getAttribute("data-offres-filter") || "";
       container._offresActive = active;
-      paint(container, filter, container._offresRows, active);
+      paint(container, filter, container._offresRows, active, true);
     });
     document.addEventListener("kj:langue", function () { render(container, filter, container._offresActive || ""); });
   }
