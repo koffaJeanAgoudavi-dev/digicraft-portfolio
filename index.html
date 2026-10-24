@@ -301,6 +301,18 @@
       </div>
     </section>
 
+    <!-- ============ SERVICES & OFFRES — contenu piloté par l'onglet Offres ============ -->
+    <section class="section offers-section" id="offres" data-offres-section hidden>
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow" data-i18n="accueil.offres.eyebrow">Services &amp; offres</p>
+          <h2 data-i18n="accueil.offres.titre">Des systèmes prêts à faire avancer votre activité</h2>
+          <p data-i18n="accueil.offres.desc">Des offres claires pour automatiser vos opérations avec méthode, sans ajouter de complexité.</p>
+        </div>
+        <div id="grille-offres" class="offers-grid" aria-live="polite" aria-busy="true"></div>
+      </div>
+    </section>
+
     <!-- ============ ACTIVITÉ — journal d'ingénieur (v0.2 §6) ============ -->
     <section class="section" id="activite">
       <div class="container">
@@ -480,6 +492,7 @@
   <script src="js/consent.js?v=20260927a"></script>
   <script src="js/analytics.js?v=20260927a"></script>
   <script src="js/sheets.js?v=20261023a"></script>
+  <script src="js/offres.js?v=20261024a"></script>
   <script src="js/projects.js?v=20261023a"></script>
   <script src="js/articles.js?v=20261023a"></script>
   <script src="js/resources.js?v=20261023a"></script>
@@ -497,6 +510,7 @@
       window.Parcs.apercu("apercu-parcours", 3);
       window.Arts.accueil("carousel-articles");
       window.Xpr.apercu("apercu-expertise", 6);
+      window.Offres.init();
       window.Temoignages.init();
       window.Prjs.initReveal();
     });

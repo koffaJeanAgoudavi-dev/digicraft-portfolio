@@ -25,6 +25,7 @@ EXPECTED = {
     "timeline": ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"],
     "expertise": ["titre", "description_courte", "description_longue", "icone", "categorie", "exemples_projets", "ordre"],
     "parcours": ["type", "titre", "organisation", "date_obtention", "date_fin", "description", "verification_url", "ordre"],
+    "offres": ["id", "type", "titre", "description", "livrables", "stack", "cta_texte", "cta_lien", "ordre", "publie"],
 }
 
 
@@ -38,9 +39,19 @@ def config_urls() -> dict[str, str]:
     if not block:
         fail("bloc sheetUrls introuvable dans js/config.js")
     found = dict(re.findall(r"^\s*(\w+)\s*:\s*\"([^\"]+)\"", block.group(1), re.M))
-    missing = sorted(set(EXPECTED) - set(found))
+    # Offres reste désactivé tant que son onglet n'est pas publié : dès qu'une
+    # URL est renseignée, il devient obligatoire et est validé comme les autres.
+    optional = {"offres"}
+    missing = sorted(set(EXPECTED) - set(found) - optional)
     if missing:
         fail("URL CSV manquante pour " + ", ".join(missing))
+    if not found.get("offres"):
+        sheet_id = re.search(r"sheetId\s*:\s*\"([^\"]+)\"", text)
+        gids = re.search(r"sheetGids\s*:\s*\{(.*?)\n\s*\},", text, re.S)
+        gid = re.search(r"^\s*offres\s*:\s*([0-9]+)", gids.group(1), re.M) if gids else None
+        if sheet_id and gid:
+            found["offres"] = f"https://docs.google.com/spreadsheets/d/{sheet_id.group(1)}/export?format=csv&gid={gid.group(1)}"
+    found.setdefault("offres", "")
     return found
 
 
@@ -89,6 +100,32 @@ def link(value: str) -> str:
     return value if re.match(r"^https://[^\s<>\"']+$", value, re.I) else ""
 
 
+def list_values(value: str) -> list[str]:
+    return [item.strip().lstrip("-–—✓✔ ") for item in re.split(r"[|;\n•]+", value or "") if item.strip()]
+
+
+def offer_card(row: dict[str, str]) -> str:
+    if not truth(row.get("publie", "")):
+        return ""
+    type_html = f'<p class="offer-type">{e(row.get("type", ""))}</p>' if row.get("type") else ""
+    items = list_values(row.get("livrables", ""))
+    deliverables = "" if not items else "<ul>" + "".join(
+        f'<li><span class="offer-check" aria-hidden="true">✓</span><span>{e(item)}</span></li>' for item in items
+    ) + "</ul>"
+    stack = list_values(row.get("stack", ""))
+    stack_html = "" if not stack else '<ul class="offer-stack">' + "".join(f"<li>{e(item)}</li>" for item in stack) + "</ul>"
+    href = link(row.get("cta_lien", ""))
+    cta = f'<a class="btn btn-gold offer-cta" href="{e(href)}">{e(row.get("cta_texte", ""))} <span class="arr">→</span></a>' if href and row.get("cta_texte") else ""
+    return (
+        '<article class="offer-card prerender-offer">'
+        + type_html
+        + f'<h3>{e(row.get("titre", ""))}</h3>'
+        + (f'<p class="offer-description">{e(row.get("description", ""))}</p>' if row.get("description") else "")
+        + ('<div class="offer-deliverables"><p class="offer-label">Ce qui est inclus</p>' + deliverables + '</div>' if deliverables else "")
+        + '<div class="offer-bottom">' + stack_html + cta + '</div></article>'
+    )
+
+
 def card(title: str, description: str, meta: str = "", href: str = "") -> str:
     title_html = f"<h3>{e(title)}</h3>" if title else ""
     meta_html = f"<p class=\"prerender-meta\">{e(meta)}</p>" if meta else ""
@@ -118,7 +155,7 @@ def insert_after_mount(text: str, mount_id: str, content: str) -> str:
 
 def main() -> None:
     urls = config_urls()
-    data = {name: fetch_rows(name, urls[name]) for name in EXPECTED}
+    data = {name: (fetch_rows(name, urls[name]) if urls.get(name) else []) for name in EXPECTED}
     params = {row["cle"]: row["valeur"] for row in data["parametres"] if row.get("cle")}
     required_params = ["hero_titre", "hero_role", "hero_accroche", "hero_promesse"]
     missing = [key for key in required_params if not params.get(key)]
@@ -132,6 +169,7 @@ def main() -> None:
     resources = sorted([r for r in data["ressources"] if r["nom_produit"]], key=order)
     timeline = sorted([r for r in data["timeline"] if r["titre"]], key=order)
     parcours = sorted([r for r in data["parcours"] if r["titre"]], key=order)
+    offres = sorted([r for r in data["offres"] if r["titre"] and truth(r.get("publie", ""))], key=order)
 
     fragments = {
         "expertise": noscript("Expertise", [card(r["titre"], r["description_courte"], r["categorie"]) for r in expertise]),
@@ -140,6 +178,7 @@ def main() -> None:
         "ressources": noscript("Ressources", [card(r["nom_produit"], r["description"], r["type"] + (" · " + r["prix"] + " " + r["devise"] if r["prix"] else ""), link(r["url_boutique"])) for r in resources]),
         "timeline": noscript("Activité", [card(r["titre"], r["description"], r["date"] + (" · " + r["statut"] if r["statut"] else ""), link(r["lien_optionnel"])) for r in timeline]),
         "parcours": noscript("Parcours", [card(r["titre"], r["description"], r["type"] + (" · " + r["organisation"] if r["organisation"] else ""), link(r["verification_url"])) for r in parcours]),
+        "offres": noscript("Services & offres", [offer_card(r) for r in offres]),
     }
     home_rows = []
     for name, rows, label, field in [("expertise", expertise, "Expertise", "titre"), ("projets", projects, "Projets", "titre"), ("articles", articles, "Articles", "titre"), ("timeline", timeline, "Activité", "titre"), ("parcours", parcours, "Parcours", "titre")]:
@@ -175,6 +214,9 @@ def main() -> None:
     if marker not in home_text:
         fail("point d'insertion homepage introuvable")
     home_text = home_text.replace(marker, fragments["home"] + "\n" + marker, 1)
+    home_text = insert_after_mount(home_text, "grille-offres", fragments["offres"])
+    if offres:
+        home_text = home_text.replace('data-offres-section hidden', 'data-offres-section', 1)
     prepared[home] = home_text
 
     # Atomic writes: an exception before this point leaves the previous deploy source intact.

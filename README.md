@@ -80,6 +80,7 @@ portfolio/
 │   ├── parcours.js       ← Rendu parcours
 │   ├── articles.js       ← Rendu articles
 │   ├── resources.js      ← Rendu produits
+│   ├── offres.js         ← Rendu Services & offres depuis l’onglet Offres
 │   └── main.js           ← Header, menu, paramètres, formulaire, révélation
 ├── js/data/*.json        ← Données de secours locales (miroir du Sheet)
 └── outils/               ← Outillage de génération du dictionnaire i18n (non chargé par le site)
@@ -106,6 +107,7 @@ recopié dans les modules métier).
 | `timeline` | ActiviteTimeline | `1732881613` |
 | `temoignages` | Témoignages | `1989663815` |
 | `outils` | Outils | non renseigné |
+| `offres` | Offres | non renseigné |
 
 **Témoignages et badge Google :** l’onglet optionnel `Témoignages` doit contenir exactement
 les colonnes `id`, `nom`, `role`, `entreprise`, `texte`, `texte_en`, `source_url`,
@@ -121,6 +123,14 @@ au même endroit dans `js/config.js` : `window.CONFIG.sheetGids.outils` (ligne d
 située dans le bloc `sheetGids`). Si l’onglet n’est pas encore publié, laissez ce champ vide :
 `js/data/outils.json` fournit automatiquement la liste de secours. Pour activer le Sheet,
 remplacez aussi `sheetUrls.outils` par l’URL CSV publiée correspondante.
+
+**Services & offres :** l’onglet optionnel `Offres` doit contenir exactement les colonnes
+`id`, `type`, `titre`, `description`, `livrables`, `stack`, `cta_texte`, `cta_lien`,
+`ordre`, `publie`. Une ligne apparaît sur l’accueil uniquement si `publie=TRUE`.
+Les champs facultatifs `titre_en`, `description_en`, `livrables_en` et `cta_texte_en`
+sont acceptés pour l’anglais. Les champs `livrables` et `stack` acceptent plusieurs
+éléments séparés par `|`, `;` ou un retour à la ligne. Renseignez le GID et l’URL CSV
+dans `js/config.js` après publication ; tant qu’ils sont vides, la section reste masquée.
 
 Dans l’onglet `Parametres`, ajoutez `google_note` (ex. `5,0`) et `google_nb_avis`
 (ex. `5`). Le badge reprend automatiquement `url_google_business`, s’affiche uniquement

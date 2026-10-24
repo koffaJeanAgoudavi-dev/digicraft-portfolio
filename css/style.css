@@ -2145,3 +2145,87 @@ body.case-study-page{
   .r-card .r-media,.a-card .a-media,.p-card .p-media{padding:.7rem;aspect-ratio:1.2 / 1}
   .r-media-inner,.a-media-inner,.p-media-inner{padding:.75rem;border-radius:14px}
 }
+
+
+/* ---------- Services & Offres — cartes glassmorphism pilotées par le CMS ---------- */
+.offers-section{
+  background:#F2F1F0;
+  border-top:1px solid rgba(224,218,238,.72);
+  border-bottom:1px solid rgba(224,218,238,.72);
+}
+.offers-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1.25rem;
+  align-items:stretch;
+}
+.offer-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+  padding:1.7rem;
+  overflow:hidden;
+  border:1px solid rgba(242,241,240,.96);
+  border-radius:20px;
+  background:rgba(255,255,255,.74);
+  box-shadow:0 18px 45px -28px rgba(76,43,159,.28),inset 0 1px 0 rgba(255,255,255,.92);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease;
+}
+.offer-card::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:4px;
+  background:linear-gradient(90deg,#7048D8,#CBB8FA);
+  opacity:.88;
+}
+.offer-card:hover,.offer-card:focus-within{
+  transform:translateY(-4px);
+  border-color:#D9CAFA;
+  box-shadow:0 24px 50px -26px rgba(76,43,159,.34),inset 0 1px 0 rgba(255,255,255,.98);
+}
+.offer-type,.offer-label{
+  font-family:var(--font-mono);
+  font-size:.68rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.offer-type{
+  align-self:flex-start;
+  margin-bottom:1rem;
+  padding:.35rem .65rem;
+  color:#4B2A9F;
+  border:1px solid #D9CAFA;
+  border-radius:999px;
+  background:#F0EBFF;
+}
+.offer-card h3{
+  margin:0;
+  font-size:clamp(1.35rem,2vw,1.7rem);
+  line-height:1.12;
+  letter-spacing:-.025em;
+}
+.offer-description{
+  margin-top:.85rem;
+  color:var(--ink-2);
+  line-height:1.65;
+}
+.offer-deliverables{margin-top:1.3rem}
+.offer-label{margin:0 0 .65rem;color:#716B80}
+.offer-deliverables ul{display:grid;gap:.55rem;margin:0;padding:0;list-style:none}
+.offer-deliverables li{display:flex;align-items:flex-start;gap:.55rem;color:var(--ink-2);font-size:.9rem;line-height:1.45}
+.offer-check{display:grid;place-items:center;flex:none;width:1.1rem;height:1.1rem;margin-top:.08rem;border-radius:50%;background:#7048D8;color:#fff;font-size:.7rem;font-weight:700}
+.offer-bottom{display:flex;flex-direction:column;gap:1rem;margin-top:auto;padding-top:1.5rem}
+.offer-stack{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
+.offer-stack li{padding:.32rem .55rem;border:1px solid #E7DEFB;border-radius:999px;background:rgba(240,235,255,.62);color:#4B2A9F;font-family:var(--font-mono);font-size:.68rem}
+.offer-cta{align-self:flex-start;margin-top:.1rem}
+@media (max-width:900px){.offers-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){
+  .offers-grid{grid-template-columns:1fr;gap:1rem}
+  .offer-card{padding:1.4rem;border-radius:18px}
+}
+@media (prefers-reduced-motion:reduce){.offer-card{transition:none}.offer-card:hover,.offer-card:focus-within{transform:none}}

@@ -111,7 +111,7 @@
     if (cacheOnglets[name]) return cacheOnglets[name];
 
     var useSheet = window.CONFIG.sheetId && !window.CONFIG.forceLocal;
-    var optionalEmpty = (name === "temoignages" || name === "outils") &&
+    var optionalEmpty = (name === "temoignages" || name === "outils" || name === "offres") &&
       !(window.CONFIG.sheetUrls && window.CONFIG.sheetUrls[name]) &&
       !(window.CONFIG.sheetGids && window.CONFIG.sheetGids[name]);
     var promise;
