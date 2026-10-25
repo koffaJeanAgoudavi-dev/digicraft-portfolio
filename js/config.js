@@ -19,31 +19,31 @@ window.CONFIG = {
   // affiche ...#gid=XXXXXXX → copiez ce nombre ici.
   // Les GID publiés peuvent changer après une nouvelle publication : mettez à jour cette table, puis les URLs ci-dessous.
   sheetGids: {
-    parametres: 2043920918,    // onglet Parametres
-    projets: 992675999,      // onglet Projets
-    articles: 353173161,     // onglet Articles
-    ressources: 775775749,  // onglet Ressources
-    timeline: 1732881613,      // onglet Timeline (journal d'activité)
-    expertise: 686585981,    // onglet Expertise
-    parcours: 1357681272,      // onglet Parcours (ex-Certifications)
-    temoignages: 1989663815,  // onglet Témoignages
-    outils: 521002585,        // onglet Outils
+    parametres: 1619778256,    // onglet Parametres
+    projets: 1573170802,      // onglet Projets
+    articles: 1049754698,     // onglet Articles
+    ressources: 1639497975,  // onglet Ressources
+    timeline: 241157336,      // onglet Timeline (journal d'activité)
+    expertise: 314516114,    // onglet Expertise
+    parcours: 990186242,      // onglet Parcours (ex-Certifications)
+    temoignages: 802248481,  // onglet Témoignages
+    outils: 1525285715,        // onglet Outils
     offres: 2095230316        // onglet Offres
   },
 
   // URLs officielles de publication (Fichier → Publier sur le web → CSV).
   // Utilisées en priorité — plus fiables que l'export généré.
   sheetUrls: {
-    parametres: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=2043920918&single=true&output=csv",
-    projets: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=992675999&single=true&output=csv",
-    articles: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=353173161&single=true&output=csv",
-    ressources: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=775775749&single=true&output=csv",
-    timeline: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1732881613&single=true&output=csv",
-    expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=686585981&single=true&output=csv",
-    parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1357681272&single=true&output=csv",
-    temoignages: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=1989663815&single=true&output=csv",
-    outils: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=521002585&single=true&output=csv",
-    offres: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=2095230316&single=true&output=csv"
+    parametres: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=1619778256&single=true&output=csv",
+    projets: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=1573170802&single=true&output=csv",
+    articles: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=1049754698&single=true&output=csv",
+    ressources: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=1639497975&single=true&output=csv",
+    timeline: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=241157336&single=true&output=csv",
+    expertise: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=314516114&single=true&output=csv",
+    parcours: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=990186242&single=true&output=csv",
+    temoignages: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=802248481&single=true&output=csv",
+    outils: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=1525285715&single=true&output=csv",
+    offres: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=2095230316&single=true&output=csv"
   },
 
   // Colonnes attendues par onglet — utilisées pour détecter un changement

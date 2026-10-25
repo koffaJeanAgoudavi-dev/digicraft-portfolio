@@ -1,5 +1,5 @@
 const ORIGIN = "https://digicraft-labs-drf.pages.dev";
-const PROJECTS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=992675999&single=true&output=csv";
+const PROJECTS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=1573170802&single=true&output=csv";
 const XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>';
 const URLSET_OPEN = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 const STATIC_ROUTES = [

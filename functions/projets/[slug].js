@@ -31,7 +31,7 @@
    Identique à js/config.js → sheetUrls.projets (source de vérité :
    config.js ; à garder synchronisée si le Sheet est republié). */
 const SHEET_PROJETS_CSV =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBKUCRKKu2iTMXxxUT5Jx4Pgiypm1c18HcOcBCv7xKs95lP5BAi0ysDZL0RDdSDA/pub?gid=992675999&single=true&output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKnFB5MtfigmmxucBAVQlNrwVaVhcPkf0Qn5mcZgEFirhZ6YCrpgisntTMpMWA3Vv6xHsZF6FbjbS2/pub?gid=1573170802&single=true&output=csv";
 
 const CACHE_TTL_SECONDS = 300;
 
