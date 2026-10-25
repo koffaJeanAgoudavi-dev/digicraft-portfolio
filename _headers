@@ -27,4 +27,4 @@
 #                 compris — www seul ne suffit pas)
 #                 *.clarity.ms (collecte Clarity : g./l./www…)
 # ------------------------------------------------------------
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://*.googleusercontent.com https://*.google-analytics.com https://*.clarity.ms; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://i.ytimg.com; connect-src 'self' https://docs.google.com https://*.googleusercontent.com https://*.google-analytics.com https://*.clarity.ms; frame-src https://www.youtube-nocookie.com; frame-ancestors 'none'

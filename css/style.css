@@ -1515,6 +1515,21 @@ body.case-study-page{
   background:linear-gradient(135deg,#F1F5F9,#EDE9FE);
 }
 .case-study-page .cs-card-visual .cs-media img{object-fit:cover}
+.case-study-page .cs-video-card{min-height:390px}
+.case-study-page .cs-video-card[hidden]{display:none!important}
+.case-study-page .cs-video-frame{
+  flex:1;display:grid;place-items:center;min-height:230px;
+  border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#F1F5F9,#EDE9FE);
+}
+.case-study-page .cs-video-card.is-vertical .cs-video-frame{max-width:360px;width:100%;aspect-ratio:9/16;min-height:0;margin-inline:auto}
+.case-study-page .cs-video-poster{position:relative;display:block;width:100%;height:100%;min-height:230px;padding:0;border:0;cursor:pointer;background:#EDE9FE}
+.case-study-page .cs-video-poster img{display:block;width:100%;height:100%;object-fit:cover}
+.case-study-page .cs-video-play{position:absolute;inset:50% auto auto 50%;display:grid;place-items:center;width:3.5rem;height:3.5rem;transform:translate(-50%,-50%);border-radius:50%;background:#6D28D9;color:#fff;font-size:1.15rem;box-shadow:0 10px 24px rgba(15,23,42,.22);transition:transform .2s ease,background .2s ease}
+.case-study-page .cs-video-poster:hover .cs-video-play,.case-study-page .cs-video-poster:focus-visible .cs-video-play{transform:translate(-50%,-50%) scale(1.08);background:#5B21B6}
+.case-study-page .cs-video-frame iframe{display:block;width:100%;height:100%;min-height:230px;border:0}
+.case-study-page .cs-video-card.is-vertical .cs-video-frame iframe{min-height:0;aspect-ratio:9/16}
+.case-study-page .cs-video-external{margin:auto}
+.demo-pill{display:inline-flex;align-items:center;gap:.25rem;padding:.28rem .55rem;border:1px solid #DDD6FE;border-radius:999px;background:#F5F3FF;color:#6D28D9;font-size:.68rem;font-weight:700;white-space:nowrap}
 .case-study-page .cs-card-foot{
   display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;
   margin-top:auto;padding-top:1rem;
@@ -1534,6 +1549,7 @@ body.case-study-page{
   .case-study-page .cs-bento-grid{grid-template-columns:1fr;gap:1rem}
   .case-study-page .cs-card-visual{min-height:0}
   .case-study-page .cs-card-visual .cs-media{min-height:0;aspect-ratio:16/10}
+  .case-study-page .cs-video-card{min-height:0}
 }
 @media (max-width:560px){
   .case-study-page .cs-card{padding:1.2rem 1.1rem 1rem;border-radius:16px}

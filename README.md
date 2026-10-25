@@ -98,16 +98,16 @@ recopié dans les modules métier).
 
 | Clé locale | Nom de l’onglet publié | GID |
 |---|---|---:|
-| `parametres` | Parametres | `2043920918` |
-| `projets` | Projets | `992675999` |
-| `articles` | Articles | `353173161` |
-| `ressources` | Ressources | `775775749` |
-| `parcours` | Parcours | `1357681272` |
-| `expertise` | Expertise | `686585981` |
-| `timeline` | ActiviteTimeline | `1732881613` |
-| `temoignages` | Témoignages | `1989663815` |
-| `outils` | Outils | non renseigné |
-| `offres` | Offres | non renseigné |
+| `parametres` | Parametres | `1619778256` |
+| `projets` | Projets | `1573170802` |
+| `articles` | Articles | `1049754698` |
+| `ressources` | Ressources | `1639497975` |
+| `parcours` | Parcours | `990186242` |
+| `expertise` | Expertise | `314516114` |
+| `timeline` | ActiviteTimeline | `241157336` |
+| `temoignages` | Témoignages | `802248481` |
+| `outils` | Outils | `1525285715` |
+| `offres` | Offres | `2095230316` |
 
 **Témoignages et badge Google :** l’onglet optionnel `Témoignages` doit contenir exactement
 les colonnes `id`, `nom`, `role`, `entreprise`, `texte`, `texte_en`, `source_url`,
@@ -187,6 +187,18 @@ visite, comme tout le CMS).
 `Jouer`… → le bouton affiche ce texte. Valeurs spéciales :
 - `interne` → lien vers `projets/<slug>.html` (études de cas V2)
 - `externe` → lien vers `url_destination` (nouvel onglet)
+
+### Démo vidéo des projets
+
+Ajoutez à la fin de l'onglet `Projets` les colonnes facultatives `video_url` et
+`video_format`. `video_format` accepte `horizontal` (valeur par défaut) ou
+`vertical`. Les URLs YouTube `watch`, `youtu.be`, `shorts` et `embed` sont
+converties vers le lecteur privé `youtube-nocookie.com` ; la miniature est
+affichée avant le clic et aucun iframe n'est créé avant l'action du visiteur.
+Une URL vidéo non YouTube ouvre un nouvel onglet avec le bouton « Voir la
+vidéo ». Une cellule vide, invalide ou factice masque entièrement le bloc et
+la pastille `▶ Démo`. Les cartes de projet restent inchangées lorsque ces
+colonnes sont vides.
 
 ---
 
