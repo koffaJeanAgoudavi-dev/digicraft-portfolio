@@ -1516,6 +1516,7 @@ body.case-study-page{
 }
 .case-study-page .cs-card-visual .cs-media img{object-fit:cover}
 .case-study-page .cs-video-card{min-height:390px}
+.case-study-page .cs-video-card[hidden]{display:none!important}
 .case-study-page .cs-video-frame{
   flex:1;display:grid;place-items:center;min-height:230px;
   border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#F1F5F9,#EDE9FE);
