@@ -198,6 +198,13 @@
     return /^https?:\/\//i.test(s) ? s : "https://" + s;
   }
 
+  /* URL vidéo : une cellule vide, factice ou mal formée ne doit jamais
+     produire de lecteur ou de lien cassé. */
+  function safeVideoUrl(v) {
+    var url = safeExternalUrl(v);
+    return /^https?:\/\/[^\s<>"']+$/i.test(url) ? url : "";
+  }
+
   function safeImageUrl(v) {
     var s = String(v == null ? "" : v).trim();
     if (isInvalidResource(s)) return "";
@@ -288,6 +295,7 @@
     byOrder: byOrder,
     formatDate: formatDate,
     safeExternalUrl: safeExternalUrl,
+    safeVideoUrl: safeVideoUrl,
     safeImageUrl: safeImageUrl,
     isCloudinaryImageUrl: isCloudinaryImageUrl,
     optimizedImageUrl: optimizedImageUrl,

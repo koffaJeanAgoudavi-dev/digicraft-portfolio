@@ -43,6 +43,35 @@
      fonctionner à n'importe quelle profondeur de page. */
   function extUrl(u) { return window.Sheets.safeExternalUrl(u); }
 
+  /* Vidéos CMS : seules les URLs HTTP(S) sans espace sont conservées.
+     YouTube est converti vers youtube-nocookie.com ; les autres URLs restent
+     des liens externes ouverts dans un nouvel onglet. */
+  function youtubeId(url) {
+    try {
+      var u = new URL(url);
+      var host = u.hostname.toLowerCase().replace(/^www\./, "");
+      if (host === "youtu.be") return (u.pathname.split("/")[1] || "").trim();
+      if (host !== "youtube.com" && host !== "m.youtube.com") return "";
+      var parts = u.pathname.split("/").filter(Boolean);
+      if (u.searchParams.get("v")) return u.searchParams.get("v");
+      if (parts[0] === "shorts" || parts[0] === "embed" || parts[0] === "live") return parts[1] || "";
+    } catch (e) { return ""; }
+    return "";
+  }
+
+  function videoInfo(p) {
+    var raw = String((p && p.video_url) || "").trim();
+    var url = window.Sheets.safeVideoUrl ? window.Sheets.safeVideoUrl(raw) : extUrl(raw);
+    if (!url || !/^https?:\/\/[^\s<>"']+$/i.test(url)) return null;
+    var id = youtubeId(url);
+    var format = String((p && p.video_format) || "").toLowerCase().trim() === "vertical" ? "vertical" : "horizontal";
+    return id && /^[A-Za-z0-9_-]{6,}$/.test(id)
+      ? { url: url, id: id, format: format, youtube: true,
+          embed: "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?autoplay=1&rel=0",
+          thumbnail: "https://i.ytimg.com/vi/" + encodeURIComponent(id) + "/hqdefault.jpg" }
+      : { url: url, format: format, youtube: false };
+  }
+
   /* Libellé du bouton d'action directe : la valeur de la colonne
      type_lien (Bot, Demo, Jouer…). Les valeurs non-action (vides,
      "interne", "externe", "En savoir plus", "Voir le projet") sont
@@ -212,6 +241,7 @@
     var ms = stack(projet);
     var statut = ligneStatut(projet);
     var cat = String(projet.categorie || "").trim();
+    var demo = videoInfo(projet);
 
     /* Visuel : image du Sheet si fournie, sinon visuel de remplacement
        (initiales réelles) — aucune image inventée. */
@@ -248,10 +278,11 @@
     return '<article class="card card-hover p-card reveal">' +
       media +
       '<div class="p-body">' +
-        ((b.libelle || cat)
+        ((b.libelle || cat || demo)
           ? '<div class="p-top">' +
               (b.libelle ? '<span class="badge-statut ' + b.classe + '">' + esc(b.libelle) + '</span>' : "") +
               (cat ? '<span class="p-cat">' + esc(cat) + '</span>' : "") +
+              (demo ? '<span class="demo-pill" aria-label="' + esc(T("projets.demo.aria", { t: txt(projet, "titre") }, "Démo vidéo")) + '">' + T("projets.demo", null, "▶ Démo") + '</span>' : "") +
             '</div>'
           : "") +
         '<h3 class="p-title">' + titre + '</h3>' +
@@ -354,6 +385,8 @@
             solution_en: window.Sheets.champ(r, ["solution_en"], ""),
             technologies_detail_en: window.Sheets.champ(r, ["technologies_detail_en"], ""),
             resultat_en: window.Sheets.champ(r, ["resultat_en"], ""),
+            video_url: window.Sheets.champ(r, ["video_url"], ""),
+            video_format: window.Sheets.champ(r, ["video_format"], ""),
             featured: window.Sheets.toBool(window.Sheets.champ(r, ["featured"], "")),
             ordre: window.Sheets.champ(r, ["ordre", "order"], "0")
           });
@@ -662,6 +695,42 @@
         }
       }
 
+      /* Démo vidéo : la miniature est chargée seule. L'iframe YouTube
+         n'est créée qu'après le clic, donc aucun lecteur ni cookie avant
+         l'action explicite du visiteur. */
+      var videoCard = page.querySelector("[data-cs-video-card]");
+      var videoFrame = page.querySelector("[data-cs-video-frame]");
+      var video = videoInfo(p);
+      if (videoCard && videoFrame) {
+        if (!video) {
+          videoCard.hidden = true;
+          videoFrame.innerHTML = "";
+        } else {
+          videoCard.hidden = false;
+          videoCard.classList.toggle("is-vertical", video.format === "vertical");
+          var titreVideo = txt(p, "titre") || "projet";
+          if (video.youtube) {
+            videoFrame.innerHTML = '<button type="button" class="cs-video-poster" data-cs-video-play data-video-embed="' + esc(video.embed) + '" data-video-title="' + esc(titreVideo + " — démo") + '" aria-label="' + esc(T("fiche.demo.aria", { t: titreVideo }, "Voir la démo de " + titreVideo)) + '">' +
+              '<img src="' + esc(video.thumbnail) + '" alt="' + esc(T("fiche.demo.aria", { t: titreVideo }, "Miniature de la démo de " + titreVideo)) + '" loading="lazy" decoding="async">' +
+              '<span class="cs-video-play" aria-hidden="true">▶</span>' +
+              '</button>';
+            var play = videoFrame.querySelector("[data-cs-video-play]");
+            if (play) play.addEventListener("click", function () {
+              var iframe = document.createElement("iframe");
+              iframe.src = play.getAttribute("data-video-embed");
+              iframe.title = play.getAttribute("data-video-title") || (titreVideo + " — démo");
+              iframe.loading = "lazy";
+              iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+              iframe.allowFullscreen = true;
+              videoFrame.innerHTML = "";
+              videoFrame.appendChild(iframe);
+            }, { once: true });
+          } else {
+            videoFrame.innerHTML = '<a class="btn btn-gold cs-video-external" href="' + esc(video.url) + '" target="_blank" rel="noopener" aria-label="' + esc(T("fiche.video.aria", { t: titreVideo }, "Voir la vidéo de " + titreVideo)) + '">' + T("fiche.video", null, "Voir la vidéo") + ' <span class="arr" aria-hidden="true">↗</span></a>';
+          }
+        }
+      }
+
       /* Bouton d'action directe (type_lien → url_destination) */
       var elAction = page.querySelector("[data-cs-action]");
       if (elAction) {
@@ -704,7 +773,7 @@
          ne doit jamais rester en opacité 0 — même correctif que sur la
          page Expertise). Les blocs restés vides restent masqués. */
       Array.prototype.forEach.call(
-        page.querySelectorAll("[data-cs-section], [data-cs-media]"),
+        page.querySelectorAll("[data-cs-section], [data-cs-media], [data-cs-video-card]"),
         function (el) {
           if (getComputedStyle(el).display !== "none") el.classList.add("is-visible");
         });

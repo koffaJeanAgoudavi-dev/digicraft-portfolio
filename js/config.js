@@ -52,7 +52,7 @@ window.CONFIG = {
   // (insensible à la casse / espaces, alias acceptés).
   colonnesAttendues: {
     parametres: ["cle", "valeur"],
-    projets: ["titre", "slug", "categorie", "badge_statut", "description_courte", "image_url", "stack_tags", "statut", "date", "type_lien", "url_destination", "featured", "ordre", "probleme", "solution", "technologies_detail", "resultat"],
+    projets: ["titre", "slug", "categorie", "badge_statut", "description_courte", "image_url", "stack_tags", "statut", "date", "type_lien", "url_destination", "featured", "ordre", "probleme", "solution", "technologies_detail", "resultat", "video_url", "video_format"],
     articles: ["titre", "plateforme", "description", "temps_lecture", "url", "date", "featured", "ordre", "titre_en", "description_en"],
     ressources: ["type", "nom_produit", "description", "prix", "devise", "url_boutique", "badge", "featured", "ordre", "nom_produit_en", "description_en"],
     timeline: ["id", "titre", "description", "image_url", "statut", "date", "lien_optionnel", "featured", "ordre"],

@@ -188,6 +188,18 @@ visite, comme tout le CMS).
 - `interne` → lien vers `projets/<slug>.html` (études de cas V2)
 - `externe` → lien vers `url_destination` (nouvel onglet)
 
+### Démo vidéo des projets
+
+Ajoutez à la fin de l'onglet `Projets` les colonnes facultatives `video_url` et
+`video_format`. `video_format` accepte `horizontal` (valeur par défaut) ou
+`vertical`. Les URLs YouTube `watch`, `youtu.be`, `shorts` et `embed` sont
+converties vers le lecteur privé `youtube-nocookie.com` ; la miniature est
+affichée avant le clic et aucun iframe n'est créé avant l'action du visiteur.
+Une URL vidéo non YouTube ouvre un nouvel onglet avec le bouton « Voir la
+vidéo ». Une cellule vide, invalide ou factice masque entièrement le bloc et
+la pastille `▶ Démo`. Les cartes de projet restent inchangées lorsque ces
+colonnes sont vides.
+
 ---
 
 ## 3. Images

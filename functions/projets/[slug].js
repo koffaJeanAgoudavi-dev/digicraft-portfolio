@@ -171,6 +171,19 @@ function injecterMeta(html, projet, urlCanonique, origine) {
   return html;
 }
 
+/* Prépare uniquement une URL vidéo HTTP(S) propre dans le gabarit. Le
+   lecteur lui-même reste créé côté client après le clic, sans iframe initial. */
+function injecterVideoData(html, projet) {
+  const brut = lireChamp(projet, "video_url");
+  const url = /^https?:\/\/[^\s<>"']+$/i.test(brut) ? brut : "";
+  if (!url) return html;
+  const format = lireChamp(projet, "video_format").toLowerCase() === "vertical" ? "vertical" : "horizontal";
+  return html.replace(
+    /(<section\b[^>]*data-cs-video-card\b)([^>]*>)/i,
+    (_m, avant, apres) => avant + ' data-cs-video-url="' + echapper(url) + '" data-cs-video-format="' + format + '"' + apres
+  );
+}
+
 async function reponse404(context) {
   const html = await recupererAssetHtml(context, "/404");
   if (html) {
@@ -203,7 +216,10 @@ async function servirFiche(context, projet, slugPropre) {
     return reponse404(context);
   }
   const urlCanonique = url.origin + "/projets/" + slugPropre + "/";
-  if (projet) html = injecterMeta(html, projet, urlCanonique, url.origin);
+  if (projet) {
+    html = injecterMeta(html, projet, urlCanonique, url.origin);
+    html = injecterVideoData(html, projet);
+  }
   return new Response(html, {
     status: 200,
     headers: {
