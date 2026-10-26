@@ -275,16 +275,18 @@
       ? '<div class="p-foot"><span class="p-status">' + esc(statut) + '</span><span class="p-actions">' + lienInterne + action + '</span></div>'
       : (statut ? '<div class="p-foot"><span class="p-status">' + esc(statut) + '</span></div>' : "");
 
-    return '<article class="card card-hover p-card reveal">' +
-      media +
-      '<div class="p-body">' +
+    return '<article class="card card-hover p-card p-card-split reveal">' +
+      '<div class="p-left">' +
+        media +
         ((b.libelle || cat || demo)
-          ? '<div class="p-top">' +
+          ? '<div class="p-left-meta">' +
               (b.libelle ? '<span class="badge-statut ' + b.classe + '">' + esc(b.libelle) + '</span>' : "") +
               (cat ? '<span class="p-cat">' + esc(cat) + '</span>' : "") +
-              (demo ? '<span class="demo-pill" aria-label="' + esc(T("projets.demo.aria", { t: txt(projet, "titre") }, "Démo vidéo")) + '">' + T("projets.demo", null, "▶ Démo") + '</span>' : "") +
+              (demo ? '<span class="demo-pill" role="img" aria-label="' + esc(T("projets.demo.aria", { t: txt(projet, "titre") }, "Démo vidéo")) + '">' + T("projets.demo", null, "▶ Démo") + '</span>' : "") +
             '</div>'
           : "") +
+      '</div>' +
+      '<div class="p-body">' +
         '<h3 class="p-title">' + titre + '</h3>' +
         (projet.description_courte ? '<p class="p-desc">' + esc(txt(projet, "description_courte")) + '</p>' : "") +
         (ms ? '<p class="stack-mono">' + esc(ms) + '</p>' : "") +
