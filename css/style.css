@@ -2507,3 +2507,18 @@ body.case-study-page{
   .p-card-split,
   .p-card-split .p-media img{transition:none}
 }
+
+
+/* Project cards carousel: two cards per desktop view */
+@media (min-width:720px){
+  .carousel .p-card{
+    flex:0 0 calc((100% - 1.25rem)/2);
+    max-width:calc((100% - 1.25rem)/2);
+  }
+}
+@media (max-width:719px){
+  .carousel .p-card{
+    flex:0 0 84%;
+    max-width:84%;
+  }
+}
