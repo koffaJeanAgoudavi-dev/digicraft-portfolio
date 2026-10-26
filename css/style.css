@@ -2522,3 +2522,16 @@ body.case-study-page{
     max-width:84%;
   }
 }
+
+
+/* Projects page container: two cards per row on desktop */
+@media (min-width:1024px){
+  #grille-projets.grid-3{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width:1023px){
+  #grille-projets.grid-3{
+    grid-template-columns:1fr;
+  }
+}
