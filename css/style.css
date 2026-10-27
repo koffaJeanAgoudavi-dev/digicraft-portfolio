@@ -748,12 +748,6 @@ body.dock-sheet-open{overflow:hidden}
 .xp-tag[href]:hover{background:var(--gold-soft);border-color:var(--gold)}
 .xp-tag[href]::after{content:"→";font-family:var(--font-body);font-size:.8em;opacity:.85}
 
-/* Aperçu accueil : cartes compactes et cliquables vers /expertise/ */
-.xp-card-sm{cursor:pointer;gap:.6rem;padding:1.4rem 1.35rem}
-.xp-card-sm .xp-title{font-size:1.1rem}
-.xp-card-sm .xp-desc{font-size:.9rem}
-.xp-card-sm:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-
 /* ---------- Expertise accueil : cartes horizontales 2 blocs ----------
    Alignées sur le langage visuel de la section Parcours (carte blanche,
    pilule lavande) : BLOC 1 gauche ~30% (badge catégorie + visuel
@@ -840,11 +834,6 @@ main#contenu{overflow-x:hidden}   /* wrapper principal : aucun débordement glob
   .xp-h-titre{font-size:1.12rem}
   .xp-h-projets{gap:.4rem .7rem}
 }
-.xp-card-sm::after{
-  content:"En savoir plus →";font-size:.8rem;font-weight:600;color:var(--gold-2);
-  margin-top:auto;padding-top:.4rem;
-}
-.xp-card-sm:hover::after{color:var(--gold)}
 @media (prefers-reduced-motion:reduce){.xp-card::before{opacity:1}}
 
 /* ---------- Réalisations v2 — cartes, pilules, filtres (Étape 4) ---------- */
@@ -938,14 +927,6 @@ main#contenu{overflow-x:hidden}   /* wrapper principal : aucun débordement glob
 }
 
 /* ---------- Parcours — expériences, formations, certifications (v0.2 §7) ---------- */
-.parc-groupe{margin-top:2.4rem}
-.parc-groupe:first-child{margin-top:0}
-.parc-groupe-titre{display:flex;align-items:baseline;gap:.6rem;font-size:1.25rem;margin-bottom:1.1rem}
-.parc-count{font-family:var(--font-mono);font-style:normal;font-size:.72rem;font-weight:700;color:var(--gold-2);background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:999px;padding:.05rem .5rem}
-.parc-grid{display:grid;gap:1.1rem;grid-template-columns:1fr}
-@media (min-width:720px){.parc-grid{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:1024px){.parc-grid{grid-template-columns:repeat(3,1fr)}}
-
 .parc-badge{align-self:flex-start;max-height:52px;width:auto;border-radius:8px;margin-bottom:.2rem}
 .parc-titre{font-size:1.1rem;line-height:1.25}
 .parc-org{font-size:.86rem;font-weight:600;color:var(--ink)}
@@ -960,13 +941,10 @@ main#contenu{overflow-x:hidden}   /* wrapper principal : aucun débordement glob
 .parc-card .stack-badges{margin-top:.7rem}
 .parc-card .parc-foot + *, .parc-card > *:last-child{margin-bottom:0}
 
-/* Le bloc d'aperçu sur l'accueil reprend la même grille, en 3 colonnes max */
-#apercu-parcours .parc-grid{margin-top:.2rem}
-
 /* ---------- Parcours : Split Timeline & Detail Preview (Phase 1, 2026-10-27) ----------
    Page /parcours/ : liste chronologique compacte à gauche (timeline unifiée,
    une pastille par entrée), carte de détail à droite. Le mode « aperçu » de
-   la page d'accueil (.parc-grid / .parc-card) n'est PAS concerné. */
+   la page d'accueil (.parc-card) n'est PAS concerné. */
 .career-split-container{
   display:grid;
   grid-template-columns:minmax(280px,360px) minmax(0,1fr);
