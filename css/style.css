@@ -947,6 +947,84 @@ body.dock-sheet-open{overflow:hidden}
   .career-item-titre{font-size:.9rem}
 }
 
+/* ---------- Carte Focus dynamique (Phase 2, 2026-10-27) ----------
+   Carte de détail enrichie rendue dans .career-focus-panel : en-tête
+   (pastille + micro-libellé + grand titre + organisation), badges
+   (période, type, « En cours » vert si date_fin = présent), description
+   et bouton d'action. La permutation au clic est animée (fondu +
+   micro-glissement), désactivée si prefers-reduced-motion. */
+.career-focus-card{
+  display:flex;flex-direction:column;gap:1.15rem;
+  padding:1.7rem 1.7rem 1.5rem;
+  border:1px solid rgba(226,232,240,.95);border-radius:20px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 10px 30px -10px rgba(109,40,217,.08),0 1px 2px rgba(15,23,42,.03);
+  backdrop-filter:blur(16px);
+}
+.career-focus-head{display:flex;align-items:center;gap:1rem;min-width:0}
+.career-focus-ico{
+  width:56px;height:56px;border-radius:14px;flex:none;
+  display:grid;place-items:center;
+  background:var(--lav-soft,#F5F3FF);color:#6D28D9;
+  border:1px solid var(--lav-line,#E7DEFB);
+}
+.career-focus-ico svg{width:26px;height:26px}
+.career-focus-ico img{width:100%;height:100%;object-fit:contain;border-radius:12px;background:#fff}
+.career-focus-headtxt{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.career-focus-type{
+  font-family:var(--font-mono);font-size:.62rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;
+}
+.career-focus-titre{margin:0;color:#0F172A;font-size:clamp(1.35rem,2.4vw,1.9rem);letter-spacing:-.03em;line-height:1.15;overflow-wrap:break-word}
+.career-focus-org{margin:0;font-size:.92rem;font-weight:600;color:#475569}
+.career-focus-badges{display:flex;flex-wrap:wrap;gap:.5rem}
+.career-focus-periode{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--font-mono);font-size:.7rem;color:var(--lav-dark,#4B2A9F);
+  background:var(--lav-soft,#F5F3FF);border:1px solid var(--lav-line,#E7DEFB);
+  border-radius:999px;padding:.32rem .7rem;
+}
+.career-focus-periode svg{flex:none;color:#6D28D9}
+.career-focus-statut{
+  display:inline-flex;align-items:center;
+  font-size:.7rem;font-weight:700;color:#475569;
+  background:rgba(255,255,255,.9);border:1px solid #E2E8F0;
+  border-radius:999px;padding:.32rem .7rem;
+}
+.career-focus-live{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.7rem;font-weight:700;color:#047857;
+  background:#ECFDF5;border:1px solid #A7F3D0;
+  border-radius:999px;padding:.32rem .7rem;
+}
+.career-live-dot{width:7px;height:7px;border-radius:50%;background:#10B981;box-shadow:0 0 0 4px rgba(16,185,129,.12);flex:none}
+.career-focus-desc{margin:0;color:#475569;font-size:1rem;line-height:1.75}
+.career-focus-foot{margin-top:auto;padding-top:.9rem;display:flex}
+.career-focus-btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:#6D28D9;color:#fff;border:1px solid #6D28D9;border-radius:12px;
+  padding:.68rem 1.15rem;font-weight:600;font-size:.92rem;text-decoration:none;
+  box-shadow:0 10px 22px rgba(109,40,217,.16);
+  transition:background .2s ease,border-color .2s ease,transform .2s ease;
+}
+.career-focus-btn:hover{background:#5B21B6;border-color:#5B21B6;color:#fff}
+.career-focus-btn:focus-visible{outline:2px solid #6D28D9;outline-offset:2px}
+.career-focus-btn svg{flex:none}
+/* Transition de permutation (effet dashboard SaaS) */
+@keyframes careerSwap{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+.career-focus-card.is-swapping{animation:careerSwap .38s var(--ease) both}
+@media (prefers-reduced-motion:reduce){
+  .career-focus-card.is-swapping{animation:none}
+}
+@media (max-width:560px){
+  .career-focus-card{padding:1.25rem 1.15rem 1.1rem;border-radius:16px}
+  .career-focus-ico{width:46px;height:46px;border-radius:12px}
+  .career-focus-ico svg{width:22px;height:22px}
+}
+
 /* ---------- Articles & Ressources — ajustements v2 (étape 8) ---------- */
 /* Articles : étiquette de plateforme (mono) + média optionnel */
 .a-plat{font-family:var(--font-mono);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2)}
