@@ -760,7 +760,39 @@ body.dock-sheet-open{overflow:hidden}
    pilule lavande) : BLOC 1 gauche ~30% (badge catégorie + visuel
    d'ancrage cadré façon badges Parcours), BLOC 2 droite ~70% (titre,
    description concise, projets preuves ➔). Cartes statiques. */
-#apercu-expertise{display:flex;flex-direction:column;gap:1rem}
+/* ---------- Expertise accueil : carrousel horizontal ----------
+   Scroll-snap PAR CARTE (décision utilisateur) : 2 cartes par vue
+   ≥1024px (~48,4% chacune), 1 carte <1023px avec swipe tactile.
+   Scrollbar masquée comme les carrousels Projets/Articles ; hauteur
+   contenue : la description est raccourcie à 2 lignes (coupure
+   propre) et les cartes d'une même vue s'alignent à hauteur égale. */
+main#contenu{overflow-x:hidden}   /* wrapper principal : aucun débordement global */
+.expertise-carousel-container{
+  display:flex;gap:1.25rem;
+  overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  padding:6px 6px 14px;margin:-6px;
+  scrollbar-width:none;
+}
+.expertise-carousel-container::-webkit-scrollbar{display:none}
+.expertise-carousel-container .expertise-card-horizontal{
+  flex:0 0 calc((100% - 1.25rem)/2);
+  scroll-snap-align:start;
+}
+.expertise-carousel-container .skel{
+  flex:0 0 calc((100% - 1.25rem)/2);
+  scroll-snap-align:start;min-height:170px;
+}
+.expertise-carousel-container .xp-h-desc{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+/* Points de pagination discrets — 1 par carte, actif en pilule lavande */
+.expertise-carousel-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.65rem}
+.expertise-carousel-dots[hidden]{display:none}
+.xp-dot{width:8px;height:8px;border-radius:999px;border:none;padding:0;background:#CBD5E1;cursor:pointer;transition:width .25s var(--ease),background .25s var(--ease)}
+.xp-dot:hover{background:#94A3B8}
+.xp-dot:focus-visible{outline:2px solid #6D28D9;outline-offset:2px}
+.xp-dot.is-active{width:22px;background:#6D28D9}
 .expertise-card-horizontal{
   display:grid;grid-template-columns:minmax(210px,30%) minmax(0,1fr);
   gap:clamp(1.1rem,2.5vw,1.9rem);align-items:center;
@@ -796,8 +828,11 @@ body.dock-sheet-open{overflow:hidden}
 .xp-h-lien:focus-visible{outline:2px solid #6D28D9;outline-offset:2px;border-radius:4px}
 .xp-h-lien.is-text{color:#94A3B8;font-weight:500}
 @media (max-width:1023px){
-  /* Mobile : Bloc 2 sous Bloc 1 ; le visuel s'aligne en ligne (badge + icône). */
+  /* Mobile : 1 carte par vue (swipe tactile) ; Bloc 2 sous Bloc 1 ; le
+     visuel s'aligne en ligne (badge + icône). */
   .expertise-card-horizontal{grid-template-columns:1fr;gap:1rem}
+  .expertise-carousel-container .expertise-card-horizontal{flex-basis:100%}
+  .expertise-carousel-container .skel{flex-basis:100%}
   .xp-h-visuel{flex-direction:row;align-items:center;gap:1rem}
   .xp-h-ico{width:52px;height:52px;border-radius:14px}
   .xp-h-ico svg{width:23px;height:23px}

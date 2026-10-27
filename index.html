@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261027o">
+  <link rel="stylesheet" href="css/style.css?v=20261027p">
 
   <meta name="author" content="Koffa Jean Agoudavi">
   <meta property="og:image:width" content="1366">
@@ -254,14 +254,23 @@
     <!-- ============ EXPERTISE ============ -->
     <section class="section" id="expertise">
       <div class="container">
-        <div class="section-head reveal">
-          <p class="eyebrow" data-i18n="accueil.eyebrow.xp">Expertise</p>
-          <p class="section-intro" data-i18n="accueil.xp.intro">Chaque projet part d'un problème réel : trop de temps perdu, trop de tâches répétitives, un processus qui pourrait être plus simple. Voici comment je les transforme en systèmes qui fonctionnent.</p>
-          <h2 data-i18n="accueil.xp.titre">Ce que je peux automatiser pour vous</h2>
-        </div>
-        <div id="apercu-expertise" data-xp-mode="apercu" data-xp-limit="6"
-             aria-live="polite" aria-busy="true" aria-label="Expertises">
-          <!-- injecté par js/expertise.js depuis l’onglet « Expertise » -->
+        <div class="carousel-wrap expertise-carousel-wrap">
+          <div class="carousel-head reveal">
+            <div class="section-head">
+              <p class="eyebrow" data-i18n="accueil.eyebrow.xp">Expertise</p>
+              <p class="section-intro" data-i18n="accueil.xp.intro">Chaque projet part d'un problème réel : trop de temps perdu, trop de tâches répétitives, un processus qui pourrait être plus simple. Voici comment je les transforme en systèmes qui fonctionnent.</p>
+              <h2 data-i18n="accueil.xp.titre">Ce que je peux automatiser pour vous</h2>
+            </div>
+            <div class="carousel-arrows">
+              <button class="c-arrow" data-xp-carousel-prev aria-label="Expertise précédente" data-i18n-aria="accueil.xp.prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+              <button class="c-arrow" data-xp-carousel-next aria-label="Expertise suivante" data-i18n-aria="accueil.xp.next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </div>
+          <div id="apercu-expertise" class="expertise-carousel-container" data-xp-mode="apercu" data-xp-limit="6"
+               aria-live="polite" aria-busy="true" aria-label="Expertises, défilement horizontal" data-i18n-aria="accueil.xp.aria">
+            <!-- injecté par js/expertise.js depuis l’onglet « Expertise » -->
+          </div>
+          <div class="expertise-carousel-dots" data-xp-dots></div>
         </div>
         <div style="text-align:center;margin-top:1.75rem">
           <a class="btn btn-ghost" href="expertise/"><span data-i18n="accueil.xp.btn">Voir toute l'expertise</span> <span class="arr">→</span></a>
@@ -499,21 +508,21 @@
   </footer>
 
   <script>window.SITE_ROOT = "";</script>
-  <script src="js/config.js?v=20261027o"></script>
-  <script src="js/consent.js?v=20261027o"></script>
-  <script src="js/analytics.js?v=20261027o"></script>
-  <script src="js/sheets.js?v=20261027o"></script>
-  <script src="js/offres.js?v=20261027o"></script>
-  <script src="js/projects.js?v=20261027o"></script>
-  <script src="js/articles.js?v=20261027o"></script>
-  <script src="js/resources.js?v=20261027o"></script>
-  <script src="js/expertise.js?v=20261027o"></script>
-  <script src="js/activite.js?v=20261027o"></script>
-  <script src="js/parcours.js?v=20261027o"></script>
-  <script src="js/temoignages.js?v=20261027o"></script>
-  <script src="js/i18n.js?v=20261027o"></script>
-  <script src="js/main.js?v=20261027o"></script>
-  <script src="js/dock.js?v=20261027o"></script>
+  <script src="js/config.js?v=20261027p"></script>
+  <script src="js/consent.js?v=20261027p"></script>
+  <script src="js/analytics.js?v=20261027p"></script>
+  <script src="js/sheets.js?v=20261027p"></script>
+  <script src="js/offres.js?v=20261027p"></script>
+  <script src="js/projects.js?v=20261027p"></script>
+  <script src="js/articles.js?v=20261027p"></script>
+  <script src="js/resources.js?v=20261027p"></script>
+  <script src="js/expertise.js?v=20261027p"></script>
+  <script src="js/activite.js?v=20261027p"></script>
+  <script src="js/parcours.js?v=20261027p"></script>
+  <script src="js/temoignages.js?v=20261027p"></script>
+  <script src="js/i18n.js?v=20261027p"></script>
+  <script src="js/main.js?v=20261027p"></script>
+  <script src="js/dock.js?v=20261027p"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       window.Prjs.carouselAccueil("carousel-projets");
