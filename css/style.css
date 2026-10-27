@@ -868,6 +868,10 @@ body.dock-sheet-open{overflow:hidden}
 .parc-desc{font-size:.9rem;color:var(--ink-2)}
 .parc-foot{margin-top:auto;padding-top:.7rem}
 .parc-verif{font-size:.86rem}
+/* Badges d'outils sur les cartes de l'aperçu accueil (stack_tags) :
+   même langage visuel que la carte Focus (pilules .stack-badge),
+   ancrés au-dessus du pied de carte. */
+.parc-card .stack-badges{margin-top:.7rem}
 .parc-card .parc-foot + *, .parc-card > *:last-child{margin-bottom:0}
 
 /* Le bloc d'aperçu sur l'accueil reprend la même grille, en 3 colonnes max */
