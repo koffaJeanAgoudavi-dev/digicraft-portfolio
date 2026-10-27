@@ -2535,3 +2535,76 @@ body.case-study-page{
     grid-template-columns:1fr;
   }
 }
+/* ============================================================
+   PROJECT CARDS — image gauche agrandie, rendu statique
+   ============================================================ */
+.p-card-split .p-left{
+  min-width:0;
+  overflow:hidden;
+}
+.p-card-split .p-media,
+.p-card-split .p-media-inner{
+  width:100%;
+  max-width:100%;
+  min-height:0;
+  aspect-ratio:4 / 3;
+  overflow:hidden;
+  border:0;
+  border-radius:12px;
+  background:#F8F9FA;
+}
+.p-card-split .p-media-inner{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+}
+.p-card-split .p-media-inner::before{display:none}
+.p-card-split .p-media img{
+  position:relative;
+  inset:auto;
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  max-height:200px;
+  padding:0;
+  object-fit:contain;
+  transform:none;
+  filter:none;
+}
+.p-card-split .p-media .p-ph{
+  position:relative;
+  inset:auto;
+  width:100%;
+  min-height:160px;
+  border-radius:12px;
+}
+
+/* Aucun effet de survol sur les cartes projet ni leurs médias */
+.p-card-split,
+.p-card-split:hover,
+.carousel .p-card-split:hover{
+  transform:none;
+  border-color:var(--feature-line);
+  box-shadow:var(--feature-shadow);
+  transition:none;
+}
+.p-card-split:hover .p-media img,
+.carousel .p-card-split:hover .p-media img,
+.p-card-split .p-media img{
+  transform:none;
+  filter:none;
+}
+.p-card-split .p-title a:hover,
+.p-card-split .p-actions a:hover,
+.p-card-split .p-actions .btn-xs:hover{
+  color:inherit;
+  background:inherit;
+  border-color:inherit;
+}
+@media (max-width:767px){
+  .p-card-split .p-media,
+  .p-card-split .p-media-inner{aspect-ratio:16 / 9}
+  .p-card-split .p-media img{max-height:180px}
+}
