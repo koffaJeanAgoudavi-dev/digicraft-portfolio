@@ -764,36 +764,20 @@
           }
         }
       }
-      if (elMedia) {
-        var visualCard = elMedia.closest ? elMedia.closest("[data-cs-visual-card]") : null;
-        if (p.image_url) {
-          var detailImage = window.Sheets.optimizedImageUrl(p.image_url, 800);
-          var detailSrcset = window.Sheets.responsiveImageSrcset(p.image_url, [400, 800, 1200]);
-          elMedia.innerHTML = '<img src="' + esc(detailImage) + '"' + (detailSrcset ? ' srcset="' + esc(detailSrcset) + '" sizes="(max-width: 760px) 88vw, 760px"' : '') + ' alt="' + esc(txt(p, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">';
-          elMedia.style.display = ""; /* V1.3 : fiche générique pré-masquée */
-          if (visualCard) visualCard.style.display = "";
-        } else {
-          var im = elMedia.querySelector("img");
-          if (!im || !im.getAttribute("src")) {
-            elMedia.style.display = "none";
-            if (visualCard) visualCard.style.display = "none";
-          }
-        }
-      }
-
-      /* Démo vidéo : la miniature est chargée seule. L'iframe YouTube
-         n'est créée qu'après le clic, donc aucun lecteur ni cookie avant
-         l'action explicite du visiteur. */
-      var videoCard = page.querySelector("[data-cs-video-card]");
+      /* Média hero (Phase 2) : la démo vidéo est remontée sous l'en-tête ;
+         l'image du projet sert de repli sans vidéo. Aucun visuel inventé :
+         sans vidéo ni image, le bloc reste masqué. La miniature YouTube
+         est chargée seule — l'iframe n'est créée qu'après le clic, donc
+         aucun lecteur ni cookie avant l'action explicite du visiteur. */
+      var heroMedia = page.querySelector("[data-cs-hero-media]");
       var videoFrame = page.querySelector("[data-cs-video-frame]");
       var video = videoInfo(p);
-      if (videoCard && videoFrame) {
-        if (!video) {
-          videoCard.hidden = true;
-          videoFrame.innerHTML = "";
-        } else {
-          videoCard.hidden = false;
-          videoCard.classList.toggle("is-vertical", video.format === "vertical");
+      if (heroMedia && videoFrame) {
+        if (video) {
+          /* Vidéo prioritaire : l'image (Sheet ou statique) est masquée. */
+          heroMedia.hidden = false;
+          heroMedia.classList.toggle("is-vertical", video.format === "vertical");
+          if (elMedia) elMedia.style.display = "none";
           var titreVideo = txt(p, "titre") || "projet";
           if (video.youtube) {
             videoFrame.innerHTML = '<button type="button" class="cs-video-poster" data-cs-video-play data-video-embed="' + esc(video.embed) + '" data-video-title="' + esc(titreVideo + " — démo") + '" aria-label="' + esc(T("fiche.demo.aria", { t: titreVideo }, "Voir la démo de " + titreVideo)) + '">' +
@@ -814,6 +798,20 @@
           } else {
             videoFrame.innerHTML = '<a class="btn btn-gold cs-video-external" href="' + esc(video.url) + '" target="_blank" rel="noopener" aria-label="' + esc(T("fiche.video.aria", { t: titreVideo }, "Voir la vidéo de " + titreVideo)) + '">' + T("fiche.video", null, "Voir la vidéo") + ' <span class="arr" aria-hidden="true">↗</span></a>';
           }
+        } else {
+          /* Repli image : celle du Sheet si fournie, sinon l'image statique
+             du gabarit (pages statiques — repli sans Sheet). */
+          videoFrame.innerHTML = "";
+          heroMedia.classList.remove("is-vertical");
+          if (p.image_url && elMedia) {
+            var detailImage = window.Sheets.optimizedImageUrl(p.image_url, 800);
+            var detailSrcset = window.Sheets.responsiveImageSrcset(p.image_url, [400, 800, 1200]);
+            elMedia.innerHTML = '<img src="' + esc(detailImage) + '"' + (detailSrcset ? ' srcset="' + esc(detailSrcset) + '" sizes="(max-width: 760px) 88vw, 760px"' : '') + ' alt="' + esc(txt(p, "titre")) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">';
+          }
+          var imgHero = elMedia ? elMedia.querySelector("img") : null;
+          var mediaVisible = !!(imgHero && String(imgHero.getAttribute("src") || "").trim());
+          if (elMedia) elMedia.style.display = mediaVisible ? "" : "none";
+          heroMedia.hidden = !mediaVisible;
         }
       }
 
@@ -859,7 +857,7 @@
          ne doit jamais rester en opacité 0 — même correctif que sur la
          page Expertise). Les blocs restés vides restent masqués. */
       Array.prototype.forEach.call(
-        page.querySelectorAll("[data-cs-section], [data-cs-media], [data-cs-video-card]"),
+        page.querySelectorAll("[data-cs-section], [data-cs-hero-media]"),
         function (el) {
           if (getComputedStyle(el).display !== "none") el.classList.add("is-visible");
         });

@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../../css/style.css?v=20261027c">
+  <link rel="stylesheet" href="../../css/style.css?v=20261027d">
 
   <meta name="author" content="Koffa Jean Agoudavi">
   <meta property="og:image:width" content="1366">
@@ -136,6 +136,14 @@
         <div class="cs-actions">
           <a class="btn btn-gold" data-cs-action href="https://t.me/scribo_ia_bot" target="_blank" rel="noopener" aria-label="Bot : ScriboAI Bot">Bot</a>
         </div>
+
+        <!-- Média hero (Phase 2) : vidéo de démo prioritaire, repli image du projet -->
+        <div class="cs-hero-media reveal" data-cs-hero-media>
+          <div class="cs-video-frame" data-cs-video-frame></div>
+          <div class="cs-media" data-cs-media>
+            <img src="https://res.cloudinary.com/mdebk4xz/image/upload/f_auto,q_auto,w_800/v1787947761/scriboai.png" srcset="https://res.cloudinary.com/mdebk4xz/image/upload/f_auto,q_auto,w_400/v1787947761/scriboai.png 400w, https://res.cloudinary.com/mdebk4xz/image/upload/f_auto,q_auto,w_800/v1787947761/scriboai.png 800w, https://res.cloudinary.com/mdebk4xz/image/upload/f_auto,q_auto,w_1200/v1787947761/scriboai.png 1200w" sizes="(max-width: 760px) 88vw, 760px" alt="ScriboAI Bot" width="1280" height="800" loading="lazy" decoding="async">
+          </div>
+        </div>
       </div>
     </section>
 
@@ -144,34 +152,15 @@
 
         <!-- Grille bento : contenus statiques conservés, disposition harmonisée -->
         <div class="cs-bento-grid">
-          <article class="cs-card cs-card-visual reveal" data-cs-visual-card>
-            <header class="cs-card-head">
-              <div class="cs-card-label"><span class="cs-index">01</span><span data-i18n="fiche.bento.architecture">Architecture &amp; flux</span></div>
-              <span class="cs-card-kicker" data-i18n="fiche.bento.media">Schéma technique</span>
-            </header>
-            <div class="cs-media" data-cs-media>
-          <img src="https://res.cloudinary.com/mdebk4xz/image/upload/f_auto,q_auto,w_800/v1787947761/scriboai.png" srcset="https://res.cloudinary.com/mdebk4xz/image/upload/f_auto,q_auto,w_400/v1787947761/scriboai.png 400w, https://res.cloudinary.com/mdebk4xz/image/upload/f_auto,q_auto,w_800/v1787947761/scriboai.png 800w, https://res.cloudinary.com/mdebk4xz/image/upload/f_auto,q_auto,w_1200/v1787947761/scriboai.png 1200w" sizes="(max-width: 760px) 88vw, 760px" alt="ScriboAI Bot" width="1280" height="800" loading="lazy" decoding="async">
-        </div>
-            <footer class="cs-card-foot"><span class="cs-foot-dot"></span><span data-i18n="fiche.bento.media">Visuel du système</span><span class="cs-foot-mono">DIGITAL SYSTEM</span></footer>
-          </article>
-
-          <section class="cs-card cs-video-card reveal" data-cs-video-card hidden>
-            <header class="cs-card-head">
-              <div class="cs-card-label"><span class="cs-index">02</span><span data-i18n="fiche.demo">Voir la démo</span></div>
-              <span class="cs-card-kicker">VIDEO DEMO</span>
-            </header>
-            <div class="cs-video-frame" data-cs-video-frame></div>
-          </section>
-
           <section class="cs-card reveal" data-cs-section="probleme">
-            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">02</span><span data-i18n="fiche.s1.num">01 — Contexte</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.diagnostic">Diagnostic</span></header>
+            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">01</span><span data-i18n="fiche.s1.num">01 — Contexte</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.diagnostic">Diagnostic</span></header>
             <h2 data-i18n="fiche.s1.titre">Le problème</h2>
             <p class="cs-card-text" data-cs-txt>Rédiger rapidement des contenus de qualité peut être chronophage, surtout lorsqu'il faut reformuler, résumer ou structurer des informations directement depuis son téléphone.</p>
             <footer class="cs-card-foot"><span data-i18n="fiche.bento.diagnostic">Problématique opérationnelle</span><span class="cs-foot-mono">CONTEXT</span></footer>
           </section>
 
           <section class="cs-card reveal" data-cs-section="solution">
-            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">03</span><span data-i18n="fiche.s2.num">02 — La réponse</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.engineering">Ingénierie</span></header>
+            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">02</span><span data-i18n="fiche.s2.num">02 — La réponse</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.engineering">Ingénierie</span></header>
             <h2 data-i18n="fiche.s2.titre">La solution</h2>
             <p class="cs-card-text" data-cs-txt>ScriboAI est un assistant rédactionnel accessible depuis Telegram. Il utilise l'IA pour générer, reformuler et synthétiser des textes rapidement, avec une interface conversationnelle simple et accessible sans application dédiée.</p>
             <div class="cs-tech-detail" data-cs-section="technologies_detail">
@@ -182,7 +171,7 @@
           </section>
 
           <section class="cs-card cs-card-result reveal" data-cs-section="resultat">
-            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">04</span><span data-i18n="fiche.s4.num">04 — État actuel</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.results">Résultats &amp; métriques</span></header>
+            <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">03</span><span data-i18n="fiche.s4.num">04 — État actuel</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.results">Résultats &amp; métriques</span></header>
             <h2 data-i18n="fiche.s4.titre">Résultat aujourd'hui</h2>
             <p class="cs-card-text" data-cs-txt>Un assistant accessible directement dans Telegram, conçu pour réduire le temps nécessaire à la rédaction et à la synthèse. Le projet démontre l'intégration de plusieurs services IA dans une architecture légère et accessible.</p>
             <footer class="cs-card-foot"><span class="cs-foot-dot cs-foot-dot-live"></span><span data-i18n="fiche.bento.results">Impact observé</span><span class="cs-foot-mono">LIVE STATUS</span></footer>
@@ -256,16 +245,16 @@
   </footer>
 
   <script>window.SITE_ROOT = "../../";</script>
-  <script src="../../js/config.js?v=20261027c"></script>
-  <script src="../../js/i18n.js?v=20261027c"></script>
-  <script src="../../js/consent.js?v=20261027c"></script>
-  <script src="../../js/analytics.js?v=20261027c"></script>
-  <script src="../../js/sheets.js?v=20261027c"></script>
-  <script src="../../js/projects.js?v=20261027c"></script>
-  <script src="../../js/articles.js?v=20261027c"></script>
-  <script src="../../js/resources.js?v=20261027c"></script>
-  <script src="../../js/main.js?v=20261027c"></script>
-  <script src="../../js/dock.js?v=20261027c"></script>
+  <script src="../../js/config.js?v=20261027d"></script>
+  <script src="../../js/i18n.js?v=20261027d"></script>
+  <script src="../../js/consent.js?v=20261027d"></script>
+  <script src="../../js/analytics.js?v=20261027d"></script>
+  <script src="../../js/sheets.js?v=20261027d"></script>
+  <script src="../../js/projects.js?v=20261027d"></script>
+  <script src="../../js/articles.js?v=20261027d"></script>
+  <script src="../../js/resources.js?v=20261027d"></script>
+  <script src="../../js/main.js?v=20261027d"></script>
+  <script src="../../js/dock.js?v=20261027d"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       window.Prjs.caseStudy();
