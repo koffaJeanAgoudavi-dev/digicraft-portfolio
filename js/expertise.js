@@ -176,13 +176,36 @@
       '</article>';
   }
 
-  function carteApercu(x) {
-    return '<article class="card card-hover xp-card xp-card-sm reveal">' +
-      '<span class="xp-ico">' + icone(x.icone) + '</span>' +
-      (x.categorie ? '<span class="chip xp-cat">' + esc(x.categorie) + '</span>' : '') +
-      '<h3 class="xp-title">' + esc(x.titre) + '</h3>' +
-      (x.description_courte ? '<p class="xp-desc">' + esc(x.description_courte) + '</p>' : '') +
-      '</article>';
+  /* Carte horizontale 2 blocs (accueil) — alignée sur le style de la
+     section Parcours : BLOC 1 gauche ~30% (badge catégorie + visuel
+     d'ancrage cadré), BLOC 2 droite ~70% (titre, description concise,
+     projets preuves). Décisions utilisateur : cartes STATIQUES (liens
+     internes + CTA de section, pas de clic carte) ; 1 ou 2 projets
+     preuves maximum ; jamais de lien fabriqué (exemple non résolu =
+     texte simple). */
+  function carteHorizontale(x, index) {
+    var exemples = (x.exemples || []).slice(0, 2);
+    var liens = exemples.map(function (nom) {
+      var slug = resoudreExemple(nom, index || {});
+      if (slug) {
+        var href = (window.SITE_ROOT || "") + "projets/" + slug + "/";
+        return '<a class="xp-h-lien" href="' + esc(href) + '">' + esc(nom) +
+          '<span aria-hidden="true">➔</span></a>';
+      }
+      return '<span class="xp-h-lien is-text">' + esc(nom) + '</span>';
+    }).join("");
+    return '<article class="expertise-card-horizontal reveal">' +
+      '<div class="xp-h-visuel">' +
+        (x.categorie ? '<span class="xp-h-cat">' + esc(x.categorie) + '</span>' : '') +
+        '<span class="xp-h-ico">' + icone(x.icone) + '</span>' +
+      '</div>' +
+      '<div class="xp-h-contenu">' +
+        '<h3 class="xp-h-titre">' + esc(x.titre) + '</h3>' +
+        (x.description_courte ? '<p class="xp-h-desc">' + esc(x.description_courte) + '</p>' : '') +
+        (liens ? '<div class="xp-h-projets"><span class="xp-h-projets-label">' +
+          T("xp.projets", null, "Projets associés") + '</span>' + liens + '</div>' : '') +
+      '</div>' +
+    '</article>';
   }
 
   function etat(type, titre, texte) {
@@ -247,18 +270,10 @@
            (l'ordre prime sur le regroupement). */
         el.innerHTML = liste.map(function (x) { return carteComplete(x, index); }).join("");
       } else {
-        /* Aperçu accueil : pas de liens projets ici (ils vivent sur la
-           page dédiée) — cartes cliquables vers /expertise/. */
-        el.innerHTML = liste.map(carteApercu).join("");
-        Array.prototype.forEach.call(el.querySelectorAll(".xp-card"), function (c, i) {
-          var x = liste[i];
-          c.setAttribute("tabindex", "0");
-          c.setAttribute("role", "link");
-          c.setAttribute("aria-label", T("xp.aria", { t: x.titre }));
-          var aller = function () { window.location.href = (window.SITE_ROOT || "") + "expertise/"; };
-          c.addEventListener("click", aller);
-          c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); aller(); } });
-        });
+        /* Aperçu accueil : cartes horizontales 2 blocs, statiques — les
+           projets preuves sont liés directement (➔), le bouton de section
+           « Voir toute l'expertise » porte la navigation globale. */
+        el.innerHTML = liste.map(function (x) { return carteHorizontale(x, index); }).join("");
       }
       statutSource(el, src, items.length);
       reveler(el);
