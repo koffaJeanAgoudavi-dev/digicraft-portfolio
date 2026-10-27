@@ -279,6 +279,9 @@
       (e.organisation ? '<p class="parc-org">' + esc(e.organisation) + '</p>' : "") +
       (periode ? '<p class="parc-periode"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg><span>' + esc(periode) + '</span></p>' : "") +
       (desc ? '<p class="parc-desc">' + esc(desc) + '</p>' : "") +
+      /* Aperçu accueil : mêmes badges d'outils que la carte Focus de la
+         page Parcours (colonne optionnelle stack_tags du Sheet). */
+      outilsHtml(e, "stack-badges parc-tools") +
       (verif ? '<div class="parc-foot">' + verif + '</div>' : "") +
     '</article>';
   }
@@ -353,6 +356,23 @@
     return T("parc.action.generique", null, "Voir le détail");
   }
 
+  /* Rangée d'outils/compétences (colonne optionnelle stack_tags) :
+     TOOLS_REGISTRY via projects.js quand il est chargé (page Parcours et
+     accueil le font), repli pilules textuelles sinon. Absent ou vide du
+     Sheet → rien (aucune donnée inventée). Le paramètre enveloppe est
+     la classe du conteneur (page Parcours → career-focus-tools ; cartes
+     de l'aperçu accueil → stack-badges parc-tools). */
+  function outilsHtml(e, enveloppe) {
+    var jetons = String((e && e.stack_tags) || "").split(/[,·|;]/)
+      .map(function (t) { return t.replace(/\s+/g, " ").trim(); })
+      .filter(Boolean);
+    if (!jetons.length) return "";
+    var html = (window.Prjs && typeof window.Prjs.stackBadges === "function")
+      ? window.Prjs.stackBadges(e)
+      : jetons.map(function (t) { return '<span class="stack-badge">' + esc(t) + "</span>"; }).join("");
+    return '<div class="' + enveloppe + '">' + html + "</div>";
+  }
+
   function carteFocus(e, langue) {
     var titre = choisir(e.titre, e.titre_en, langue);
     var desc = choisir(e.description, e.description_en, langue);
@@ -365,19 +385,9 @@
       : (ICONES_TYPE[cleTypeIcone(norm)] || ICONE_DEFAUT);
     var verificationUrl = extUrl(e.verification_url);
     var libelle = libelleAction(e);
-    /* Phase 3 : badges d'outils/compétences (colonne optionnelle stack_tags).
-       Moteur TOOLS_REGISTRY de projects.js (icônes) quand il est chargé,
-       repli pilules textuelles sinon — même langage visuel .stack-badges. */
-    var outils = "";
-    var jetons = String(e.stack_tags || "").split(/[,·|;]/)
-      .map(function (t) { return t.replace(/\s+/g, " ").trim(); })
-      .filter(Boolean);
-    if (jetons.length) {
-      var htmlBadges = (window.Prjs && typeof window.Prjs.stackBadges === "function")
-        ? window.Prjs.stackBadges(e)
-        : jetons.map(function (t) { return '<span class="stack-badge">' + esc(t) + "</span>"; }).join("");
-      outils = '<div class="career-focus-tools">' + htmlBadges + "</div>";
-    }
+    /* Outils/compétences : rendu partagé avec les cartes de l'aperçu
+       d'accueil (voir outilsHtml ci-dessus). */
+    var outils = outilsHtml(e, "career-focus-tools");
     var action = verificationUrl
       ? '<a class="career-focus-btn" href="' + esc(verificationUrl) + '" target="_blank" rel="noopener"' +
         ' aria-label="' + esc(libelle + " : " + titre) + '">' + esc(libelle) +
