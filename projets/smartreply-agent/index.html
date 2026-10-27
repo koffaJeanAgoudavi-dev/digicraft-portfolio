@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../../css/style.css?v=20261027d">
+  <link rel="stylesheet" href="../../css/style.css?v=20261027e">
 
   <meta name="author" content="Koffa Jean Agoudavi">
   <meta property="og:image:width" content="1366">
@@ -150,8 +150,8 @@
     <section class="section" style="padding-top:1.5rem">
       <div class="container">
 
-        <!-- Grille bento : contenus statiques conservés, disposition harmonisée -->
-        <div class="cs-bento-grid">
+        <!-- Triptyque : Problème → Solution → Résultats (Phase 3) -->
+        <div class="cs-triptych">
           <section class="cs-card reveal" data-cs-section="probleme">
             <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">01</span><span data-i18n="fiche.s1.num">01 — Contexte</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.diagnostic">Diagnostic</span></header>
             <h2 data-i18n="fiche.s1.titre">Le problème</h2>
@@ -163,20 +163,22 @@
             <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">02</span><span data-i18n="fiche.s2.num">02 — La réponse</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.engineering">Ingénierie</span></header>
             <h2 data-i18n="fiche.s2.titre">La solution</h2>
             <p class="cs-card-text" data-cs-txt>SmartReply Agent surveille une boîte Gmail, analyse chaque email entrant avec un modèle IA (Groq) pour déterminer sa catégorie et sa priorité, puis enregistre ces informations de façon structurée. Les notifications et interactions se font directement depuis Telegram, sans interface web à gérer.</p>
-            <div class="cs-tech-detail" data-cs-section="technologies_detail">
-              <span class="cs-inline-label" data-i18n="fiche.bento.technologies">Stack technique</span>
-              <p data-cs-txt>Make orchestre l'ensemble du workflow. Groq (modèle llama-3.3-70b-versatile) analyse et classe chaque email. Airtable centralise les données dans un schéma à 6 tables. Telegram sert d'unique interface pour les notifications et rapports de synthèse programmés.</p>
-            </div>
             <footer class="cs-card-foot"><span data-i18n="fiche.bento.engineering">Système déployé</span><span class="cs-foot-mono">ENGINEERING</span></footer>
           </section>
 
-          <section class="cs-card cs-card-result reveal" data-cs-section="resultat">
+          <section class="cs-card reveal" data-cs-section="resultat">
             <header class="cs-card-head"><div class="cs-card-label"><span class="cs-index">03</span><span data-i18n="fiche.s4.num">04 — État actuel</span></div><span class="cs-card-kicker" data-i18n="fiche.bento.results">Résultats &amp; métriques</span></header>
             <h2 data-i18n="fiche.s4.titre">Résultat aujourd'hui</h2>
             <p class="cs-card-text" data-cs-txt>La V1.0 (pipeline Make en 4 étapes : Gmail → Groq → Google AI Studio → brouillon Gmail) et la V1.5 (ajout de boutons Telegram interactifs, simplifiés à deux actions Envoyer/Ignorer) sont fonctionnelles. Le développement de la V2.0 — classification par catégorie et priorité, rapports de synthèse programmés — est actuellement en pause, la Phase 3 restant à terminer.</p>
             <footer class="cs-card-foot"><span class="cs-foot-dot cs-foot-dot-live"></span><span data-i18n="fiche.bento.results">Impact observé</span><span class="cs-foot-mono">LIVE STATUS</span></footer>
           </section>
         </div>
+
+        <!-- Stack technique (Phase 3) : bandeau pleine largeur sous le triptyque -->
+        <section class="cs-tech-strip reveal" data-cs-section="technologies_detail">
+          <span class="cs-inline-label" data-i18n="fiche.bento.technologies">Stack technique</span>
+          <p data-cs-txt>Make orchestre l'ensemble du workflow. Groq (modèle llama-3.3-70b-versatile) analyse et classe chaque email. Airtable centralise les données dans un schéma à 6 tables. Telegram sert d'unique interface pour les notifications et rapports de synthèse programmés.</p>
+        </section>
 
         <!-- CTA -->
         <div class="cta-box reveal" style="margin-top:4.5rem">
@@ -245,16 +247,16 @@
   </footer>
 
   <script>window.SITE_ROOT = "../../";</script>
-  <script src="../../js/config.js?v=20261027d"></script>
-  <script src="../../js/i18n.js?v=20261027d"></script>
-  <script src="../../js/consent.js?v=20261027d"></script>
-  <script src="../../js/analytics.js?v=20261027d"></script>
-  <script src="../../js/sheets.js?v=20261027d"></script>
-  <script src="../../js/projects.js?v=20261027d"></script>
-  <script src="../../js/articles.js?v=20261027d"></script>
-  <script src="../../js/resources.js?v=20261027d"></script>
-  <script src="../../js/main.js?v=20261027d"></script>
-  <script src="../../js/dock.js?v=20261027d"></script>
+  <script src="../../js/config.js?v=20261027e"></script>
+  <script src="../../js/i18n.js?v=20261027e"></script>
+  <script src="../../js/consent.js?v=20261027e"></script>
+  <script src="../../js/analytics.js?v=20261027e"></script>
+  <script src="../../js/sheets.js?v=20261027e"></script>
+  <script src="../../js/projects.js?v=20261027e"></script>
+  <script src="../../js/articles.js?v=20261027e"></script>
+  <script src="../../js/resources.js?v=20261027e"></script>
+  <script src="../../js/main.js?v=20261027e"></script>
+  <script src="../../js/dock.js?v=20261027e"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       window.Prjs.caseStudy();
