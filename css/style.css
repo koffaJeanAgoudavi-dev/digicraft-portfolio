@@ -1360,11 +1360,14 @@ body.case-study-page{
 .case-study-page .cs-actions .btn-gold:hover{background:#5B21B6;border-color:#5B21B6}
 /* Triptyque horizontal (Phase 3) : Problème → Solution → Résultats côte à
    côte. Flexbox élastique : une carte masquée (champ Sheet vide) laisse
-   les autres se partager la largeur — jamais de colonne orpheline. */
+   les autres se partager la largeur — jamais de colonne orpheline.
+   V1.4 (2026-10-27) blindage anti-écrasement : alignement explicite et
+   contenu des cartes non compressible (voir règle flex-shrink:0 ci-dessous). */
 .case-study-page .cs-triptych{
   max-width:1180px;
   margin:0 auto;
   display:flex;
+  align-items:stretch;
   gap:1.25rem;
 }
 .case-study-page .cs-triptych>.cs-card{flex:1 1 0}
@@ -1393,7 +1396,18 @@ body.case-study-page{
 }
 .case-study-page .cs-card-kicker{flex:none;color:#94A3B8;font-size:.7rem;font-weight:600;letter-spacing:.04em}
 .case-study-page .cs-card h2{margin:0 0 .85rem;color:#0F172A;font-size:clamp(1.3rem,2.2vw,1.8rem);letter-spacing:-.03em;line-height:1.16}
-.case-study-page .cs-card-text{margin:0;color:#475569;font-size:.98rem;line-height:1.75;white-space:pre-line}
+.case-study-page .cs-card-text{margin:0;color:#475569;font-size:.98rem;line-height:1.75;white-space:pre-line;overflow-wrap:break-word}
+/* V1.4 (2026-10-27) — correctif « texte écrasé » : dans un conteneur flex
+   en colonne, les enfants ont flex-shrink:1 par défaut : si une contrainte
+   de hauteur apparaît (héritée, moteur, zoom), le bloc de texte — le plus
+   grand enfant — est le premier comprimé vers 0 sous overflow:hidden, ce
+   qui donne exactement « en-têtes visibles, corps replié ». En interdisant
+   la compression verticale de TOUS les enfants de contenu, le texte pousse
+   la carte au lieu de s'effacer ; la carte grandit avec son contenu. */
+.case-study-page .cs-card>.cs-card-head,
+.case-study-page .cs-card>h2,
+.case-study-page .cs-card>.cs-card-text,
+.case-study-page .cs-card>.cs-card-foot{flex-shrink:0}
 /* Média hero (Phase 2) : démo vidéo remontée sous l'en-tête, repli image.
    Bloc immersif épuré — pas d'habillage bento. Vidéo 16:9 (ou 9:16
    centrée pour le format vertical) ; image en ratio naturel (aucun
@@ -1443,10 +1457,18 @@ body.case-study-page{
   color:var(--lav-dark,#4B2A9F);background:#fff;border:1px solid var(--lav-line,#EDE9FE);
   border-radius:999px;padding:.32rem .7rem;
 }
-.case-study-page .cs-tech-strip p{margin:0;color:#475569;font-family:var(--font-mono);font-size:.8rem;line-height:1.7;white-space:pre-line}
+.case-study-page .cs-tech-strip p{margin:0;color:#475569;font-family:var(--font-mono);font-size:.8rem;line-height:1.7;white-space:pre-line;overflow-wrap:break-word}
 .case-study-page .cta-box{max-width:1180px;margin-inline:auto!important;margin-top:4.5rem;border-color:#DDD6FE;background:linear-gradient(135deg,#F5F3FF,#fff)}
 @media (max-width:1023px){
   .case-study-page .cs-triptych{flex-direction:column;gap:1rem}   /* 3 colonnes trop étroites entre 820 et 1024px */
+  /* V1.4 (2026-10-27) — correctif « texte écrasé » (bug mobile) :
+     `flex:1 1 0` (règle desktop, répartition en LARGEUR) devient
+     destructeur en colonne : flex-basis 0 sur l'axe VERTICAL + overflow
+    :hidden (qui annule min-height:auto → 0) écrase chaque carte à la
+     hauteur de son seul en-tête, tout le contenu suivant étant rogné.
+     En empilement mobile, la hauteur d'une carte doit redevenir celle
+     de son contenu : flex:none (= 0 0 auto). */
+  .case-study-page .cs-triptych>.cs-card{flex:none}
 }
 @media (max-width:820px){
   .case-study-page .cs-hero-media{margin-top:1.6rem}
