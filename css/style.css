@@ -873,6 +873,80 @@ body.dock-sheet-open{overflow:hidden}
 /* Le bloc d'aperçu sur l'accueil reprend la même grille, en 3 colonnes max */
 #apercu-parcours .parc-grid{margin-top:.2rem}
 
+/* ---------- Parcours : Split Timeline & Detail Preview (Phase 1, 2026-10-27) ----------
+   Page /parcours/ : liste chronologique compacte à gauche (timeline unifiée,
+   une pastille par entrée), carte de détail à droite. Le mode « aperçu » de
+   la page d'accueil (.parc-grid / .parc-card) n'est PAS concerné. */
+.career-split-container{
+  display:grid;
+  grid-template-columns:minmax(280px,360px) minmax(0,1fr);
+  gap:clamp(1.6rem,3vw,2.6rem);
+  align-items:start;
+}
+@media (max-width:959px){
+  /* Empilement mobile : la timeline reste lisible, le détail passe dessous. */
+  .career-split-container{grid-template-columns:1fr;gap:1.4rem}
+}
+.career-timeline-list{display:flex;flex-direction:column;gap:.4rem;position:relative}
+/* Ligne verticale d'ancrage : elle coulisse derrière les pastilles. */
+.career-timeline-list::before{
+  content:"";position:absolute;left:2rem;top:1.1rem;bottom:1.1rem;width:2px;
+  background:linear-gradient(180deg,var(--lav-line,#E7DEFB),rgba(231,222,251,.25));
+  border-radius:2px;
+}
+.career-item{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:.8rem;
+  width:100%;text-align:left;
+  padding:.7rem .85rem .7rem .75rem;
+  border:1px solid transparent;border-radius:14px;background:transparent;
+  cursor:pointer;position:relative;z-index:1;
+  font:inherit;color:inherit;
+  transition:background .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.career-item:hover{background:rgba(255,255,255,.72)}
+.career-item:focus-visible{outline:2px solid #6D28D9;outline-offset:2px}
+.career-item.is-active{
+  background:rgba(255,255,255,.92);
+  border-color:var(--lav-line,#E7DEFB);
+  box-shadow:0 10px 26px -12px rgba(109,40,217,.18),0 1px 2px rgba(15,23,42,.04);
+}
+.career-item-ico{
+  width:38px;height:38px;border-radius:11px;flex:none;
+  display:grid;place-items:center;
+  background:var(--lav-soft,#F5F3FF);color:#6D28D9;
+  border:1px solid var(--lav-line,#E7DEFB);
+}
+.career-item.is-active .career-item-ico{background:#fff}
+.career-item-ico svg{width:19px;height:19px}
+.career-item-ico img{width:100%;height:100%;object-fit:contain;border-radius:10px;background:#fff}
+.career-item-body{display:flex;flex-direction:column;gap:.12rem;min-width:0}
+.career-item-type{
+  font-family:var(--font-mono);font-size:.6rem;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;color:#94A3B8;
+}
+.career-item-titre{font-size:.94rem;font-weight:700;color:#0F172A;line-height:1.3}
+.career-item-org{
+  font-size:.78rem;color:#475569;line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.career-item-periode{
+  font-family:var(--font-mono);font-size:.66rem;letter-spacing:.02em;color:var(--lav-dark,#4B2A9F);
+  background:var(--lav-soft,#F5F3FF);border:1px solid var(--lav-line,#E7DEFB);
+  border-radius:999px;padding:.28rem .6rem;white-space:nowrap;align-self:center;
+  max-width:9.5rem;overflow:hidden;text-overflow:ellipsis;
+}
+.career-item.is-active .career-item-periode{background:#fff}
+.career-focus-panel{position:sticky;top:100px;min-width:0}   /* aligné sur .actv-aside */
+@media (max-width:959px){
+  .career-focus-panel{position:static}   /* pas de sticky en empilement mobile */
+}
+@media (max-width:560px){
+  /* Très petits écrans : la période passe sous le texte, badge aligné à gauche. */
+  .career-item{grid-template-columns:auto minmax(0,1fr);row-gap:.4rem}
+  .career-item-periode{grid-column:2;justify-self:start}
+  .career-item-titre{font-size:.9rem}
+}
+
 /* ---------- Articles & Ressources — ajustements v2 (étape 8) ---------- */
 /* Articles : étiquette de plateforme (mono) + média optionnel */
 .a-plat{font-family:var(--font-mono);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2)}

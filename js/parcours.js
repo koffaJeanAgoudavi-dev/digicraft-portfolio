@@ -201,6 +201,25 @@
     });
   }
 
+  /* Phase 1 (2026-10-27) — Split Timeline & Detail Preview : tri
+     chronologique de la liste de gauche. Date d'obtention (début de
+     période) DÉCROISSANTE : l'entrée la plus récente ouvre la timeline
+     (et porte .is-active). Les entrées sans date lisible restent en fin
+     de liste, dans l'ordre du Sheet. Aucune date inventée. */
+  function trierChrono(liste) {
+    return (liste || []).slice().sort(function (a, b) {
+      var da = analyserDate(a.date_obtention), db = analyserDate(b.date_obtention);
+      if (da && db && da.ts !== db.ts) return db.ts - da.ts;
+      if (da && !db) return -1;
+      if (!da && db) return 1;
+      var oa = nombre(a.ordre), ob = nombre(b.ordre);
+      if (oa !== null && ob !== null && oa !== ob) return oa - ob;
+      if (oa !== null && ob === null) return -1;
+      if (oa === null && ob !== null) return 1;
+      return a.position - b.position;
+    });
+  }
+
   /* Groupes par `type` (uniquement ceux réellement présents) */
   function grouper(liste) {
     var ordre = [], map = {};
@@ -261,6 +280,52 @@
     var s = "";
     for (var i = 0; i < n; i++) s += '<div class="skel" style="min-height:180px"></div>';
     return s;
+  }
+
+  /* ---------- Phase 1 (2026-10-27) : Split Timeline & Detail Preview ----------
+     Item compact de la liste chronologique (colonne gauche) : pastille
+     (badge du Sheet ou icône du type), micro-libellé du type, titre,
+     organisation, période en badge. Les items sont des <button> : la
+     sélection (bascule du panneau de détail) arrive en Phase 2 — la
+     structure et la sémantique sont posées dès maintenant. */
+  var ICONES_TYPE = {
+    experience: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg>',
+    formation: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>',
+    certification: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/></svg>',
+    projet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>'
+  };
+  var ICONE_DEFAUT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4L2 9.6h7.6z"/></svg>';
+  function cleTypeIcone(norm) {
+    if (/^(experience|experiences|exp[ée]rience)/.test(norm)) return "experience";
+    if (/^(formation|formations|licence|diplome|diplôme)/.test(norm)) return "formation";
+    if (/^(certification|certifications)/.test(norm)) return "certification";
+    if (/^(projet|projets)/.test(norm)) return "projet";
+    return "defaut";
+  }
+
+  function itemTimeline(e, langue, actif) {
+    var titre = choisir(e.titre, e.titre_en, langue);
+    var periode = formaterPeriode(e.date_obtention, e.date_fin, langue);
+    var norm = String(e.type || "").trim().toLowerCase();
+    var typeLibelle = libelleGroupe(norm) || "";
+    /* Pastille : badge du Sheet si présent, sinon icône du type. */
+    var badgeImageSrc = window.Sheets.optimizedImageUrl(e.badge_image_url, 96);
+    var ico = badgeImageSrc
+      ? '<img src="' + esc(badgeImageSrc) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">'
+      : (ICONES_TYPE[cleTypeIcone(norm)] || ICONE_DEFAUT);
+    var aria = [titre, typeLibelle, e.organisation, periode].filter(Boolean).join(", ");
+    return '<button type="button" class="career-item reveal' + (actif ? " is-active" : "") + '"' +
+      ' data-parc-entry="' + esc(e.position) + '"' +
+      (actif ? ' aria-current="true"' : "") +
+      ' aria-label="' + esc(aria) + '">' +
+      '<span class="career-item-ico" aria-hidden="true">' + ico + "</span>" +
+      '<span class="career-item-body">' +
+        (typeLibelle ? '<span class="career-item-type">' + esc(typeLibelle) + "</span>" : "") +
+        '<span class="career-item-titre">' + esc(titre) + "</span>" +
+        (e.organisation ? '<span class="career-item-org">' + esc(e.organisation) + "</span>" : "") +
+      "</span>" +
+      (periode ? '<span class="career-item-periode">' + esc(periode) + "</span>" : "") +
+    "</button>";
   }
 
   function etatVide(titre, texte, hint) {
@@ -327,17 +392,30 @@
           try { return carte(e, langue); } catch (err) { console.error("[Parcours] Entrée non rendue :", e.titre, err); return ""; }
         }).join("") + '</div>';
       } else {
-        /* page dédiée : regroupement par `type` réellement présent */
-        var groupes = grouper(tous);
-        el.innerHTML = groupes.map(function (g) {
-          var cartes = g.items.map(function (e) {
-            try { return carte(e, langue); } catch (err) { console.error("[Parcours] Entrée non rendue :", e.titre, err); return ""; }
-          }).join("");
-          return '<section class="parc-groupe">' +
-            (g.libelle ? '<h2 class="parc-groupe-titre reveal"><span>' + esc(g.libelle) + '</span><em class="parc-count">' + g.items.length + '</em></h2>' : "") +
-            '<div class="parc-grid">' + cartes + '</div>' +
-          '</section>';
+        /* Page dédiée — Phase 1 (2026-10-27), Split Timeline & Detail
+           Preview : liste chronologique compacte à gauche, carte de détail
+           de l'entrée active (la plus récente) à droite. Timeline unifiée :
+           les en-têtes de groupes disparaissent, le type reste visible via
+           la pastille et le micro-libellé de chaque item. La bascule au
+           clic (panneau de détail) arrive en Phase 2. */
+        var entrees = trierChrono(tous);
+        var rendues = [];
+        var items = entrees.map(function (e) {
+          try {
+            rendues.push(e);
+            return itemTimeline(e, langue, rendues.length === 1);
+          } catch (err) {
+            rendues.pop();
+            console.error("[Parcours] Entrée non rendue :", e.titre, err);
+            return "";
+          }
         }).join("");
+        var detail = rendues.length ? carte(rendues[0], langue) : "";
+        el.innerHTML =
+          '<div class="career-split-container">' +
+            '<div class="career-timeline-list">' + items + "</div>" +
+            '<div class="career-focus-panel">' + detail + "</div>" +
+          "</div>";
       }
       statutSource(el, src, mode === "apercu" ? sel.length : tous.length);
       reveler(el);
@@ -363,6 +441,7 @@
     apercu: apercu,
     recuperer: recuperer,
     trier: trier,
+    trierChrono: trierChrono,
     grouper: grouper,
     analyserDate: analyserDate,
     formaterDate: formaterDate,
