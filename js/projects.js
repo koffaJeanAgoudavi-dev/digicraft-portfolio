@@ -167,13 +167,90 @@
     return { libelle: libelle, classe: classePilule(libelle) };
   }
 
-  /* Ligne technologique : texte brut monospace (v0.2 §2) */
+  /* Ligne technologique : texte brut monospace (v0.2 §2).
+     Conservée pour le repli des gabarits non migrés et l'export du module. */
   function stack(p) {
     return String((p && p.stack_tags) || "")
       .split(/[,·|;]/)
       .map(function (t) { return t.replace(/\s+/g, " ").trim(); })
       .filter(Boolean)
       .join(" · ");
+  }
+
+  /* ---- Dictionnaire des outils (Phase 1 — refonte étude de cas) ----
+     Clé normalisée (minuscules, sans accents, espaces compactés) →
+     { nom, icone }. Référentiel aligné sur l'onglet « outils » du Sheet
+     (page À propos) et les SVG de assets/brands/outils/ :
+       - outil répertorié AVEC logo de marque → son SVG dédié ;
+       - outil répertorié SANS logo de marque → icône générique
+         (generic.svg), choix éditorial validé (cohérence À propos) ;
+       - outil ABSENT du dictionnaire → badge textuel (repli propre,
+         bordure pointillée), jamais d'icône ou de nom inventé. */
+  var TOOLS_REGISTRY = {
+    "gmail":            { nom: "Gmail",            icone: "assets/brands/outils/google.svg" },
+    "google sheets":    { nom: "Google Sheets",    icone: "assets/brands/outils/google.svg" },
+    "sheets":           { nom: "Google Sheets",    icone: "assets/brands/outils/google.svg" },
+    "google ai studio": { nom: "Google AI Studio", icone: "assets/brands/outils/google.svg" },
+    "gemini":           { nom: "Gemini",           icone: "assets/brands/outils/google.svg" },
+    "groq":             { nom: "Groq",             icone: "assets/brands/outils/generic.svg" },
+    "claude":           { nom: "Claude",           icone: "assets/brands/outils/claude.svg" },
+    "make":             { nom: "Make",             icone: "assets/brands/outils/make.svg" },
+    "telegram":         { nom: "Telegram",         icone: "assets/brands/outils/telegram.svg" },
+    "python":           { nom: "Python",           icone: "assets/brands/outils/generic.svg" },
+    "fastapi":          { nom: "FastAPI",          icone: "assets/brands/outils/generic.svg" },
+    "github":           { nom: "GitHub",           icone: "assets/brands/outils/github.svg" },
+    "cloudflare":       { nom: "Cloudflare",       icone: "assets/brands/outils/cloudflare.svg" },
+    "neon":             { nom: "Neon DB",          icone: "assets/brands/outils/neon.svg" },
+    "neon db":          { nom: "Neon DB",          icone: "assets/brands/outils/neon.svg" },
+    "render":           { nom: "Render",           icone: "assets/brands/outils/generic.svg" },
+    "manus ai":         { nom: "Manus AI",         icone: "assets/brands/outils/generic.svg" },
+    "manus":            { nom: "Manus AI",         icone: "assets/brands/outils/generic.svg" },
+    "canva":            { nom: "Canva",            icone: "assets/brands/outils/generic.svg" },
+    "webhooks et api":  { nom: "Webhooks et API",  icone: "assets/brands/outils/generic.svg" }
+  };
+
+  /* Normalisation d'un jeton de stack : minuscules, sans accents,
+    espaces compactés — tolérant aux variantes de saisie du Sheet.
+    Table explicite (style ES5 du module, sans String.normalize). */
+  function normaliserOutil(t) {
+    return String(t == null ? "" : t)
+      .toLowerCase()
+      .replace(/[àáâãäå]/g, "a").replace(/[èéêë]/g, "e")
+      .replace(/[ìíîï]/g, "i").replace(/[òóôõö]/g, "o")
+      .replace(/[ùúûü]/g, "u").replace(/[ç]/g, "c")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  /* Badge visuel d'un outil : icône + nom (répertorié) ou texte seul
+     (inconnu). L'icône est décorative (alt="") : le nom est adjacent. */
+  function badgeOutil(jeton) {
+    var cle = normaliserOutil(jeton);
+    var fiche = TOOLS_REGISTRY[cle];
+    if (fiche) {
+      var icone = (window.SITE_ROOT || "") + fiche.icone;
+      return '<span class="stack-badge">' +
+        '<img src="' + esc(icone) + '" alt="" width="15" height="15" loading="lazy" decoding="async">' +
+        esc(fiche.nom) +
+      '</span>';
+    }
+    return '<span class="stack-badge is-unknown">' + esc(jeton) + '</span>';
+  }
+
+  /* Badges de la stack d'un projet : un badge par outil de stack_tags,
+     doublons ignorés (première occurrence), ordre du Sheet préservé. */
+  function stackBadges(p) {
+    var jetons = String((p && p.stack_tags) || "")
+      .split(/[,·|;]/)
+      .map(function (t) { return t.replace(/\s+/g, " ").trim(); })
+      .filter(Boolean);
+    var vus = Object.create(null);
+    var out = [];
+    jetons.forEach(function (t) {
+      var cle = normaliserOutil(t);
+      if (cle && !vus[cle]) { vus[cle] = true; out.push(badgeOutil(t)); }
+    });
+    return out.join("");
   }
 
   /* Statut affiché sous la carte : `statut` puis `date` — uniquement
@@ -238,7 +315,7 @@
     var href = l ? l.href : "";
     var cible = l && l.externe ? ' target="_blank" rel="noopener"' : "";
     var b = badgeStatut(projet);
-    var ms = stack(projet);
+    var badges = stackBadges(projet);
     var statut = ligneStatut(projet);
     var cat = String(projet.categorie || "").trim();
     var demo = videoInfo(projet);
@@ -289,7 +366,7 @@
       '<div class="p-body">' +
         '<h3 class="p-title">' + titre + '</h3>' +
         (projet.description_courte ? '<p class="p-desc">' + esc(txt(projet, "description_courte")) + '</p>' : "") +
-        (ms ? '<p class="stack-mono">' + esc(ms) + '</p>' : "") +
+        (badges ? '<div class="stack-badges">' + badges + '</div>' : "") +
         pied +
       '</div>' +
     '</article>';
@@ -668,16 +745,23 @@
         }
       }
       if (elTags) {
-        var texteStack = stack(p);
-        /* v2 : ligne technologique monospace (pages projets restylées) ;
-           repli en puces `.tag` pour tout autre gabarit. */
-        if (elTags.classList && elTags.classList.contains("stack-mono")) {
-          elTags.textContent = texteStack;
-          elTags.style.display = texteStack ? "" : "none";
-        } else if (texteStack) {
-          elTags.innerHTML = texteStack.split(" · ").map(function (t) {
-            return '<span class="tag">' + esc(t) + '</span>';
-          }).join("");
+        /* Phase 1 — badges visuels (icône + nom) depuis TOOLS_REGISTRY ;
+           repli textuel propre pour les outils non répertoriés.
+           Gabarits hérités (.stack-mono ou puces .tag) conservés. */
+        if (elTags.classList && elTags.classList.contains("stack-badges")) {
+          var badgesStack = stackBadges(p);
+          elTags.innerHTML = badgesStack;
+          elTags.style.display = badgesStack ? "" : "none";
+        } else {
+          var texteStack = stack(p);
+          if (elTags.classList && elTags.classList.contains("stack-mono")) {
+            elTags.textContent = texteStack;
+            elTags.style.display = texteStack ? "" : "none";
+          } else if (texteStack) {
+            elTags.innerHTML = texteStack.split(" · ").map(function (t) {
+              return '<span class="tag">' + esc(t) + '</span>';
+            }).join("");
+          }
         }
       }
       if (elMedia) {
@@ -859,6 +943,9 @@
     listeFamilles: listeFamilles,
     badgeStatut: badgeStatut,
     stack: stack,
+    stackBadges: stackBadges,
+    normaliserOutil: normaliserOutil,
+    toolsRegistry: TOOLS_REGISTRY,
     lienPrincipal: lienPrincipal
   };
 })();

@@ -1193,6 +1193,16 @@ body{background:var(--lav-bg);color:var(--lav-text)}
 .xp-card .xp-ico{background:var(--lav-soft);border-color:#d9cafa;color:var(--lav-dark)}
 .stack-mono{display:block;font-family:var(--font-mono);font-size:.78rem;line-height:1.6;border:1px dashed var(--line);border-radius:8px;padding:.5rem .7rem;word-break:break-word;background:var(--lav-soft);border-color:var(--lav-line);color:var(--lav-dark)}
 
+/* ---------- Badges de stack (Phase 1 — dictionnaire d'outils) ----------
+   Rendu harmonisé fiche étude de cas ↔ cartes projets (accueil, grille) :
+   pastille lavande, icône 15px + nom depuis TOOLS_REGISTRY (js/projects.js).
+   Outil non répertorié → badge textuel à bordure pointillée (repli propre). */
+.stack-badges{display:flex;flex-wrap:wrap;gap:.42rem}
+.p-card .stack-badges{margin-top:auto}      /* ancrage bas de carte, comme l'ancienne ligne mono */
+.stack-badge{display:inline-flex;align-items:center;gap:.42rem;max-width:100%;font-family:var(--font-mono);font-size:.74rem;font-weight:600;line-height:1.25;color:var(--lav-dark);background:var(--lav-soft);border:1px solid var(--lav-line);border-radius:999px;padding:.34rem .68rem}
+.stack-badge img{display:block;width:15px;height:15px;flex:none;object-fit:contain}
+.stack-badge.is-unknown{border-style:dashed}
+
 .cta-box{background:linear-gradient(135deg,var(--lav-dark),var(--lav));border-color:#8f72e5;box-shadow:0 28px 60px -34px rgba(76,43,159,.55)}
 .site-footer{padding:4rem 0 2rem;margin-top:2rem;color:#CFC9C2;border-top:1px solid #1c2b40;background:#21163f;border-top-color:#39266c}
 .site-footer .footer-col h4{color:#d9c9ff}
