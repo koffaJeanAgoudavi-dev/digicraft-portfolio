@@ -179,10 +179,12 @@
             verification_url: window.Sheets.champ(r, ["verification_url", "url_verification", "url"], ""),
             badge_image_url: window.Sheets.champ(r, ["badge_image_url", "badge"], ""),
             /* Phase 3 (2026-10-27) : outils/compétences OPTIONNELS — colonne
-               stack_tags (alias competences / outils / tags), même format que
-               l'onglet Projets (séparateurs , · | ;). Absente ou vide du
-               Sheet → rien ne s'affiche (aucune donnée inventée). */
-            stack_tags: window.Sheets.champ(r, ["stack_tags", "competences", "outils", "tags"], ""),
+               stack_tags (alias competences / compétences / outils / tags,
+               variantes espace et casse tolérées via la normalisation
+               Sheets.champ), même format que l'onglet Projets (séparateurs
+               , · | ;). Absente ou vide du Sheet → rien ne s'affiche
+               (aucune donnée inventée). */
+            stack_tags: window.Sheets.champ(r, ["stack_tags", "stack tags", "stacktags", "competences", "compétences", "compétence", "outils", "tags"], ""),
             featured: window.Sheets.toBool(window.Sheets.champ(r, ["featured", "a_la_une", "mis_en_avant"], "")),
             ordre: window.Sheets.champ(r, ["ordre", "order"], "")
           });
