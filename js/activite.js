@@ -88,8 +88,20 @@
     return { ts: ts, annee: annee, mois: mois, jour: precision === "jour" ? jour : null, precision: precision };
   }
 
-  /* Affichage lisible, sans invention : « 15 septembre 2026 » / « Septembre 2026 » */
-  function formaterDate(v, langue) { return window.Sheets.formatDate(v, langue); }
+  /* Affichage lisible, sans invention : « 15 septembre 2026 » / « septembre 2026 ».
+     NB : reçoit l'OBJET date_info renvoyé par analyserDate() — pas la chaîne
+     brute du Sheet. Sheets.formatDate attend une chaîne : lui transmettre
+     l'objet produisait « [object Object] » par coercion String(). Le formatage
+     se fait donc localement, depuis les champs déjà validés, en respectant la
+     précision jour/mois (FR en minuscules, EN capitalisé, comme Sheets.formatDate). */
+  function formaterDate(d, langue) {
+    if (!d || !d.annee || d.mois < 1 || d.mois > 12) return "";
+    var noms = (langue === "en") ? MOIS_EN : MOIS_FR;
+    var mois = noms[d.mois - 1];
+    if (!mois) return "";
+    if (d.precision === "jour" && d.jour) return d.jour + " " + mois + " " + d.annee;
+    return mois + " " + d.annee;
+  }
 
   /* ---------- 2) DONNÉES ---------- */
   function recuperer() {
@@ -174,7 +186,13 @@
       ? '<img class="tl-img" src="' + esc(activityImageSrc) + '"' + (activitySrcset ? ' srcset="' + esc(activitySrcset) + '" sizes="(max-width: 720px) 88vw, 640px"' : '') + ' alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">'
       : "";
 
-    return '<li class="tl-item' + (index === 0 ? " is-first" : "") + '">' +
+    /* Scroll reveal : chaque étape démarre invisible (fade-in + slide-up
+       via la classe .reveal) et apparaît à l'intersection, gérée par
+       reveler() et l'observateur global (js/main.js / js/projects.js).
+       Décalage en cascade plafonné pour rester discret. */
+    var delai = Math.min(index * 90, 360);
+
+    return '<li class="tl-item reveal' + (index === 0 ? " is-first" : "") + '" style="--d:' + delai + 'ms">' +
       meta +
       '<h3 class="tl-titre">' + esc(titre) + '</h3>' +
       (desc ? '<p class="tl-desc">' + esc(desc).replace(/\n/g, "<br>") + '</p>' : "") +

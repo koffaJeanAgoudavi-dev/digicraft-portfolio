@@ -551,11 +551,9 @@ strong{color:var(--ink);font-weight:600}
 .method-step b .m-num{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:8px;background:var(--gold-soft);color:var(--gold-2);font-family:var(--font-display);font-size:.85rem;border:1px solid var(--gold-line)}
 .method-step p{font-size:.87rem}
 
-.tl-item{position:relative}
-.tl-item::before{content:"";position:absolute;left:-1.7rem;top:.45rem;width:13px;height:13px;border-radius:50%;background:var(--card);border:2.5px solid var(--gold)}
-.tl-item b{display:block;font-size:.95rem}
-.tl-item span{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-2)}
-.tl-item p{font-size:.88rem;margin-top:.25rem}
+/* .tl-* : l'ancien bloc hérité qui stylisait .tl-item ici a été supprimé —
+   la timeline n'a qu'une seule source de vérité, dans la section
+   « Activité — journal chronologique » plus bas dans ce fichier. */
 
 /* ---------- Note boutique ---------- */
 .shop-note{
@@ -931,28 +929,50 @@ body.dock-sheet-open{overflow:hidden}
   .cs-actions .btn{flex:1 1 auto;text-align:center}
 }
 
-/* ---------- Activité — journal chronologique (v0.2 §6) ---------- */
-.tl{list-style:none;position:relative;margin:1.8rem 0 0;padding-left:1.9rem;display:flex;flex-direction:column;gap:0}
-.tl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1.5px;background:var(--line-strong)}
-.tl-item{position:relative;padding:0 0 1.7rem}
-.tl-item::before{content:"";position:absolute;left:-1.9rem;top:.42rem;width:11px;height:11px;border-radius:50%;background:var(--card);border:2.5px solid var(--gold)}
+/* ---------- Activité — journal chronologique (v0.2 §6) ----------
+   SOURCE DE VÉRITÉ UNIQUE du composant timeline (accueil + /activite/).
+   Les anciennes déclarations .tl dispersées (bloc « À propos » et couche
+   re-thème 2026) sont consolidées ici. La ligne verticale qui relie les
+   étapes est un simple border-left sur le conteneur : plus aucun ::before
+   en position absolue, la timeline compose donc proprement dans une grille. */
+.tl{list-style:none;margin:2.2rem 0 0;padding-left:2.1rem;border-left:1px solid var(--line-strong);display:flex;flex-direction:column;gap:1.9rem}
+.tl-item{position:relative}
+.tl-item::before{content:"";position:absolute;left:calc(-2.1rem - 6px);top:.42rem;width:11px;height:11px;border-radius:50%;background:var(--card);border:2.5px solid var(--gold)}
 .tl-item.is-first::before{background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
 .tl-meta{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:.3rem}
 .tl-date{font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2)}
-.tl-type{font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-2);background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:999px;padding:.1rem .5rem}
+.tl-type{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-2);background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:999px;padding:.1rem .5rem}
 .tl-titre{font-size:1.08rem;margin-bottom:.3rem}
-.tl-desc{font-size:.9rem;color:var(--ink-2);max-width:78ch}
+.tl-desc{font-size:.88rem;color:var(--ink-2);margin-top:.25rem;max-width:78ch}
 .tl-foot{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;margin-top:.55rem}
-.tl-statut{font-family:var(--font-mono);font-size:.74rem;color:var(--ink-2);background:rgba(166,143,129,.10);border:1px dashed var(--line);border-radius:8px;padding:.28rem .55rem;max-width:100%}
+.tl-statut{font-family:var(--font-mono);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-2);background:rgba(166,143,129,.10);border:1px dashed var(--line);border-radius:8px;padding:.28rem .55rem;max-width:100%}
 .tl-link{font-size:.85rem}
 .tl-img{display:block;margin-top:.7rem;max-width:min(100%,360px);border-radius:12px;border:1px solid var(--line)}
 .tl-state{list-style:none}
 .tl-state::before{display:none}
 .tl-state .es-ico{margin-inline:auto}
-@media (max-width:560px){
-  .tl{padding-left:1.5rem}
-  .tl-item{padding-bottom:1.4rem}
-  .tl-item::before{left:-1.5rem;width:9px;height:9px}
+
+/* Layout accueil « Coulisses » : grande carte pastel + grille 2 colonnes.
+   CONTRAINTE STICKY : aucun transform ni overflow ne doit jamais être
+   appliqué à .actv-card, .actv-grid, .container ou .section — sinon la
+   colonne gauche cesserait de coller au défilement. */
+.actv-card{background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:24px;padding:clamp(2.2rem,4.5vw,3.8rem)}
+.actv-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:start}
+.actv-aside{position:sticky;top:100px}
+.actv-aside .section-head{margin-bottom:0}
+.actv-main .tl{margin-top:0}
+.actv-cta{text-align:center;margin-top:2.75rem}
+
+/* Mobile (<768px) : grille et sticky désactivés — le titre s'empile au-dessus
+   de la timeline (spécification refonte §6). */
+@media (max-width:767.98px){
+  .actv-grid{display:block}
+  .actv-aside{position:static}
+  .actv-aside .section-head{margin-bottom:1.4rem}
+  .actv-main .tl{margin-top:.4rem}
+  .actv-cta{margin-top:2rem}
+  .tl{gap:1.5rem;padding-left:1.6rem;margin-top:1.6rem}
+  .tl-item::before{left:calc(-1.6rem - 5px);width:9px;height:9px}
   .tl-statut{font-size:.7rem}
 }
 
@@ -1122,10 +1142,9 @@ body.has-dock{padding-left:96px}
 .stack-mono{background:#f4f1eb;border-color:#ded8ce;color:#596273}
 .badge-statut.is-public{background:#e8f1e8;color:#397044;border-color:#bdd7c0}
 
-/* Timeline et profil : respirer davantage */
-.tl{margin-top:2.2rem}
-.tl-item{padding-bottom:2rem}
-.tl-item::before{border-color:#7048D8}
+/* Timeline et profil : respirer davantage
+   (les règles .tl/.tl-item qui figuraient ici sont consolidées dans la
+   section « Activité — journal chronologique » — source de vérité unique) */
 .about-grid{gap:clamp(3rem,7vw,7rem)}
 .about-photo{border-radius:24px;box-shadow:var(--shadow-md)}
 .about-photo::after{background:linear-gradient(180deg,transparent 55%,rgba(11,20,36,.75))}
