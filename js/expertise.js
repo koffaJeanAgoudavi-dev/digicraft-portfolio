@@ -29,13 +29,12 @@
 
   /* ---------- Icônes SVG (jetons de repli) ---------- */
   var SVG = {
-    automatisation: '<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.1-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2 2 0 1 1 7.03 4.14l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.56V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.56 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/>',
-    ia: '<path d="M12 3l2.2 5.4L20 10l-5.8 1.6L12 17l-2.2-5.4L4 10l5.8-1.6z"/>',
-    bot: '<rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/><path d="M9.5 13.5h.01M14.5 13.5h.01"/><path d="M8 17c1.1 1 2.6 1.5 4 1.5s2.9-.5 4-1.5"/>',
-    chat: '<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/>',
-    produit: '<path d="M4 7h16v12H4z"/><path d="M4 11h16"/><path d="M8 15h3"/>',
-    integration: '<path d="M9 3v4M15 3v4"/><path d="M6 7h12v6a6 6 0 0 1-12 0z"/><path d="M12 19v2"/>',
-    data: '<path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/>'
+    mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+    chart: '<path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/>',
+    message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    workflow: '<rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/>',
+    layers: '<path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/>',
+    ia: '<path d="M12 3l2.2 5.4L20 10l-5.8 1.6L12 17l-2.2-5.4L4 10l5.8-1.6z"/>'
   };
 
   function sansAccents(s) {
@@ -50,31 +49,47 @@
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
   function svg(cle) {
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
+    /* Convention exacte de la section Parcours : stroke 1.8, caps/joins
+       arrondis, viewBox 24 — icônes vectorielles épurées (style Lucide). */
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
            'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (SVG[cle] || SVG.ia) + '</svg>';
   }
 
-  /* ---------- Résolution d'icône ----------
-     emoji/texte court → tel quel · jeton connu → SVG · défaut → SVG */
-  function icone(cle) {
-    var v = String(cle || "").trim();
-    if (!v) return svg("ia");
-    if (/^(https?:)?\/\//i.test(v)) {
-      return '<img src="' + esc(v) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">';
+  /* ---------- Résolution du visuel d'ancrage (harmonisé Parcours) ----------
+     1. badge_image_url (onglet Sheet) → logo <img> optimisé, technique
+        exacte des pastilles Parcours (optimizedImageUrl, lazy, repli
+        onerror, alt vide) ;
+     2. sinon icône SVG vectorielle épurée (Lucide, stroke 1.8) choisie
+        selon la CATÉGORIE : mail (Emails), bar-chart-2 (Suivi),
+        message-square (Assistants), workflow (Intégrations),
+        layers (Produit digital) ;
+     3. catégorie non reconnue → étoile.
+     Décision utilisateur (2026-10-27) : la colonne « icone » (emojis,
+     jetons, URLs) est IGNORÉE — plus aucun emoji ne s'affiche. */
+  function cleCategorie(categorie) {
+    var n = norm(categorie);
+    if (/mail|email|courriel|relance/.test(n)) return "mail";
+    if (/suivi|client|retour|demande|data|donnee|analys|stat/.test(n)) return "chart";
+    if (/assistant|chat|conversation|messag|telegram|bot|agent|support/.test(n)) return "message";
+    if (/integr|connect|api|webhook|outil|workflow|process|automat/.test(n)) return "workflow";
+    if (/produit|product|digital|saas|mvp|lancement/.test(n)) return "layers";
+    return "ia";
+  }
+
+  function visuel(x, largeur) {
+    var url = x && x.badge_image_url ? x.badge_image_url : "";
+    var src = (window.Sheets && window.Sheets.optimizedImageUrl)
+      ? window.Sheets.optimizedImageUrl(url, largeur || 96)
+      : (url || "");
+    if (src) {
+      return '<img src="' + esc(src) + '" alt="" loading="lazy" decoding="async" fetchpriority="low" onerror="this.remove()">';
     }
-    /* emoji / pictogramme = caractère non ASCII ; un mot ASCII (« saas »)
-       est traité comme un jeton et reçoit une icône SVG. */
-    if (v.length <= 4 && /[^\x00-\x7F]/.test(v)) {
-      return '<span class="xp-emoji" aria-hidden="true">' + esc(v) + '</span>';
-    }
-    var n = norm(v);
-    if (/saas|produit|product/.test(n)) return svg("produit");
-    if (/chat|conversation|messag/.test(n)) return svg("chat");
-    if (/bot|assistant|agent/.test(n)) return svg("bot");
-    if (/automat|workflow|process/.test(n)) return svg("automatisation");
-    if (/integr|api|connect|webhook/.test(n)) return svg("integration");
-    if (/data|donnee|analys/.test(n)) return svg("data");
-    return svg("ia");
+    return svg(cleCategorie(x && x.categorie));
+  }
+
+  /* Compatibilité API : Xpr.icone(badgeUrl, categorie). */
+  function icone(badgeUrl, categorie) {
+    return visuel({ badge_image_url: badgeUrl, categorie: categorie });
   }
 
   /* ---------- Exemples de projets → liens vers les fiches réelles ----------
@@ -120,7 +135,7 @@
             titre: titre,
             description_courte: window.I18n ? window.I18n.champ(r, "description_courte") : C(r, ["description_courte"], ""),
             description_longue: window.I18n ? window.I18n.champ(r, "description_longue") : C(r, ["description_longue"], ""),
-            icone: C(r, ["icone", "icône", "icon"], ""),
+            badge_image_url: C(r, ["badge_image_url", "badge"], ""),
             categorie: window.I18n ? window.I18n.champ(r, "categorie") : C(r, ["categorie", "catégorie"], ""),
             exemples: listeExemples(C(r, ["exemples_projets", "exemples", "projets"], "")),
             ordre: C(r, ["ordre", "order"], ""),
@@ -168,7 +183,7 @@
   function carteComplete(x, index) {
     var desc = x.description_longue || x.description_courte || "";
     return '<article class="card xp-card reveal">' +
-      '<span class="xp-ico">' + icone(x.icone) + '</span>' +
+      '<span class="xp-ico">' + visuel(x) + '</span>' +
       (x.categorie ? '<span class="chip chip-gold xp-cat">' + esc(x.categorie) + '</span>' : '') +
       '<h2 class="xp-title">' + esc(x.titre) + '</h2>' +
       (desc ? '<p class="xp-desc">' + esc(desc) + '</p>' : '') +
@@ -197,7 +212,7 @@
     return '<article class="expertise-card-horizontal reveal">' +
       '<div class="xp-h-visuel">' +
         (x.categorie ? '<span class="xp-h-cat">' + esc(x.categorie) + '</span>' : '') +
-        '<span class="xp-h-ico">' + icone(x.icone) + '</span>' +
+        '<span class="xp-h-ico">' + visuel(x) + '</span>' +
       '</div>' +
       '<div class="xp-h-contenu">' +
         '<h3 class="xp-h-titre">' + esc(x.titre) + '</h3>' +
