@@ -1041,6 +1041,40 @@ body.dock-sheet-open{overflow:hidden}
   .career-focus-ico svg{width:22px;height:22px}
 }
 
+/* ---------- Aperçu Parcours de l'accueil : Split Layout (harmonisation) ----------
+   Même composant que /parcours/, adapté à une section d'accueil : la
+   timeline vit dans une hauteur bornée (480px) avec défilement interne
+   pour ne pas rallonger la page, scrollbar discrète aux tons lavande de
+   la charte. Les items sont rendus dans .career-timeline-scroll pour que
+   la ligne d'ancrage couvre tout le contenu défilant. */
+#apercu-parcours .career-timeline-list{
+  max-height:480px;
+  overflow-y:auto;
+  padding-right:.45rem;                 /* place pour la scrollbar */
+  overscroll-behavior:contain;          /* le scroll interne ne déborde pas sur la page */
+  scrollbar-width:thin;                 /* Firefox : scrollbar fine */
+  scrollbar-color:#DDD6FE transparent;
+}
+#apercu-parcours .career-timeline-list::before{display:none}   /* remplacée par celle du contenu défilant */
+#apercu-parcours .career-timeline-scroll{position:relative;display:flex;flex-direction:column;gap:.4rem;padding-bottom:.4rem}
+#apercu-parcours .career-timeline-scroll::before{
+  content:"";position:absolute;left:2rem;top:1.1rem;bottom:1.1rem;width:2px;
+  background:linear-gradient(180deg,var(--lav-line,#E7DEFB),rgba(231,222,251,.25));
+  border-radius:2px;
+}
+/* Scrollbar WebKit : piste transparente, pouce lavande, hover violet profond */
+#apercu-parcours .career-timeline-list::-webkit-scrollbar{width:8px}
+#apercu-parcours .career-timeline-list::-webkit-scrollbar-track{background:transparent;border-radius:8px}
+#apercu-parcours .career-timeline-list::-webkit-scrollbar-thumb{background:#DDD6FE;border-radius:8px}
+#apercu-parcours .career-timeline-list::-webkit-scrollbar-thumb:hover{background:#6D28D9}
+#apercu-parcours .career-focus-panel{position:static}   /* section courte : pas de sticky */
+@media (max-width:959px){
+  #apercu-parcours .career-timeline-list{max-height:340px}   /* mobile : contrainte adaptée */
+}
+@media (max-width:560px){
+  #apercu-parcours .career-timeline-list{max-height:300px}
+}
+
 /* ---------- Articles & Ressources — ajustements v2 (étape 8) ---------- */
 /* Articles : étiquette de plateforme (mono) + média optionnel */
 .a-plat{font-family:var(--font-mono);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2)}

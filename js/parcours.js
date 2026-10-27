@@ -500,6 +500,42 @@
     Array.prototype.forEach.call(cibles, function (c) { obs.observe(c); });
   }
 
+  /* Rendu du composant Split (timeline + carte Focus), partagé entre la
+     page /parcours/ et l'aperçu de l'accueil (harmonisation). avecScroll
+     (accueil) : les items vivent dans un wrapper .career-timeline-scroll
+     pour que la ligne d'ancrage verticale couvre TOUT le contenu défilant
+     — le conteneur .career-timeline-list reçoit max-height + overflow-y
+     côté CSS (une pseudo-classe positionnée dans un conteneur qui défile
+     resterait coincée au premier écran de défilement). */
+  function rendreSplit(el, entrees, langue, avecScroll) {
+    var rendues = [];
+    var items = entrees.map(function (e) {
+      try {
+        rendues.push(e);
+        return itemTimeline(e, langue, rendues.length === 1);
+      } catch (err) {
+        rendues.pop();
+        console.error("[Parcours] Entrée non rendue :", e.titre, err);
+        return "";
+      }
+    }).join("");
+    var detail = rendues.length ? carteFocus(rendues[0], langue) : "";
+    var liste = avecScroll
+      ? '<div class="career-timeline-list"><div class="career-timeline-scroll">' + items + "</div></div>"
+      : '<div class="career-timeline-list">' + items + "</div>";
+    el.innerHTML =
+      '<div class="career-split-container' + (avecScroll ? " is-accueil" : "") + '">' +
+        liste +
+        '<div class="career-focus-panel">' + detail + "</div>" +
+      "</div>";
+    /* Phase 2 : moteur d'interaction — clic (et clavier via les
+       <button>) sur un item → bascule .is-active + permutation de la
+       carte Focus à droite. Décision utilisateur : clic seul, pas de
+       bascule au survol. */
+    brancherInteractions(el, rendues, langue);
+    return rendues.length;
+  }
+
   function rendre(containerId, mode, limite) {
     var el = document.getElementById(containerId);
     if (!el) return;
@@ -516,46 +552,25 @@
         return;
       }
 
+      var nb = 0;
       if (mode === "apercu") {
-        var sel = tous.filter(function (e) { return e.featured; }).slice(0, limite || 3);
+        /* Accueil (harmonisation split) : entrées FEATURED uniquement —
+           curation conservée — mais TOUTES présentes dans la timeline
+           défilante (plus de cap grille : le défilement interne gère la
+           longueur). Chronologie identique à /parcours/. */
+        var sel = tous.filter(function (e) { return e.featured; });
         if (!sel.length) {
           el.innerHTML = etatVide(T("parc.accueil.vide.titre"), T("parc.accueil.vide.desc"), T("parc.accueil.vide.hint"));
           statutSource(el, src, 0);
           return;
         }
-        el.innerHTML = '<div class="parc-grid">' + sel.map(function (e) {
-          try { return carte(e, langue); } catch (err) { console.error("[Parcours] Entrée non rendue :", e.titre, err); return ""; }
-        }).join("") + '</div>';
+        nb = rendreSplit(el, trierChrono(sel), langue, true);
       } else {
-        /* Page dédiée — Phase 1 (2026-10-27), Split Timeline & Detail
-           Preview : liste chronologique compacte à gauche, carte de détail
-           de l'entrée active (la plus récente) à droite. Timeline unifiée :
-           les en-têtes de groupes disparaissent, le type reste visible via
-           la pastille et le micro-libellé de chaque item. La bascule au
-           clic (panneau de détail) arrive en Phase 2. */
-        var entrees = trierChrono(tous);
-        var rendues = [];
-        var items = entrees.map(function (e) {
-          try {
-            rendues.push(e);
-            return itemTimeline(e, langue, rendues.length === 1);
-          } catch (err) {
-            rendues.pop();
-            console.error("[Parcours] Entrée non rendue :", e.titre, err);
-            return "";
-          }
-        }).join("");
-        var detail = rendues.length ? carteFocus(rendues[0], langue) : "";
-        el.innerHTML =
-          '<div class="career-split-container">' +
-            '<div class="career-timeline-list">' + items + "</div>" +
-            '<div class="career-focus-panel">' + detail + "</div>" +
-          "</div>";
-        /* Phase 2 : moteur d'interaction — clic sur un item → bascule
-           .is-active + permutation de la carte Focus à droite. */
-        brancherInteractions(el, rendues, langue);
+        /* Page dédiée — Split Timeline & Detail Preview : toutes les
+           entrées, chronologie décroissante, hauteur naturelle. */
+        nb = rendreSplit(el, trierChrono(tous), langue, false);
       }
-      statutSource(el, src, mode === "apercu" ? sel.length : tous.length);
+      statutSource(el, src, mode === "apercu" ? nb : tous.length);
       reveler(el);
     }).catch(function (e) {
       console.error("[Parcours] Erreur de chargement :", e);
