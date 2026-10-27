@@ -1331,14 +1331,22 @@ body.case-study-page{
   line-height:1.02;
   margin:.35rem 0 .6rem;
 }
-.case-study-page .page-hero .lead{
-  max-width:900px;
+/* Description narrative (V1.5) : le texte du projet se lit après la
+   vidéo, aligné sur la largeur du média pour un flux de lecture continu
+   (Titre → Badges → Bouton → Vidéo → Description → Triptyque). */
+.case-study-page .cs-longdesc{
+  max-width:880px;
+  margin:0 auto clamp(2.2rem,4vw,3.2rem);
+}
+.case-study-page .cs-longdesc p{
+  margin:0;max-width:70ch;
   color:#475569;
-  font-size:clamp(1rem,1.7vw,1.28rem);
+  font-size:clamp(1.02rem,1.7vw,1.26rem);
+  line-height:1.75;
 }
 .case-study-page .page-extra{
   display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;
-  margin-top:1.25rem;
+  margin-top:.9rem;   /* V1.5 : badges directement sous le titre (hero épuré) */
 }
 .case-study-page .page-extra .stack-mono{
   background:rgba(255,255,255,.72);

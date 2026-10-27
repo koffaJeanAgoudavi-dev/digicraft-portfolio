@@ -728,6 +728,11 @@
 
       if (elTitre && txt(p, "titre")) elTitre.textContent = txt(p, "titre");
       if (elDesc && txt(p, "description_courte")) elDesc.textContent = txt(p, "description_courte");
+      /* V1.5 : description narrative sous la vidéo — le bloc est masqué si
+         le projet n'a aucune description (Sheet vide ET repli statique
+         vide) ; le squelette de la fiche générique ne reste jamais figé. */
+      var blocDesc = elDesc ? elDesc.closest("[data-cs-longdesc]") : null;
+      if (blocDesc && !elDesc.textContent.trim()) blocDesc.style.display = "none";
       if (txt(p, "titre")) document.title = T("projets.fiche.titre", { t: txt(p, "titre") });
       if (elStatut && p.statut) {
         elStatut.textContent = p.statut;
@@ -852,12 +857,12 @@
         }
       });
 
-      /* Sections/visuel remplis APRÈS l'init de l'observateur : leur
-         apparition est garantie (une section rendue visible au chargement
-         ne doit jamais rester en opacité 0 — même correctif que sur la
-         page Expertise). Les blocs restés vides restent masqués. */
+      /* Sections/visuel/description remplis APRÈS l'init de l'observateur :
+         leur apparition est garantie (une section rendue visible au
+         chargement ne doit jamais rester en opacité 0 — même correctif que
+         sur la page Expertise). Les blocs restés vides restent masqués. */
       Array.prototype.forEach.call(
-        page.querySelectorAll("[data-cs-section], [data-cs-hero-media]"),
+        page.querySelectorAll("[data-cs-section], [data-cs-hero-media], [data-cs-longdesc]"),
         function (el) {
           if (getComputedStyle(el).display !== "none") el.classList.add("is-visible");
         });
