@@ -318,18 +318,31 @@
     </section>
 
     <!-- ============ ACTIVITÉ — journal d'ingénieur (v0.2 §6) ============ -->
+    <!-- Refonte : grande carte pastel + grille 2 colonnes (titre sticky à
+         gauche, timeline à droite, CTA centré en bas de carte). La colonne
+         .actv-aside est sticky : ne pas ajouter de transform/overflow sur
+         .actv-card, .actv-grid, .container ou .section (voir style.css). -->
     <section class="section" id="activite">
       <div class="container">
-        <div class="section-head reveal">
-          <p class="eyebrow" data-i18n="accueil.eyebrow.actv">Coulisses</p>
-          <h2 data-i18n="accueil.actv.titre">Des automatisations en situation réelle</h2>
-          <p data-i18n="accueil.actv.desc">Les problèmes opérationnels que j'étudie et transforme en solutions concrètes.</p>
-        </div>
-        <ol class="tl" id="apercu-activite" data-actv-mode="apercu" data-actv-limit="3" aria-live="polite" aria-busy="true">
-          <!-- injecté par js/activite.js depuis l'onglet « Timeline » -->
-        </ol>
-        <div style="text-align:center;margin-top:1.5rem">
-          <a class="btn btn-ghost" href="activite/"><span data-i18n="accueil.actv.btn">Toute l'activité</span> <span class="arr">→</span></a>
+        <div class="actv-card">
+          <div class="actv-grid">
+            <div class="actv-aside">
+              <div class="section-head reveal">
+                <p class="eyebrow" data-i18n="accueil.eyebrow.actv">Coulisses</p>
+                <h2 data-i18n="accueil.actv.titre">Des automatisations en situation réelle</h2>
+                <p data-i18n="accueil.actv.desc">Les problèmes opérationnels que j'étudie et transforme en solutions concrètes.</p>
+              </div>
+            </div>
+            <div class="actv-main">
+              <ol class="tl" id="apercu-activite" data-actv-mode="apercu" data-actv-limit="3" aria-live="polite" aria-busy="true">
+                <!-- injecté par js/activite.js depuis l'onglet « Timeline » -->
+              </ol>
+              <!-- .dyn-source (indicateur de source) est injecté ici par js/activite.js -->
+            </div>
+          </div>
+          <div class="actv-cta">
+            <a class="btn btn-ghost" href="activite/"><span data-i18n="accueil.actv.btn">Toute l'activité</span> <span class="arr">→</span></a>
+          </div>
         </div>
       </div>
     </section>
@@ -503,7 +516,7 @@
   <script src="js/articles.js?v=20261023a"></script>
   <script src="js/resources.js?v=20261023a"></script>
   <script src="js/expertise.js?v=20260927a"></script>
-  <script src="js/activite.js?v=20261023a"></script>
+  <script src="js/activite.js?v=20261027a"></script>
   <script src="js/parcours.js?v=20261023a"></script>
   <script src="js/temoignages.js?v=20261009a"></script>
   <script src="js/i18n.js?v=20261009a"></script>
