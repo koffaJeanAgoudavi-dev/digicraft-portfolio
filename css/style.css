@@ -939,6 +939,14 @@ body.dock-sheet-open{overflow:hidden}
 .career-focus-panel{position:sticky;top:100px;min-width:0}   /* aligné sur .actv-aside */
 @media (max-width:959px){
   .career-focus-panel{position:static}   /* pas de sticky en empilement mobile */
+  /* Phase 3 — indicateur mobile : chevron sur l'item actif, il signale
+     que le détail de la sélection s'affiche sous la timeline. */
+  .career-item.is-active{padding-right:2.15rem}
+  .career-item.is-active::after{
+    content:"";position:absolute;right:.9rem;top:50%;
+    width:8px;height:8px;border-right:2px solid #6D28D9;border-bottom:2px solid #6D28D9;
+    transform:translateY(-70%) rotate(45deg);
+  }
 }
 @media (max-width:560px){
   /* Très petits écrans : la période passe sous le texte, badge aligné à gauche. */
@@ -999,7 +1007,11 @@ body.dock-sheet-open{overflow:hidden}
 }
 .career-live-dot{width:7px;height:7px;border-radius:50%;background:#10B981;box-shadow:0 0 0 4px rgba(16,185,129,.12);flex:none}
 .career-focus-desc{margin:0;color:#475569;font-size:1rem;line-height:1.75}
-.career-focus-foot{margin-top:auto;padding-top:.9rem;display:flex}
+/* Phase 3 : rangée d'outils/compétences — les pilules .stack-badge du
+   système global (TOOLS_REGISTRY) s'y alignent avec retour à la ligne. */
+.career-focus-tools{display:flex;min-width:0}
+.career-focus-tools .stack-badges{margin-top:0}
+.career-focus-foot{margin-top:auto;padding-top:1rem;border-top:1px solid rgba(226,232,240,.9);display:flex}
 .career-focus-btn{
   display:inline-flex;align-items:center;gap:.45rem;
   background:#6D28D9;color:#fff;border:1px solid #6D28D9;border-radius:12px;

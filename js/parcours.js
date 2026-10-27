@@ -178,6 +178,11 @@
             description_en: window.Sheets.champ(r, ["description_en"], ""),
             verification_url: window.Sheets.champ(r, ["verification_url", "url_verification", "url"], ""),
             badge_image_url: window.Sheets.champ(r, ["badge_image_url", "badge"], ""),
+            /* Phase 3 (2026-10-27) : outils/compétences OPTIONNELS — colonne
+               stack_tags (alias competences / outils / tags), même format que
+               l'onglet Projets (séparateurs , · | ;). Absente ou vide du
+               Sheet → rien ne s'affiche (aucune donnée inventée). */
+            stack_tags: window.Sheets.champ(r, ["stack_tags", "competences", "outils", "tags"], ""),
             featured: window.Sheets.toBool(window.Sheets.champ(r, ["featured", "a_la_une", "mis_en_avant"], "")),
             ordre: window.Sheets.champ(r, ["ordre", "order"], "")
           });
@@ -358,6 +363,19 @@
       : (ICONES_TYPE[cleTypeIcone(norm)] || ICONE_DEFAUT);
     var verificationUrl = extUrl(e.verification_url);
     var libelle = libelleAction(e);
+    /* Phase 3 : badges d'outils/compétences (colonne optionnelle stack_tags).
+       Moteur TOOLS_REGISTRY de projects.js (icônes) quand il est chargé,
+       repli pilules textuelles sinon — même langage visuel .stack-badges. */
+    var outils = "";
+    var jetons = String(e.stack_tags || "").split(/[,·|;]/)
+      .map(function (t) { return t.replace(/\s+/g, " ").trim(); })
+      .filter(Boolean);
+    if (jetons.length) {
+      var htmlBadges = (window.Prjs && typeof window.Prjs.stackBadges === "function")
+        ? window.Prjs.stackBadges(e)
+        : jetons.map(function (t) { return '<span class="stack-badge">' + esc(t) + "</span>"; }).join("");
+      outils = '<div class="career-focus-tools">' + htmlBadges + "</div>";
+    }
     var action = verificationUrl
       ? '<a class="career-focus-btn" href="' + esc(verificationUrl) + '" target="_blank" rel="noopener"' +
         ' aria-label="' + esc(libelle + " : " + titre) + '">' + esc(libelle) +
@@ -380,6 +398,7 @@
         "</div>"
         : "") +
       (desc ? '<p class="career-focus-desc">' + esc(desc) + "</p>" : "") +
+      outils +
       (action ? '<div class="career-focus-foot">' + action + "</div>" : "") +
     "</article>";
   }
