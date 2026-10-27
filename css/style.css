@@ -729,8 +729,7 @@ body.dock-sheet-open{overflow:hidden}
   color:var(--gold-2);
 }
 .xp-ico svg{width:23px;height:23px}
-.xp-ico img{width:100%;height:100%;object-fit:cover;border-radius:12px}
-.xp-emoji{font-size:1.45rem;line-height:1}
+.xp-ico img{width:100%;height:100%;object-fit:contain;border-radius:12px;background:#fff}
 .xp-cat{align-self:flex-start}
 .xp-title{font-size:1.24rem;margin:0}
 .xp-desc{margin:0;font-size:.94rem;color:var(--ink-2)}
@@ -816,8 +815,7 @@ main#contenu{overflow-x:hidden}   /* wrapper principal : aucun débordement glob
   border:1px solid var(--lav-line,#E7DEFB);
 }
 .xp-h-ico svg{width:27px;height:27px}
-.xp-h-ico img{width:100%;height:100%;object-fit:contain;border-radius:14px;background:#fff}
-.xp-h-ico .xp-emoji{font-size:1.85rem}
+.xp-h-ico img{width:100%;height:100%;object-fit:contain;border-radius:16px;background:#fff}
 .xp-h-contenu{display:flex;flex-direction:column;gap:.55rem;min-width:0}
 .xp-h-titre{margin:0;color:#0F172A;font-size:clamp(1.22rem,2.2vw,1.55rem);font-weight:800;letter-spacing:-.025em;line-height:1.2;overflow-wrap:break-word}
 .xp-h-desc{margin:0;color:#475569;font-size:.97rem;line-height:1.65;max-width:62ch}
@@ -1903,6 +1901,7 @@ body.case-study-page{
   width:54px;height:54px;border-radius:15px;
   background:var(--feature-soft);border:1px solid #d9cafa;color:#4b2a9f;
 }
+.xp-card .xp-ico img{border-radius:14px}
 .xp-card .xp-title{font-size:1.28rem;line-height:1.18}
 .xp-card .xp-desc{font-size:.91rem;line-height:1.58}
 .xp-card .xp-projects{margin-top:auto;border-top:1px solid #eeeaf5;padding-top:.8rem}
