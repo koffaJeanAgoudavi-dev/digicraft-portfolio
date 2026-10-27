@@ -2608,3 +2608,10 @@ body.case-study-page{
   .p-card-split .p-media-inner{aspect-ratio:16 / 9}
   .p-card-split .p-media img{max-height:180px}
 }
+
+/* Accueil — carousel projets : une carte par vue sur tous les écrans */
+#carousel-projets .p-card{
+  flex:0 0 100%;
+  max-width:100%;
+  scroll-snap-align:start;
+}
