@@ -160,7 +160,16 @@
 
   /* ---------- Données ---------- */
   function recuperer() {
-    return window.Sheets.loadSheet("parcours").then(function (rows) {
+    /* Le registre unifié des outils (onglet « outils » du Sheet, logos
+       officiels) est chargé en parallèle quand projects.js est présent :
+       les stack_tags des cartes Parcours et de la carte Focus rendent
+       alors les mêmes logos que la boîte à outils de /a-propos/. Sans
+       projects.js, repli pilules textuelles (comportement d'origine). */
+    var outils = (window.Prjs && typeof window.Prjs.chargerOutils === "function")
+      ? window.Prjs.chargerOutils()
+      : Promise.resolve();
+    return Promise.all([window.Sheets.loadSheet("parcours"), outils]).then(function (res) {
+      var rows = res[0];
       var out = [];
       rows.forEach(function (r, i) {
         try {

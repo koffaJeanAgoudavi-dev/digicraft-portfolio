@@ -222,13 +222,51 @@
       .trim();
   }
 
+  /* ---- Registre unifié des outils (harmonisation 2026-10-27) ----
+     Les badges de stack consomment la MÊME source que la boîte à
+     outils de /a-propos/ : l'onglet « outils » du Sheet (logos
+     officiels en couleur, colonne logo). Ordre de résolution :
+       1. onglet Sheet « outils » — logo officiel s'il est renseigné ;
+       2. dictionnaire local ci-dessus (assets/brands/outils/) — repli
+          quand le Sheet est absent/KO ou que la ligne n'a pas de logo ;
+       3. badge textuel is-unknown (jamais d'icône ni de nom inventé).
+     Promesse mémoïsée : un seul chargement de l'onglet par page, et le
+     rendu des cartes (accueil, grille, fiche, Parcours) l'attend via
+     recuperer() — le logo est donc résolu dès le premier rendu. */
+  var outilsSheet = Object.create(null);
+  var outilsPrets = null;
+
+  function chargerOutils() {
+    if (outilsPrets) return outilsPrets;
+    outilsPrets = window.Sheets.loadSheet("outils").then(function (rows) {
+      (rows || []).forEach(function (r) {
+        var nom = window.Sheets.champ(r, ["nom", "name", "outil"], "");
+        var logo = window.Sheets.champ(r, ["logo", "logo_url", "icone"], "");
+        if (!nom || !logo) return;   /* ligne vide ou sans logo → repli local */
+        var cle = normaliserOutil(nom);
+        if (cle && !outilsSheet[cle]) {
+          outilsSheet[cle] = {
+            nom: nom,
+            /* Chemin local tel quel, URL Cloudinary optimisée (f_auto,q_auto,w_96). */
+            icone: window.Sheets.optimizedImageUrl(logo, 96)
+          };
+        }
+      });
+    }).catch(function (e) {
+      console.error("[Projets] Onglet outils indisponible — repli sur le dictionnaire local :", e);
+    });
+    return outilsPrets;
+  }
+
   /* Badge visuel d'un outil : icône + nom (répertorié) ou texte seul
      (inconnu). L'icône est décorative (alt="") : le nom est adjacent. */
   function badgeOutil(jeton) {
     var cle = normaliserOutil(jeton);
-    var fiche = TOOLS_REGISTRY[cle];
+    var fiche = outilsSheet[cle] || TOOLS_REGISTRY[cle];
     if (fiche) {
-      var icone = (window.SITE_ROOT || "") + fiche.icone;
+      var icone = /^(https?:)?\/\//i.test(fiche.icone)
+        ? fiche.icone
+        : (window.SITE_ROOT || "") + fiche.icone;
       return '<span class="stack-badge">' +
         '<img src="' + esc(icone) + '" alt="" width="15" height="15" loading="lazy" decoding="async">' +
         esc(fiche.nom) +
@@ -430,7 +468,13 @@
      en isolant chaque ligne : une ligne problématique est ignorée et
      loguée, jamais l'ensemble du rendu. */
   function recuperer() {
-    return window.Sheets.loadSheet("projets").then(function (rows) {
+    /* L'onglet « outils » (registre unifié des logos) est chargé EN
+       PARALLÈLE des projets : tous les rendus qui consomment
+       stackBadges() — carousel accueil, grille /projets/, fiche étude
+       de cas, Parcours — attendent cette promesse commune, donc le
+       logo officiel est résolu dès le premier rendu. */
+    return Promise.all([window.Sheets.loadSheet("projets"), chargerOutils()]).then(function (res) {
+      var rows = res[0];
       var out = [];
       rows.forEach(function (r, i) {
         try {
@@ -949,6 +993,7 @@
     stackBadges: stackBadges,
     normaliserOutil: normaliserOutil,
     toolsRegistry: TOOLS_REGISTRY,
+    chargerOutils: chargerOutils,
     lienPrincipal: lienPrincipal
   };
 })();
