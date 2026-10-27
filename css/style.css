@@ -1444,7 +1444,7 @@ body.case-study-page{
   border-radius:999px;padding:.32rem .7rem;
 }
 .case-study-page .cs-tech-strip p{margin:0;color:#475569;font-family:var(--font-mono);font-size:.8rem;line-height:1.7;white-space:pre-line}
-.case-study-page .cta-box{max-width:1180px;margin-inline:auto!important;border-color:#DDD6FE;background:linear-gradient(135deg,#F5F3FF,#fff)}
+.case-study-page .cta-box{max-width:1180px;margin-inline:auto!important;margin-top:4.5rem;border-color:#DDD6FE;background:linear-gradient(135deg,#F5F3FF,#fff)}
 @media (max-width:1023px){
   .case-study-page .cs-triptych{flex-direction:column;gap:1rem}   /* 3 colonnes trop étroites entre 820 et 1024px */
 }
