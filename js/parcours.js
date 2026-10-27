@@ -328,6 +328,110 @@
     "</button>";
   }
 
+  /* ---------- Phase 2 (2026-10-27) : carte Focus dynamique (droite) ----------
+     Carte de détail enrichie : grand titre + logo/organisme, badges
+     (période, type, « En cours » si date_fin = présent/en cours),
+     description détaillée, bouton d'action au libellé adapté au type
+     (certification → « Vérifier la certification », projet → « Voir le
+     projet », sinon « Voir le détail »). Aucune donnée inventée : un
+     champ vide du Sheet disparaît proprement. */
+  function estEnCours(e) {
+    return /^(present|présent|en cours)$/i.test(String((e && e.date_fin) || "").trim());
+  }
+
+  function libelleAction(e) {
+    var norm = String(e.type || "").trim().toLowerCase();
+    if (/^(certification|certifications)/.test(norm)) return T("parc.action.certification", null, "Vérifier la certification");
+    if (/^(projet|projets)/.test(norm)) return T("parc.action.projet", null, "Voir le projet");
+    return T("parc.action.generique", null, "Voir le détail");
+  }
+
+  function carteFocus(e, langue) {
+    var titre = choisir(e.titre, e.titre_en, langue);
+    var desc = choisir(e.description, e.description_en, langue);
+    var periode = formaterPeriode(e.date_obtention, e.date_fin, langue);
+    var norm = String(e.type || "").trim().toLowerCase();
+    var typeLibelle = libelleGroupe(norm) || "";
+    var badgeImageSrc = window.Sheets.optimizedImageUrl(e.badge_image_url, 200);
+    var ico = badgeImageSrc
+      ? '<img src="' + esc(badgeImageSrc) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">'
+      : (ICONES_TYPE[cleTypeIcone(norm)] || ICONE_DEFAUT);
+    var verificationUrl = extUrl(e.verification_url);
+    var libelle = libelleAction(e);
+    var action = verificationUrl
+      ? '<a class="career-focus-btn" href="' + esc(verificationUrl) + '" target="_blank" rel="noopener"' +
+        ' aria-label="' + esc(libelle + " : " + titre) + '">' + esc(libelle) +
+        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
+      : "";
+    return '<article class="career-focus-card reveal is-visible" data-parc-entry="' + esc(e.position) + '">' +
+      '<header class="career-focus-head">' +
+        '<span class="career-focus-ico" aria-hidden="true">' + ico + "</span>" +
+        '<div class="career-focus-headtxt">' +
+          (typeLibelle ? '<span class="career-focus-type">' + esc(typeLibelle) + "</span>" : "") +
+          '<h2 class="career-focus-titre">' + esc(titre) + "</h2>" +
+          (e.organisation ? '<p class="career-focus-org">' + esc(e.organisation) + "</p>" : "") +
+        "</div>" +
+      "</header>" +
+      ((periode || typeLibelle || estEnCours(e))
+        ? '<div class="career-focus-badges">' +
+          (periode ? '<span class="career-focus-periode"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg><span>' + esc(periode) + "</span></span>" : "") +
+          (typeLibelle ? '<span class="career-focus-statut">' + esc(typeLibelle) + "</span>" : "") +
+          (estEnCours(e) ? '<span class="career-focus-live"><span class="career-live-dot" aria-hidden="true"></span>' + esc(T("parc.periode.en_cours", null, "En cours")) + "</span>" : "") +
+        "</div>"
+        : "") +
+      (desc ? '<p class="career-focus-desc">' + esc(desc) + "</p>" : "") +
+      (action ? '<div class="career-focus-foot">' + action + "</div>" : "") +
+    "</article>";
+  }
+
+  /* Bascule de la sélection : un seul item actif (classe + aria-current),
+     permutation de la carte Focus avec la même source de données que la
+     liste (closure) — aucune donnée n'est perdue au clic. */
+  function selectionner(item, entrees, panel, langue, conteneur) {
+    var pos = parseInt(item.getAttribute("data-parc-entry"), 10);
+    var e = null;
+    for (var i = 0; i < entrees.length; i++) {
+      if (entrees[i].position === pos) { e = entrees[i]; break; }
+    }
+    if (!e) return;
+    Array.prototype.forEach.call(conteneur.querySelectorAll(".career-item"), function (b) {
+      var actif = b === item;
+      b.classList.toggle("is-active", actif);
+      if (actif) b.setAttribute("aria-current", "true");
+      else b.removeAttribute("aria-current");
+    });
+    panel.innerHTML = carteFocus(e, langue);
+    var carte = panel.firstElementChild;
+    if (carte) {
+      carte.classList.add("is-swapping");   /* transition CSS (fondu + micro-glissement) */
+      carte.addEventListener("animationend", function () {
+        carte.classList.remove("is-swapping");
+      }, { once: true });
+    }
+    /* Empilement mobile : si le panneau sort du champ, l'amener en douceur. */
+    try {
+      var rect = panel.getBoundingClientRect();
+      if (rect.top < 0 || rect.bottom > (window.innerHeight || 0)) {
+        var reduit = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        panel.scrollIntoView({ behavior: reduit ? "auto" : "smooth", block: "nearest" });
+      }
+    } catch (err) { /* scrollIntoView non critique */ }
+  }
+
+  /* Écouteur délégué sur la liste : un seul listener pour tous les items,
+     re-créé à chaque rendu (changement de langue inclus). Clic (et clavier
+     via les <button>) uniquement — pas de bascule au survol. */
+  function brancherInteractions(el, entrees, langue) {
+    var liste = el.querySelector(".career-timeline-list");
+    var panel = el.querySelector(".career-focus-panel");
+    if (!liste || !panel || !entrees.length) return;
+    liste.addEventListener("click", function (ev) {
+      var item = ev.target && ev.target.closest ? ev.target.closest(".career-item") : null;
+      if (!item || !liste.contains(item)) return;
+      selectionner(item, entrees, panel, langue, el);
+    });
+  }
+
   function etatVide(titre, texte, hint) {
     return '<div class="empty-state reveal is-visible">' +
       '<div class="es-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h11l-2 3 2 3H5"/></svg></div>' +
@@ -410,12 +514,15 @@
             return "";
           }
         }).join("");
-        var detail = rendues.length ? carte(rendues[0], langue) : "";
+        var detail = rendues.length ? carteFocus(rendues[0], langue) : "";
         el.innerHTML =
           '<div class="career-split-container">' +
             '<div class="career-timeline-list">' + items + "</div>" +
             '<div class="career-focus-panel">' + detail + "</div>" +
           "</div>";
+        /* Phase 2 : moteur d'interaction — clic sur un item → bascule
+           .is-active + permutation de la carte Focus à droite. */
+        brancherInteractions(el, rendues, langue);
       }
       statutSource(el, src, mode === "apercu" ? sel.length : tous.length);
       reveler(el);
@@ -446,6 +553,9 @@
     analyserDate: analyserDate,
     formaterDate: formaterDate,
     formaterPeriode: formaterPeriode,
-    carte: carte
+    carte: carte,
+    carteFocus: carteFocus,
+    estEnCours: estEnCours,
+    libelleAction: libelleAction
   };
 })();
