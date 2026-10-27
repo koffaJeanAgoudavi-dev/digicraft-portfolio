@@ -260,6 +260,7 @@
         statutSource(el, src, 0);
         el.innerHTML = etat("vide", T("xp.vide.titre"),
           T("xp.vide.desc"));
+        initialiserCarrousel(el);
         return;
       }
       var liste = mode === "page" ? items : items.slice(0, limite || items.length);
@@ -277,10 +278,12 @@
       }
       statutSource(el, src, items.length);
       reveler(el);
+      initialiserCarrousel(el);
     }).catch(function (e) {
       console.error("[Expertise] Erreur de chargement :", e);
       statutSource(el, "erreur", 0);
       el.innerHTML = etat("erreur", T("xp.erreur.titre"), T("etat.sheet"));
+      initialiserCarrousel(el);
     });
   }
 
@@ -320,6 +323,103 @@
       }, { rootMargin: "0px 0px -6% 0px", threshold: 0.05 });
     }
     Array.prototype.forEach.call(cibles, function (c) { observateurLocal.observe(c); });
+  }
+
+  /* ---- Carrousel horizontal de l'accueil (.expertise-carousel-container)
+     Décisions utilisateur : défilement PAR CARTE (flèches = 1 carte,
+     points = 1 par carte) ; hauteur plafonnée (description raccourcie
+     à 2 lignes en CSS). Le câblage (flèches, scroll, resize) est posé
+     UNE seule fois : au changement de langue, rendre() réinjecte les
+     cartes et seul l'habillage (points, états) est rafraîchi — aucun
+     listener dupliqué. Le conteneur n'utilise pas la classe .carousel
+     pour ne pas être pris en charge par le câblage générique de
+     js/main.js (pas de double commande). ---- */
+  var carrousel = { pret: false, cont: null, zone: null, prev: null, next: null, frame: 0 };
+
+  function cartesCarrousel() {
+    if (!carrousel.cont || !carrousel.cont.querySelectorAll) return [];
+    return Array.prototype.slice.call(carrousel.cont.querySelectorAll(".expertise-card-horizontal"));
+  }
+
+  function positionCarte(carte) {
+    var cartes = cartesCarrousel();
+    return cartes.length ? carte.offsetLeft - cartes[0].offsetLeft : 0;
+  }
+
+  function indexCarteCourante() {
+    var cartes = cartesCarrousel();
+    if (!cartes.length) return 0;
+    var objectif = carrousel.cont.scrollLeft || 0;
+    var meilleur = 0, ecartMin = Infinity;
+    for (var i = 0; i < cartes.length; i++) {
+      var ecart = Math.abs(positionCarte(cartes[i]) - objectif);
+      if (ecart < ecartMin) { ecartMin = ecart; meilleur = i; }
+    }
+    return meilleur;
+  }
+
+  function allerCarte(index) {
+    var cartes = cartesCarrousel();
+    if (!cartes.length || !carrousel.cont.scrollTo) return;
+    var i = Math.max(0, Math.min(index, cartes.length - 1));
+    var doux = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    carrousel.cont.scrollTo({ left: positionCarte(cartes[i]), behavior: doux ? "smooth" : "auto" });
+  }
+
+  function construirePoints() {
+    if (!carrousel.zone) return;
+    var cartes = cartesCarrousel();
+    carrousel.zone.innerHTML = "";
+    /* 0 ou 1 carte : rien à paginer → zone vide et masquée */
+    if (cartes.length < 2) { carrousel.zone.hidden = true; return; }
+    carrousel.zone.hidden = false;
+    var actif = indexCarteCourante();
+    cartes.forEach(function (carte, i) {
+      var p = document.createElement("button");
+      p.type = "button";
+      p.className = "xp-dot" + (i === actif ? " is-active" : "");
+      if (i === actif) p.setAttribute("aria-current", "true");
+      p.setAttribute("aria-label", T("accueil.xp.dot", { n: i + 1 }, "Aller à l'expertise " + (i + 1)));
+      p.addEventListener("click", function () { allerCarte(i); });
+      carrousel.zone.appendChild(p);
+    });
+  }
+
+  function majEtatCarrousel() {
+    var i = indexCarteCourante(), n = cartesCarrousel().length;
+    if (carrousel.zone) {
+      Array.prototype.forEach.call(carrousel.zone.querySelectorAll(".xp-dot"), function (p, k) {
+        p.classList.toggle("is-active", k === i);
+        if (k === i) p.setAttribute("aria-current", "true");
+        else p.removeAttribute("aria-current");
+      });
+    }
+    if (carrousel.prev) carrousel.prev.disabled = i <= 0;
+    if (carrousel.next) carrousel.next.disabled = i >= n - 1;
+  }
+
+  function planifierEtat() {
+    if (carrousel.frame) return;
+    var raf = window.requestAnimationFrame || function (f) { f(); };
+    carrousel.frame = raf(function () { carrousel.frame = 0; majEtatCarrousel(); });
+  }
+
+  function initialiserCarrousel(cont) {
+    if (!cont || !cont.classList || !cont.classList.contains("expertise-carousel-container")) return;
+    carrousel.cont = cont;
+    var wrap = cont.closest ? cont.closest(".expertise-carousel-wrap") : null;
+    if (!wrap) wrap = cont.parentElement;
+    carrousel.zone = wrap ? wrap.querySelector("[data-xp-dots]") : null;
+    carrousel.prev = wrap ? wrap.querySelector("[data-xp-carousel-prev]") : null;
+    carrousel.next = wrap ? wrap.querySelector("[data-xp-carousel-next]") : null;
+    if (carrousel.pret) { construirePoints(); majEtatCarrousel(); return; }
+    carrousel.pret = true;
+    if (carrousel.prev) carrousel.prev.addEventListener("click", function () { allerCarte(indexCarteCourante() - 1); });
+    if (carrousel.next) carrousel.next.addEventListener("click", function () { allerCarte(indexCarteCourante() + 1); });
+    cont.addEventListener("scroll", planifierEtat, { passive: true });
+    window.addEventListener("resize", planifierEtat, { passive: true });
+    construirePoints();
+    majEtatCarrousel();
   }
 
   function apercu(containerId, limite) { rendre(containerId, "apercu", limite); }
