@@ -754,6 +754,59 @@ body.dock-sheet-open{overflow:hidden}
 .xp-card-sm .xp-title{font-size:1.1rem}
 .xp-card-sm .xp-desc{font-size:.9rem}
 .xp-card-sm:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---------- Expertise accueil : cartes horizontales 2 blocs ----------
+   Alignées sur le langage visuel de la section Parcours (carte blanche,
+   pilule lavande) : BLOC 1 gauche ~30% (badge catégorie + visuel
+   d'ancrage cadré façon badges Parcours), BLOC 2 droite ~70% (titre,
+   description concise, projets preuves ➔). Cartes statiques. */
+#apercu-expertise{display:flex;flex-direction:column;gap:1rem}
+.expertise-card-horizontal{
+  display:grid;grid-template-columns:minmax(210px,30%) minmax(0,1fr);
+  gap:clamp(1.1rem,2.5vw,1.9rem);align-items:center;
+  padding:1.4rem 1.6rem;
+  border:1px solid rgba(226,232,240,.95);border-radius:20px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 10px 30px -10px rgba(109,40,217,.08),0 1px 2px rgba(15,23,42,.03);
+  backdrop-filter:blur(16px);
+}
+.xp-h-visuel{display:flex;flex-direction:column;align-items:flex-start;gap:.9rem;min-width:0}
+.xp-h-cat{
+  font-family:var(--font-mono);font-size:.62rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--lav-dark,#4B2A9F);
+  background:var(--lav-soft,#F5F3FF);border:1px solid var(--lav-line,#E7DEFB);
+  border-radius:999px;padding:.3rem .65rem;
+}
+.xp-h-ico{
+  width:62px;height:62px;border-radius:16px;flex:none;
+  display:grid;place-items:center;
+  background:var(--lav-soft,#F5F3FF);color:#6D28D9;
+  border:1px solid var(--lav-line,#E7DEFB);
+}
+.xp-h-ico svg{width:27px;height:27px}
+.xp-h-ico img{width:100%;height:100%;object-fit:contain;border-radius:14px;background:#fff}
+.xp-h-ico .xp-emoji{font-size:1.85rem}
+.xp-h-contenu{display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.xp-h-titre{margin:0;color:#0F172A;font-size:clamp(1.22rem,2.2vw,1.55rem);font-weight:800;letter-spacing:-.025em;line-height:1.2;overflow-wrap:break-word}
+.xp-h-desc{margin:0;color:#475569;font-size:.97rem;line-height:1.65;max-width:62ch}
+.xp-h-projets{display:flex;flex-wrap:wrap;gap:.45rem .9rem;align-items:center;padding-top:.75rem;border-top:1px solid rgba(226,232,240,.9)}
+.xp-h-projets-label{font-family:var(--font-mono);font-size:.62rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#94A3B8}
+.xp-h-lien{display:inline-flex;align-items:center;gap:.35rem;color:#6D28D9;font-weight:600;font-size:.92rem;text-decoration:none;transition:color .2s ease}
+.xp-h-lien:hover{color:#5B21B6;text-decoration:underline}
+.xp-h-lien:focus-visible{outline:2px solid #6D28D9;outline-offset:2px;border-radius:4px}
+.xp-h-lien.is-text{color:#94A3B8;font-weight:500}
+@media (max-width:1023px){
+  /* Mobile : Bloc 2 sous Bloc 1 ; le visuel s'aligne en ligne (badge + icône). */
+  .expertise-card-horizontal{grid-template-columns:1fr;gap:1rem}
+  .xp-h-visuel{flex-direction:row;align-items:center;gap:1rem}
+  .xp-h-ico{width:52px;height:52px;border-radius:14px}
+  .xp-h-ico svg{width:23px;height:23px}
+}
+@media (max-width:560px){
+  .expertise-card-horizontal{padding:1.15rem 1.1rem;border-radius:16px}
+  .xp-h-titre{font-size:1.12rem}
+  .xp-h-projets{gap:.4rem .7rem}
+}
 .xp-card-sm::after{
   content:"En savoir plus →";font-size:.8rem;font-weight:600;color:var(--gold-2);
   margin-top:auto;padding-top:.4rem;

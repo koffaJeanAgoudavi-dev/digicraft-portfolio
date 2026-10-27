@@ -471,6 +471,7 @@
       "xp.exemples": "Exemples de réalisations",
       "xp.eyebrow": "Expertise",
       "xp.lead": "Je transforme vos processus complexes en systèmes simples, automatisés et prêts à l'emploi.",
+      "xp.projets": "Projets associés",
       "xp.titre": "Expertise",
       "xp.vide.desc": "Les compétences apparaîtront ici dès qu'elles seront disponibles.",
       "xp.vide.titre": "Expertise en cours d'intégration"
@@ -920,6 +921,7 @@
       "xp.exemples": "Related work",
       "xp.eyebrow": "Expertise",
       "xp.lead": "I transform your complex processes into simple, automated, ready-to-use systems.",
+      "xp.projets": "Related projects",
       "xp.titre": "Expertise",
       "xp.vide.desc": "Skills will appear here as soon as they are available.",
       "xp.vide.titre": "Expertise being added"
