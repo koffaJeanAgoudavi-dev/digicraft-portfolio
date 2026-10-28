@@ -991,6 +991,7 @@
     badgeStatut: badgeStatut,
     stack: stack,
     stackBadges: stackBadges,
+    badgeOutil: badgeOutil,
     normaliserOutil: normaliserOutil,
     toolsRegistry: TOOLS_REGISTRY,
     chargerOutils: chargerOutils,
