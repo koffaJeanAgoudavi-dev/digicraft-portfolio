@@ -2348,24 +2348,22 @@ body.case-study-page{
 .offers-tab:focus-visible{outline:2px solid #7048D8;outline-offset:2px}
 .offers-tab.is-active{background:#7048D8;color:#fff;box-shadow:0 8px 18px -10px rgba(112,72,216,.6)}
 
-/* ---------- Offres : cartes pricing (Phase 2) ----------
-   Structure : en-tête (badge type + titre + description), zone prix
-   (prix_display), corps livrables ✓, stack (badges officiels du
-   TOOLS_REGISTRY), pied CTA. mise_en_avant=TRUE → accent doré
-   (.pricing-card--highlight). */
+/* ---------- Offres : cartes pricing (Phase 3 — SaaS pricing table) ----------
+   Fond blanc, bordure fine, coins arrondis marqués (22px) ; prix
+   sous le titre ; carte phare (mise_en_avant=TRUE) : fond teinté
+   lavande/violet en dégradé + ombre portée marquée + badge
+   « LE PLUS DEMANDÉ » ; CTA contour (plein sur la phare) ;
+   responsive : 3 colonnes ≥ 1024px, 1 colonne en dessous. */
 .pricing-card{
   position:relative;
   display:flex;
   flex-direction:column;
   min-height:100%;
-  padding:1.7rem;
-  overflow:hidden;
-  border:1px solid rgba(242,241,240,.96);
-  border-radius:20px;
-  background:rgba(255,255,255,.74);
-  box-shadow:0 18px 45px -28px rgba(76,43,159,.28),inset 0 1px 0 rgba(255,255,255,.92);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
+  padding:1.75rem;
+  border:1px solid #EDE9F7;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 14px 34px -24px rgba(76,43,159,.22);
   transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease;
 }
 .pricing-card::before{
@@ -2373,22 +2371,45 @@ body.case-study-page{
   position:absolute;
   inset:0 0 auto;
   height:4px;
+  border-radius:inherit;
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
   background:linear-gradient(90deg,#7048D8,#CBB8FA);
-  opacity:.88;
+  opacity:.85;
 }
 .pricing-card:hover,.pricing-card:focus-within{
   transform:translateY(-4px);
   border-color:#D9CAFA;
-  box-shadow:0 24px 50px -26px rgba(76,43,159,.34),inset 0 1px 0 rgba(255,255,255,.98);
+  box-shadow:0 22px 44px -22px rgba(76,43,159,.3);
 }
+/* Carte phare : mise_en_avant=TRUE → teinte lavande/violet,
+   élévation visuelle marquée, badge « LE PLUS DEMANDÉ ». */
 .pricing-card--highlight{
-  border-color:var(--gold,#D9A441);
-  box-shadow:0 20px 48px -24px rgba(176,124,20,.38),inset 0 1px 0 rgba(255,255,255,.95);
+  border-color:#C9B2F8;
+  background:linear-gradient(168deg,#FBF9FF 0%,#F4EEFF 48%,#ECE2FF 100%);
+  box-shadow:0 26px 60px -18px rgba(112,72,216,.5),0 10px 24px -14px rgba(76,43,159,.32);
 }
-.pricing-card--highlight::before{background:linear-gradient(90deg,var(--gold,#D9A441),#F4D78A)}
+.pricing-card--highlight::before{background:linear-gradient(90deg,#5B34C0,#8F72E5);opacity:1}
 .pricing-card--highlight:hover,.pricing-card--highlight:focus-within{
-  border-color:var(--gold-2,#B07C14);
-  box-shadow:0 26px 54px -24px rgba(176,124,20,.46),inset 0 1px 0 rgba(255,255,255,.98);
+  border-color:#B79AF0;
+  box-shadow:0 32px 70px -20px rgba(112,72,216,.58),0 12px 28px -14px rgba(76,43,159,.38);
+}
+.pricing-card-flag{
+  position:absolute;
+  top:-13px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:.42rem .85rem;
+  border-radius:999px;
+  background:linear-gradient(90deg,#5B34C0,#8F72E5);
+  color:#fff;
+  font-family:var(--font-mono);
+  font-size:.64rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  box-shadow:0 10px 22px -10px rgba(91,52,192,.65);
 }
 .pricing-card-head{display:flex;flex-direction:column;align-items:flex-start}
 .pricing-card-type,.pricing-card-label{
@@ -2407,47 +2428,79 @@ body.case-study-page{
   background:#F0EBFF;
 }
 .pricing-card--highlight .pricing-card-type{
-  color:var(--gold-2,#8A6A1D);
-  border-color:var(--gold-line,#EBD9A8);
-  background:var(--gold-soft,#FBF3DF);
+  color:#4B2A9F;
+  border-color:#C9B2F8;
+  background:#EFE7FF;
 }
 .pricing-card-titre{
   margin:0;
-  font-size:clamp(1.35rem,2vw,1.7rem);
-  line-height:1.12;
-  letter-spacing:-.025em;
+  font-size:clamp(1.3rem,1.9vw,1.62rem);
+  line-height:1.15;
+  letter-spacing:-.02em;
+  overflow-wrap:break-word;
 }
+/* Prix sous le titre (décision utilisateur Phase 3). */
+.pricing-card-prix{
+  margin:.95rem 0 0;
+  font-size:1.8rem;
+  font-weight:800;
+  letter-spacing:-.03em;
+  line-height:1.1;
+  color:var(--ink);
+  overflow-wrap:break-word;
+}
+.pricing-card--highlight .pricing-card-prix{color:#5B34C0}
 .pricing-card-desc{
-  margin-top:.85rem;
+  margin-top:.9rem;
   color:var(--ink-2);
   line-height:1.65;
+  overflow-wrap:break-word;
 }
-.pricing-card-prix{
-  margin:1.25rem 0 0;
-  padding-top:1.1rem;
-  border-top:1px dashed var(--line);
-  font-size:1.32rem;
-  font-weight:800;
-  letter-spacing:-.02em;
-  color:var(--ink);
-}
-.pricing-card--highlight .pricing-card-prix{color:var(--gold-2,#8A6A1D)}
-.pricing-card-body{margin-top:1.3rem}
+.pricing-card-body{margin-top:1.35rem}
 .pricing-card-label{margin:0 0 .65rem;color:#716B80}
 .pricing-card-body ul{display:grid;gap:.55rem;margin:0;padding:0;list-style:none}
 .pricing-card-body li{display:flex;align-items:flex-start;gap:.55rem;color:var(--ink-2);font-size:.9rem;line-height:1.45}
 .pricing-check{display:grid;place-items:center;flex:none;width:1.1rem;height:1.1rem;margin-top:.08rem;border-radius:50%;background:#7048D8;color:#fff;font-size:.7rem;font-weight:700}
-.pricing-card--highlight .pricing-check{background:var(--gold,#D9A441)}
+.pricing-card--highlight .pricing-check{background:#5B34C0}
 .pricing-card-bottom{display:flex;flex-direction:column;gap:1rem;margin-top:auto;padding-top:1.5rem}
 .pricing-card-stack{display:flex;flex-wrap:wrap;gap:.42rem}
 .pricing-card-stack--text{margin:0;padding:0;list-style:none}
 .pricing-card-stack--text li{padding:.32rem .55rem;border:1px solid #E7DEFB;border-radius:999px;background:rgba(240,235,255,.62);color:#4B2A9F;font-family:var(--font-mono);font-size:.68rem}
-.pricing-card-cta{align-self:flex-start;margin-top:.1rem}
+/* CTA : contour violet sur les cartes standard, plein dégradé sur
+   la carte phare (hiérarchie SaaS — décision utilisateur). */
+.pricing-card-cta{
+  align-self:flex-start;
+  margin-top:.1rem;
+  background:transparent;
+  color:#7048D8;
+  border:1.5px solid #A98FE8;
+}
+.pricing-card-cta:hover,.pricing-card-cta:focus-visible{
+  background:#7048D8;
+  color:#fff;
+  border-color:#7048D8;
+  transform:translateY(-2px);
+  box-shadow:0 12px 26px -12px rgba(112,72,216,.55);
+}
+.pricing-card--highlight .pricing-card-cta{
+  background:linear-gradient(90deg,#7048D8,#8F72E5);
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 14px 30px -14px rgba(112,72,216,.65);
+}
+.pricing-card--highlight .pricing-card-cta:hover,.pricing-card--highlight .pricing-card-cta:focus-visible{
+  background:linear-gradient(90deg,#5B34C0,#7048D8);
+  border-color:transparent;
+  transform:translateY(-2px);
+  box-shadow:0 16px 34px -14px rgba(91,52,192,.7);
+}
 .offers-empty{grid-column:1/-1;margin:0;padding:2.2rem 1rem;text-align:center;color:var(--ink-2);font-size:.95rem;border:1px dashed var(--line);border-radius:16px;background:rgba(255,255,255,.5)}
-@media (max-width:900px){.offers-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:620px){
-  .offers-grid{grid-template-columns:1fr;gap:1rem}
+/* Responsive : 3 colonnes ≥ 1024px, empilement fluide 1 colonne
+   en dessous (< 1023px), sans débordement horizontal. */
+@media (max-width:1023px){
+  .offers-grid{grid-template-columns:1fr;gap:1.25rem}
   .pricing-card{padding:1.4rem;border-radius:18px}
+  .pricing-card-flag{top:-12px;padding:.38rem .7rem;font-size:.6rem}
   .offers-tab{padding:.55rem 1rem;font-size:.78rem}
 }
 @media (prefers-reduced-motion:reduce){.pricing-card{transition:none}.pricing-card:hover,.pricing-card:focus-within{transform:none}}

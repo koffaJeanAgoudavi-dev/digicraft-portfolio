@@ -23,6 +23,16 @@
        section masquée ;
      - lot vide → message d'état vide dans l'onglet (cliquable).
 
+   Phase 3 (2026-10-28) — style « SaaS Pricing Table » :
+     - prix sous le titre, avant la description (décision
+       utilisateur) ;
+     - carte phare : fond teinté lavande/violet (dégradé), ombre
+       portée marquée, badge supérieur « LE PLUS DEMANDÉ »
+       (offres.phare / MOST POPULAR en EN) ;
+     - CTA hiérarchisés : contour violet sur les cartes standard,
+       plein dégradé sur la carte phare ;
+     - responsive : 3 colonnes ≥ 1024px, 1 colonne en dessous.
+
    Variantes facultatives : titre_en, description_en, livrables_en,
    cta_texte_en. Sans GID publié, la section reste masquée.
    ============================================================ */
@@ -137,15 +147,18 @@
         }).join("") + "</ul></div>"
       : "";
     var ctaHtml = o.cta_lien
-      ? '<a class="btn btn-gold pricing-card-cta" href="' + esc(o.cta_lien) + '"' + (/^https?:\/\//i.test(o.cta_lien) ? ' target="_blank" rel="noopener"' : "") + ">" + esc(o.cta_texte || "Découvrir l’offre") + ' <span class="arr" aria-hidden="true">→</span></a>'
+      ? '<a class="btn pricing-card-cta" href="' + esc(o.cta_lien) + '"' + (/^https?:\/\//i.test(o.cta_lien) ? ' target="_blank" rel="noopener"' : "") + ">" + esc(o.cta_texte || "Découvrir l’offre") + ' <span class="arr" aria-hidden="true">→</span></a>'
       : "";
+    /* Phase 3 : badge « LE PLUS DEMANDÉ » sur la carte phare, prix
+       sous le titre (avant la description) — décision utilisateur. */
     return '<article class="pricing-card' + (o.mise_en_avant ? " pricing-card--highlight" : "") + '">' +
+      (o.mise_en_avant ? '<span class="pricing-card-flag" data-i18n="offres.phare">LE PLUS DEMANDÉ</span>' : "") +
       '<header class="pricing-card-head">' +
         (o.type ? '<span class="pricing-card-type">' + esc(o.type) + "</span>" : "") +
         '<h3 class="pricing-card-titre">' + esc(o.titre) + "</h3>" +
+        (o.prix_display ? '<p class="pricing-card-prix">' + esc(o.prix_display) + "</p>" : "") +
         (o.description ? '<p class="pricing-card-desc">' + esc(o.description) + "</p>" : "") +
       "</header>" +
-      (o.prix_display ? '<p class="pricing-card-prix">' + esc(o.prix_display) + "</p>" : "") +
       corps +
       '<div class="pricing-card-bottom">' + stackHtml(o) + ctaHtml + "</div>" +
       "</article>";
