@@ -233,15 +233,23 @@ colonnes sont vides.
 
 ### Google Search Console (vérification de propriété)
 
-La balise de vérification est déjà en place dans le `<head>` des
-10 pages (HTML statique, fiable à 100 % — pas d'injection JS) :
+Deux méthodes actives en parallèle :
+
+1. **Balise HTML** — présente dans le `<head>` des 16 pages (HTML
+   statique, fiable à 100 % — pas d'injection JS) :
 
 ```html
-<meta name="google-site-verification" content="RwuhsveunXtvJvMHt2v_kQKeC2xaRPjTYuRsp_99o0s">
+<meta name="google-site-verification" content="jq5LA_xpX5w6S2zpK0yzKLgKwTOVp5ZlmPEBXNh6A9Y" />
 ```
 
+2. **Fichier HTML** — `google9d0312d5ce0937bf.html` à la racine, servi
+   par la fonction dédiée `functions/google9d0312d5ce0937bf.html.js`
+   (route déclarée dans `_routes.json`, pour contourner la redirection
+   Clean URLs de Cloudflare Pages).
+
 Pour vérifier : Search Console → Ajouter une propriété → **Préfixe d'URL**
-→ `https://digicraft-labs-drf.pages.dev/` → méthode **Balise HTML** →
+→ `https://digicraft-labs-drf.pages.dev/` → méthode **Balise HTML** ou
+**Fichier HTML** →
 « Vérifier ». Compte Google identique à celui de GA4. La vérification
 n'est rejouée qu'après redéploiement sur Cloudflare Pages ; elle prend
 ensuite 5 à 15 minutes.
