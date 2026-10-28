@@ -33,8 +33,14 @@
        plein dégradé sur la carte phare ;
      - responsive : 3 colonnes ≥ 1024px, 1 colonne en dessous.
 
+   Phase 4 (2026-10-28) — composant « Problème résolu » :
+     colonne probleme_resolu (variante probleme_resolu_en) rendue
+     juste sous la description en blockquote discret
+     (.problem-solved-block / -label / -text).
+
    Variantes facultatives : titre_en, description_en, livrables_en,
-   cta_texte_en. Sans GID publié, la section reste masquée.
+   probleme_resolu_en, cta_texte_en. Sans GID publié, la section
+   reste masquée.
    ============================================================ */
 (function () {
   "use strict";
@@ -92,6 +98,7 @@
       titre: texte(row, "titre"),
       type: texte(row, "type"),
       description: texte(row, "description"),
+      probleme_resolu: texte(row, "probleme_resolu"),
       livrables: listeLivrables(texte(row, "livrables")),
       stack: listeStack(texte(row, "stack")),
       prix_display: window.Sheets.champ(row, ["prix_display", "prix"], ""),
@@ -149,6 +156,11 @@
     var ctaHtml = o.cta_lien
       ? '<a class="btn pricing-card-cta" href="' + esc(o.cta_lien) + '"' + (/^https?:\/\//i.test(o.cta_lien) ? ' target="_blank" rel="noopener"' : "") + ">" + esc(o.cta_texte || "Découvrir l’offre") + ' <span class="arr" aria-hidden="true">→</span></a>'
       : "";
+    /* Phase 4 : « Problème résolu » (probleme_resolu) juste sous la
+       description principale — style blockquote discret. */
+    var probleme = o.probleme_resolu
+      ? '<div class="problem-solved-block"><span class="problem-solved-label" data-i18n="offres.probleme">PROBLÈME RÉSOLU</span><p class="problem-solved-text">' + esc(o.probleme_resolu) + "</p></div>"
+      : "";
     /* Phase 3 : badge « LE PLUS DEMANDÉ » sur la carte phare, prix
        sous le titre (avant la description) — décision utilisateur. */
     return '<article class="pricing-card' + (o.mise_en_avant ? " pricing-card--highlight" : "") + '">' +
@@ -159,6 +171,7 @@
         (o.prix_display ? '<p class="pricing-card-prix">' + esc(o.prix_display) + "</p>" : "") +
         (o.description ? '<p class="pricing-card-desc">' + esc(o.description) + "</p>" : "") +
       "</header>" +
+      probleme +
       corps +
       '<div class="pricing-card-bottom">' + stackHtml(o) + ctaHtml + "</div>" +
       "</article>";
