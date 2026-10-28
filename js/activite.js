@@ -227,21 +227,11 @@
   }
 
   /* Indicateur de source (jamais d'échec silencieux) */
-  function statutSource(el, source, n) {
-    if (!el || !el.parentElement) return;
-    var ancien = el.parentElement.querySelector(".dyn-source");
-    if (ancien) ancien.remove();
-    var div = document.createElement("p");
-    div.className = "dyn-source" + (source === "local" ? " is-local" : "") + (source === "erreur" ? " is-erreur" : "");
-    if (source === "google-sheets") {
-      div.innerHTML = '<span class="dot"></span>' + T("etat.donnees") + n + ' ' + (n > 1 ? T("actv.compteur.plur") : T("actv.compteur.sing"));
-    } else if (source === "local") {
-      div.innerHTML = '<span class="dot"></span>' + T("etat.secours");
-    } else {
-      div.innerHTML = '<span class="dot"></span>' + T("etat.erreur");
-    }
-    el.parentElement.insertBefore(div, el.nextSibling);
-  }
+  /* Nettoyage (2026-10-28) : les mentions d'état de synchronisation du
+     CMS (« Données synchronisées · X entrées ») ne s'affichent plus
+     sur le site public. Fonction gardée en no-op pour ne pas modifier
+     les sites d'appel. */
+  function statutSource() { return; }
 
   function reveler(el) {
     if (!el) return;

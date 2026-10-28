@@ -225,16 +225,27 @@
     '</div>';
   }
 
-  function statutSource(el, source, n, mot) {
-    if (!el || !el.parentElement) return;
-    var ancien = el.parentElement.querySelector(".dyn-source");
-    if (ancien) ancien.remove();
-    var div = document.createElement("p");
-    div.className = "dyn-source" + (source === "local" ? " is-local" : "") + (source === "erreur" ? " is-erreur" : "");
-    if (source === "google-sheets") div.innerHTML = '<span class="dot"></span>' + T("etat.donnees") + n + " " + (n > 1 ? T("art.compteur.plur") : T("art.compteur.sing"));
-    else if (source === "local") div.innerHTML = '<span class="dot"></span>' + T("etat.secours");
-    else div.innerHTML = '<span class="dot"></span>' + T("etat.erreur");
-    el.parentElement.insertBefore(div, el.nextSibling);
+  /* Nettoyage (2026-10-28) : les mentions d'état de synchronisation du
+     CMS (« Données synchronisées · X articles ») ne s'affichent plus
+     sur le site public. Fonction gardée en no-op pour ne pas modifier
+     les sites d'appel. */
+  function statutSource() { return; }
+
+  /* Indicateurs de pagination unifiés (tirets) sous le carrousel de
+     l'accueil — composant cloné de l'Expertise (js/carousel-dots.js).
+     Uniquement en mode « apercu » (accueil) : la grille /articles/ ne
+     défile pas (décision utilisateur 2026-10-28). */
+  function dotsArticles(el) {
+    if (!window.Dots || !el) return;
+    var wrap = el.closest ? el.closest(".carousel-wrap") : null;
+    window.Dots.attacher({
+      conteneur: el,
+      items: ".a-card",
+      cleAria: "accueil.articles.dot",
+      secoursAria: "Aller à l'article {n}",
+      prev: wrap ? wrap.querySelector("[data-carousel-prev]") : null,
+      next: wrap ? wrap.querySelector("[data-carousel-next]") : null
+    });
   }
 
   /* Révélation des cartes injectées (les pages /articles/ et /boutique/
@@ -289,6 +300,7 @@
         if (bar) bar.innerHTML = "";
         el.innerHTML = etatVide(T("art.vide.titre"), T("art.vide.desc"), T("etat.rien.invente"));
         statutSource(el, src, 0, "article");
+        if (mode === "apercu") dotsArticles(el);
         return;
       }
 
@@ -297,6 +309,7 @@
         if (!featured.length) {
           el.innerHTML = etatVide(T("art.accueil.vide.titre"), T("art.accueil.vide.desc"), T("art.accueil.vide.hint"));
           statutSource(el, src, 0, "article");
+          dotsArticles(el);
           return;
         }
         el.innerHTML = featured.map(function (a) {
@@ -304,6 +317,7 @@
         }).join("");
         statutSource(el, src, featured.length, "article");
         reveler(el);
+        dotsArticles(el);
         return;
       }
 

@@ -445,24 +445,11 @@
     '</div>';
   }
 
-  /* Indicateur visible de source de données (jamais d'échec silencieux) */
-  function statutSource(containerId, source, n) {
-    var el = document.getElementById(containerId);
-    if (!el || !el.parentElement) return;
-    var ancien = el.parentElement.querySelector(".dyn-source");
-    if (ancien) ancien.remove();
-    var div = document.createElement("p");
-    div.className = "dyn-source" + (source === "local" ? " is-local" : "");
-    if (source === "google-sheets") {
-      div.innerHTML = '<span class="dot"></span>' + T("etat.donnees") + n + ' ' + (n > 1 ? T("projets.compteur.plur") : T("projets.compteur.sing"));
-    } else if (source === "local") {
-      div.innerHTML = '<span class="dot"></span>' + T("etat.secours");
-    } else {
-      div.innerHTML = '<span class="dot"></span>' + T("etat.erreur");
-      div.classList.add("is-erreur");
-    }
-    el.parentElement.insertBefore(div, el.nextSibling);
-  }
+  /* Nettoyage (2026-10-28) : les mentions d'état de synchronisation du
+     CMS (« Données synchronisées · X projets ») ne s'affichent plus
+     sur le site public. Fonction gardée en no-op pour ne pas modifier
+     les sites d'appel. */
+  function statutSource() { return; }
 
   /* Construit des objets propres, champ par champ (alias + casse tolérées),
      en isolant chaque ligne : une ligne problématique est ignorée et
@@ -523,6 +510,21 @@
   }
 
   /* ---- Carousel accueil : featured=true uniquement ---- */
+  /* Indicateurs de pagination unifiés (tirets) sous le carrousel —
+     composant cloné de l'Expertise (js/carousel-dots.js, 2026-10-28). */
+  function dotsCarrousel(el) {
+    if (!window.Dots || !el) return;
+    var wrap = el.closest ? el.closest(".carousel-wrap") : null;
+    window.Dots.attacher({
+      conteneur: el,
+      items: ".p-card",
+      cleAria: "accueil.projets.dot",
+      secoursAria: "Aller au projet {n}",
+      prev: wrap ? wrap.querySelector("[data-carousel-prev]") : null,
+      next: wrap ? wrap.querySelector("[data-carousel-next]") : null
+    });
+  }
+
   function carouselAccueil(containerId) {
     var el = document.getElementById(containerId);
     if (!el) return;
@@ -535,6 +537,7 @@
         el.innerHTML = etatVide("Aucun projet à la une",
           "Les projets marqués featured=TRUE dans le Sheet apparaîtront ici.",
           "Aucune modification de code nécessaire : ajoutez la ligne dans l'onglet Projets.");
+        dotsCarrousel(el);
         return;
       }
       el.innerHTML = featured.slice(0, 6).map(function (p) {
@@ -543,10 +546,12 @@
         "Les projets marqués featured=TRUE dans le Sheet apparaîtront ici.");
       statutSource(containerId, src, featured.length);
       window.Prjs.observeNew(el);
+      dotsCarrousel(el);
     }).catch(function (e) {
       console.error("[Projets] Erreur de chargement :", e);
       statutSource(containerId, "erreur", 0);
       el.innerHTML = etat("erreur", T("projets.erreur.titre"), T("etat.sheet"), "#", T("commun.reessayer"));
+      dotsCarrousel(el);
     });
   }
 

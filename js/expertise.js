@@ -241,18 +241,11 @@
     return out;
   }
 
-  function statutSource(el, source, n) {
-    if (!el || !el.parentElement) return;
-    var prec = el.parentElement.querySelector(".dyn-source");
-    if (prec) prec.remove();
-    var p = document.createElement("p");
-    p.className = "dyn-source" + (source === "local" ? " is-local" : "") + (source === "erreur" ? " is-erreur" : "");
-    p.innerHTML = '<span class="dot"></span>' +
-      (source === "google-sheets" ? T("etat.donnees") + n + " " + (n > 1 ? T("xp.compteur.plur") : T("xp.compteur.sing"))
-        : source === "local" ? T("etat.secours")
-        : T("etat.erreur"));
-    el.parentElement.appendChild(p);
-  }
+  /* Nettoyage (2026-10-28) : les mentions d'état de synchronisation du
+     CMS (« Données synchronisées · X expertises ») ne s'affichent plus
+     sur le site public. Fonction gardée en no-op pour ne pas modifier
+     les sites d'appel. */
+  function statutSource() { return; }
 
   function rendre(containerId, mode, limite) {
     var el = document.getElementById(containerId);

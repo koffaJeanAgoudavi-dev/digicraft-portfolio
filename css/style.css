@@ -403,17 +403,6 @@ strong{color:var(--ink);font-weight:600}
 .dyn-state p{font-size:.92rem;margin-bottom:1.2rem}
 .dyn-state .btn{padding:.6rem 1.2rem;font-size:.85rem}
 
-/* Indicateur de source de données (jamais d'échec silencieux) */
-.dyn-source{
-  display:flex;align-items:center;gap:.5rem;
-  font-size:.76rem;font-weight:500;color:var(--ink-2);
-  margin-top:.9rem;
-}
-.dyn-source .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex:none}
-.dyn-source.is-local .dot{background:#3E9B4F}
-.dyn-source.is-erreur .dot{background:#B3402E}
-.dyn-source.is-erreur{color:#B3402E;font-weight:600}
-
 /* Skeleton */
 .skel{position:relative;overflow:hidden;background:#E9E5E1;border-radius:var(--radius);min-height:280px}
 .skel::after{
@@ -780,12 +769,17 @@ main#contenu{overflow-x:hidden}   /* wrapper principal : aucun débordement glob
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
 /* Points de pagination discrets — 1 par carte, actif en pilule lavande */
-.expertise-carousel-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.65rem}
-.expertise-carousel-dots[hidden]{display:none}
-.xp-dot{width:8px;height:8px;border-radius:999px;border:none;padding:0;background:#CBD5E1;cursor:pointer;transition:width .25s var(--ease),background .25s var(--ease)}
-.xp-dot:hover{background:#94A3B8}
-.xp-dot:focus-visible{outline:2px solid #6D28D9;outline-offset:2px}
-.xp-dot.is-active{width:22px;background:#6D28D9}
+/* ---------- Indicateurs de pagination unifiés (tirets) ----------
+   Composant cloné du carrousel Expertise pour toutes les sections à
+   défilement horizontal (Projets à la une, Articles) : pilule 8px,
+   état actif 22px violet #6D28D9. Décision 2026-10-28 : carrousels
+   seuls — les grilles statiques restent sans indicateurs. */
+.carousel-dots,.expertise-carousel-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.65rem}
+.carousel-dots[hidden],.expertise-carousel-dots[hidden]{display:none}
+.carousel-dot,.xp-dot{width:8px;height:8px;border-radius:999px;border:none;padding:0;background:#CBD5E1;cursor:pointer;transition:width .25s var(--ease),background .25s var(--ease)}
+.carousel-dot:hover,.xp-dot:hover{background:#94A3B8}
+.carousel-dot:focus-visible,.xp-dot:focus-visible{outline:2px solid #6D28D9;outline-offset:2px}
+.carousel-dot.is-active,.xp-dot.is-active{width:22px;background:#6D28D9}
 .expertise-card-horizontal{
   display:grid;grid-template-columns:minmax(210px,30%) minmax(0,1fr);
   gap:clamp(1.1rem,2.5vw,1.9rem);align-items:center;
