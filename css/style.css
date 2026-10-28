@@ -2456,6 +2456,34 @@ body.case-study-page{
   line-height:1.65;
   overflow-wrap:break-word;
 }
+/* ---------- Problème résolu (Phase 4) — blockquote discret sous la
+   description : bordure gauche violette, fond très léger, label
+   majuscules atténué, texte italique secondaire. ---------- */
+.problem-solved-block{
+  margin:12px 0;
+  padding:.25rem .8rem .4rem 0;
+  padding-left:12px;
+  border-left:3px solid #7048D8;
+  background:rgba(112,72,216,.045);
+  border-radius:0 10px 10px 0;
+}
+.pricing-card--highlight .problem-solved-block{border-left-color:#5B34C0;background:rgba(91,52,192,.055)}
+.problem-solved-label{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#716B80;
+}
+.problem-solved-text{
+  margin:.3rem 0 0;
+  font-style:italic;
+  color:var(--ink-2);
+  line-height:1.6;
+  overflow-wrap:break-word;
+}
 .pricing-card-body{margin-top:1.35rem}
 .pricing-card-label{margin:0 0 .65rem;color:#716B80}
 .pricing-card-body ul{display:grid;gap:.55rem;margin:0;padding:0;list-style:none}
