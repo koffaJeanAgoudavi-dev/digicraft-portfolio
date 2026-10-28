@@ -2327,7 +2327,33 @@ body.case-study-page{
   gap:1.25rem;
   align-items:stretch;
 }
-.offer-card{
+/* ---------- Offres : commutateur d'onglets (Phase 2, 2026-10-28) ----------
+   Bascule 2 positions centrée en haut de section : Prestations
+   Sur-Mesure (DISCUSSION) / Kits & Templates (DIRECT). Segmented
+   control aligné sur la charte des pastilles (lavande → plein). */
+.offers-tabs{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:.25rem;
+  width:-moz-fit-content;width:fit-content;max-width:100%;
+  margin:0 auto 1.6rem;padding:.28rem;
+  border:1px solid #E7DEFB;border-radius:999px;
+  background:rgba(255,255,255,.72);backdrop-filter:blur(10px);
+}
+.offers-tab{
+  appearance:none;border:none;border-radius:999px;
+  padding:.62rem 1.35rem;background:transparent;color:#4B2A9F;cursor:pointer;
+  font:600 .82rem/1.2 var(--font-body,Inter,sans-serif);
+  transition:background .2s ease,color .2s ease,box-shadow .2s ease;
+}
+.offers-tab:hover{background:#F0EBFF}
+.offers-tab:focus-visible{outline:2px solid #7048D8;outline-offset:2px}
+.offers-tab.is-active{background:#7048D8;color:#fff;box-shadow:0 8px 18px -10px rgba(112,72,216,.6)}
+
+/* ---------- Offres : cartes pricing (Phase 2) ----------
+   Structure : en-tête (badge type + titre + description), zone prix
+   (prix_display), corps livrables ✓, stack (badges officiels du
+   TOOLS_REGISTRY), pied CTA. mise_en_avant=TRUE → accent doré
+   (.pricing-card--highlight). */
+.pricing-card{
   position:relative;
   display:flex;
   flex-direction:column;
@@ -2342,7 +2368,7 @@ body.case-study-page{
   -webkit-backdrop-filter:blur(14px);
   transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease;
 }
-.offer-card::before{
+.pricing-card::before{
   content:"";
   position:absolute;
   inset:0 0 auto;
@@ -2350,20 +2376,29 @@ body.case-study-page{
   background:linear-gradient(90deg,#7048D8,#CBB8FA);
   opacity:.88;
 }
-.offer-card:hover,.offer-card:focus-within{
+.pricing-card:hover,.pricing-card:focus-within{
   transform:translateY(-4px);
   border-color:#D9CAFA;
   box-shadow:0 24px 50px -26px rgba(76,43,159,.34),inset 0 1px 0 rgba(255,255,255,.98);
 }
-.offer-type,.offer-label{
+.pricing-card--highlight{
+  border-color:var(--gold,#D9A441);
+  box-shadow:0 20px 48px -24px rgba(176,124,20,.38),inset 0 1px 0 rgba(255,255,255,.95);
+}
+.pricing-card--highlight::before{background:linear-gradient(90deg,var(--gold,#D9A441),#F4D78A)}
+.pricing-card--highlight:hover,.pricing-card--highlight:focus-within{
+  border-color:var(--gold-2,#B07C14);
+  box-shadow:0 26px 54px -24px rgba(176,124,20,.46),inset 0 1px 0 rgba(255,255,255,.98);
+}
+.pricing-card-head{display:flex;flex-direction:column;align-items:flex-start}
+.pricing-card-type,.pricing-card-label{
   font-family:var(--font-mono);
   font-size:.68rem;
   font-weight:700;
   letter-spacing:.12em;
   text-transform:uppercase;
 }
-.offer-type{
-  align-self:flex-start;
+.pricing-card-type{
   margin-bottom:1rem;
   padding:.35rem .65rem;
   color:#4B2A9F;
@@ -2371,32 +2406,51 @@ body.case-study-page{
   border-radius:999px;
   background:#F0EBFF;
 }
-.offer-card h3{
+.pricing-card--highlight .pricing-card-type{
+  color:var(--gold-2,#8A6A1D);
+  border-color:var(--gold-line,#EBD9A8);
+  background:var(--gold-soft,#FBF3DF);
+}
+.pricing-card-titre{
   margin:0;
   font-size:clamp(1.35rem,2vw,1.7rem);
   line-height:1.12;
   letter-spacing:-.025em;
 }
-.offer-description{
+.pricing-card-desc{
   margin-top:.85rem;
   color:var(--ink-2);
   line-height:1.65;
 }
-.offer-deliverables{margin-top:1.3rem}
-.offer-label{margin:0 0 .65rem;color:#716B80}
-.offer-deliverables ul{display:grid;gap:.55rem;margin:0;padding:0;list-style:none}
-.offer-deliverables li{display:flex;align-items:flex-start;gap:.55rem;color:var(--ink-2);font-size:.9rem;line-height:1.45}
-.offer-check{display:grid;place-items:center;flex:none;width:1.1rem;height:1.1rem;margin-top:.08rem;border-radius:50%;background:#7048D8;color:#fff;font-size:.7rem;font-weight:700}
-.offer-bottom{display:flex;flex-direction:column;gap:1rem;margin-top:auto;padding-top:1.5rem}
-.offer-stack{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
-.offer-stack li{padding:.32rem .55rem;border:1px solid #E7DEFB;border-radius:999px;background:rgba(240,235,255,.62);color:#4B2A9F;font-family:var(--font-mono);font-size:.68rem}
-.offer-cta{align-self:flex-start;margin-top:.1rem}
+.pricing-card-prix{
+  margin:1.25rem 0 0;
+  padding-top:1.1rem;
+  border-top:1px dashed var(--line);
+  font-size:1.32rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+  color:var(--ink);
+}
+.pricing-card--highlight .pricing-card-prix{color:var(--gold-2,#8A6A1D)}
+.pricing-card-body{margin-top:1.3rem}
+.pricing-card-label{margin:0 0 .65rem;color:#716B80}
+.pricing-card-body ul{display:grid;gap:.55rem;margin:0;padding:0;list-style:none}
+.pricing-card-body li{display:flex;align-items:flex-start;gap:.55rem;color:var(--ink-2);font-size:.9rem;line-height:1.45}
+.pricing-check{display:grid;place-items:center;flex:none;width:1.1rem;height:1.1rem;margin-top:.08rem;border-radius:50%;background:#7048D8;color:#fff;font-size:.7rem;font-weight:700}
+.pricing-card--highlight .pricing-check{background:var(--gold,#D9A441)}
+.pricing-card-bottom{display:flex;flex-direction:column;gap:1rem;margin-top:auto;padding-top:1.5rem}
+.pricing-card-stack{display:flex;flex-wrap:wrap;gap:.42rem}
+.pricing-card-stack--text{margin:0;padding:0;list-style:none}
+.pricing-card-stack--text li{padding:.32rem .55rem;border:1px solid #E7DEFB;border-radius:999px;background:rgba(240,235,255,.62);color:#4B2A9F;font-family:var(--font-mono);font-size:.68rem}
+.pricing-card-cta{align-self:flex-start;margin-top:.1rem}
+.offers-empty{grid-column:1/-1;margin:0;padding:2.2rem 1rem;text-align:center;color:var(--ink-2);font-size:.95rem;border:1px dashed var(--line);border-radius:16px;background:rgba(255,255,255,.5)}
 @media (max-width:900px){.offers-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){
   .offers-grid{grid-template-columns:1fr;gap:1rem}
-  .offer-card{padding:1.4rem;border-radius:18px}
+  .pricing-card{padding:1.4rem;border-radius:18px}
+  .offers-tab{padding:.55rem 1rem;font-size:.78rem}
 }
-@media (prefers-reduced-motion:reduce){.offer-card{transition:none}.offer-card:hover,.offer-card:focus-within{transform:none}}
+@media (prefers-reduced-motion:reduce){.pricing-card{transition:none}.pricing-card:hover,.pricing-card:focus-within{transform:none}}
 
 /* Filtre par type : les boutons sont générés depuis la colonne `type` du Sheet. */
 .offers-filter{

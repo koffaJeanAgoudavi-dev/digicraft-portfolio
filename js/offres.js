@@ -1,29 +1,36 @@
 /* ============================================================
    OFFRES.JS — Services & offres depuis l'onglet Offres
    ------------------------------------------------------------
-   Phase 1 (refonte 2026-10-27) — nouveaux en-têtes du Sheet :
+   Phase 1 (2026-10-27) — parsing des nouveaux en-têtes :
      id, ordre, publie, titre, type, description,
-     livrables   (items séparés par des « ; »),
-     stack       (outils séparés par des « , »),
-     prix_display, cta_texte, cta_lien,
-     mode_achat  (DISCUSSION ou DIRECT),
-     mise_en_avant (TRUE ou FALSE).
+     livrables (« ; »), stack (« , »), prix_display,
+     cta_texte, cta_lien, mode_achat (DISCUSSION|DIRECT),
+     mise_en_avant (TRUE|FALSE).
 
-   Décisions utilisateur (2026-10-27) :
-     - mode_achat VIDE/absent → l'offre est EXCLUE des deux lots ;
-     - séparateurs STRICTS : « ; » pour livrables, « , » pour stack ;
-     - prix_display est LU et normalisé mais AFFICHÉ en Phase 2 ;
-     - pas de variante prix_display_en (prix identique FR/EN).
+   Phase 2 (2026-10-28) — commutateur d'onglets + cartes :
+     - commutateur 2 positions en haut de section :
+       « Prestations Sur-Mesure » (mode_achat=DISCUSSION) /
+       « Kits & Templates » (mode_achat=DIRECT) — bascule fluide
+       sans rechargement (role=tablist/tab, flèches clavier) ;
+     - filtres par TYPE conservés SOUS le commutateur (décision
+       utilisateur) : filtrage combiné mode d'achat PUIS type ;
+     - cartes .pricing-card : en-tête (badge type + titre +
+       description), zone prix (prix_display), corps livrables ✓,
+       stack (badges officiels du TOOLS_REGISTRY unifié), pied CTA ;
+       mise_en_avant=TRUE → .pricing-card--highlight ;
+     - STRICT (décision utilisateur) : une offre sans mode_achat
+       valide n'apparaît dans AUCUN lot ; les deux lots vides →
+       section masquée ;
+     - lot vide → message d'état vide dans l'onglet (cliquable).
+
    Variantes facultatives : titre_en, description_en, livrables_en,
    cta_texte_en. Sans GID publié, la section reste masquée.
-
-   Badges de stack : le TOOLS_REGISTRY unifié (onglet « outils »,
-   même source que la boîte à outils de /a-propos/) fournit les
-   logos officiels dès que projects.js est chargé ; sans lui, repli
-   sur les puces textuelles d'origine.
    ============================================================ */
 (function () {
   "use strict";
+
+  /* État du commutateur (mode d'achat actif + filtre type actif). */
+  var etat = { mode: "DISCUSSION", type: "" };
 
   function esc(value) {
     return String(value == null ? "" : value).replace(/[&<>"']/g, function (ch) {
@@ -38,9 +45,7 @@
     return String(row && row[base] || "").trim();
   }
 
-  /* Livrables : séparateur STRICT « ; » (décision utilisateur) — la
-     virgule et le retour à la ligne ne découpent PAS. Le préfixe de
-     puce (✓, -) éventuel est nettoyé, le rendu ajoute son propre ✓. */
+  /* Livrables : séparateur STRICT « ; » (décision utilisateur). */
   function listeLivrables(value) {
     return String(value || "")
       .split(";")
@@ -48,8 +53,7 @@
       .filter(Boolean);
   }
 
-  /* Stack : séparateur STRICT « , » (décision utilisateur) — le « ; »
-     ne découpe PAS. Doublons ignorés (première occurrence). */
+  /* Stack : séparateur STRICT « , » — doublons ignorés. */
   function listeStack(value) {
     var vus = Object.create(null);
     return String(value || "")
@@ -68,10 +72,7 @@
     return window.Sheets.toBool(window.Sheets.champ(row, ["publie", "published"], ""));
   }
 
-  /* ---------- normaliser() — objet propre par offre (Phase 1) ----------
-     Lit les 13 champs des nouveaux en-têtes. mode_achat est mis en
-     MAJUSCULES et ramené à "" s'il n'est ni DISCUSSION ni DIRECT :
-     une telle offre n'apparaît dans AUCUN lot de parModeAchat(). */
+  /* ---------- normaliser() — objet propre par offre (Phase 1) ---------- */
   function normaliser(row) {
     var mode = String(window.Sheets.champ(row, ["mode_achat", "mode"], "") || "").trim().toUpperCase();
     return {
@@ -83,8 +84,6 @@
       description: texte(row, "description"),
       livrables: listeLivrables(texte(row, "livrables")),
       stack: listeStack(texte(row, "stack")),
-      /* Lu mais non affiché : le rendu du prix arrive en Phase 2.
-         Champ direct (sans variante _en — décision utilisateur). */
       prix_display: window.Sheets.champ(row, ["prix_display", "prix"], ""),
       cta_texte: texte(row, "cta_texte"),
       cta_lien: window.Sheets.safeExternalUrl(window.Sheets.champ(row, ["cta_lien", "cta_url"], "")),
@@ -93,10 +92,6 @@
     };
   }
 
-  /* ---------- recuperer() — offres publiées, triées ----------
-     Le registre unifié des outils est chargé en parallèle quand
-     projects.js est présent : les badges de stack rendent alors les
-     logos officiels dès le premier rendu. */
   function attendreRegistre() {
     return (window.Prjs && typeof window.Prjs.chargerOutils === "function")
       ? window.Prjs.chargerOutils()
@@ -113,10 +108,7 @@
     });
   }
 
-  /* ---------- parModeAchat() — moteur de filtrage (Phase 1) ----------
-     Renvoie le lot d'offres dont mode_achat === mode (casse et
-     espaces indifférents). Les offres sans mode d'achat valide sont
-     exclues des DEUX lots (décision utilisateur). */
+  /* ---------- parModeAchat() — moteur de filtrage (Phase 1) ---------- */
   function parModeAchat(offres, mode) {
     var cible = String(mode == null ? "" : mode).trim().toUpperCase();
     return (offres || []).filter(function (o) {
@@ -124,35 +116,38 @@
     });
   }
 
-  /* ---------- Rendu ---------- */
+  /* ---------- Rendu (Phase 2) ---------- */
   function stackHtml(o) {
     if (!o.stack.length) return "";
     if (window.Prjs && typeof window.Prjs.badgeOutil === "function") {
-      return '<div class="stack-badges" aria-label="Stack technique">' +
+      return '<div class="pricing-card-stack" aria-label="Stack technique">' +
         o.stack.map(function (jeton) { return window.Prjs.badgeOutil(jeton); }).join("") +
         "</div>";
     }
-    /* Repli (projects.js absent) : puces textuelles d'origine. */
-    return '<ul class="offer-stack" aria-label="Stack technique">' +
+    /* Repli (projects.js absent) : puces textuelles. */
+    return '<ul class="pricing-card-stack pricing-card-stack--text" aria-label="Stack technique">' +
       o.stack.map(function (jeton) { return "<li>" + esc(jeton) + "</li>"; }).join("") +
       "</ul>";
   }
 
   function card(o) {
-    var deliverablesHtml = o.livrables.length
-      ? '<div class="offer-deliverables"><p class="offer-label" data-i18n="offres.livrables">Ce qui est inclus</p><ul>' + o.livrables.map(function (item) {
-          return '<li><span class="offer-check" aria-hidden="true">✓</span><span>' + esc(item) + '</span></li>';
-        }).join("") + '</ul></div>'
+    var corps = o.livrables.length
+      ? '<div class="pricing-card-body"><p class="pricing-card-label" data-i18n="offres.livrables">Ce qui est inclus</p><ul>' + o.livrables.map(function (item) {
+          return '<li><span class="pricing-check" aria-hidden="true">✓</span><span>' + esc(item) + "</span></li>";
+        }).join("") + "</ul></div>"
       : "";
     var ctaHtml = o.cta_lien
-      ? '<a class="btn btn-gold offer-cta" href="' + esc(o.cta_lien) + '"' + (/^https?:\/\//i.test(o.cta_lien) ? ' target="_blank" rel="noopener"' : '') + '>' + esc(o.cta_texte || "Découvrir l’offre") + ' <span class="arr" aria-hidden="true">→</span></a>'
+      ? '<a class="btn btn-gold pricing-card-cta" href="' + esc(o.cta_lien) + '"' + (/^https?:\/\//i.test(o.cta_lien) ? ' target="_blank" rel="noopener"' : "") + ">" + esc(o.cta_texte || "Découvrir l’offre") + ' <span class="arr" aria-hidden="true">→</span></a>'
       : "";
-    return '<article class="offer-card card-hover">' +
-      (o.type ? '<span class="offer-type">' + esc(o.type) + '</span>' : '') +
-      "<h3>" + esc(o.titre) + "</h3>" +
-      (o.description ? '<p class="offer-description">' + esc(o.description) + "</p>" : "") +
-      deliverablesHtml +
-      '<div class="offer-bottom">' + stackHtml(o) + ctaHtml + "</div>" +
+    return '<article class="pricing-card' + (o.mise_en_avant ? " pricing-card--highlight" : "") + '">' +
+      '<header class="pricing-card-head">' +
+        (o.type ? '<span class="pricing-card-type">' + esc(o.type) + "</span>" : "") +
+        '<h3 class="pricing-card-titre">' + esc(o.titre) + "</h3>" +
+        (o.description ? '<p class="pricing-card-desc">' + esc(o.description) + "</p>" : "") +
+      "</header>" +
+      (o.prix_display ? '<p class="pricing-card-prix">' + esc(o.prix_display) + "</p>" : "") +
+      corps +
+      '<div class="pricing-card-bottom">' + stackHtml(o) + ctaHtml + "</div>" +
       "</article>";
   }
 
@@ -167,6 +162,7 @@
       var type = typeKey(row);
       if (type && types.indexOf(type) === -1) types.push(type);
     });
+    filter.hidden = types.length === 0;
     filter.innerHTML = ['<button type="button" class="offers-filter-btn' + (!active ? ' is-active' : '') +
       '" data-offres-filter="" aria-pressed="' + (!active ? 'true' : 'false') + '">' +
       esc(window.I18n && window.I18n.t ? window.I18n.t("offres.filtre.tous", null, "Tous") : "Tous") + '</button>']
@@ -178,10 +174,8 @@
       })).join("");
   }
 
-  function paint(container, filter, offers, active, animate) {
-    renderFilters(filter, offers, active);
-    var visible = active ? offers.filter(function (row) { return typeKey(row) === active; }) : offers;
-    var html = visible.map(card).join("");
+  function paint(container, offers, animate) {
+    var html = offers.map(card).join("");
     var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!animate || reduceMotion || !container.children.length) {
       container.innerHTML = html;
@@ -205,29 +199,78 @@
     }, 180);
   }
 
-  function render(container, filter, activeType) {
+  /* Synchronise le commutateur avec le mode actif : état visuel,
+     aria-selected, tabindex (parcours clavier) et aria-labelledby de
+     la grille. */
+  function syncTabs(container) {
+    var tabs = document.getElementById("tabs-offres");
+    if (!tabs) return;
+    var boutons = tabs.querySelectorAll("[data-offres-mode]");
+    Array.prototype.forEach.call(boutons, function (b) {
+      var actif = b.getAttribute("data-offres-mode") === etat.mode;
+      b.classList.toggle("is-active", actif);
+      b.setAttribute("aria-selected", actif ? "true" : "false");
+      b.setAttribute("tabindex", actif ? "0" : "-1");
+      if (actif && b.id) container.setAttribute("aria-labelledby", b.id);
+    });
+  }
+
+  function render(container, filter) {
     return recuperer().then(function (offers) {
       var section = container.closest("[data-offres-section]");
       var cta = document.querySelector("[data-offres-cta]");
-      if (!offers.length) {
+      var discussion = parModeAchat(offers, "DISCUSSION");
+      var direct = parModeAchat(offers, "DIRECT");
+
+      /* Aucune offre, ou aucune avec un mode d'achat valide (strict) :
+         la section entière disparaît, comme le CTA du hero. */
+      if (!offers.length || (!discussion.length && !direct.length)) {
         container.innerHTML = "";
-        if (filter) filter.innerHTML = "";
+        if (filter) { filter.innerHTML = ""; filter.hidden = true; }
         if (section) section.hidden = true;
         if (cta) cta.hidden = true;
         return;
       }
-      var active = activeType && offers.some(function (row) { return typeKey(row) === activeType; }) ? activeType : "";
-      paint(container, filter, offers, active, false);
+
+      /* Atterrissage (premier rendu uniquement) : si le lot du mode
+         actif est vide, basculer sur l'autre lot. Ensuite, un clic
+         utilisateur sur un onglet vide affiche le message d'état
+         vide — l'onglet reste cliquable (décision utilisateur). */
+      var lot = parModeAchat(offers, etat.mode);
+      if (!lot.length && !etat.amarre) {
+        etat.mode = discussion.length ? "DISCUSSION" : "DIRECT";
+        etat.type = "";
+        lot = parModeAchat(offers, etat.mode);
+      }
+      etat.amarre = true;
+
       if (section) section.hidden = false;
       if (cta) cta.hidden = false;
+      syncTabs(container);
+
+      /* Lot vide (l'autre est rempli) : message d'état vide propre,
+         onglet cliquable — décision utilisateur. */
+      if (!lot.length) {
+        renderFilters(filter, lot, "");
+        container.innerHTML = '<p class="offers-empty">' +
+          esc(window.I18n && window.I18n.t ? window.I18n.t("offres.vide.lot", null, "Aucune offre dans cette catégorie pour le moment.") : "Aucune offre dans cette catégorie pour le moment.") +
+          "</p>";
+        container.setAttribute("aria-busy", "false");
+        return;
+      }
+
+      /* Filtre type : conservé seulement s'il existe dans le lot actif. */
+      if (etat.type && !lot.some(function (o) { return typeKey(o) === etat.type; })) etat.type = "";
+      renderFilters(filter, lot, etat.type);
+      var visibles = etat.type ? lot.filter(function (o) { return typeKey(o) === etat.type; }) : lot;
+      paint(container, visibles, false);
       if (window.I18n && typeof window.I18n.appliquer === "function") window.I18n.appliquer();
       container._offresRows = offers;
       container._offresFilter = filter;
-      container._offresActive = active;
     }).catch(function (error) {
       console.error("[Offres] Échec de chargement :", error);
       container.innerHTML = "";
-      if (filter) filter.innerHTML = "";
+      if (filter) { filter.innerHTML = ""; filter.hidden = true; }
       var section = container.closest("[data-offres-section]");
       if (section) section.hidden = true;
       var cta = document.querySelector("[data-offres-cta]");
@@ -235,25 +278,61 @@
     });
   }
 
+  function basculerMode(container, filter, mode) {
+    var cible = String(mode || "").trim().toUpperCase();
+    if (cible !== "DISCUSSION" && cible !== "DIRECT") return;
+    if (cible === etat.mode) return;
+    etat.mode = cible;
+    etat.type = "";   /* les types diffèrent d'un lot à l'autre */
+    render(container, filter);
+  }
+
   function init() {
     var container = document.getElementById("grille-offres");
     if (!container) return;
     var filter = document.getElementById("filtres-offres");
-    render(container, filter, "");
+    var tabs = document.getElementById("tabs-offres");
+
+    render(container, filter);
+
+    /* Commutateur : clic + navigation clavier (flèches). */
+    if (tabs) {
+      tabs.addEventListener("click", function (event) {
+        var button = event.target.closest ? event.target.closest("[data-offres-mode]") : null;
+        if (button) basculerMode(container, filter, button.getAttribute("data-offres-mode"));
+      });
+      tabs.addEventListener("keydown", function (event) {
+        var pas = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!pas) return;
+        var boutons = Array.prototype.slice.call(tabs.querySelectorAll("[data-offres-mode]"));
+        var i = boutons.indexOf(event.target);
+        if (i === -1) return;
+        event.preventDefault();
+        var suivant = boutons[(i + pas + boutons.length) % boutons.length];
+        if (suivant) {
+          suivant.focus();
+          basculerMode(container, filter, suivant.getAttribute("data-offres-mode"));
+        }
+      });
+    }
+
+    /* Filtres par type : filtrage À L'INTÉRIEUR du lot actif. */
     if (filter) filter.addEventListener("click", function (event) {
       var button = event.target.closest ? event.target.closest("[data-offres-filter]") : null;
       if (!button || !container._offresRows) return;
-      var active = button.getAttribute("data-offres-filter") || "";
-      container._offresActive = active;
-      paint(container, filter, container._offresRows, active, true);
+      etat.type = button.getAttribute("data-offres-filter") || "";
+      var lot = parModeAchat(container._offresRows, etat.mode);
+      renderFilters(filter, lot, etat.type);
+      var visibles = etat.type ? lot.filter(function (o) { return typeKey(o) === etat.type; }) : lot;
+      paint(container, visibles, true);
     });
-    document.addEventListener("kj:langue", function () { render(container, filter, container._offresActive || ""); });
+
+    document.addEventListener("kj:langue", function () { render(container, filter); });
   }
 
   window.Offres = {
     init: init,
     render: render,
-    /* Phase 1 : parsing et moteur de filtrage exposés (tests + Phase 2). */
     recuperer: recuperer,
     normaliser: normaliser,
     parModeAchat: parModeAchat
