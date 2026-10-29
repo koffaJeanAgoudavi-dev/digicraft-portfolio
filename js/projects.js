@@ -475,11 +475,16 @@
             badge_statut: window.Sheets.champ(r, ["badge_statut", "badge"], ""),
             filtre: window.Sheets.champ(r, ["filtre", "filter"], ""),
             description_courte: window.Sheets.champ(r, ["description_courte", "description"], ""),
+            /* V1.6 — description narrative de la fiche étude de cas
+               (sous le média) : description_longue, lue séparément de la
+               courte réservée aux cartes. */
+            description_longue: window.Sheets.champ(r, ["description_longue"], ""),
             /* É10 — variantes anglaises : conservées telles quelles, le choix
                se fait au rendu (window.I18n.champ) pour que la bascule de
                langue reste instantanée même sans recharger les données. */
             titre_en: window.Sheets.champ(r, ["titre_en", "title_en"], ""),
             description_courte_en: window.Sheets.champ(r, ["description_courte_en"], ""),
+            description_longue_en: window.Sheets.champ(r, ["description_longue_en"], ""),
             image_url: window.Sheets.champ(r, ["image_url", "image"], ""),
             stack_tags: window.Sheets.champ(r, ["stack_tags", "tags"], ""),
             statut: window.Sheets.champ(r, ["statut", "status"], ""),
@@ -776,7 +781,13 @@
       }
 
       if (elTitre && txt(p, "titre")) elTitre.textContent = txt(p, "titre");
-      if (elDesc && txt(p, "description_courte")) elDesc.textContent = txt(p, "description_courte");
+      /* Remapping (2026-10-29) : la description narrative sous le média
+         provient de description_longue — les cartes (accueil, /projets/)
+         conservent description_courte, et la meta SEO reste sur la courte.
+         STRICT (décision utilisateur) : longue vide → texte effacé et bloc
+         masqué par la logique V1.5 ci-dessous — jamais de retombée sur la
+         courte. */
+      if (elDesc) elDesc.textContent = txt(p, "description_longue") || "";
       /* V1.5 : description narrative sous la vidéo — le bloc est masqué si
          le projet n'a aucune description (Sheet vide ET repli statique
          vide) ; le squelette de la fiche générique ne reste jamais figé. */
