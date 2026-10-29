@@ -88,6 +88,36 @@
     return window.Sheets.toBool(window.Sheets.champ(row, ["publie", "published"], ""));
   }
 
+  /* ---------- lienCta() — CTA interne ou externe (correctif 2026-10-29) ----------
+     Le CMS peut pointer un CTA vers une page interne du site (ex.
+     « contact?offre=email-flow-ia »). safeExternalUrl — garde-fou strict
+     des URL externes, intouchable — préfixerait un tel chemin par
+     « https:// » et produirait un lien cassé (https://contact?…).
+     Ce résolveur INTERNE est séparé et tout aussi strict : il n'accepte
+     qu'un chemin de site (lettres, chiffres, / - _ . ~ ? = & %), sans
+     schéma, sans « // », sans espaces ni caractères d'injection. Tout
+     le reste repart vers safeExternalUrl, inchangé. */
+  function lienInterne(v) {
+    var s = String(v == null ? "" : v).trim();
+    if (!s) return "";
+    if (/^[a-z][a-z0-9+.-]*:/i.test(s)) return "";      /* schéma → externe */
+    if (s.indexOf("//") === 0) return "";               /* protocol-relative → externe */
+    if (/[^A-Za-z0-9\-._~\/?=&%]/.test(s)) return "";   /* whitelist stricte */
+    /* Segment nu (« contact?x ») → « contact/?x » : évite la redirection
+       Clean URLs de Cloudflare Pages et préserve la query. */
+    var m = s.match(/^([A-Za-z0-9][A-Za-z0-9\-_.]*)(\?.*)?$/);
+    if (m) s = m[1] + "/" + (m[2] || "");
+    /* Ancrage site : chemin relatif préfixé par SITE_ROOT, « /… » tel quel. */
+    if (s.charAt(0) !== "/") s = (window.SITE_ROOT || "") + s;
+    return s;
+  }
+
+  function lienCta(v) {
+    var interne = lienInterne(v);
+    if (interne) return interne;
+    return window.Sheets.safeExternalUrl(v);
+  }
+
   /* ---------- normaliser() — objet propre par offre (Phase 1) ---------- */
   function normaliser(row) {
     var mode = String(window.Sheets.champ(row, ["mode_achat", "mode"], "") || "").trim().toUpperCase();
@@ -104,7 +134,7 @@
       stack: listeStack(texte(row, "stack")),
       prix_display: window.Sheets.champ(row, ["prix_display", "prix"], ""),
       cta_texte: texte(row, "cta_texte"),
-      cta_lien: window.Sheets.safeExternalUrl(window.Sheets.champ(row, ["cta_lien", "cta_url"], "")),
+      cta_lien: lienCta(window.Sheets.champ(row, ["cta_lien", "cta_url"], "")),
       mode_achat: (mode === "DISCUSSION" || mode === "DIRECT") ? mode : "",
       mise_en_avant: window.Sheets.toBool(window.Sheets.champ(row, ["mise_en_avant", "mis_en_avant", "featured"], ""))
     };
