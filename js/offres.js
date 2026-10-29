@@ -130,6 +130,7 @@
       type: texte(row, "type"),
       description: texte(row, "description"),
       probleme_resolu: texte(row, "probleme_resolu"),
+      fonctionnement: texte(row, "fonctionnement"),
       livrables: listeLivrables(texte(row, "livrables")),
       stack: listeStack(texte(row, "stack")),
       prix_display: window.Sheets.champ(row, ["prix_display", "prix"], ""),
@@ -192,6 +193,11 @@
     var probleme = o.probleme_resolu
       ? '<div class="problem-solved-block"><span class="problem-solved-label" data-i18n="offres.probleme">PROBLÈME RÉSOLU</span><p class="problem-solved-text">' + esc(o.probleme_resolu) + "</p></div>"
       : "";
+    /* « Fonctionnement » (colonne fonctionnement) — dernier champ CMS,
+       affiché juste en dessous de la stack technique, avant le CTA. */
+    var fonctionnement = o.fonctionnement
+      ? '<div class="pricing-card-fonctionnement"><span class="pricing-card-fonctionnement-label" data-i18n="offres.fonctionnement">Fonctionnement</span><p class="pricing-card-fonctionnement-text">' + esc(o.fonctionnement) + "</p></div>"
+      : "";
     /* Phase 3 : badge « LE PLUS DEMANDÉ » sur la carte phare, prix
        sous le titre (avant la description) — décision utilisateur. */
     return '<article class="pricing-card' + (o.mise_en_avant ? " pricing-card--highlight" : "") + '">' +
@@ -204,7 +210,7 @@
       "</header>" +
       probleme +
       corps +
-      '<div class="pricing-card-bottom">' + stackHtml(o) + ctaHtml + "</div>" +
+      '<div class="pricing-card-bottom">' + stackHtml(o) + fonctionnement + ctaHtml + "</div>" +
       "</article>";
   }
 

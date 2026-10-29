@@ -2523,6 +2523,25 @@ body.case-study-page{
 .pricing-card-stack{display:flex;flex-wrap:wrap;gap:.42rem}
 .pricing-card-stack--text{margin:0;padding:0;list-style:none}
 .pricing-card-stack--text li{padding:.32rem .55rem;border:1px solid #E7DEFB;border-radius:999px;background:rgba(240,235,255,.62);color:#4B2A9F;font-family:var(--font-mono);font-size:var(--fs-xs)}
+/* ---------- Fonctionnement (dernier champ CMS) — juste sous la stack,
+   avant le CTA : label mono discret + texte secondaire. ---------- */
+.pricing-card-fonctionnement{margin:0}
+.pricing-card-fonctionnement-label{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:var(--fs-xs);
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#716B80;
+}
+.pricing-card-fonctionnement-text{
+  margin:.3rem 0 0;
+  color:var(--ink-2);
+  font-size:var(--fs-sm);
+  line-height:1.6;
+  overflow-wrap:break-word;
+}
 /* CTA : contour violet sur les cartes standard, plein dégradé sur
    la carte phare (hiérarchie SaaS — décision utilisateur). */
 .pricing-card-cta{
