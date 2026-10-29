@@ -93,6 +93,7 @@
     var mode = String(window.Sheets.champ(row, ["mode_achat", "mode"], "") || "").trim().toUpperCase();
     return {
       id: window.Sheets.champ(row, ["id"], ""),
+      slug: window.Sheets.champ(row, ["slug"], ""),
       ordre: window.Sheets.champ(row, ["ordre", "order"], ""),
       publie: published(row),
       titre: texte(row, "titre"),

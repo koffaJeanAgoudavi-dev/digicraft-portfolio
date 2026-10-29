@@ -2,6 +2,7 @@ const MAX = {
   nom: 120,
   email: 254,
   sujet: 160,
+  titre_offre: 200,
   message: 5000
 };
 const MIN_DELAY_MS = 2500;
@@ -50,6 +51,7 @@ export async function onRequestPost(context) {
   const nom = clean(body.nom);
   const email = clean(body.email);
   const sujet = clean(body.sujet);
+  const titreOffre = clean(body.titre_offre);
   const message = clean(body.message);
   const website = clean(body.website);
   const startedAt = Number(body.form_started_at);
@@ -60,6 +62,7 @@ export async function onRequestPost(context) {
   const lengthsOk = nom.length > 0 && nom.length <= MAX.nom &&
     email.length > 0 && email.length <= MAX.email &&
     sujet.length > 0 && sujet.length <= MAX.sujet &&
+    titreOffre.length <= MAX.titre_offre &&
     message.length > 0 && message.length <= MAX.message;
   if (!lengthsOk || !validEmail(email)) {
     return json({ ok: false, error: "validation" }, 422);
@@ -83,7 +86,14 @@ export async function onRequestPost(context) {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify({ nom, email, sujet, message })
+      body: JSON.stringify({
+        date_heure: new Date().toISOString(),
+        nom,
+        email,
+        sujet,
+        titre_offre: titreOffre,
+        message
+      })
     });
 
     if (!upstream.ok) {

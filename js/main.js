@@ -249,6 +249,68 @@
     var started = qs('input[name="form_started_at"]', form);
     if (started) started.value = String(Date.now());
 
+    /* ---- Sujet « Demande concernant une offre existante » ----
+       Menu déroulant secondaire peuplé depuis l'onglet CMS Offres
+       (publie=TRUE, tout mode_achat ; libellé=titre, value=slug —
+       jamais id). Masqué pour les autres sujets. Pré-remplissage :
+       /contact?offre=slug (slug inconnu → option neutre conservée). */
+    var SUJET_OFFRE = "Demande concernant une offre existante";
+    var selSujet = qs("#sujet", form);
+    var champOffre = qs(".field-offre", form);
+    var selOffre = qs("#offre", form);
+    var offresChargees = false;
+
+    function peuplerOffres(slugInitial) {
+      if (!selOffre) return Promise.resolve();
+      if (!(window.Offres && typeof window.Offres.recuperer === "function")) {
+        return Promise.resolve(); /* offres.js absent : menu réduit à la neutre */
+      }
+      return window.Offres.recuperer().then(function (offres) {
+        var conserve = slugInitial || selOffre.value || "";
+        selOffre.innerHTML = "";
+        var neutre = document.createElement("option");
+        neutre.value = "";
+        neutre.setAttribute("data-i18n", "contact.opt.offre.invite");
+        neutre.textContent = T("contact.opt.offre.invite", null, "-- Sélectionnez une offre --");
+        selOffre.appendChild(neutre);
+        offres.forEach(function (o) {
+          if (!o.slug || !o.titre) return; /* reconnaissance exclusivement par slug */
+          var opt = document.createElement("option");
+          opt.value = o.slug;
+          opt.textContent = o.titre;
+          selOffre.appendChild(opt);
+        });
+        selOffre.value = conserve;
+        if (selOffre.value !== conserve) selOffre.value = ""; /* slug disparu → neutre */
+        offresChargees = true;
+      }).catch(function () { /* Sheet indisponible : menu réduit à la neutre */ });
+    }
+
+    function basculerChampOffre(slugInitial) {
+      if (!champOffre || !selOffre || !selSujet) return;
+      var actif = selSujet.value === SUJET_OFFRE;
+      champOffre.hidden = !actif;
+      if (actif && !offresChargees) peuplerOffres(slugInitial || "");
+    }
+
+    if (selSujet) selSujet.addEventListener("change", function () { basculerChampOffre(""); });
+
+    /* Pré-remplissage ?offre=slug : sujet imposé, menu affiché, offre
+       sélectionnée si le slug existe ; les autres champs restent libres. */
+    var offreDemandee = "";
+    try {
+      offreDemandee = String(new URLSearchParams(window.location.search).get("offre") || "").trim();
+    } catch (e) { offreDemandee = ""; }
+    if (offreDemandee && selSujet) {
+      selSujet.value = SUJET_OFFRE;
+      basculerChampOffre(offreDemandee);
+    }
+
+    /* Bascule de langue : re-peuplement (titres _en) — sélection conservée par slug. */
+    document.addEventListener("kj:langue", function () {
+      if (offresChargees && selOffre) peuplerOffres(selOffre.value);
+    });
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (errBox) errBox.classList.remove("is-visible");
@@ -283,6 +345,13 @@
       var abort = "AbortController" in window ? new AbortController() : null;
       var timer = abort ? setTimeout(function () { abort.abort(); }, 15000) : null;
       var website = qs('input[name="website"]', form);
+      /* Titre exact de l'offre sélectionnée (libellé affiché) — vide si
+         le sujet n'est pas « offre » ou si aucune offre n'est choisie. */
+      var titreOffre = "";
+      if (sujet === SUJET_OFFRE && selOffre && selOffre.value) {
+        var optSel = selOffre.options[selOffre.selectedIndex];
+        titreOffre = optSel ? String(optSel.textContent || "").trim() : "";
+      }
 
       fetch((window.SITE_ROOT || "") + "api/contact", {
         method: "POST",
@@ -291,6 +360,7 @@
           nom: nom,
           email: email,
           sujet: sujet,
+          titre_offre: titreOffre,
           message: message,
           website: website ? website.value : "",
           form_started_at: started ? started.value : ""

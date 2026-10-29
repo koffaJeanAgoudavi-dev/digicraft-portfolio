@@ -60,7 +60,7 @@ window.CONFIG = {
     parcours: ["type", "titre", "organisation", "date_obtention", "date_fin", "description", "verification_url", "ordre"],
     temoignages: ["id", "nom", "role", "entreprise", "texte", "texte_en", "source_url", "featured", "ordre"],
     outils: ["id", "nom", "logo", "categorie", "categorie_en", "featured", "ordre"],
-    offres: ["id", "ordre", "publie", "titre", "type", "description", "probleme_resolu", "livrables", "stack", "prix_display", "cta_texte", "cta_lien", "mode_achat", "mise_en_avant"]
+    offres: ["id", "slug", "ordre", "publie", "titre", "type", "description", "probleme_resolu", "livrables", "stack", "prix_display", "cta_texte", "cta_lien", "mode_achat", "mise_en_avant"]
   },
 
   // Données par défaut (utilisées seulement si le Sheet ET le JSON local
